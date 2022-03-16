@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "Fintamath-android"
+include ':app'
+gradle.ext.useLocalLibrary = false
+gradle.ext.useRemoteLibrary = false
+gradle.ext.isDebuggable = true
