@@ -1,4 +1,4 @@
-package com.example.fintamath_android
+package com.fintarin.fintamath_android
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

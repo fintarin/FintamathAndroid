@@ -7,7 +7,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.fintamath_android"
+        applicationId "com.fintarin.fintamath_android"
         minSdk 24
         targetSdk 32
         versionCode 1

@@ -1,11 +1,11 @@
-package com.example.fintamath_android
+package com.fintarin.fintamath_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import com.example.fintamath_android.databinding.ActivityMainBinding
+import com.fintarin.fintamath_android.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
