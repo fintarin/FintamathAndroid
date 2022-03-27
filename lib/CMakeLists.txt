@@ -27,3 +27,5 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC src)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC fintamath_solver)
+
+set(CMAKE_CONFIGURATION_TYPES "Release" CACHE STRING "" FORCE)
