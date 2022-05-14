@@ -8,7 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Fintamathandroid">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        >
         <activity
             android:name="com.fintarin.fintamath_android.MainActivity"
             android:exported="true">

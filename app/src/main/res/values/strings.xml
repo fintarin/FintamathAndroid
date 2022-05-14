@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Fintamath</string>
     <string name="solve">Solve</string>
+    <string name="pi">&#x3C0;</string>
+    <string name="e">&#8455;</string>
+    <string name="exp">&#178;</string>
+    <string name="sqrt">&#8730;</string>
 </resources>

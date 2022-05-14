@@ -1,10 +1,12 @@
 package com.fintarin.fintamath_android
 
-import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.View
+
 
 import com.fintarin.fintamath_android.databinding.ActivityMainBinding
 import java.lang.Exception
@@ -12,9 +14,11 @@ import kotlinx.coroutines.*
 import androidx.lifecycle.lifecycleScope
 
 class MainActivity : AppCompatActivity() {
-    private val TAG:String="Main activity calls calculator"
     private lateinit var binding: ActivityMainBinding
+    private lateinit var expression: MainExpression
     private lateinit var currentJob: Job
+    private var toSolve:String=""
+    private var isKeyboardVisible:Boolean=true
     private fun calculate(string: String):String{
         return try {
             findSolution(string)
@@ -28,15 +32,40 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        expression= MainExpression(binding.newview,binding)
+        KeyboardViewSwitcher.setKeyboardToDefaultView(binding, this,expression)
+
+        binding.delete.setOnClickListener {
+            expression.deleteChild()
+            binding.toSolve.text=expression.getText()
+        }
+
+
+        binding.mainForm.setOnClickListener{changeKeyboardVisibility()}
+
+        binding.toSolve.setOnClickListener{changeKeyboardVisibility()}
+
+        binding.solution.setOnClickListener{changeKeyboardVisibility()}
+
         binding.toSolve.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                Dispatchers.Main.cancelChildren()
-                currentJob=lifecycleScope.launch(Dispatchers.Main) {
-                    val result:String= withContext(Dispatchers.Default){
-                            calculate(binding.toSolve.text.toString())}
-                    if(currentJob.isActive) {
-                        binding.solution.text = result
+                toSolve=expression.getText()
+                Log.d("sd","Start calculation {")
+                try {
+                    if (toSolve !== "") {
+                        Dispatchers.Main.cancelChildren()
+                        currentJob = lifecycleScope.launch(Dispatchers.Main) {
+                            val result: String = withContext(Dispatchers.Default) {
+                                calculate(toSolve)
+                            }
+                            if (currentJob.isActive) {
+                                binding.solution.text = result
+                            }
+                        }
                     }
+                }
+                catch (e:Exception){
+                    Log.d("DJ-Tape","Catch some shit")
                 }
             }
 
@@ -50,9 +79,22 @@ class MainActivity : AppCompatActivity() {
 
     external fun findSolution(string: String): String
 
-   companion object {
+    companion object {
         init {
             System.loadLibrary("fintamath-android")
+        }
+    }
+
+    private fun changeKeyboardVisibility(){
+        if(isKeyboardVisible){
+            binding.functionalRow.visibility= View.GONE
+            binding.keyboard.visibility=View.GONE
+            isKeyboardVisible=false
+        }
+        else{
+            binding.functionalRow.visibility= View.VISIBLE
+            binding.keyboard.visibility=View.VISIBLE
+            isKeyboardVisible=true
         }
     }
 }

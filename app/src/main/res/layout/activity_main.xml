@@ -1,22 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:layout_gravity="center">
-    <EditText
+    android:layout_alignParentTop="true"
+    android:background="#00FF0000"
+    android:gravity="center"
+    android:padding="0dp"
+    android:text="Fintamath">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/borders"></androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/newview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/to_solve"
+        android:minWidth="200dp"
+        android:minHeight="200dp"
+        android:orientation="horizontal"></LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:cursorVisible="true"
+        android:text="Fintamath"
+        android:textSize="20dp" />
+
+    <TextView
         android:id="@+id/to_solve"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
-        />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/solution"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:hint="" />
+        android:hint=""
+        android:minWidth="10dp"
+        android:minHeight="10dp" />
+
+    <LinearLayout
+        android:id="@+id/functional_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/keyboard">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/functions"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/borders"
+            android:minHeight="50dp"
+            android:padding="10dp"
+            android:text="f(x)"
+            android:textAllCaps="false"
+            android:textAppearance="@style/Widget.AppCompat.Button.Colored"
+            android:textStyle="italic" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/letters"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/borders"
+            android:minHeight="50dp"
+            android:padding="10dp"
+            android:text="abc"
+            android:textAllCaps="false"
+            android:textAppearance="@style/Widget.AppCompat.Button.Colored"
+            android:textStyle="italic" />
+
+        <ImageButton
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/borders"
+            android:src="@android:drawable/ic_input_delete"
+            android:textAppearance="@style/Widget.AppCompat.Button.Colored"
+            tools:src="@drawable/ic_baseline_backspace_24" />
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="0dp">
+
+        <TableRow
+            android:id="@+id/firstRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TableRow
+            android:id="@+id/secondRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TableRow
+            android:id="@+id/thirdRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TableRow
+            android:id="@+id/fourthRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </TableLayout>
 </RelativeLayout>
