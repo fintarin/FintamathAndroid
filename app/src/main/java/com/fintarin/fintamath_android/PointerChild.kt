@@ -23,12 +23,11 @@ class PointerChild:ChildExpression {
         layout.layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
         layout.setOnClickListener {
             this.setSelected()
-            Log.d("DJ-Tape","Select child${this.getText()}")
         }
         textView= TextView(layout.context)
         textView.layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
         textView.setTextSize(40.0F)
-        textView.setTextColor(Color.BLACK)
+        textView.setTextColor(Color.GRAY)
         textView.setBackgroundColor(Color.GRAY)
         textView.text=("?")
         layout.addView(textView)

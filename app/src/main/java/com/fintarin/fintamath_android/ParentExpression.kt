@@ -9,4 +9,5 @@ interface ParentExpression:Expression {
     fun deleteChild()
     fun addChild(childExpression: ChildExpression)
     fun setDescendantUnselected()
+    fun setDescendantSelected()
 }

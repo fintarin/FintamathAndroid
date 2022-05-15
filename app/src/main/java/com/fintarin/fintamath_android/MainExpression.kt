@@ -50,7 +50,6 @@ class MainExpression(_parentLayout: ViewGroup,binding: ActivityMainBinding): Par
             isSelected=false
             childExpression.setSelected()
         }
-
         else {
             var selectedChild:ChildExpression?=null
             for (child in children) {
@@ -78,7 +77,6 @@ class MainExpression(_parentLayout: ViewGroup,binding: ActivityMainBinding): Par
         children.add(children.indexOf(child)+1,childExpression)
         layout.addView(childExpression.getLayout(),children.indexOf(child)+1)
         childExpression.setSelected()
-        addPointerChild()
     }
 
     override fun addPointerChild() {
@@ -122,7 +120,6 @@ class MainExpression(_parentLayout: ViewGroup,binding: ActivityMainBinding): Par
                 childToDelete=child
             }
             else if(child is ParentExpression && child.hasSelectedDescendant()){
-                Log.d("DJ-Tape","Delete child recursive")
                 child.deleteChild()
             }
         }
@@ -156,7 +153,6 @@ class MainExpression(_parentLayout: ViewGroup,binding: ActivityMainBinding): Par
     }
 
     override fun setDescendantUnselected() {
-        isSelected=false
         deletePointerChild()
         for (child in children){
             if(child.isSelected()){
@@ -165,6 +161,15 @@ class MainExpression(_parentLayout: ViewGroup,binding: ActivityMainBinding): Par
             else if(child is ParentExpression){
                 child.setDescendantUnselected()
             }
+        }
+    }
+
+    override fun setDescendantSelected() {
+        if(isSelected){
+            this.setUnselected()
+        }
+        else if(hasSelectedDescendant){
+            this.setDescendantUnselected()
         }
     }
 }

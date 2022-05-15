@@ -18,14 +18,19 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/borders"></androidx.appcompat.widget.Toolbar>
 
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/scroll">
     <LinearLayout
         android:id="@+id/newview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/to_solve"
-        android:minWidth="200dp"
-        android:minHeight="200dp"
+        android:minWidth="80dp"
+        android:minHeight="80dp"
         android:orientation="horizontal"></LinearLayout>
+    </HorizontalScrollView>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,16 +47,46 @@
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
         android:visibility="invisible" />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_below="@id/scroll"
+        android:indeterminateDrawable="@drawable/progress_bar"
+        android:indeterminateOnly="true"
+        ></ProgressBar>
 
     <TextView
         android:id="@+id/solution"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/scroll"
         android:hint=""
+        android:textSize="40dp"
+        android:textColor="@color/black"
+        android:scrollbars = "horizontal"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:minWidth="10dp"
         android:minHeight="10dp" />
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/solution"
+        android:id="@+id/full_solution"
+        android:visibility="invisible"
+        android:text="Full solution"
+        ></Button>
+    <TextView
+        android:id="@+id/full_solution_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:textSize="40dp"
+        android:layout_below="@id/full_solution"
+        ></TextView>
     <LinearLayout
         android:id="@+id/functional_row"
         android:layout_width="match_parent"
@@ -97,7 +132,6 @@
             android:textAppearance="@style/Widget.AppCompat.Button.Colored"
             tools:src="@drawable/ic_baseline_backspace_24" />
     </LinearLayout>
-
     <TableLayout
         android:id="@+id/keyboard"
         android:layout_width="match_parent"

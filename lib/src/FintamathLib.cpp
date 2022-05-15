@@ -10,8 +10,7 @@ extern "C" JNIEXPORT jstring Java_com_fintarin_fintamath_1android_MainActivity_f
     std::string input = env->GetStringUTFChars(str, nullptr);
     try {
         fintamath::Expression e=fintamath::Expression(input);
-        e.simplify();
-        std::string output = e.toString();
+        std::string output = e.simplify()->toString();
         return env->NewStringUTF(output.c_str());
     } catch (std::exception &exception) {
         return env->NewStringUTF("Unable to calculate");

@@ -1,9 +1,12 @@
 package com.fintarin.fintamath_android
 
+import android.icu.number.IntegerWidth
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
 
@@ -12,6 +15,8 @@ import com.fintarin.fintamath_android.databinding.ActivityMainBinding
 import java.lang.Exception
 import kotlinx.coroutines.*
 import androidx.lifecycle.lifecycleScope
+import java.math.BigDecimal
+import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -39,6 +44,17 @@ class MainActivity : AppCompatActivity() {
             expression.deleteChild()
             binding.toSolve.text=expression.getText()
         }
+        binding.fullSolution.setOnClickListener{
+            if(binding.fullSolutionText.visibility==View.VISIBLE) {
+                binding.fullSolution.text="Show full solution"
+                binding.fullSolutionText.visibility = View.INVISIBLE
+            }
+            else{
+                binding.fullSolution.text="Hide full solution"
+                binding.fullSolutionText.visibility = View.VISIBLE
+            }
+        }
+
 
 
         binding.mainForm.setOnClickListener{changeKeyboardVisibility()}
@@ -47,25 +63,64 @@ class MainActivity : AppCompatActivity() {
 
         binding.solution.setOnClickListener{changeKeyboardVisibility()}
 
+        binding.fullSolutionText.movementMethod=ScrollingMovementMethod.getInstance()
+        binding.solution.movementMethod=ScrollingMovementMethod.getInstance()
+        binding.solution.setHorizontallyScrolling(true)
+
+
         binding.toSolve.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 toSolve=expression.getText()
-                Log.d("sd","Start calculation {")
                 try {
                     if (toSolve !== "") {
+                        binding.progressBar.visibility=View.VISIBLE
+                        binding.solution.visibility=View.INVISIBLE
+                        binding.fullSolution.text="Show full solution"
+                        binding.fullSolutionText.visibility = View.INVISIBLE
                         Dispatchers.Main.cancelChildren()
                         currentJob = lifecycleScope.launch(Dispatchers.Main) {
-                            val result: String = withContext(Dispatchers.Default) {
+                            delay(300L)
+
+                            var result: String = withContext(Dispatchers.Default) {
                                 calculate(toSolve)
                             }
                             if (currentJob.isActive) {
-                                binding.solution.text = result
+                                binding.progressBar.visibility = View.INVISIBLE
+                                binding.solution.visibility = View.VISIBLE
+                                binding.fullSolutionText.text = result
+                                if (result.length > 20) {
+                                    try {
+                                        result.toBigDecimal()
+                                        if (result.contains("-")) {
+                                            binding.solution.text = "-"
+                                            result=result.replace("-", "")
+                                        }
+                                        var dotPosition =result.length
+                                            if (result.contains(".")) {
+                                            dotPosition = result.indexOf(".")
+                                            result=result.replace(".", "")
+                                        }
+                                        binding.solution.text=binding.solution.text.toString()+result[0]+"."+result.substring(1, 19)+"*10^${dotPosition}"
+                                        binding.fullSolution.visibility = View.VISIBLE
+                                        binding.fullSolutionText.visibility = View.INVISIBLE
+
+                                    } catch (e: Exception) {
+                                            binding.fullSolution.visibility = View.VISIBLE
+                                            binding.fullSolutionText.visibility = View.INVISIBLE
+                                            binding.solution.text = result.substring(0, 19) + "..."
+                                    }
+                                    Log.d("Calculate", "${toSolve} , ${result}")
+                                }
+                                else{
+                                    binding.solution.text=result
+                                    binding.fullSolution.visibility = View.INVISIBLE
+                                    binding.fullSolutionText.visibility = View.INVISIBLE
+                                }
                             }
                         }
                     }
                 }
                 catch (e:Exception){
-                    Log.d("DJ-Tape","Catch some shit")
                 }
             }
 
@@ -87,8 +142,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun changeKeyboardVisibility(){
         if(isKeyboardVisible){
-            binding.functionalRow.visibility= View.GONE
-            binding.keyboard.visibility=View.GONE
+            binding.functionalRow.visibility= View.INVISIBLE
+            binding.keyboard.visibility=View.INVISIBLE
             isKeyboardVisible=false
         }
         else{

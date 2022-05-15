@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TableRow
 import androidx.appcompat.widget.AppCompatButton
 import com.fintarin.fintamath_android.databinding.ActivityMainBinding
+import kotlinx.coroutines.delay
 
 class KeyboardViewSwitcher {
     companion object{
@@ -50,7 +51,7 @@ class KeyboardViewSwitcher {
             binding.thirdRow.addView(createButton("pi",context,binding,mainExpression))
 
             binding.fourthRow.weightSum=6f
-            binding.fourthRow.addView(createNumericButton(".",context,binding,mainExpression))
+            binding.fourthRow.addView(createLongHoldButton(".",",",context,binding,mainExpression))
             binding.fourthRow.addView(createNumericButton("0",context,binding,mainExpression))
             binding.fourthRow.addView(createButton("=",context,binding,mainExpression))
             binding.fourthRow.addView(createButton("-",context,binding,mainExpression))
@@ -72,37 +73,29 @@ class KeyboardViewSwitcher {
             binding.thirdRow.removeAllViews()
             binding.fourthRow.removeAllViews()
 
-            binding.firstRow.weightSum=6f
-            binding.firstRow.addView(createButton("sin",context,binding,mainExpression))
+            binding.firstRow.weightSum=4f
             binding.firstRow.addView(createButton("asin",context,binding,mainExpression))
+            binding.firstRow.addView(createButton("sin",context,binding,mainExpression))
             binding.firstRow.addView(createButton("log",context,binding,mainExpression))
-            binding.firstRow.addView(createButton("/",context,binding,mainExpression))
-            binding.firstRow.addView(createButton("(",context,binding,mainExpression))
-            binding.firstRow.addView(createButton(")",context,binding,mainExpression))
+            binding.firstRow.addView(createButton("exp",context,binding,mainExpression))
 
-            binding.secondRow.weightSum=6f
-            binding.secondRow.addView(createButton("cos",context,binding,mainExpression))
+            binding.secondRow.weightSum=4f
             binding.secondRow.addView(createButton("acos",context,binding,mainExpression))
-            binding.secondRow.addView(createButton("sqrt",context,binding,mainExpression))
-            binding.secondRow.addView(createButton("*",context,binding,mainExpression))
-            binding.secondRow.addView(createButton("sqrt",context,binding,mainExpression))
-            binding.secondRow.addView(createButton("^",context,binding,mainExpression))
+            binding.secondRow.addView(createButton("cos",context,binding,mainExpression))
+            binding.secondRow.addView(createButton("ln",context,binding,mainExpression))
+            binding.secondRow.addView(createButton("abs",context,binding,mainExpression))
 
-            binding.thirdRow.weightSum=6f
-            binding.thirdRow.addView(createButton("tan",context,binding,mainExpression))
+            binding.thirdRow.weightSum=4f
             binding.thirdRow.addView(createButton("atan",context,binding,mainExpression))
+            binding.thirdRow.addView(createButton("tan",context,binding,mainExpression))
+            binding.thirdRow.addView(createButton("lg",context,binding,mainExpression))
             binding.thirdRow.addView(createButton("!",context,binding,mainExpression))
-            binding.thirdRow.addView(createButton("+",context,binding,mainExpression))
-            binding.thirdRow.addView(createButton("x",context,binding,mainExpression))
-            binding.thirdRow.addView(createButton("pi",context,binding,mainExpression))
 
-            binding.fourthRow.weightSum=6f
-            binding.fourthRow.addView(createButton("cot",context,binding,mainExpression))
+            binding.fourthRow.weightSum=4f
             binding.fourthRow.addView(createButton("acot",context,binding,mainExpression))
+            binding.fourthRow.addView(createButton("cot",context,binding,mainExpression))
+            binding.fourthRow.addView(createButton("lb",context,binding,mainExpression))
             binding.fourthRow.addView(createButton("!!",context,binding,mainExpression))
-            binding.fourthRow.addView(createButton("-",context,binding,mainExpression))
-            binding.fourthRow.addView(createButton("%",context,binding,mainExpression))
-            binding.fourthRow.addView(createButton("e",context,binding,mainExpression))
         }
 
 
@@ -169,16 +162,31 @@ class KeyboardViewSwitcher {
             button.setBackgroundResource(R.drawable.borders)
             button.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
             button.setOnClickListener {
-                mainExpression.addChild(Symbol(button.text.toString()))
+                var x=Symbol(button.text.toString())
+                mainExpression.addChild(x)
                 binding.toSolve.text=mainExpression.getText()
+                x.getLayout().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                binding.scroll.scrollBy(x.getLayout().measuredWidth,0)
             }
             button.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-            button.height=button.measuredWidth
+            button.height=button.width
             return button
         }
         private fun createNumericButton(text:String, context: Context,binding: ActivityMainBinding,mainExpression: MainExpression):AppCompatButton{
             val button:AppCompatButton= createButton(text,context,binding,mainExpression)
             button.setBackgroundResource(R.drawable.numbers)
+            return button
+        }
+        private fun createLongHoldButton(text: String,other:String,context: Context,binding: ActivityMainBinding,mainExpression: MainExpression):AppCompatButton{
+            val button:AppCompatButton= createButton(text,context,binding,mainExpression)
+            button.setOnLongClickListener{
+                var x=Symbol(other)
+                mainExpression.addChild(x)
+                binding.toSolve.text=mainExpression.getText()
+                x.getLayout().measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                binding.scroll.scrollBy(x.getLayout().measuredWidth,0)
+                true
+            }
             return button
         }
     }

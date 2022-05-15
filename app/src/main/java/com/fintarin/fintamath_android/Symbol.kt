@@ -10,16 +10,16 @@ class Symbol(_symbol: String):ChildExpression {
     private var isSelected:Boolean=false
     private var symbol:String=_symbol
     private lateinit var layout: ViewGroup
-    private lateinit var parent:Expression
+    private lateinit var parent:ParentExpression
     private lateinit var textView: TextView
+
     override fun setParent(parent: ParentExpression) {
         this.parent=parent
         layout = LinearLayout(parent.getLayout().context)
         layout.layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
         layout.setOnClickListener {
-            parent.setDescendantUnselected()
+            this.parent.setDescendantUnselected()
             this.setSelected()
-            parent.addPointerChild()
         }
         textView= TextView(layout.context)
         textView.layoutParams=LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -43,7 +43,9 @@ class Symbol(_symbol: String):ChildExpression {
     }
 
     override fun setSelected() {
+        parent.setDescendantSelected()
         isSelected=true
+        parent.addPointerChild()
     }
 
 
