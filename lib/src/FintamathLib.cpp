@@ -1,7 +1,18 @@
-#include "fintamath/solver/Solver.hpp"
+#include "fintamath/expressions/Expression.hpp"
 
-void f() {
-  Solver solver;
-  ArithmeticExpression e("1+1");
-  solver.solve(e);
+
+#include <jni.h>
+#include <string>
+
+extern "C" JNIEXPORT jstring Java_com_fintarin_fintamath_1android_MainActivity_findSolution(JNIEnv *env,
+                                                                                                    jobject,
+                                                                                                    jstring str) {
+    std::string input = env->GetStringUTFChars(str, nullptr);
+    try {
+        fintamath::Expression e=fintamath::Expression(input);
+        std::string output = e.simplify()->toString();
+        return env->NewStringUTF(output.c_str());
+    } catch (std::exception &exception) {
+        return env->NewStringUTF("Unable to calculate");
+    }
 }
