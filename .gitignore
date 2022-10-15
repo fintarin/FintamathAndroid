@@ -72,3 +72,9 @@ CMakeFiles/*
 
 # Gradle
 .gradle
+
+# Config
+local.properties
+
+# Build
+app/build
