@@ -69,3 +69,6 @@ CMakeFiles/*
 
 # IDEA config
 .idea/*
+
+# Gradle
+.gradle
