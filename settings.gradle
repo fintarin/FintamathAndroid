@@ -5,6 +5,7 @@ pluginManagement {
         mavenCentral()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -12,7 +13,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Fintamath-android"
+
+rootProject.name = "fintamath"
 include ':app'
 gradle.ext.useLocalLibrary = false
 gradle.ext.useRemoteLibrary = false

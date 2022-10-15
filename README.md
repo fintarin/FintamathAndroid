@@ -1,1 +1,1 @@
-# Fintamath-app
+# Fintamath Android
