@@ -75,6 +75,3 @@ CMakeFiles/*
 
 # Config
 local.properties
-
-# Build
-app/build

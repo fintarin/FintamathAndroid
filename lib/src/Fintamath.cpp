@@ -3,18 +3,24 @@
 #include <jni.h>
 #include <string>
 
-extern "C" JNIEXPORT jstring Java_com_fintarin_fintamath_1android_MainActivity_findSolution(JNIEnv *env, jobject,
-                                                                                            jstring inputJStr) {
-
-  std::string inputStr = env->GetStringUTFChars(inputJStr, nullptr);
+extern "C" JNIEXPORT jstring Java_com_fintamath_Calculator_simplify(JNIEnv *env, jobject, jstring inputJStr) {
+  std::string inStr = env->GetStringUTFChars(inputJStr, nullptr);
 
   try {
-    fintamath::Expression e = fintamath::Expression(inputStr);
-    return env->NewStringUTF(e.simplify()->toString());
-
-  } catch (const std::invalid_argument &exc) {
+    auto outExpr = fintamath::Expression(inStr);
+    return env->NewStringUTF(outExpr.toString().c_str());
+  } catch (const fintamath::Exception &exc) {
     return env->NewStringUTF(exc.what());
-  } catch (const std::domain_error &exc) {
+  }
+}
+
+extern "C" JNIEXPORT jstring Java_com_fintamath_Calculator_solve(JNIEnv *env, jobject, jstring inputJStr) {
+  std::string inStr = env->GetStringUTFChars(inputJStr, nullptr);
+
+  try {
+    auto outExpr = fintamath::Expression(inStr).simplify();
+    return env->NewStringUTF(outExpr->toString().c_str());
+  } catch (const fintamath::Exception &exc) {
     return env->NewStringUTF(exc.what());
   }
 }

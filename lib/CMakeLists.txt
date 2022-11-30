@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
 
-project(fintamath-android)
+project(fintamath_android)
 
 set(CMAKE_CONFIGURATION_TYPES
     "Release"
