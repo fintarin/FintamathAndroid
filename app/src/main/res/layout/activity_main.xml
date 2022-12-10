@@ -15,49 +15,63 @@
 
         <EditText
             android:id="@+id/inText"
+
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:background="@color/md_grey_900"
             android:padding="10dp"
             android:paddingTop="30dp"
+
+            android:background="@color/md_grey_900"
+
             android:hint="Type a math problem..."
             android:textColorHint="@color/md_grey_200_alpha"
+
             android:text=""
-            android:textColor="@color/md_grey_200"
             android:textSize="20sp"
+            android:textColor="@color/md_grey_200"
             android:textCursorDrawable="@drawable/color_cursor" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
+
             android:background="@color/md_grey_200"/>
 
         <TextView
             android:id="@+id/outText"
+
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@color/md_grey_900"
             android:padding="10dp"
+
+            android:background="@color/md_grey_900"
+
             android:text=""
-            android:textColor="@color/md_grey_200"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/md_grey_200" />
+
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/keyboardLayer"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
         <android.inputmethodservice.KeyboardView
             android:id="@+id/keyboard_view"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="visible"
+
+            android:background="@color/md_grey_900"
+
             android:keyTextColor="@color/md_grey_200"
             android:keyBackground="@drawable/key_background"
-            android:keyPreviewLayout="@layout/key_preview"
-            android:background="@color/md_grey_900"
-            android:visibility="visible"/>
+            android:keyPreviewLayout="@layout/key_preview" />
+
     </FrameLayout>
 
 </RelativeLayout>

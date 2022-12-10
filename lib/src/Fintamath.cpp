@@ -1,4 +1,5 @@
 #include "fintamath/expressions/Expression.hpp"
+#include "fintamath/exceptions/Exception.hpp"
 
 #include <jni.h>
 #include <string>

@@ -3,18 +3,16 @@ package com.fintamath;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Map;
 
 /**
  * todo
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView outText;
 
     private KeyboardView keyboardView;
-    private InputMethodService inputMethodService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -45,14 +42,14 @@ public class MainActivity extends AppCompatActivity {
         calculator = new Calculator();
 
         inText = findViewById(R.id.inText);
+        inText.setOnTouchListener(this::onTouchInText);
+
         outText = findViewById(R.id.outText);
+        outText.setOnTouchListener(this::onTouchOutText);
 
         keyboardView = findViewById(R.id.keyboard_view);
         keyboardView.setKeyboard(new Keyboard(this, R.xml.keyboard));
-
-        inText.setOnTouchListener(this::onTouchInText);
-        outText.setOnTouchListener(this::onTouchOutText);
-        keyboardView.setOnKeyboardActionListener(mOnKeyboardActionListener);
+        keyboardView.setOnKeyboardActionListener(new MainKeyboardActionListener(calculator, inText, outText));
 
         inText.requestFocus();
     }
@@ -78,52 +75,4 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
-
-    private KeyboardView.OnKeyboardActionListener mOnKeyboardActionListener = new KeyboardView.OnKeyboardActionListener() {
-        @Override public void onKey(int primaryCode, int[] keyCodes) {
-            InputConnection ic = inText.onCreateInputConnection(new EditorInfo());
-            if (ic == null) {
-                return;
-            }
-
-            switch (primaryCode) {
-                case Keyboard.KEYCODE_DELETE:
-                    CharSequence selectedText = ic.getSelectedText(0);
-
-                    if (TextUtils.isEmpty(selectedText)) {
-                        ic.deleteSurroundingText(1, 0);
-                    } else {
-                        ic.commitText("", 1);
-                    }
-
-                    break;
-                default:
-                    char code = (char) primaryCode;
-                    ic.commitText(String.valueOf(code), 1);
-            }
-
-            outText.setText(calculator.simplify(inText.getText().toString()));
-        }
-
-        @Override public void onPress(int arg0) {
-        }
-
-        @Override public void onRelease(int primaryCode) {
-        }
-
-        @Override public void onText(CharSequence text) {
-        }
-
-        @Override public void swipeDown() {
-        }
-
-        @Override public void swipeLeft() {
-        }
-
-        @Override public void swipeRight() {
-        }
-
-        @Override public void swipeUp() {
-        }
-    };
 }
