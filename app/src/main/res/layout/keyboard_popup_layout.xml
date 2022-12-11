@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/md_grey_900"
+    android:orientation="horizontal">
+
+    <android.inputmethodservice.KeyboardView
+        android:id="@android:id/keyboardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/md_grey_900"
+
+        android:keyBackground="@color/md_grey_900"
+        android:keyPreviewLayout="@layout/key_preview"
+        android:keyTextColor="@color/md_grey_200"
+
+        android:popupLayout="@layout/keyboard_popup_layout" />
+
+</LinearLayout>

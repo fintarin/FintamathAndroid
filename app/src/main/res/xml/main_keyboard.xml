@@ -27,8 +27,7 @@
     <Row>
         <Key
             android:keyLabel="( □ )"
-            android:popupCharacters="()"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:popupKeyboard="@xml/brackets_popup_keyboard" />
         <Key
             android:keyLabel="□/□"/>
         <Key
@@ -38,20 +37,17 @@
         <Key
             android:keyLabel="9" />
         <Key
-            android:keyLabel="÷"
-            android:popupCharacters="/"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:keyLabel="÷" />
     </Row>
 
     <Row>
         <Key
             android:keyLabel="&lt;"
             android:popupCharacters="&lt;≤"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:popupKeyboard="@xml/less_popup_keyboard" />
         <Key
             android:keyLabel="&gt;"
-            android:popupCharacters="&gt;≥"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:popupKeyboard="@xml/more_popup_keyboard" />
         <Key
             android:keyLabel="4" />
         <Key
@@ -65,12 +61,10 @@
     <Row>
         <Key
             android:keyLabel="□²"
-            android:popupCharacters="⁰¹²³⁴⁵⁶"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:popupKeyboard="@xml/power_popup_keyboard" />
         <Key
             android:keyLabel="√□"
-            android:popupCharacters="√"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:popupKeyboard="@xml/root_popup_keyboard" />
         <Key
             android:keyLabel="1" />
         <Key
@@ -84,8 +78,7 @@
     <Row>
         <Key
             android:keyLabel="x"
-            android:popupCharacters="xyz"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:popupKeyboard="@xml/letters_popup_keyboard" />
         <Key
             android:keyLabel="%" />
         <Key

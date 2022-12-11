@@ -26,7 +26,8 @@
 
     <Row>
         <Key
-            android:keyLabel="x"/>
+            android:keyLabel="x"
+            android:popupKeyboard="@xml/letters_popup_keyboard" />
         <Key
             android:keyLabel="abs" />
         <Key
@@ -39,7 +40,7 @@
 
     <Row>
         <Key
-            android:keyLabel="y"/>
+            android:keyLabel="pow"/>
         <Key
             android:keyLabel="exp" />
         <Key
