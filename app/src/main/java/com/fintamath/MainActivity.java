@@ -20,13 +20,11 @@ import kotlin.Pair;
 
 /**
  * todo
- * 4) логика работы всех операций
- * 6) каретка ввода, кнопки -> <-
  * 7) исправить символ дроби
  * сделать фокус на popup keyboard
  * сделать окантовку клавиш
- * пофиксить вывод специальных символов (*, /)
  * сделать все keyLabel lowercase
+ * сделать, чтобы подсвечивались кнопки abc и f(x) при выборе
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -74,18 +72,19 @@ public class MainActivity extends AppCompatActivity {
                 ))
         );
 
-        currentKeyboard = keyboards.get(KeyboardType.MainKeyboard).getFirst();
-        keyboardSwitcher = new KeyboardSwitcher(keyboards, currentKeyboard);
+        KeyboardType currentKeyboardType = KeyboardType.MainKeyboard;
+        currentKeyboard = keyboards.get(currentKeyboardType).getFirst();
+        keyboardSwitcher = new KeyboardSwitcher(keyboards, currentKeyboard, currentKeyboardType);
 
         Map<KeyboardType, KeyboardView.OnKeyboardActionListener> listeners = Map.ofEntries(
                 entry(KeyboardType.MainKeyboard,
-                        new KeyboardActionListenerMain(calculator, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculator, keyboardSwitcher, inText, outText)
                 ),
                 entry(KeyboardType.LettersKeyboard,
-                        new KeyboardActionListenerLetters(calculator, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculator, keyboardSwitcher, inText, outText)
                 ),
                 entry(KeyboardType.FunctionsKeyboard,
-                        new KeyboardActionListenerFunctions(calculator, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculator, keyboardSwitcher, inText, outText)
                 )
         );
 

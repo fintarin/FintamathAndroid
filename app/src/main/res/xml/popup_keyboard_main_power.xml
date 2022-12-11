@@ -5,10 +5,13 @@
 
     <Row>
         <Key
+            android:codes="6003"
             android:keyLabel="□²" />
         <Key
+            android:codes="6004"
             android:keyLabel="□³"/>
         <Key
+            android:codes="6005"
             android:keyLabel="□ⁿ" />
     </Row>
 

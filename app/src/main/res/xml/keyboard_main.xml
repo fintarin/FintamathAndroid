@@ -5,30 +5,35 @@
 
     <Row>
         <Key
-            android:codes="-2"
+            android:codes="6000"
             android:keyLabel="abc" />
         <Key
-            android:codes="-6"
+            android:codes="6001"
             android:keyLabel="f(x)" />
         <Key
+            android:codes="5998"
             android:keyLabel="←"
             android:isRepeatable="true" />
         <Key
+            android:codes="5999"
             android:keyLabel="→"
             android:isRepeatable="true" />
         <Key
+            android:codes="5997"
             android:keyLabel="ac" />
         <Key
-            android:codes="-5"
+            android:codes="5996"
             android:keyLabel="c"
             android:isRepeatable="true" />
     </Row>
 
     <Row>
         <Key
+            android:codes="6002"
             android:keyLabel="( □ )"
             android:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
+            android:codes="6014"
             android:keyLabel="□/□"/>
         <Key
             android:keyLabel="7" />
@@ -37,6 +42,7 @@
         <Key
             android:keyLabel="9" />
         <Key
+            android:codes="6014"
             android:keyLabel="÷" />
     </Row>
 
@@ -54,18 +60,18 @@
         <Key
             android:keyLabel="6" />
         <Key
+            android:codes="6013"
             android:keyLabel="×"/>
     </Row>
 
     <Row>
         <Key
+            android:codes="6003"
             android:keyLabel="□²"
-            android:popupKeyboard="@xml/popup_keyboard_main_power"
-            android:keyEdgeFlags="right" />
+            android:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
-            android:keyLabel="√□"
-            android:popupKeyboard="@xml/popup_keyboard_main_root"
-            android:keyEdgeFlags="right" />
+            android:codes="6006"
+            android:keyLabel="√□" />
         <Key
             android:keyLabel="1" />
         <Key

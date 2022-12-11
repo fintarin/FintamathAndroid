@@ -5,6 +5,7 @@
 
     <Row>
         <Key
+            android:codes="6002"
             android:keyLabel="( □ )" />
         <Key
             android:keyLabel="("/>
