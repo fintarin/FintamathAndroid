@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="14%"
-    android:keyHeight="7%">
+    android:keyWidth="16.67%"
+    android:keyHeight="9%">
 
     <Row>
         <Key
-            android:keyLabel="□²" />
+            android:keyLabel="( □ )" />
         <Key
-            android:keyLabel="□³"/>
+            android:keyLabel="("/>
         <Key
-            android:keyLabel="□ⁿ" />
+            android:keyLabel=")" />
     </Row>
 
 </Keyboard>

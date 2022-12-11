@@ -26,6 +26,7 @@ import kotlin.Pair;
  * сделать фокус на popup keyboard
  * сделать окантовку клавиш
  * пофиксить вывод специальных символов (*, /)
+ * сделать все keyLabel lowercase
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -61,15 +62,15 @@ public class MainActivity extends AppCompatActivity {
         keyboards = Map.ofEntries(
                 entry(KeyboardType.MainKeyboard, new Pair<>(
                         findViewById(R.id.main_keyboard_view),
-                        new Keyboard(this, R.xml.main_keyboard)
+                        new Keyboard(this, R.xml.keyboard_main)
                 )),
                 entry(KeyboardType.LettersKeyboard, new Pair<>(
                         findViewById(R.id.letters_keyboard_view),
-                        new Keyboard(this, R.xml.letters_keyboard)
+                        new Keyboard(this, R.xml.keyboard_letters)
                 )),
                 entry(KeyboardType.FunctionsKeyboard, new Pair<>(
                         findViewById(R.id.functions_keyboard_view),
-                        new Keyboard(this, R.xml.functions_keyboard)
+                        new Keyboard(this, R.xml.keyboard_functions)
                 ))
         );
 

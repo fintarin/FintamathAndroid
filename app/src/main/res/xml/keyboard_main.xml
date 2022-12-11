@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
     android:keyWidth="20%"
-    android:keyHeight="10%">
+    android:keyHeight="9%">
 
     <Row>
         <Key
@@ -27,7 +27,7 @@
     <Row>
         <Key
             android:keyLabel="( □ )"
-            android:popupKeyboard="@xml/brackets_popup_keyboard" />
+            android:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
             android:keyLabel="□/□"/>
         <Key
@@ -43,11 +43,10 @@
     <Row>
         <Key
             android:keyLabel="&lt;"
-            android:popupCharacters="&lt;≤"
-            android:popupKeyboard="@xml/less_popup_keyboard" />
+            android:popupKeyboard="@xml/popup_keyboard_main_less" />
         <Key
             android:keyLabel="&gt;"
-            android:popupKeyboard="@xml/more_popup_keyboard" />
+            android:popupKeyboard="@xml/popup_keyboard_main_more" />
         <Key
             android:keyLabel="4" />
         <Key
@@ -61,10 +60,12 @@
     <Row>
         <Key
             android:keyLabel="□²"
-            android:popupKeyboard="@xml/power_popup_keyboard" />
+            android:popupKeyboard="@xml/popup_keyboard_main_power"
+            android:keyEdgeFlags="right" />
         <Key
             android:keyLabel="√□"
-            android:popupKeyboard="@xml/root_popup_keyboard" />
+            android:popupKeyboard="@xml/popup_keyboard_main_root"
+            android:keyEdgeFlags="right" />
         <Key
             android:keyLabel="1" />
         <Key
@@ -78,7 +79,7 @@
     <Row>
         <Key
             android:keyLabel="x"
-            android:popupKeyboard="@xml/letters_popup_keyboard" />
+            android:popupKeyboard="@xml/popup_keyboard_main_xyz" />
         <Key
             android:keyLabel="%" />
         <Key

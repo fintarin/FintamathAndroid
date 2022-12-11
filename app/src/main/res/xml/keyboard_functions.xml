@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
     android:keyWidth="20%"
-    android:keyHeight="10%">
+    android:keyHeight="9%">
 
     <Row>
         <Key
@@ -27,7 +27,7 @@
     <Row>
         <Key
             android:keyLabel="x"
-            android:popupKeyboard="@xml/letters_popup_keyboard" />
+            android:popupKeyboard="@xml/popup_keyboard_functions_xyz" />
         <Key
             android:keyLabel="abs" />
         <Key
