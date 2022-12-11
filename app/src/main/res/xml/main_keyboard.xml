@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="16.67%"
-    android:keyHeight="9%">
+    android:keyWidth="20%"
+    android:keyHeight="10%">
 
     <Row>
         <Key
-            android:keyLabel="abc"
-            android:popupCharacters="abcdefgh"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:codes="-2"
+            android:keyLabel="abc" />
         <Key
+            android:codes="-6"
             android:keyLabel="f(x)" />
         <Key
             android:keyLabel="←"
@@ -19,18 +19,18 @@
         <Key
             android:keyLabel="ac" />
         <Key
+            android:codes="-5"
             android:keyLabel="c"
             android:isRepeatable="true" />
     </Row>
+
     <Row>
         <Key
             android:keyLabel="( □ )"
             android:popupCharacters="()"
             android:popupKeyboard="@xml/keyboard_popup_template" />
         <Key
-            android:keyLabel="□/□"
-            android:popupCharacters="/"
-            android:popupKeyboard="@xml/keyboard_popup_template" />
+            android:keyLabel="□/□"/>
         <Key
             android:keyLabel="7" />
         <Key
@@ -42,6 +42,7 @@
             android:popupCharacters="/"
             android:popupKeyboard="@xml/keyboard_popup_template" />
     </Row>
+
     <Row>
         <Key
             android:keyLabel="&lt;"
@@ -60,6 +61,7 @@
         <Key
             android:keyLabel="×"/>
     </Row>
+
     <Row>
         <Key
             android:keyLabel="□²"
@@ -78,6 +80,7 @@
         <Key
             android:keyLabel="-" />
     </Row>
+
     <Row>
         <Key
             android:keyLabel="x"
@@ -94,4 +97,5 @@
         <Key
             android:keyLabel="+" />
     </Row>
+
 </Keyboard>

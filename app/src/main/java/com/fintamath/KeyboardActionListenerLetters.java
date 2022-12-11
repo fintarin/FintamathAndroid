@@ -8,15 +8,16 @@ import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainKeyboardActionListener implements KeyboardView.OnKeyboardActionListener {
+public class KeyboardActionListenerLetters implements KeyboardView.OnKeyboardActionListener {
 
     private final Calculator calculator;
-
+    private final KeyboardSwitcher keyboardSwitcher;
     private final EditText inText;
     private final TextView outText;
 
-    MainKeyboardActionListener(Calculator calculator, EditText inText, TextView outText) {
+    KeyboardActionListenerLetters(Calculator calculator, KeyboardSwitcher keyboardSwitcher, EditText inText, TextView outText) {
         this.calculator = calculator;
+        this.keyboardSwitcher = keyboardSwitcher;
         this.inText = inText;
         this.outText = outText;
     }
@@ -29,14 +30,13 @@ public class MainKeyboardActionListener implements KeyboardView.OnKeyboardAction
 
         switch (primaryCode) {
             case Keyboard.KEYCODE_DELETE:
-                CharSequence selectedText = ic.getSelectedText(0);
-
-                if (TextUtils.isEmpty(selectedText)) {
-                    ic.deleteSurroundingText(1, 0);
-                } else {
-                    ic.commitText("", 1);
-                }
-
+                ic.deleteSurroundingText(1, 0);
+                break;
+            case Keyboard.KEYCODE_MODE_CHANGE:
+                keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
+                break;
+            case  Keyboard.KEYCODE_ALT:
+                keyboardSwitcher.switchKeyboard(KeyboardType.FunctionsKeyboard);
                 break;
             default:
                 char code = (char) primaryCode;

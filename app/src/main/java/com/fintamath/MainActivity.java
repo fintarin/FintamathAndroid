@@ -1,5 +1,7 @@
 package com.fintamath;
 
+import static java.util.Map.entry;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -13,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Map;
+
+import kotlin.Pair;
 
 /**
  * todo
@@ -32,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText inText;
     private TextView outText;
 
-    private KeyboardView keyboardView;
+    private Map<KeyboardType, Pair<KeyboardView, Keyboard>> keyboards;
+    private KeyboardView currentKeyboard;
+    private KeyboardSwitcher keyboardSwitcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
@@ -47,11 +53,47 @@ public class MainActivity extends AppCompatActivity {
         outText = findViewById(R.id.outText);
         outText.setOnTouchListener(this::onTouchOutText);
 
-        keyboardView = findViewById(R.id.keyboard_view);
-        keyboardView.setKeyboard(new Keyboard(this, R.xml.keyboard));
-        keyboardView.setOnKeyboardActionListener(new MainKeyboardActionListener(calculator, inText, outText));
+        initKeyboards();
 
         inText.requestFocus();
+        currentKeyboard.setVisibility(View.VISIBLE);
+    }
+
+    private void initKeyboards() {
+        keyboards = Map.ofEntries(
+                entry(KeyboardType.MainKeyboard, new Pair<>(
+                        findViewById(R.id.main_keyboard_view),
+                        new Keyboard(this, R.xml.main_keyboard)
+                )),
+                entry(KeyboardType.LettersKeyboard, new Pair<>(
+                        findViewById(R.id.letters_keyboard_view),
+                        new Keyboard(this, R.xml.letters_keyboard)
+                )),
+                entry(KeyboardType.FunctionsKeyboard, new Pair<>(
+                        findViewById(R.id.functions_keyboard_view),
+                        new Keyboard(this, R.xml.functions_keyboard)
+                ))
+        );
+
+        currentKeyboard = keyboards.get(KeyboardType.MainKeyboard).getFirst();
+        keyboardSwitcher = new KeyboardSwitcher(keyboards, currentKeyboard);
+
+        Map<KeyboardType, KeyboardView.OnKeyboardActionListener> listeners = Map.ofEntries(
+                entry(KeyboardType.MainKeyboard,
+                        new KeyboardActionListenerMain(calculator, keyboardSwitcher, inText, outText)
+                ),
+                entry(KeyboardType.LettersKeyboard,
+                        new KeyboardActionListenerLetters(calculator, keyboardSwitcher, inText, outText)
+                ),
+                entry(KeyboardType.FunctionsKeyboard,
+                        new KeyboardActionListenerFunctions(calculator, keyboardSwitcher, inText, outText)
+                )
+        );
+
+        keyboards.forEach((key, value) -> {
+            value.getFirst().setKeyboard(value.getSecond());
+            value.getFirst().setOnKeyboardActionListener(listeners.get(key));
+        });
     }
 
     private boolean onTouchInText(View view, MotionEvent event) {
@@ -61,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (view.equals(inText)) {
             inText.requestFocus();
-            keyboardView.setVisibility(View.VISIBLE);
+            currentKeyboard.setVisibility(View.VISIBLE);
         }
 
         return true;
@@ -69,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean onTouchOutText(View view, MotionEvent motionEvent) {
         if (view.equals(outText)) {
-            keyboardView.setVisibility(View.GONE);
+            currentKeyboard.setVisibility(View.GONE);
             inText.clearFocus();
         }
 

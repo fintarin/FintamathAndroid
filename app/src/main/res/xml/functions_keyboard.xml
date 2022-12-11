@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="20%"
+    android:keyHeight="10%">
+
+    <Row>
+        <Key
+            android:codes="-2"
+            android:keyLabel="abc" />
+        <Key
+            android:codes="-6"
+            android:keyLabel="f(x)" />
+        <Key
+            android:keyLabel="←"
+            android:isRepeatable="true" />
+        <Key
+            android:keyLabel="→"
+            android:isRepeatable="true" />
+        <Key
+            android:keyLabel="ac" />
+        <Key
+            android:codes="-5"
+            android:keyLabel="c"
+            android:isRepeatable="true" />
+    </Row>
+
+    <Row>
+        <Key
+            android:keyLabel="x"/>
+        <Key
+            android:keyLabel="abs" />
+        <Key
+            android:keyLabel="log" />
+        <Key
+            android:keyLabel="sin" />
+        <Key
+            android:keyLabel="asin" />
+    </Row>
+
+    <Row>
+        <Key
+            android:keyLabel="y"/>
+        <Key
+            android:keyLabel="exp" />
+        <Key
+            android:keyLabel="ln" />
+        <Key
+            android:keyLabel="cos" />
+        <Key
+            android:keyLabel="acos" />
+    </Row>
+
+    <Row>
+        <Key
+            android:keyLabel="e"/>
+        <Key
+            android:keyLabel="!" />
+        <Key
+            android:keyLabel="lb" />
+        <Key
+            android:keyLabel="tan" />
+        <Key
+            android:keyLabel="atan" />
+    </Row>
+
+    <Row>
+        <Key
+            android:keyLabel="π"/>
+        <Key
+            android:keyLabel="!!" />
+        <Key
+            android:keyLabel="lg" />
+        <Key
+            android:keyLabel="cot" />
+        <Key
+            android:keyLabel="acot" />
+    </Row>
+
+</Keyboard>

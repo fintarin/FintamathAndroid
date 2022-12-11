@@ -60,11 +60,37 @@
         android:layout_alignParentBottom="true">
 
         <android.inputmethodservice.KeyboardView
-            android:id="@+id/keyboard_view"
+            android:id="@+id/main_keyboard_view"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
+
+            android:background="@color/md_grey_900"
+
+            android:keyTextColor="@color/md_grey_200"
+            android:keyBackground="@drawable/key_background"
+            android:keyPreviewLayout="@layout/key_preview" />
+
+        <android.inputmethodservice.KeyboardView
+            android:id="@+id/letters_keyboard_view"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+
+            android:background="@color/md_grey_900"
+
+            android:keyTextColor="@color/md_grey_200"
+            android:keyBackground="@drawable/key_background"
+            android:keyPreviewLayout="@layout/key_preview" />
+
+        <android.inputmethodservice.KeyboardView
+            android:id="@+id/functions_keyboard_view"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
 
             android:background="@color/md_grey_900"
 
