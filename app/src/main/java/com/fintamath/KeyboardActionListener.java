@@ -8,19 +8,22 @@ import android.widget.TextView;
 
 public class KeyboardActionListener implements KeyboardView.OnKeyboardActionListener {
 
-    private final Calculator calculator;
+    private final CalculatorProcessor calculatorProcessor;
     private final KeyboardSwitcher keyboardSwitcher;
+
     private final EditText inText;
     private final TextView outText;
+
     private final InputConnection inputConnection;
 
-    KeyboardActionListener(Calculator calculator, KeyboardSwitcher keyboardSwitcher, EditText inText, TextView outText) {
-        this.calculator = calculator;
+    KeyboardActionListener(CalculatorProcessor calculatorProcessor, KeyboardSwitcher keyboardSwitcher, EditText inText, TextView outText) {
+        this.calculatorProcessor = calculatorProcessor;
         this.keyboardSwitcher = keyboardSwitcher;
+
         this.inText = inText;
         this.outText = outText;
 
-        inputConnection = inText.onCreateInputConnection(new EditorInfo());
+        this.inputConnection = inText.onCreateInputConnection(new EditorInfo());
     }
 
     @Override public void onKey(int primaryCode, int[] keyCodes) {
@@ -28,7 +31,7 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
 
         if (keyCode == null) {
             insetText(String.valueOf((char) primaryCode));
-            calculate();
+            calculatorProcessor.calculate();
             return;
         }
 
@@ -111,7 +114,7 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             default:
         }
 
-        calculate();
+        calculatorProcessor.calculate();
     }
 
     private void delete() {
@@ -161,16 +164,6 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
         }
 
         inText.setSelection(inText.getSelectionStart() + i);
-    }
-
-    private void calculate() {
-        String inString = inText.getText().toString();
-
-        if ("".equals(inString)) {
-            outText.setText("");
-        } else {
-            outText.setText(calculator.simplify(inString));
-        }
     }
 
     @Override public void onPress(int arg0) {

@@ -22,13 +22,9 @@ import kotlin.Pair;
  * todo
  * 7) исправить символ дроби
  * сделать фокус на popup keyboard
- * сделать окантовку клавиш
- * сделать все keyLabel lowercase
  * сделать, чтобы подсвечивались кнопки abc и f(x) при выборе
  */
 public class MainActivity extends AppCompatActivity {
-
-    private Calculator calculator;
 
     private EditText inText;
     private TextView outText;
@@ -37,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
     private KeyboardView currentKeyboard;
     private KeyboardSwitcher keyboardSwitcher;
 
+    private CalculatorProcessor calculatorProcessor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        calculator = new Calculator();
 
         inText = findViewById(R.id.inText);
         inText.setOnTouchListener(this::onTouchInText);
@@ -50,10 +46,12 @@ public class MainActivity extends AppCompatActivity {
         outText = findViewById(R.id.outText);
         outText.setOnTouchListener(this::onTouchOutText);
 
+        calculatorProcessor = new CalculatorProcessor(this, inText, outText);
+
         initKeyboards();
 
-        inText.requestFocus();
         currentKeyboard.setVisibility(View.VISIBLE);
+        inText.requestFocus();
     }
 
     private void initKeyboards() {
@@ -78,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
 
         Map<KeyboardType, KeyboardView.OnKeyboardActionListener> listeners = Map.ofEntries(
                 entry(KeyboardType.MainKeyboard,
-                        new KeyboardActionListener(calculator, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText, outText)
                 ),
                 entry(KeyboardType.LettersKeyboard,
-                        new KeyboardActionListener(calculator, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText, outText)
                 ),
                 entry(KeyboardType.FunctionsKeyboard,
-                        new KeyboardActionListener(calculator, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText, outText)
                 )
         );
 
@@ -95,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean onTouchInText(View view, MotionEvent event) {
-        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        hideSystemKeyboard(view);
 
         if (view.equals(inText)) {
             inText.requestFocus();
@@ -107,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void onFocusChangeInText(View view, boolean b) {
+        hideSystemKeyboard(view);
+    }
+
     private boolean onTouchOutText(View view, MotionEvent motionEvent) {
         if (view.equals(outText)) {
             currentKeyboard.setVisibility(View.GONE);
@@ -114,5 +114,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private void hideSystemKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
