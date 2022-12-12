@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/md_grey_900"
+    android:background="@drawable/key_background"
     android:orientation="horizontal">
 
-    <android.inputmethodservice.KeyboardView
-        android:id="@android:id/keyboardView"
+    <com.fintamath.MyKeyboardView
+        android:id="@id/keyboardView"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:background="@color/md_grey_900"
+        android:background="@drawable/keyboard_popup_background"
 
         android:keyTextColor="@color/md_grey_200"
         android:keyBackground="@drawable/key_background"
