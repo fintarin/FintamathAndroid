@@ -2,9 +2,11 @@ package com.fintamath;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Build;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,10 +22,10 @@ import java.util.Map;
 public class MyKeyboardView extends KeyboardView {
 
     private Map<Keyboard.Key,View> mMiniKeyboardCache;
-
     private MyKeyboardView mMiniKeyboard;
     private PopupWindow mPopupKeyboard;
     private int mPopupLayout;
+    private boolean mMiniKeyboardOnScreen;
 
     public MyKeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -46,6 +48,31 @@ public class MyKeyboardView extends KeyboardView {
         }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent me) {
+        if (mMiniKeyboardOnScreen) {
+            float x = me.getX();
+            float y = mMiniKeyboard.getY();
+
+            if (x > mMiniKeyboard.getX() + mMiniKeyboard.getMeasuredWidth()) {
+                x = mMiniKeyboard.getX() + mMiniKeyboard.getMeasuredWidth() - 1;
+            } else if (x < mMiniKeyboard.getX()) {
+                x = mMiniKeyboard.getX();
+            }
+
+            if (me.getAction() == MotionEvent.ACTION_MOVE) {
+                return mMiniKeyboard.dispatchTouchEvent(MotionEvent.obtain(me.getDownTime(),
+                        me.getEventTime(), MotionEvent.ACTION_DOWN, x, y, 0));
+            } else {
+                return mMiniKeyboard.dispatchTouchEvent(MotionEvent.obtain(me.getDownTime(),
+                        me.getEventTime(), me.getAction(), x, y, me.getMetaState()));
+            }
+        }
+
+        return super.onTouchEvent(me);
+    }
+
+    @Override
     protected boolean onLongPress(Keyboard.Key popupKey) {
         int popupKeyboardId = popupKey.popupResId;
 
@@ -118,6 +145,8 @@ public class MyKeyboardView extends KeyboardView {
         mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y);
         invalidateAllKeys();
 
+        mMiniKeyboardOnScreen = true;
+
         return true;
     }
 
@@ -125,6 +154,7 @@ public class MyKeyboardView extends KeyboardView {
         if (mPopupKeyboard.isShowing()) {
             mPopupKeyboard.dismiss();
             invalidateAllKeys();
+            mMiniKeyboardOnScreen = false;
         }
     }
 }
