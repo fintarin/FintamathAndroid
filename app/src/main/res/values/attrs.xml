@@ -1,92 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- {@deprecated Copy this definition into your own application project.} -->
     <declare-styleable name="KeyboardView">
-        <!-- Default KeyboardView style.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Default KeyboardView style. -->
         <attr name="keyboardViewStyle" format="reference" />
 
         <!-- Image for the key. This image needs to be a StateListDrawable, with the following
              possible states: normal, pressed, checkable, checkable+pressed, checkable+checked,
-             checkable+checked+pressed.
-             {@deprecated Copy this definition into your own application project.} -->
+             checkable+checked+pressed. -->
         <attr name="keyBackground" format="reference" />
 
-        <!-- Size of the text for character keys.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Size of the text for character keys. -->
         <attr name="keyTextSize" format="dimension" />
 
-        <!-- Size of the text for custom keys with some text and no icon.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Size of the text for custom keys with some text and no icon. -->
         <attr name="labelTextSize" format="dimension" />
 
-        <!-- Color to use for the label in a key.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Color to use for the label in a key. -->
         <attr name="keyTextColor" format="color" />
 
-        <!-- Layout resource for key press feedback.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Layout resource for key press feedback. -->
         <attr name="keyPreviewLayout" format="reference" />
 
-        <!-- Vertical offset of the key press feedback from the key.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Vertical offset of the key press feedback from the key. -->
         <attr name="keyPreviewOffset" format="dimension" />
 
-        <!-- Height of the key press feedback popup.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Height of the key press feedback popup. -->
         <attr name="keyPreviewHeight" format="dimension" />
 
-        <!-- Amount to offset the touch Y coordinate by, for bias correction.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Amount to offset the touch Y coordinate by, for bias correction. -->
         <attr name="verticalCorrection" format="dimension" />
 
-        <!-- Layout resource for popup keyboards.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Layout resource for popup keyboards. -->
         <attr name="popupLayout" format="reference" />
     </declare-styleable>
 
-    <!-- {@deprecated Copy this definition into your own application project.} -->
     <declare-styleable name="Keyboard_Key">
-        <!-- The unicode value or comma-separated values that this key outputs.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- The unicode value or comma-separated values that this key outputs. -->
         <attr name="codes" format="integer|string" />
-        <!-- The XML keyboard layout of any popup keyboard.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- The XML keyboard layout of any popup keyboard. -->
         <attr name="popupKeyboard" format="reference" />
-        <!-- The characters to display in the popup keyboard.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- The characters to display in the popup keyboard. -->
         <attr name="popupCharacters" format="string" />
-        <!-- Key edge flags.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Key edge flags. -->
         <attr name="keyEdgeFlags">
-            <!-- Key is anchored to the left of the keyboard.
-                 {@deprecated Copy this definition into your own application project.} -->
+            <!-- Key is anchored to the left of the keyboard. -->
             <flag name="left" value="1" />
-            <!-- Key is anchored to the right of the keyboard.
-                 {@deprecated Copy this definition into your own application project.} -->
+            <!-- Key is anchored to the right of the keyboard. -->
             <flag name="right" value="2" />
         </attr>
-        <!-- Whether this is a modifier key such as Alt or Shift.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Whether this is a modifier key such as Alt or Shift. -->
         <attr name="isModifier" format="boolean" />
-        <!-- Whether this is a toggle key.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Whether this is a toggle key. -->
         <attr name="isSticky" format="boolean" />
-        <!-- Whether long-pressing on this key will make it repeat.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- Whether long-pressing on this key will make it repeat. -->
         <attr name="isRepeatable" format="boolean" />
-        <!-- The icon to show in the popup preview.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- The icon to show in the popup preview. -->
         <attr name="iconPreview" format="reference" />
-        <!-- The string of characters to output when this key is pressed.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- The string of characters to output when this key is pressed. -->
         <attr name="keyOutputText" format="string" />
-        <!-- The label to display on the key.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- The label to display on the key. -->
         <attr name="keyLabel" format="string" />
-        <!-- The icon to display on the key instead of the label.
-             {@deprecated Copy this definition into your own application project.} -->
+        <!-- The icon to display on the key instead of the label. -->
         <attr name="keyIcon" format="reference" />
     </declare-styleable>
 
