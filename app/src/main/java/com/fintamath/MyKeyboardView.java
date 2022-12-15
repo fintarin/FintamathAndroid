@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class MyKeyboardView extends KeyboardView {
     private MyKeyboardView mMiniKeyboard;
     private int mPopupLayout;
     private boolean mMiniKeyboardOnScreen;
+    private boolean mIsMiniKeyboard;
     private float mMiniKeyboardOffsetX;
     private float mMiniKeyboardOffsetY;
     private final Map<Keyboard.Key,View> mMiniKeyboardCache = new HashMap<>();
@@ -44,27 +46,39 @@ public class MyKeyboardView extends KeyboardView {
     }
 
     @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        if (mIsMiniKeyboard) {
+            onTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+                    MotionEvent.ACTION_DOWN, 0, 0, 0));
+        }
+    }
+
+    @Override
     public void setPopupOffset(int x, int y) {
+        super.setPopupOffset(x, y);
         mMiniKeyboardOffsetX = x;
         mMiniKeyboardOffsetY = y;
-        super.setPopupOffset(x, y);
+        mIsMiniKeyboard = true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent me) {
-        if (mMiniKeyboard != null && mMiniKeyboardOnScreen) {
+        if (mMiniKeyboardOnScreen && mMiniKeyboard != null && mMiniKeyboard.isAttachedToWindow()) {
             float x = me.getX() - mMiniKeyboard.mMiniKeyboardOffsetX;
-            x = x >= mMiniKeyboard.getRight() ? mMiniKeyboard.getRight() - 1 : x;
-            x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
             float y = mMiniKeyboard.getY();
 
-            if (me.getAction() == MotionEvent.ACTION_MOVE) {
-                return mMiniKeyboard.dispatchTouchEvent(MotionEvent.obtain(me.getDownTime(),
-                        me.getEventTime(), MotionEvent.ACTION_DOWN, x, y, 0));
-            } else {
-                return mMiniKeyboard.dispatchTouchEvent(MotionEvent.obtain(me.getDownTime(),
-                        me.getEventTime(), me.getAction(), x, y, me.getMetaState()));
+            x = x >= mMiniKeyboard.getRight() ? mMiniKeyboard.getRight() - 1 : x;
+            x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
+
+            int action = me.getAction() == MotionEvent.ACTION_MOVE ? MotionEvent.ACTION_DOWN : me.getAction();
+            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
+                return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(me.getDownTime(), me.getEventTime(),
+                        action, x, y, me.getMetaState()));
             }
+
+            return false;
         }
 
         return super.onTouchEvent(me);
