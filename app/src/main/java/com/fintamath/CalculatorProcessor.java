@@ -33,9 +33,11 @@ public class CalculatorProcessor {
             return;
         }
 
-        outText.setText("...");
-
         calcThread = new Thread(() -> {
+            activity.runOnUiThread(() -> {
+                outText.setText(". . .");
+            });
+
             String res = calculator.solve(inText.getText().toString());
 
             if (Thread.currentThread() == calcThread) {

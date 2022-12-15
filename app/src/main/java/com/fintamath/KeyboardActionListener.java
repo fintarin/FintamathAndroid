@@ -65,12 +65,6 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case Brackets:
                 insertBrackets();
                 break;
-            case Mul:
-                inputConnection.commitText("*", 1);
-                break;
-            case Div:
-                inputConnection.commitText("/", 1);
-                break;
             case DoubleFactorial:
                 insetText("!!");
                 break;

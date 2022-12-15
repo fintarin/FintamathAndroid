@@ -42,7 +42,7 @@
         <Key
             android:keyLabel="9" />
         <Key
-            android:codes="6014"
+            android:codes="47"
             android:keyLabel="÷" />
     </Row>
 
@@ -60,7 +60,7 @@
         <Key
             android:keyLabel="6" />
         <Key
-            android:codes="6013"
+            android:codes="42"
             android:keyLabel="×"/>
     </Row>
 

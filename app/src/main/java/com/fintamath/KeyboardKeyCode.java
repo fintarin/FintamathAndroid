@@ -19,8 +19,6 @@ public enum KeyboardKeyCode {
     Cos(6010),
     Tan(6011),
     Cot(6012),
-    Mul(6013),
-    Div(6014),
     Asin(6015),
     Acos(6016),
     Atan(6017),
