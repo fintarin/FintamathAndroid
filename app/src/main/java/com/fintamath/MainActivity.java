@@ -20,9 +20,13 @@ import kotlin.Pair;
 
 /**
  * todo
- * 7) исправить символ дроби
- * сделать фокус на popup keyboard
+ * исправить символ дроби
  * сделать, чтобы подсвечивались кнопки abc и f(x) при выборе
+ * сделать фон чуть светлее
+ * сделать 2 меню вывода
+ * исправить отображение меню ввода или сделать на контейнерах
+ * исправить мерцание вывода из-за ...
+ * сделать, выделение кнопок, которые вызывают попап
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -101,10 +105,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
-    }
-
-    private void onFocusChangeInText(View view, boolean b) {
-        hideSystemKeyboard(view);
     }
 
     private boolean onTouchOutText(View view, MotionEvent motionEvent) {
