@@ -80,7 +80,7 @@
             android:keyBackground="@drawable/key_background"
             android:keyPreviewLayout="@layout/key_preview"
 
-            app:popupLayout="@layout/keyboard_popup_layout" />
+            app:popupLayout="@layout/keyboard_popup" />
 
         <com.fintamath.MyKeyboardView
             android:id="@+id/letters_keyboard_view"
@@ -95,7 +95,7 @@
             android:keyBackground="@drawable/key_background"
             android:keyPreviewLayout="@layout/key_preview"
 
-            app:popupLayout="@layout/keyboard_popup_layout" />
+            app:popupLayout="@layout/keyboard_popup" />
 
         <com.fintamath.MyKeyboardView
             android:id="@+id/functions_keyboard_view"
@@ -110,7 +110,7 @@
             android:keyBackground="@drawable/key_background"
             android:keyPreviewLayout="@layout/key_preview"
 
-            app:popupLayout="@layout/keyboard_popup_layout" />
+            app:popupLayout="@layout/keyboard_popup" />
 
     </FrameLayout>
 
