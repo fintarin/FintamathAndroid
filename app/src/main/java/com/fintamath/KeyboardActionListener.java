@@ -105,6 +105,9 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case MoreEqv:
                 insetText(">=");
                 break;
+            case Frac:
+                insetText("/");
+                break;
             default:
         }
 

@@ -33,6 +33,7 @@ public enum KeyboardKeyCode {
     Pi(6028),
     LessEqv(6029),
     MoreEqv(6030),
+    Frac(6031),
     ;
 
     private final int value;

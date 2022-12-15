@@ -33,7 +33,7 @@
             android:keyLabel="( □ )"
             android:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
-            android:codes="6014"
+            android:codes="6031"
             android:keyLabel="□/□"/>
         <Key
             android:keyLabel="7" />
