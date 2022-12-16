@@ -13,17 +13,19 @@
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <com.fintamath.mathtextview.MathTextView
+        <com.fintamath.mathtextview.MathEditText
             android:id="@+id/inText"
 
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:gravity="center_vertical"
             android:padding="10dp"
             android:paddingTop="30dp"
 
             app:hint="Type a math problem..."
 
-            app:textViewLayout="@layout/math_edit_text_view" />
+            app:textViewLayout="@layout/math_edit_text"
+            app:fractionLineLayout="@layout/fraction_line" />
 
         <View
             android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,35 +15,42 @@ import com.fintamath.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MathTextView extends LinearLayout {
+public class MathEditText extends LinearLayout {
 
-    private List<View> mViews = new ArrayList<>();
-    private EditText mCurrentTextView;
-
-    private int mTextViewLayout;
+    private AttributeSet mAttrs;
+    private int mEditTextLayout;
+    private int mFractionLineLayout;
     private String mHintText;
     private final String mHintInnerText;
     private OnTouchListener mOnTouchListener;
 
+    private List<View> mViews = new ArrayList<>();
+    private EditText mCurrentEditText;
+
     private int mCursorPosition;
     private StringBuilder mStringBuilder = new StringBuilder();
 
-    public MathTextView(Context context, AttributeSet attrs) {
+    public MathEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MathTextView);
+        mAttrs = attrs;
+        TypedArray a = context.obtainStyledAttributes(mAttrs, R.styleable.MathTextView);
         int n = a.getIndexCount();
 
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
 
-            switch (attr){
+            switch (attr) {
                 case R.styleable.MathTextView_textViewLayout: {
-                    mTextViewLayout = a.getResourceId(attr, 0);
+                    mEditTextLayout = a.getResourceId(attr, 0);
                     break;
                 }
                 case R.styleable.MathTextView_hint: {
                     mHintText = a.getString(attr);
+                    break;
+                }
+                case R.styleable.MathTextView_fractionLineLayout: {
+                    mFractionLineLayout = a.getResourceId(attr, 0);
                     break;
                 }
                 default: {
@@ -53,12 +61,25 @@ public class MathTextView extends LinearLayout {
 
         LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        mViews.add(inflate.inflate(mTextViewLayout, null));
-        mCurrentTextView = (EditText) mViews.get(0);
-        mHintInnerText = mCurrentTextView.getHint().toString();
-        addView(mCurrentTextView);
+        mViews.add(inflate.inflate(mEditTextLayout, null));
+        mCurrentEditText = (EditText) mViews.get(0);
+        mHintInnerText = mCurrentEditText.getHint().toString();
+        addView(mCurrentEditText);
+
+//        LinearLayout vbox = new LinearLayout(getContext());
+//        vbox.setOrientation(VERTICAL);
+//
+//        vbox.addView(inflate.inflate(mEditTextLayout, null));
+//        vbox.addView(inflate.inflate(mFractionLineLayout, null));
+//        vbox.addView(inflate.inflate(mEditTextLayout, null));
+//
+//        addView(vbox);
 
         setText("");
+    }
+
+    public String getText() {
+        return mStringBuilder.toString();
     }
 
     public void insert(String text) {
@@ -120,31 +141,33 @@ public class MathTextView extends LinearLayout {
         return mCursorPosition;
     }
 
-    @Override
-    public void setOnTouchListener(OnTouchListener onTouchListener) {
-        mOnTouchListener = onTouchListener;
-        mCurrentTextView.setOnTouchListener(onTouchListener);
-    }
+    // TODO
+//    @Override
+//    public void setOnTouchListener(OnTouchListener onTouchListener) {
+//        mOnTouchListener = onTouchListener;
+//        mCurrentEditText.setOnTouchListener(onTouchListener);
+//    }
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        return mCurrentEditText.dispatchTouchEvent(event);
+//    }
 
     private void setText(String inText) {
         mStringBuilder = new StringBuilder(inText);
-        mCurrentTextView.setText(mStringBuilder.toString());
+        mCurrentEditText.setText(mStringBuilder.toString());
 
         if ("".equals(mStringBuilder.toString())) {
-            mCurrentTextView.setHint(mHintText);
+            mCurrentEditText.setHint(mHintText);
         } else {
-            mCurrentTextView.setHint(mHintInnerText);
+            mCurrentEditText.setHint(mHintInnerText);
         }
     }
 
     private void setCursorPositions(int pos) {
-        if (pos >= 0 && pos <= mCurrentTextView.getText().length()) {
+        if (pos >= 0 && pos <= mCurrentEditText.getText().length()) {
             mCursorPosition = pos;
-            mCurrentTextView.setSelection(mCursorPosition);
+            mCurrentEditText.setSelection(mCursorPosition);
         }
-    }
-
-    public String getText() {
-        return mStringBuilder.toString();
     }
 }

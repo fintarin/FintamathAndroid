@@ -3,17 +3,17 @@ package com.fintamath;
 import android.inputmethodservice.KeyboardView;
 import android.widget.TextView;
 
-import com.fintamath.mathtextview.MathTextView;
+import com.fintamath.mathtextview.MathEditText;
 
 public class KeyboardActionListener implements KeyboardView.OnKeyboardActionListener {
 
     private final CalculatorProcessor calculatorProcessor;
     private final KeyboardSwitcher keyboardSwitcher;
 
-    private final MathTextView inText;
+    private final MathEditText inText;
     private final TextView outText;
 
-    KeyboardActionListener(CalculatorProcessor calculatorProcessor, KeyboardSwitcher keyboardSwitcher, MathTextView inText, TextView outText) {
+    KeyboardActionListener(CalculatorProcessor calculatorProcessor, KeyboardSwitcher keyboardSwitcher, MathEditText inText, TextView outText) {
         this.calculatorProcessor = calculatorProcessor;
         this.keyboardSwitcher = keyboardSwitcher;
 

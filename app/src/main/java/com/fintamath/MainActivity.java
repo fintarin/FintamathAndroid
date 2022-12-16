@@ -11,10 +11,9 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.fintamath.mathtextview.MathTextView;
+import com.fintamath.mathtextview.MathEditText;
 
 import java.util.Map;
 
@@ -30,7 +29,7 @@ import kotlin.Pair;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private MathTextView inText;
+    private MathEditText inText;
     private TextView outText;
 
     private Map<KeyboardType, Pair<KeyboardView, Keyboard>> keyboards;

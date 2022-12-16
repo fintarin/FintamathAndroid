@@ -1,23 +1,21 @@
 package com.fintamath;
 
 import android.app.Activity;
-import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.fintamath.mathtextview.MathTextView;
+import com.fintamath.mathtextview.MathEditText;
 
 public class CalculatorProcessor {
 
     private final Activity activity;
-    private final MathTextView inText;
+    private final MathEditText inText;
     private final TextView outText;
 
     private final Calculator calculator;
 
     private Thread calcThread;
 
-    CalculatorProcessor(Activity activity, MathTextView inText, TextView outText) {
+    CalculatorProcessor(Activity activity, MathEditText inText, TextView outText) {
         this.activity = activity;
         this.inText = inText;
         this.outText = outText;

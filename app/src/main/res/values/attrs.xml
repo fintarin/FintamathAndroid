@@ -3,6 +3,7 @@
 
     <declare-styleable name="MathTextView">
         <attr name="textViewLayout" format="reference" />
+        <attr name="fractionLineLayout" format="reference" />
         <attr name="hint" format="string" />
     </declare-styleable>
 
