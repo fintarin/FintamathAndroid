@@ -14,22 +14,23 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fintamath.mathtextview.MathTextView;
+
 import java.util.Map;
 
 import kotlin.Pair;
 
 /**
  * todo
- * исправить символ дроби
  * сделать, чтобы подсвечивались кнопки abc и f(x) при выборе
  * сделать фон чуть светлее
- * сделать 2 меню вывода
+ * - сделать 2 меню вывода
  * исправить отображение меню ввода или сделать на контейнерах
  * сделать, выделение кнопок, которые вызывают попап
  */
 public class MainActivity extends AppCompatActivity {
 
-    private EditText inText;
+    private MathTextView inText;
     private TextView outText;
 
     private Map<KeyboardType, Pair<KeyboardView, Keyboard>> keyboards;
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         calculatorProcessor = new CalculatorProcessor(this, inText, outText);
 
         initKeyboards();
-
         currentKeyboard.setVisibility(View.VISIBLE);
+
         inText.requestFocus();
     }
 

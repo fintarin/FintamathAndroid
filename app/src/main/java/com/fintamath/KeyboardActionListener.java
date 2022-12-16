@@ -1,46 +1,41 @@
 package com.fintamath;
 
 import android.inputmethodservice.KeyboardView;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import com.fintamath.mathtextview.MathTextView;
 
 public class KeyboardActionListener implements KeyboardView.OnKeyboardActionListener {
 
     private final CalculatorProcessor calculatorProcessor;
     private final KeyboardSwitcher keyboardSwitcher;
 
-    private final EditText inText;
+    private final MathTextView inText;
     private final TextView outText;
 
-    private final InputConnection inputConnection;
-
-    KeyboardActionListener(CalculatorProcessor calculatorProcessor, KeyboardSwitcher keyboardSwitcher, EditText inText, TextView outText) {
+    KeyboardActionListener(CalculatorProcessor calculatorProcessor, KeyboardSwitcher keyboardSwitcher, MathTextView inText, TextView outText) {
         this.calculatorProcessor = calculatorProcessor;
         this.keyboardSwitcher = keyboardSwitcher;
 
         this.inText = inText;
         this.outText = outText;
-
-        this.inputConnection = inText.onCreateInputConnection(new EditorInfo());
     }
 
     @Override public void onKey(int primaryCode, int[] keyCodes) {
         KeyboardKeyCode keyCode = KeyboardKeyCode.valueOf(primaryCode);
 
         if (keyCode == null) {
-            insetText(String.valueOf((char) primaryCode));
+            inText.insert(String.valueOf((char) primaryCode));
             calculatorProcessor.calculate();
             return;
         }
 
         switch (keyCode) {
             case Delete:
-                delete();
+                inText.delete();
                 break;
             case DeleteAll:
-                inText.setText("");
+                inText.clear();
                 break;
             case LettersKeyboard:
                 if (keyboardSwitcher.getCurrentKeyboardType() != KeyboardType.LettersKeyboard) {
@@ -57,22 +52,22 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
                 }
                 break;
             case MoveLeft:
-                moveCursor(-1);
+                inText.moveCursor(-1);
                 return;
             case MoveRight:
-                moveCursor(1);
+                inText.moveCursor(1);
                 return;
             case Brackets:
-                insertBrackets();
+                inText.insertBrackets();
                 break;
             case DoubleFactorial:
-                insetText("!!");
+                inText.insert("!!");
                 break;
             case Pi:
-                insetText("pi");
+                inText.insert("pi");
                 break;
             case Log:
-                insertBinaryFunction(keyCode);
+                inText.insertBinaryFunction(keyCode);
                 break;
             case Sin:
             case Cos:
@@ -88,79 +83,30 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case Abs:
             case Exp:
             case Sqrt:
-                insertUnaryFunction(keyCode);
+                inText.insertUnaryFunction(keyCode);
                 break;
             case Pow2:
-                insetText("^2");
+                inText.insert("^2");
                 break;
             case Pow3:
-                insetText("^3");
+                inText.insert("^3");
                 break;
             case PowN:
-                insetText("^");
+                inText.insert("^");
                 break;
             case LessEqv:
-                insetText("<=");
+                inText.insert("<=");
                 break;
             case MoreEqv:
-                insetText(">=");
+                inText.insert(">=");
                 break;
             case Frac:
-                insetText("/");
+                inText.insert("/");
                 break;
             default:
         }
 
         calculatorProcessor.calculate();
-    }
-
-    private void delete() {
-        int cursorPosition = inText.getSelectionStart();
-
-        if (cursorPosition - 1 >= 0 && cursorPosition < inText.length() &&
-                inText.getText().charAt(cursorPosition - 1) == '(' &&
-                inText.getText().charAt(cursorPosition) == ')') {
-            inputConnection.deleteSurroundingText(1, 1);
-            return;
-        }
-
-        inputConnection.deleteSurroundingText(1, 0);
-    }
-
-    private void insetText(String text) {
-        if (" ".equals(text)) {
-            return;
-        }
-
-        inputConnection.commitText(text, 1);
-    }
-
-    private void insertBrackets() {
-        inputConnection.commitText("()", 1);
-        moveCursor(-1);
-    }
-
-    private void insertUnaryFunction(KeyboardKeyCode func) {
-        String text = func.toString().toLowerCase();
-        inputConnection.commitText(text, 1);
-        insertBrackets();
-    }
-
-    private void insertBinaryFunction(KeyboardKeyCode func) {
-        String text = func.toString().toLowerCase();
-        inputConnection.commitText(text + "(,)", 1);
-        moveCursor(-2);
-    }
-
-    private void moveCursor(int i) {
-        if (inText.getSelectionStart() + i > inText.getText().length()) {
-            return;
-        }
-        if (inText.getSelectionStart() + i < 0) {
-            return;
-        }
-
-        inText.setSelection(inText.getSelectionStart() + i);
     }
 
     @Override public void onPress(int arg0) {

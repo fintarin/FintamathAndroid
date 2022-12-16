@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:background="@color/md_grey_900"
+
+    android:maxLines="1"
+    android:inputType="text"
+    android:scrollHorizontally="true"
+
+    android:hint="□"
+    android:textColorHint="@color/md_grey_200_alpha"
+
+    android:text=""
+    android:textSize="20sp"
+    android:textColor="@color/md_grey_200"
+    android:textCursorDrawable="@drawable/color_cursor" >
+
+</EditText>

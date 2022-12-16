@@ -5,17 +5,19 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fintamath.mathtextview.MathTextView;
+
 public class CalculatorProcessor {
 
     private final Activity activity;
-    private final EditText inText;
+    private final MathTextView inText;
     private final TextView outText;
 
     private final Calculator calculator;
 
     private Thread calcThread;
 
-    CalculatorProcessor(Activity activity, EditText inText, TextView outText) {
+    CalculatorProcessor(Activity activity, MathTextView inText, TextView outText) {
         this.activity = activity;
         this.inText = inText;
         this.outText = outText;

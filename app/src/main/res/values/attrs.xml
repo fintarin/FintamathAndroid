@@ -2,7 +2,8 @@
 <resources>
 
     <declare-styleable name="MathTextView">
-        <attr name="style" format="reference" />
+        <attr name="textViewLayout" format="reference" />
+        <attr name="hint" format="string" />
     </declare-styleable>
 
     <declare-styleable name="KeyboardView">
