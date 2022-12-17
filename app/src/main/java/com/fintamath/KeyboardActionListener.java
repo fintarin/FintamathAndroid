@@ -4,6 +4,8 @@ import android.inputmethodservice.KeyboardView;
 
 import com.fintamath.mathtextview.MathEditText;
 
+import java.util.Locale;
+
 public class KeyboardActionListener implements KeyboardView.OnKeyboardActionListener {
 
     private final CalculatorProcessor calculatorProcessor;
@@ -61,7 +63,7 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
                 inText.insert("!!");
                 break;
             case Log:
-                inText.insertBinaryFunction(keyCode);
+                inText.insertBinaryFunction(keyCode.toString().toLowerCase());
                 break;
             case Sin:
             case Cos:
@@ -77,7 +79,7 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case Abs:
             case Exp:
             case Sqrt:
-                inText.insertUnaryFunction(keyCode);
+                inText.insertUnaryFunction(keyCode.toString().toLowerCase());
                 break;
             case Pow2:
                 inText.insert("^2");

@@ -106,15 +106,13 @@ public class MathEditText extends LinearLayout {
         mCurrentEditText.setSelection(mCurrentEditText.getSelectionStart() - 1);
     }
 
-    public void insertUnaryFunction(KeyboardKeyCode func) {
-        String text = func.toString().toLowerCase();
-        insert(text);
-        mCurrentEditText.setSelection(mCurrentEditText.getSelectionStart() - 1);
+    public void insertUnaryFunction(String func) {
+        insert(func);
+        insertBrackets();
     }
 
-    public void insertBinaryFunction(KeyboardKeyCode func) {
-        String text = func.toString().toLowerCase();
-        insert(text + "(,)");
+    public void insertBinaryFunction(String func) {
+        insert(func + "(,)");
         mCurrentEditText.setSelection(mCurrentEditText.getSelectionStart() - 2);
     }
 

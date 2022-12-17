@@ -68,7 +68,7 @@
             android:keyLabel="□²"
             android:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
-            android:codes="6032"
+            android:codes="6006"
             android:keyLabel="√□" />
         <Key
             android:keyLabel="1" />
