@@ -5,20 +5,18 @@ import static java.util.Map.entry;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import com.fintamath.R;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MathEditText extends LinearLayout {
+public class MathEditText extends MathTextViewBase {
 
     private final TypedArray mAttrs;
     private int mEditTextLayout;
@@ -67,27 +65,23 @@ public class MathEditText extends LinearLayout {
         invalidate();
     }
 
+    @Override
     public String getText() {
-        String text = getTextRec(this);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < getChildCount(); i++) {
+            stringBuilder.append(getTextFromView(getChildAt(i)));
+        }
+
+        if (stringBuilder.toString().isEmpty()) {
+            return "";
+        }
 
         for (String key : getTextReplacements.keySet()) {
-            text = text.replace(key, getTextReplacements.get(key));
+            stringBuilder = new StringBuilder(stringBuilder.toString().replaceAll(key, getTextReplacements.get(key)));
         }
 
-        return text.substring(1, text.length() - 1);
-    }
-
-    private String getTextRec(LinearLayout layout) {
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            final View child = layout.getChildAt(i);
-
-            if (child instanceof EditText) {
-                EditText editText = (EditText) child;
-                return "(" + editText.getText().toString() + ")";
-            }
-        }
-
-        return "";
+        return stringBuilder.toString();
     }
 
     public void insert(String text) {
@@ -116,8 +110,8 @@ public class MathEditText extends LinearLayout {
     }
 
     public void insertFraction() {
-        MathTextViewFraction fractionLayout = new MathTextViewFraction(getContext(), mAttrs);
-        addLayout(fractionLayout);
+        MathTextViewFraction fractionTextView = new MathTextViewFraction(getContext(), mAttrs);
+        addMathTextView(fractionTextView);
         addEditText();
         invalidate();
         moveCursorRight();
@@ -155,21 +149,19 @@ public class MathEditText extends LinearLayout {
         moveCursorLeftRec(this, new AtomicBoolean(false), new AtomicBoolean(false));
     }
 
-    private void moveCursorLeftRec(LinearLayout layout, AtomicBoolean isCurrentTextFound, AtomicBoolean isNextTextFound) {
-        for (int childNum = layout.getChildCount() - 1; childNum >= 0; childNum--) {
+    private void moveCursorLeftRec(MathTextViewBase mathTextView, AtomicBoolean isCurrentTextFound, AtomicBoolean isNextTextFound) {
+        for (int childNum = mathTextView.getChildCount() - 1; childNum >= 0; childNum--) {
             if (isNextTextFound.get()) {
                 return;
             }
 
-            final View child = layout.getChildAt(childNum);
+            final View child = mathTextView.getChildAt(childNum);
 
-            if (child instanceof LinearLayout) {
-                moveCursorLeftRec((LinearLayout) child, isCurrentTextFound, isNextTextFound);
+            if (child instanceof MathTextViewBase) {
+                moveCursorLeftRec((MathTextViewBase) child, isCurrentTextFound, isNextTextFound);
             } else if (child instanceof EditText) {
                 if (isCurrentTextFound.get()) {
-                    mCurrentEditText.clearFocus();
-                    mCurrentEditText = (EditText) child;
-                    mCurrentEditText.requestFocus();
+                    setCurrentEditText((EditText) child);
                     isNextTextFound.set(true);
                 } else if (child == mCurrentEditText) {
                     isCurrentTextFound.set(true);
@@ -187,21 +179,19 @@ public class MathEditText extends LinearLayout {
         moveCursorRightRec(this, new AtomicBoolean(false), new AtomicBoolean(false));
     }
 
-    private void moveCursorRightRec(LinearLayout layout, AtomicBoolean isCurrentTextFound, AtomicBoolean isNextTextFound) {
-        for (int childNum = 0; childNum < layout.getChildCount(); childNum++) {
+    private void moveCursorRightRec(MathTextViewBase mathTextView, AtomicBoolean isCurrentTextFound, AtomicBoolean isNextTextFound) {
+        for (int childNum = 0; childNum < mathTextView.getChildCount(); childNum++) {
             if (isNextTextFound.get()) {
                 return;
             }
 
-            final View child = layout.getChildAt(childNum);
+            final View child = mathTextView.getChildAt(childNum);
 
-            if (child instanceof LinearLayout) {
-                moveCursorRightRec((LinearLayout) child, isCurrentTextFound, isNextTextFound);
+            if (child instanceof MathTextViewBase) {
+                moveCursorRightRec((MathTextViewBase) child, isCurrentTextFound, isNextTextFound);
             } else if (child instanceof EditText) {
                 if (isCurrentTextFound.get()) {
-                    mCurrentEditText.clearFocus();
-                    mCurrentEditText = (EditText) child;
-                    mCurrentEditText.requestFocus();
+                    setCurrentEditText((EditText) child);
                     isNextTextFound.set(true);
                 } else if (child == mCurrentEditText) {
                     isCurrentTextFound.set(true);
@@ -217,12 +207,12 @@ public class MathEditText extends LinearLayout {
         updateHint();
     }
 
-    private void invalidateViewsRec(LinearLayout layout) {
-        for (int childNum = 0; childNum < layout.getChildCount(); childNum++) {
-            final View child = layout.getChildAt(childNum);
+    private void invalidateViewsRec(MathTextViewBase mathTextView) {
+        for (int childNum = 0; childNum < mathTextView.getChildCount(); childNum++) {
+            final View child = mathTextView.getChildAt(childNum);
 
-            if (child instanceof LinearLayout) {
-                invalidateViewsRec((LinearLayout) child);
+            if (child instanceof MathTextViewBase) {
+                invalidateViewsRec((MathTextViewBase) child);
                 child.invalidate();
             }
         }
@@ -233,42 +223,48 @@ public class MathEditText extends LinearLayout {
             if (getChildCount() == 1) {
                 mCurrentEditText.setHint(mHintText);
             } else {
-                mCurrentEditText.setHint(" ");
+                mCurrentEditText.setHint("");
             }
         }
     }
 
     @Override
-    public void setOnTouchListener(OnTouchListener l) {
-        super.setOnTouchListener(l);
-        mOnTouchListener = l;
+    public void setOnTouchListener(OnTouchListener listener) {
+        super.setOnTouchListener(listener);
+        mOnTouchListener = listener;
     }
 
     private void addEditText() {
         EditText editText = (EditText) inflate.inflate(mEditTextLayout, null);
-
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER_VERTICAL;
-        editText.setLayoutParams(params);
-
-        editText.setHint(" ");
+        setCommonLayoutParams(editText);
+        editText.setHint("");
         editText.setOnTouchListener((view, me) -> mOnTouchListener.onTouch(this, me));
-
         addView(editText);
     }
 
-    private void addLayout(LinearLayout layout) {
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER_VERTICAL;
-        layout.setLayoutParams(params);
+    private void addMathTextView(MathTextViewBase mathTextView) {
+        setCommonLayoutParams(mathTextView);
+        addView(mathTextView);
 
-        addView(layout);
-
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            final View child = layout.getChildAt(i);
+        for (int i = 0; i < mathTextView.getChildCount(); i++) {
+            final View child = mathTextView.getChildAt(i);
             if (child instanceof EditText) {
                 child.setOnTouchListener((view, me) -> mOnTouchListener.onTouch(this, me));
             }
+        }
+    }
+
+    private void setCurrentEditText(EditText editText) {
+        if (mCurrentEditText.getHint() == " ") {
+            mCurrentEditText.setHint("");
+        }
+
+        mCurrentEditText.clearFocus();
+        mCurrentEditText = editText;
+        mCurrentEditText.requestFocus();
+
+        if (mCurrentEditText.getHint().toString().isEmpty()) {
+            mCurrentEditText.setHint(" ");
         }
     }
 }

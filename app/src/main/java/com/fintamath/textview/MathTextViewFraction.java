@@ -7,20 +7,19 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import com.fintamath.R;
 
-class MathTextViewFraction extends LinearLayout {
+class MathTextViewFraction extends MathTextViewBase {
 
-    private int mEditTextLayout;
-    private int mFractionLineLayout;
+    public static final int NUMERATOR_ID = 0;
+    public static final int LINE_ID = 1;
+    public static final int DENOMINATOR_ID = 2;
 
     private static final int FRACTION_LINE_HEIGHT = 1;
 
-    private static final int NUMERATOR_ID = 0;
-    private static final int LINE_ID = 1;
-    private static final int DENOMINATOR_ID = 2;
+    private int mEditTextLayout;
+    private int mFractionLineLayout;
 
     public MathTextViewFraction(Context context, TypedArray attrArray) {
         super(context);
@@ -53,15 +52,13 @@ class MathTextViewFraction extends LinearLayout {
         addView(inflate.inflate(mFractionLineLayout, null));
         addView(inflate.inflate(mEditTextLayout, null));
 
-        for (int i = 0; i < getChildCount(); i++) {
-            final View child = getChildAt(i);
+        setCommonLayoutParams(getChildAt(NUMERATOR_ID));
+        setCommonLayoutParams(getChildAt(DENOMINATOR_ID));
+    }
 
-            if (child instanceof EditText) {
-                LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                params.gravity = Gravity.CENTER;
-                child.setLayoutParams(params);
-            }
-        }
+    @Override
+    public String getText() {
+        return getTextFromView(getChildAt(NUMERATOR_ID)) + "/" + getTextFromView(getChildAt(DENOMINATOR_ID));
     }
 
     @Override

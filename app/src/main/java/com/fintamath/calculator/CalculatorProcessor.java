@@ -28,7 +28,8 @@ public class CalculatorProcessor {
             calcThread.interrupt();
         }
 
-        if (inText.getText().isEmpty()) {
+        String text = inText.getText();
+        if (text.isEmpty()) {
             outText.setText("");
             return;
         }
@@ -38,7 +39,7 @@ public class CalculatorProcessor {
                 outText.setText(". . .");
             });
 
-            String res = calculator.calculate(inText.getText());
+            String res = calculator.calculate(text);
 
             if (Thread.currentThread() == calcThread) {
                 activity.runOnUiThread(() -> {
