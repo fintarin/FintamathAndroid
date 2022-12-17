@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.fintamath.mathtextview.MathEditText
+            <com.fintamath.textview.MathEditText
                 android:id="@+id/inText"
 
                 android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <com.fintamath.MyKeyboardView
+        <com.fintamath.keyboard.MyKeyboardView
             android:id="@+id/main_keyboard_view"
 
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
 
             app:popupLayout="@layout/keyboard_popup" />
 
-        <com.fintamath.MyKeyboardView
+        <com.fintamath.keyboard.MyKeyboardView
             android:id="@+id/letters_keyboard_view"
 
             android:layout_width="match_parent"
@@ -99,7 +99,7 @@
 
             app:popupLayout="@layout/keyboard_popup" />
 
-        <com.fintamath.MyKeyboardView
+        <com.fintamath.keyboard.MyKeyboardView
             android:id="@+id/functions_keyboard_view"
 
             android:layout_width="match_parent"

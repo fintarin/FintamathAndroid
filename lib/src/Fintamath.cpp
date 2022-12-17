@@ -4,7 +4,7 @@
 #include <jni.h>
 #include <string>
 
-extern "C" JNIEXPORT jstring Java_com_fintamath_Calculator_calculate(JNIEnv *env, jobject, jstring inputJStr) {
+extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Calculator_calculate(JNIEnv *env, jobject, jstring inputJStr) {
   std::string inStr = env->GetStringUTFChars(inputJStr, nullptr);
 
   try {

@@ -1,6 +1,6 @@
-package com.fintamath;
+package com.fintamath.calculator;
 
-public class Calculator {
+class Calculator {
     native String calculate(String str);
 
     static {

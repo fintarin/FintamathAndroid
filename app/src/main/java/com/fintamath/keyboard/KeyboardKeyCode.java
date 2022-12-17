@@ -1,9 +1,9 @@
-package com.fintamath;
+package com.fintamath.keyboard;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public enum KeyboardKeyCode {
+enum KeyboardKeyCode {
     Delete(5996),
     DeleteAll(5997),
     MoveLeft(5998),

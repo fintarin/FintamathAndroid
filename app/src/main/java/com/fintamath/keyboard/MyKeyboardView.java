@@ -1,8 +1,7 @@
-package com.fintamath;
+package com.fintamath.keyboard;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.SystemClock;
@@ -12,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
+
+import com.fintamath.R;
 
 import java.util.HashMap;
 import java.util.Map;

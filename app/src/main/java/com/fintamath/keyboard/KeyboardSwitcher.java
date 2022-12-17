@@ -1,4 +1,4 @@
-package com.fintamath;
+package com.fintamath.keyboard;
 
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -7,7 +7,6 @@ import android.view.View;
 import java.util.Map;
 
 import kotlin.Pair;
-import kotlin.Triple;
 
 public class KeyboardSwitcher {
 
@@ -15,7 +14,7 @@ public class KeyboardSwitcher {
     private KeyboardView currentKeyboard;
     private KeyboardType currentKeyboardType;
 
-    KeyboardSwitcher(Map<KeyboardType, Pair<KeyboardView, Keyboard>> keyboards, KeyboardView currentKeyboard, KeyboardType currentKeyboardType) {
+    public KeyboardSwitcher(Map<KeyboardType, Pair<KeyboardView, Keyboard>> keyboards, KeyboardView currentKeyboard, KeyboardType currentKeyboardType) {
         this.keyboards = keyboards;
         this.currentKeyboard = currentKeyboard;
         this.currentKeyboardType = currentKeyboardType;

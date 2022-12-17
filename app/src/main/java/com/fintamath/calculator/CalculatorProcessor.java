@@ -1,9 +1,9 @@
-package com.fintamath;
+package com.fintamath.calculator;
 
 import android.app.Activity;
 import android.widget.TextView;
 
-import com.fintamath.mathtextview.MathEditText;
+import com.fintamath.textview.MathEditText;
 
 public class CalculatorProcessor {
 
@@ -15,7 +15,7 @@ public class CalculatorProcessor {
 
     private Thread calcThread;
 
-    CalculatorProcessor(Activity activity, MathEditText inText, TextView outText) {
+    public CalculatorProcessor(Activity activity, MathEditText inText, TextView outText) {
         this.activity = activity;
         this.inText = inText;
         this.outText = outText;
@@ -23,7 +23,7 @@ public class CalculatorProcessor {
         this.calculator = new Calculator();
     }
 
-    void calculate() {
+    public void calculate() {
         if (calcThread != null && calcThread.isAlive()) {
             calcThread.interrupt();
         }

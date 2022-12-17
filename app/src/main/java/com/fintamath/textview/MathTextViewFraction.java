@@ -1,4 +1,4 @@
-package com.fintamath.mathtextview;
+package com.fintamath.textview;
 
 import android.content.Context;
 import android.content.res.TypedArray;

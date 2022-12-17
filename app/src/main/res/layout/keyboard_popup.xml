@@ -6,7 +6,7 @@
     android:background="@drawable/key_background"
     android:orientation="horizontal">
 
-    <com.fintamath.MyKeyboardView
+    <com.fintamath.keyboard.MyKeyboardView
         android:id="@id/keyboardView"
 
         android:layout_width="match_parent"

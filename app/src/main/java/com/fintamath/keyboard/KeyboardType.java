@@ -1,4 +1,4 @@
-package com.fintamath;
+package com.fintamath.keyboard;
 
 public enum KeyboardType {
     MainKeyboard,

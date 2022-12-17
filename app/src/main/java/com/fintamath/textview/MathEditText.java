@@ -1,4 +1,4 @@
-package com.fintamath.mathtextview;
+package com.fintamath.textview;
 
 import static java.util.Map.entry;
 

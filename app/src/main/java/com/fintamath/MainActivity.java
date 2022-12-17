@@ -13,7 +13,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.fintamath.mathtextview.MathEditText;
+import com.fintamath.calculator.CalculatorProcessor;
+import com.fintamath.keyboard.KeyboardActionListener;
+import com.fintamath.keyboard.KeyboardSwitcher;
+import com.fintamath.keyboard.KeyboardType;
+import com.fintamath.textview.MathEditText;
 
 import java.util.Map;
 
