@@ -79,13 +79,13 @@ public class MainActivity extends AppCompatActivity {
 
         Map<KeyboardType, KeyboardView.OnKeyboardActionListener> listeners = Map.ofEntries(
                 entry(KeyboardType.MainKeyboard,
-                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
                 ),
                 entry(KeyboardType.LettersKeyboard,
-                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
                 ),
                 entry(KeyboardType.FunctionsKeyboard,
-                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText, outText)
+                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
                 )
         );
 

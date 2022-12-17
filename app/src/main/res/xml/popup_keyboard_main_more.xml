@@ -7,7 +7,6 @@
         <Key
             android:keyLabel="&gt;" />
         <Key
-            android:codes="6030"
             android:keyLabel="≥"/>
     </Row>
 

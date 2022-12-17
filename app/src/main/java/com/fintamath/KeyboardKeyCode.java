@@ -30,10 +30,8 @@ public enum KeyboardKeyCode {
     Abs(6023),
     Exp(6024),
     DoubleFactorial(6025),
-    Pi(6028),
-    LessEqv(6029),
-    MoreEqv(6030),
     Frac(6031),
+    Root(6032),
     ;
 
     private final int value;

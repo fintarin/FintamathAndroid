@@ -1,56 +1,58 @@
 package com.fintamath.mathtextview;
 
+import static java.util.Map.entry;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.fintamath.KeyboardKeyCode;
 import com.fintamath.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MathEditText extends LinearLayout {
 
-    private AttributeSet mAttrs;
+    private final TypedArray mAttrs;
     private int mEditTextLayout;
-    private int mFractionLineLayout;
     private String mHintText;
-    private final String mHintInnerText;
     private OnTouchListener mOnTouchListener;
 
-    private List<View> mViews = new ArrayList<>();
+    private LayoutInflater inflate;
     private EditText mCurrentEditText;
 
-    private int mCursorPosition;
-    private StringBuilder mStringBuilder = new StringBuilder();
+    private final Map<String, String> replacements = Map.ofEntries(
+            entry("÷", "/"),
+            entry("×", "*"),
+            entry("≤", "<="),
+            entry("≥", ">="),
+            entry("π", "(pi)")
+    );
 
     public MathEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mAttrs = attrs;
-        TypedArray a = context.obtainStyledAttributes(mAttrs, R.styleable.MathTextView);
-        int n = a.getIndexCount();
+        mAttrs = context.obtainStyledAttributes(attrs, R.styleable.MathTextView);
+        int n = mAttrs.getIndexCount();
 
         for (int i = 0; i < n; i++) {
-            int attr = a.getIndex(i);
+            int attr = mAttrs.getIndex(i);
 
             switch (attr) {
                 case R.styleable.MathTextView_textViewLayout: {
-                    mEditTextLayout = a.getResourceId(attr, 0);
+                    mEditTextLayout = mAttrs.getResourceId(attr, 0);
                     break;
                 }
                 case R.styleable.MathTextView_hint: {
-                    mHintText = a.getString(attr);
-                    break;
-                }
-                case R.styleable.MathTextView_fractionLineLayout: {
-                    mFractionLineLayout = a.getResourceId(attr, 0);
+                    mHintText = mAttrs.getString(attr);
                     break;
                 }
                 default: {
@@ -59,27 +61,34 @@ public class MathEditText extends LinearLayout {
             }
         }
 
-        LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        mViews.add(inflate.inflate(mEditTextLayout, null));
-        mCurrentEditText = (EditText) mViews.get(0);
-        mHintInnerText = mCurrentEditText.getHint().toString();
-        addView(mCurrentEditText);
-
-//        LinearLayout vbox = new LinearLayout(getContext());
-//        vbox.setOrientation(VERTICAL);
-//
-//        vbox.addView(inflate.inflate(mEditTextLayout, null));
-//        vbox.addView(inflate.inflate(mFractionLineLayout, null));
-//        vbox.addView(inflate.inflate(mEditTextLayout, null));
-//
-//        addView(vbox);
-
-        setText("");
+        addEditText();
+        mCurrentEditText = (EditText) getChildAt(0);
+        invalidate();
     }
 
     public String getText() {
-        return mStringBuilder.toString();
+        String text = getTextRec(this);
+
+        for (String key : replacements.keySet()) {
+            text = text.replace(key, replacements.get(key));
+        }
+
+        return text.substring(1, text.length() - 1);
+    }
+
+    private String getTextRec(LinearLayout layout) {
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            final View child = layout.getChildAt(i);
+
+            if (child instanceof EditText) {
+                EditText editText = (EditText) child;
+                return "(" + editText.getText().toString() + ")";
+            }
+        }
+
+        return "";
     }
 
     public void insert(String text) {
@@ -87,87 +96,187 @@ public class MathEditText extends LinearLayout {
             return;
         }
 
-        mStringBuilder.insert(mCursorPosition, text);
-        setText(mStringBuilder.toString());
-        moveCursor(text.length());
+        InputConnection inputConnection = mCurrentEditText.onCreateInputConnection(new EditorInfo());
+        inputConnection.commitText(text, 1);
+        invalidate();
     }
 
     public void insertBrackets() {
         insert("()");
-        moveCursor(-1);
+        mCurrentEditText.setSelection(mCurrentEditText.getSelectionStart() - 1);
     }
 
     public void insertUnaryFunction(KeyboardKeyCode func) {
         String text = func.toString().toLowerCase();
         insert(text);
-        insertBrackets();
+        mCurrentEditText.setSelection(mCurrentEditText.getSelectionStart() - 1);
     }
 
     public void insertBinaryFunction(KeyboardKeyCode func) {
         String text = func.toString().toLowerCase();
         insert(text + "(,)");
-        moveCursor(-2);
+        mCurrentEditText.setSelection(mCurrentEditText.getSelectionStart() - 2);
+    }
+
+    public void insertFraction() {
+        MathTextViewFraction fractionLayout = new MathTextViewFraction(getContext(), mAttrs);
+        addLayout(fractionLayout);
+        addEditText();
+        invalidate();
+        moveCursorRight();
     }
 
     public void delete() {
-        if (mCursorPosition == 0) {
+        InputConnection inputConnection = mCurrentEditText.onCreateInputConnection(new EditorInfo());
+        int cursorPosition = mCurrentEditText.getSelectionStart();
+
+        if (cursorPosition - 1 >= 0 && cursorPosition < mCurrentEditText.length() &&
+                mCurrentEditText.getText().charAt(cursorPosition - 1) == '(' &&
+                mCurrentEditText.getText().charAt(cursorPosition) == ')') {
+            inputConnection.deleteSurroundingText(1, 1);
             return;
         }
 
-        int cursorPosition = mCursorPosition - 1;
-        int length = 1;
-
-        if (cursorPosition >= 0 && cursorPosition + 1 < getText().length() &&
-                getText().charAt(cursorPosition) == '(' &&
-                getText().charAt(cursorPosition + 1) == ')') {
-            length++;
-        }
-
-        mStringBuilder.delete(cursorPosition, cursorPosition + length);
-        setText(mStringBuilder.toString());
-        setCursorPositions(cursorPosition);
+        inputConnection.deleteSurroundingText(1, 0);
+        invalidate();
     }
 
     public void clear() {
-        setText("");
-        setCursorPositions(0);
+        removeAllViews();
+        addEditText();
+        mCurrentEditText = (EditText) getChildAt(0);
+        mCurrentEditText.requestFocus();
+        invalidate();
     }
 
-    public void moveCursor(int i) {
-        setCursorPositions(mCursorPosition + i);
+    public void moveCursorLeft() {
+        if (mCurrentEditText.getSelectionStart() > 0) {
+            mCurrentEditText.setSelection(mCurrentEditText.getSelectionStart() - 1);
+            return;
+        }
+
+        moveCursorLeftRec(this, new AtomicBoolean(false), new AtomicBoolean(false));
     }
 
-    public int getCursorPosition() {
-        return mCursorPosition;
-    }
+    private void moveCursorLeftRec(LinearLayout layout, AtomicBoolean isCurrentTextFound, AtomicBoolean isNextTextFound) {
+        for (int childNum = layout.getChildCount() - 1; childNum >= 0; childNum--) {
+            if (isNextTextFound.get()) {
+                return;
+            }
 
-    // TODO
-//    @Override
-//    public void setOnTouchListener(OnTouchListener onTouchListener) {
-//        mOnTouchListener = onTouchListener;
-//        mCurrentEditText.setOnTouchListener(onTouchListener);
-//    }
-//
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        return mCurrentEditText.dispatchTouchEvent(event);
-//    }
+            final View child = layout.getChildAt(childNum);
 
-    private void setText(String inText) {
-        mStringBuilder = new StringBuilder(inText);
-        mCurrentEditText.setText(mStringBuilder.toString());
-
-        if ("".equals(mStringBuilder.toString())) {
-            mCurrentEditText.setHint(mHintText);
-        } else {
-            mCurrentEditText.setHint(mHintInnerText);
+            if (child instanceof LinearLayout) {
+                moveCursorLeftRec((LinearLayout) child, isCurrentTextFound, isNextTextFound);
+            } else if (child instanceof EditText) {
+                if (isCurrentTextFound.get()) {
+                    mCurrentEditText.clearFocus();
+                    mCurrentEditText = (EditText) child;
+                    mCurrentEditText.requestFocus();
+                    isNextTextFound.set(true);
+                } else if (child == mCurrentEditText) {
+                    isCurrentTextFound.set(true);
+                }
+            }
         }
     }
 
-    private void setCursorPositions(int pos) {
-        if (pos >= 0 && pos <= mCurrentEditText.getText().length()) {
-            mCursorPosition = pos;
-            mCurrentEditText.setSelection(mCursorPosition);
+    public void moveCursorRight() {
+        if (mCurrentEditText.getSelectionStart() < mCurrentEditText.length()) {
+            mCurrentEditText.setSelection(mCurrentEditText.getSelectionStart() + 1);
+            return;
         }
+
+        moveCursorRightRec(this, new AtomicBoolean(false), new AtomicBoolean(false));
+    }
+
+    private void moveCursorRightRec(LinearLayout layout, AtomicBoolean isCurrentTextFound, AtomicBoolean isNextTextFound) {
+        for (int childNum = 0; childNum < layout.getChildCount(); childNum++) {
+            if (isNextTextFound.get()) {
+                return;
+            }
+
+            final View child = layout.getChildAt(childNum);
+
+            if (child instanceof LinearLayout) {
+                moveCursorRightRec((LinearLayout) child, isCurrentTextFound, isNextTextFound);
+            } else if (child instanceof EditText) {
+                if (isCurrentTextFound.get()) {
+                    mCurrentEditText.clearFocus();
+                    mCurrentEditText = (EditText) child;
+                    mCurrentEditText.requestFocus();
+                    isNextTextFound.set(true);
+                } else if (child == mCurrentEditText) {
+                    isCurrentTextFound.set(true);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        invalidateViewsRec(this);
+        updateHint();
+    }
+
+    private void invalidateViewsRec(LinearLayout layout) {
+        for (int childNum = 0; childNum < layout.getChildCount(); childNum++) {
+            final View child = layout.getChildAt(childNum);
+
+            if (child instanceof LinearLayout) {
+                invalidateViewsRec((LinearLayout) child);
+                child.invalidate();
+            }
+        }
+    }
+
+    private void updateHint() {
+        if (mCurrentEditText.getText().toString().isEmpty()) {
+            if (getChildCount() == 1) {
+                mCurrentEditText.setHint(mHintText);
+            } else {
+                mCurrentEditText.setHint(" ");
+            }
+        }
+    }
+
+    @Override
+    public void setOnTouchListener(OnTouchListener l) {
+        super.setOnTouchListener(l);
+        mOnTouchListener = l;
+    }
+
+    private void addEditText() {
+        EditText editText = (EditText) inflate.inflate(mEditTextLayout, null);
+
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
+        editText.setLayoutParams(params);
+
+        editText.setHint(" ");
+        setEditTextOnTouchListener(editText);
+
+        addView(editText);
+    }
+
+    private void addLayout(LinearLayout layout) {
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
+        layout.setLayoutParams(params);
+
+        addView(layout);
+
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            final View child = layout.getChildAt(i);
+
+            if (child instanceof EditText) {
+                setEditTextOnTouchListener((EditText) child);
+            }
+        }
+    }
+
+    private void setEditTextOnTouchListener(View editText) {
+        editText.setOnTouchListener((view, me) -> mOnTouchListener.onTouch(this, me));
     }
 }

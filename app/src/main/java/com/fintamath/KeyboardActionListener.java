@@ -1,7 +1,6 @@
 package com.fintamath;
 
 import android.inputmethodservice.KeyboardView;
-import android.widget.TextView;
 
 import com.fintamath.mathtextview.MathEditText;
 
@@ -11,14 +10,12 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
     private final KeyboardSwitcher keyboardSwitcher;
 
     private final MathEditText inText;
-    private final TextView outText;
 
-    KeyboardActionListener(CalculatorProcessor calculatorProcessor, KeyboardSwitcher keyboardSwitcher, MathEditText inText, TextView outText) {
+    KeyboardActionListener(CalculatorProcessor calculatorProcessor, KeyboardSwitcher keyboardSwitcher, MathEditText inText) {
         this.calculatorProcessor = calculatorProcessor;
         this.keyboardSwitcher = keyboardSwitcher;
 
         this.inText = inText;
-        this.outText = outText;
     }
 
     @Override public void onKey(int primaryCode, int[] keyCodes) {
@@ -52,19 +49,16 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
                 }
                 break;
             case MoveLeft:
-                inText.moveCursor(-1);
+                inText.moveCursorLeft();
                 return;
             case MoveRight:
-                inText.moveCursor(1);
+                inText.moveCursorRight();
                 return;
             case Brackets:
                 inText.insertBrackets();
                 break;
             case DoubleFactorial:
                 inText.insert("!!");
-                break;
-            case Pi:
-                inText.insert("pi");
                 break;
             case Log:
                 inText.insertBinaryFunction(keyCode);
@@ -94,14 +88,8 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case PowN:
                 inText.insert("^");
                 break;
-            case LessEqv:
-                inText.insert("<=");
-                break;
-            case MoreEqv:
-                inText.insert(">=");
-                break;
             case Frac:
-                inText.insert("/");
+                inText.insertFraction();
                 break;
             default:
         }

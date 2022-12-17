@@ -4,12 +4,14 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    android:background="@color/md_grey_900"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
 
     android:maxLines="1"
     android:inputType="text"
     android:scrollHorizontally="true"
+
+    android:background="@color/md_grey_900"
 
     android:hint="□"
     android:textColorHint="@color/md_grey_200_alpha"

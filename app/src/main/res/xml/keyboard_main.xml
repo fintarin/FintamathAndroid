@@ -42,7 +42,6 @@
         <Key
             android:keyLabel="9" />
         <Key
-            android:codes="47"
             android:keyLabel="÷" />
     </Row>
 
@@ -60,7 +59,6 @@
         <Key
             android:keyLabel="6" />
         <Key
-            android:codes="42"
             android:keyLabel="×"/>
     </Row>
 
@@ -70,7 +68,7 @@
             android:keyLabel="□²"
             android:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
-            android:codes="6006"
+            android:codes="6032"
             android:keyLabel="√□" />
         <Key
             android:keyLabel="1" />

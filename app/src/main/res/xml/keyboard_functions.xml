@@ -81,7 +81,6 @@
 
     <Row>
         <Key
-            android:codes="6028"
             android:keyLabel="π"/>
         <Key
             android:codes="6025"

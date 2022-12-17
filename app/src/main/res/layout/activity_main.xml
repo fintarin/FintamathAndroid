@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.fintamath.mathtextview.MathEditText
@@ -18,8 +18,8 @@
 
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:gravity="center_vertical"
             android:padding="10dp"
+            android:paddingStart="8dp"
             android:paddingTop="30dp"
 
             app:hint="Type a math problem..."
@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:paddingTop="30dp"
 
                 android:background="@color/md_grey_900"
 

@@ -28,7 +28,7 @@ public class CalculatorProcessor {
             calcThread.interrupt();
         }
 
-        if ("".equals(inText.getText().toString())) {
+        if (inText.getText().isEmpty()) {
             outText.setText("");
             return;
         }
@@ -38,7 +38,7 @@ public class CalculatorProcessor {
                 outText.setText(". . .");
             });
 
-            String res = calculator.solve(inText.getText().toString());
+            String res = calculator.calculate(inText.getText());
 
             if (Thread.currentThread() == calcThread) {
                 activity.runOnUiThread(() -> {
