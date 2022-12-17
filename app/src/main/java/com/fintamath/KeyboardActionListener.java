@@ -4,8 +4,6 @@ import android.inputmethodservice.KeyboardView;
 
 import com.fintamath.mathtextview.MathEditText;
 
-import java.util.Locale;
-
 public class KeyboardActionListener implements KeyboardView.OnKeyboardActionListener {
 
     private final CalculatorProcessor calculatorProcessor;

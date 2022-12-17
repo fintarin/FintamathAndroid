@@ -9,7 +9,6 @@
 
     android:maxLines="1"
     android:inputType="text"
-    android:scrollHorizontally="true"
 
     android:background="@color/md_grey_900"
 

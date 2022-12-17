@@ -13,19 +13,26 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.fintamath.mathtextview.MathEditText
-            android:id="@+id/inText"
-
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:padding="10dp"
-            android:paddingStart="8dp"
-            android:paddingTop="30dp"
+            android:layout_height="wrap_content">
 
-            app:hint="Type a math problem..."
+            <com.fintamath.mathtextview.MathEditText
+                android:id="@+id/inText"
 
-            app:textViewLayout="@layout/math_edit_text"
-            app:fractionLineLayout="@layout/fraction_line" />
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+
+                android:padding="10dp"
+                android:paddingStart="8dp"
+                android:paddingTop="30dp"
+
+                app:hint="Type a math problem..."
+
+                app:textViewLayout="@layout/math_edit_text"
+                app:fractionLineLayout="@layout/fraction_line" />
+
+        </HorizontalScrollView>
 
         <View
             android:layout_width="match_parent"

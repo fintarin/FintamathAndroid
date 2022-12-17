@@ -13,7 +13,6 @@ import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.fintamath.KeyboardKeyCode;
 import com.fintamath.R;
 
 import java.util.Map;
@@ -29,7 +28,7 @@ public class MathEditText extends LinearLayout {
     private LayoutInflater inflate;
     private EditText mCurrentEditText;
 
-    private final Map<String, String> replacements = Map.ofEntries(
+    private final Map<String, String> getTextReplacements = Map.ofEntries(
             entry("÷", "/"),
             entry("×", "*"),
             entry("≤", "<="),
@@ -71,8 +70,8 @@ public class MathEditText extends LinearLayout {
     public String getText() {
         String text = getTextRec(this);
 
-        for (String key : replacements.keySet()) {
-            text = text.replace(key, replacements.get(key));
+        for (String key : getTextReplacements.keySet()) {
+            text = text.replace(key, getTextReplacements.get(key));
         }
 
         return text.substring(1, text.length() - 1);
@@ -249,32 +248,27 @@ public class MathEditText extends LinearLayout {
         EditText editText = (EditText) inflate.inflate(mEditTextLayout, null);
 
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
+        params.gravity = Gravity.CENTER_VERTICAL;
         editText.setLayoutParams(params);
 
         editText.setHint(" ");
-        setEditTextOnTouchListener(editText);
+        editText.setOnTouchListener((view, me) -> mOnTouchListener.onTouch(this, me));
 
         addView(editText);
     }
 
     private void addLayout(LinearLayout layout) {
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER_VERTICAL | Gravity.LEFT;
+        params.gravity = Gravity.CENTER_VERTICAL;
         layout.setLayoutParams(params);
 
         addView(layout);
 
         for (int i = 0; i < layout.getChildCount(); i++) {
             final View child = layout.getChildAt(i);
-
             if (child instanceof EditText) {
-                setEditTextOnTouchListener((EditText) child);
+                child.setOnTouchListener((view, me) -> mOnTouchListener.onTouch(this, me));
             }
         }
-    }
-
-    private void setEditTextOnTouchListener(View editText) {
-        editText.setOnTouchListener((view, me) -> mOnTouchListener.onTouch(this, me));
     }
 }
