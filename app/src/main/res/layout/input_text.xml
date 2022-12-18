@@ -25,7 +25,7 @@
 
             app:hint="Type a math problem..."
 
-            app:textViewLayout="@layout/math_edit_text"
+            app:textViewLayout="@layout/math_inner_edit_text"
             app:fractionLineLayout="@layout/fraction_line" />
 
     </HorizontalScrollView>
