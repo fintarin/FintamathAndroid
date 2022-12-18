@@ -21,6 +21,7 @@ public class MathEditText extends MathTextViewBase {
     private final TypedArray mAttrs;
     private int mEditTextLayout;
     private String mHintText;
+    private String mInnerHintText;
     private OnTouchListener mOnTouchListener;
 
     private LayoutInflater inflate;
@@ -36,8 +37,17 @@ public class MathEditText extends MathTextViewBase {
 
     public MathEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         mAttrs = context.obtainStyledAttributes(attrs, R.styleable.MathTextView);
+        init(context);
+    }
+
+    public MathEditText(Context context, TypedArray attrs) {
+        super(context);
+        mAttrs = attrs;
+        init(context);
+    }
+
+    private void init(Context context) {
         int n = mAttrs.getIndexCount();
 
         for (int i = 0; i < n; i++) {
@@ -60,8 +70,9 @@ public class MathEditText extends MathTextViewBase {
 
         inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        addEditText();
-        mCurrentEditText = (EditText) getChildAt(0);
+        mCurrentEditText = (EditText) inflate.inflate(mEditTextLayout, null);
+        mInnerHintText = mCurrentEditText.getHint().toString();
+        appendEditText(mCurrentEditText);
         invalidate();
     }
 
@@ -110,14 +121,13 @@ public class MathEditText extends MathTextViewBase {
     }
 
     public void insertFraction() {
-        mCurrentEditText.setHint("");
         MathTextViewFraction fractionTextView = new MathTextViewFraction(getContext(), mAttrs);
-        addMathTextView(fractionTextView);
-        addEditText();
+        insertMathTextView(fractionTextView);
         invalidate();
         moveCursorRight();
     }
 
+    // TODO: implement removing fractions
     public void delete() {
         InputConnection inputConnection = mCurrentEditText.onCreateInputConnection(new EditorInfo());
         int cursorPosition = mCurrentEditText.getSelectionStart();
@@ -131,11 +141,15 @@ public class MathEditText extends MathTextViewBase {
 
         inputConnection.deleteSurroundingText(1, 0);
         invalidate();
+
+        if (mCurrentEditText.getText().toString().isEmpty()) {
+            mCurrentEditText.setHint(mInnerHintText);
+        }
     }
 
     public void clear() {
         removeAllViews();
-        addEditText();
+        appendEmptyEditText();
         mCurrentEditText = (EditText) getChildAt(0);
         mCurrentEditText.requestFocus();
         invalidate();
@@ -235,28 +249,77 @@ public class MathEditText extends MathTextViewBase {
         mOnTouchListener = listener;
     }
 
-    private void addEditText() {
-        EditText editText = (EditText) inflate.inflate(mEditTextLayout, null);
+    private void appendEditText(EditText editText) {
         setCommonLayoutParams(editText);
         editText.setHint("");
-        editText.setOnTouchListener((view, me) -> mOnTouchListener.onTouch(this, me));
+        setEditTextOnTouchEventListener(editText);
         addView(editText);
     }
 
-    private void addMathTextView(MathTextViewBase mathTextView) {
-        setCommonLayoutParams(mathTextView);
-        addView(mathTextView);
+    private void appendEmptyEditText() {
+        appendEditText((EditText) inflate.inflate(mEditTextLayout, null));
+    }
 
+    private void insertMathTextView(MathTextViewBase insertedMathTextView) {
+        setCommonLayoutParams(insertedMathTextView);
+        setEditTextsOnTouchEventListener(insertedMathTextView);
+
+        EditText rightEditText = (EditText) inflate.inflate(mEditTextLayout, null);
+        rightEditText.setText(mCurrentEditText.getText().toString().substring(mCurrentEditText.getSelectionStart()));
+        mCurrentEditText.setText(mCurrentEditText.getText().toString().substring(0, mCurrentEditText.getSelectionStart()));
+
+        MathTextViewBase currentParentMathTextView = (MathTextViewBase) mCurrentEditText.getParent();
+
+        for (int i = 0; i < currentParentMathTextView.getChildCount(); i++) {
+            final View child = currentParentMathTextView.getChildAt(i);
+
+            if (child == mCurrentEditText) {
+                if (currentParentMathTextView instanceof MathEditText) {
+                    mCurrentEditText.setHint("");
+                    MathEditText newMathTextView = (MathEditText) currentParentMathTextView;
+                    newMathTextView.addView(insertedMathTextView);
+                    newMathTextView.appendEditText(rightEditText);
+                } else {
+                    MathEditText newMathTextView = new MathEditText(getContext(), mAttrs);
+                    newMathTextView.setOnTouchListener(mOnTouchListener);
+                    newMathTextView.mHintText = "";
+                    newMathTextView.mCurrentEditText.setHint("");
+
+                    currentParentMathTextView.removeViewAt(i);
+                    currentParentMathTextView.addView(newMathTextView, i);
+
+                    newMathTextView.addView(insertedMathTextView);
+                    newMathTextView.appendEditText(rightEditText);
+                    newMathTextView.mCurrentEditText.setText(mCurrentEditText.getText());
+
+                    setCurrentEditText(newMathTextView.mCurrentEditText);
+                }
+
+                break;
+            }
+        }
+    }
+
+    // TODO: implement on text touch
+    private void setEditTextOnTouchEventListener(EditText editText) {
+        editText.setOnTouchListener((view, me) -> {
+            boolean res = mOnTouchListener.onTouch(this, me);
+            setCurrentEditText((EditText) view);
+            return res;
+        });
+    }
+
+    private void setEditTextsOnTouchEventListener(MathTextViewBase mathTextView) {
         for (int i = 0; i < mathTextView.getChildCount(); i++) {
             final View child = mathTextView.getChildAt(i);
             if (child instanceof EditText) {
-                child.setOnTouchListener((view, me) -> mOnTouchListener.onTouch(this, me));
+                setEditTextOnTouchEventListener((EditText) child);
             }
         }
     }
 
     private void setCurrentEditText(EditText editText) {
-        if (mCurrentEditText.getHint() == " ") {
+        if (mCurrentEditText.getHint() == mInnerHintText) {
             mCurrentEditText.setHint("");
         }
 
@@ -265,7 +328,7 @@ public class MathEditText extends MathTextViewBase {
         mCurrentEditText.requestFocus();
 
         if (mCurrentEditText.getHint().toString().isEmpty()) {
-            mCurrentEditText.setHint(" ");
+            mCurrentEditText.setHint(mInnerHintText);
         }
     }
 }
