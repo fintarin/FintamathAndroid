@@ -82,7 +82,8 @@ public class MathEditText extends MathTextViewBase {
 
         for (int i = 0; i < getChildCount(); i++) {
             String text = getTextFromView(getChildAt(i));
-            if (!text.isEmpty() && text.charAt(text.length() - 1) != '(' &&
+            if (!text.isEmpty() &&
+                    text.charAt(text.length() - 1) >= '0' && text.charAt(text.length() - 1) <= '9' &&
                     getChildAt(i + 1) instanceof MathTextViewFraction) {
                 stringBuilder.append("(").append(text).append("+").append(getTextFromView(getChildAt(i + 1))).append(")");
                 i++;
