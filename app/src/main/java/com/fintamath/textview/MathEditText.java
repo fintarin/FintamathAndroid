@@ -110,6 +110,7 @@ public class MathEditText extends MathTextViewBase {
     }
 
     public void insertFraction() {
+        mCurrentEditText.setHint("");
         MathTextViewFraction fractionTextView = new MathTextViewFraction(getContext(), mAttrs);
         addMathTextView(fractionTextView);
         addEditText();
