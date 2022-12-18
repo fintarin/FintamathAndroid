@@ -23,17 +23,6 @@ import java.util.Map;
 
 import kotlin.Pair;
 
-/**
- * todo
- * сделать фон чуть светлее
- * сделать обход лайаутов через getParent
- * реализовать удаление лайаута
- * исправить центрирование для вложенных лайаутов: (()/())(()/())
- * исправить inner hint квадратика - он не всегда показывается
- * исправить переход на 5(()/())
- * сделать лайаут степени
- * оптимизировать вложенные дроби, возможно, через ListView
- */
 public class MainActivity extends AppCompatActivity {
 
     private MathEditText inText;
