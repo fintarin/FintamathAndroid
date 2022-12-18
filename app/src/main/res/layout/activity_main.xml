@@ -13,32 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:padding="10dp"
-            android:paddingStart="8dp">
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical">
-
-                <com.fintamath.textview.MathEditText
-                    android:id="@+id/inText"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    app:hint="Type a math problem..."
-
-                    app:textViewLayout="@layout/math_edit_text"
-                    app:fractionLineLayout="@layout/fraction_line" />
-
-            </HorizontalScrollView>
-
-        </androidx.core.widget.NestedScrollView>
+        <include layout="@layout/input_text" />
 
         <View
             android:layout_width="match_parent"
@@ -46,32 +21,7 @@
 
             android:background="@color/md_grey_200_alpha"/>
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="60dp"
-            android:padding="10dp">
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/outText"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:background="@color/md_grey_900"
-
-                    android:text=""
-                    android:textSize="20sp"
-                    android:textColor="@color/md_grey_200" />
-
-            </HorizontalScrollView>
-
-        </androidx.core.widget.NestedScrollView>
+        <include layout="@layout/output_text" />
 
         <TextView
             android:id="@+id/alternativeFormTitle"
@@ -87,35 +37,7 @@
             android:textSize="20sp"
             android:textColor="@color/md_grey_200_alpha" />
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="60dp"
-            android:padding="10dp">
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/outFullText"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-
-                    android:maxLines="1"
-
-                    android:background="@color/md_grey_900"
-
-                    android:text=""
-                    android:textSize="20sp"
-                    android:textColor="@color/md_grey_200" />
-
-            </HorizontalScrollView>
-
-        </androidx.core.widget.NestedScrollView>
-
+        <include layout="@layout/output_full_text" />
     </LinearLayout>
 
     <FrameLayout

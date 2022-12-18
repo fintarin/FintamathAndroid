@@ -62,9 +62,7 @@ class MathTextViewFraction extends MathTextViewBase {
     }
 
     @Override
-    public void invalidate() {
-        super.invalidate();
-
+    protected void update() {
         getChildAt(NUMERATOR_ID).measure(0, 0);
         getChildAt(DENOMINATOR_ID).measure(0, 0);
 

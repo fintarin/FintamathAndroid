@@ -21,6 +21,8 @@ class MathTextViewBase extends LinearLayout {
         return "";
     }
 
+    protected void update() { }
+
     protected static void setCommonLayoutParams(View view) {
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;

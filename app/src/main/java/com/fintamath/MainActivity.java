@@ -14,7 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.fintamath.calculator.CalculatorProcessor;
-import com.fintamath.keyboard.KeyboardActionListener;
+import com.fintamath.keyboard_listener.KeyboardActionListener;
 import com.fintamath.keyboard.KeyboardSwitcher;
 import com.fintamath.keyboard.KeyboardType;
 import com.fintamath.textview.MathEditText;
@@ -26,8 +26,14 @@ import kotlin.Pair;
 /**
  * todo
  * сделать, чтобы подсвечивались кнопки abc и f(x) при выборе
- * сделать фон чуть светлее
  * сделать, выделение кнопок, которые вызывают попап
+ * сделать фон чуть светлее
+ * реализовать удаление попапа
+ * исправить центрирование для вложенных лайаутов: (()/())(()/())
+ * исправить inner hint квадратика - он не всегда показывается
+ * исправить переход на 5(()/())
+ * сделать лайаут степени
+ * сделать иконку приложения
  */
 public class MainActivity extends AppCompatActivity {
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="100dp"
+
+    android:padding="10dp"
+    android:paddingStart="8dp"
+
+    tools:showIn="@layout/activity_main">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical">
+
+        <com.fintamath.textview.MathEditText
+            android:id="@+id/inText"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            app:hint="Type a math problem..."
+
+            app:textViewLayout="@layout/math_edit_text"
+            app:fractionLineLayout="@layout/fraction_line" />
+
+    </HorizontalScrollView>
+
+</androidx.core.widget.NestedScrollView>
+
+        

@@ -73,7 +73,7 @@ public class MathEditText extends MathTextViewBase {
         mCurrentEditText = (EditText) inflate.inflate(mEditTextLayout, null);
         mInnerHintText = mCurrentEditText.getHint().toString();
         appendEditText(mCurrentEditText);
-        invalidate();
+        update();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class MathEditText extends MathTextViewBase {
 
         InputConnection inputConnection = mCurrentEditText.onCreateInputConnection(new EditorInfo());
         inputConnection.commitText(text, 1);
-        invalidate();
+        update();
     }
 
     public void insertBrackets() {
@@ -123,7 +123,7 @@ public class MathEditText extends MathTextViewBase {
     public void insertFraction() {
         MathTextViewFraction fractionTextView = new MathTextViewFraction(getContext(), mAttrs);
         insertMathTextView(fractionTextView);
-        invalidate();
+        update();
         moveCursorRight();
     }
 
@@ -140,7 +140,7 @@ public class MathEditText extends MathTextViewBase {
         }
 
         inputConnection.deleteSurroundingText(1, 0);
-        invalidate();
+        update();
 
         if (mCurrentEditText.getText().toString().isEmpty() && getChildCount() != 1) {
             mCurrentEditText.setHint(mInnerHintText);
@@ -152,7 +152,7 @@ public class MathEditText extends MathTextViewBase {
         appendEmptyEditText();
         mCurrentEditText = (EditText) getChildAt(0);
         mCurrentEditText.requestFocus();
-        invalidate();
+        update();
     }
 
     public void moveCursorLeft() {
@@ -216,19 +216,17 @@ public class MathEditText extends MathTextViewBase {
     }
 
     @Override
-    public void invalidate() {
-        super.invalidate();
-        invalidateViewsRec(this);
+    protected void update() {
+        updateViewsRec(this);
         updateHint();
     }
 
-    private void invalidateViewsRec(MathTextViewBase mathTextView) {
+    private void updateViewsRec(MathTextViewBase mathTextView) {
         for (int childNum = 0; childNum < mathTextView.getChildCount(); childNum++) {
             final View child = mathTextView.getChildAt(childNum);
-
             if (child instanceof MathTextViewBase) {
-                invalidateViewsRec((MathTextViewBase) child);
-                child.invalidate();
+                updateViewsRec((MathTextViewBase) child);
+                ((MathTextViewBase) child).update();
             }
         }
     }

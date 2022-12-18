@@ -1,8 +1,10 @@
-package com.fintamath.keyboard;
+package com.fintamath.keyboard_listener;
 
 import android.inputmethodservice.KeyboardView;
 
 import com.fintamath.calculator.CalculatorProcessor;
+import com.fintamath.keyboard.KeyboardSwitcher;
+import com.fintamath.keyboard.KeyboardType;
 import com.fintamath.textview.MathEditText;
 
 public class KeyboardActionListener implements KeyboardView.OnKeyboardActionListener {
@@ -29,37 +31,34 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
         }
 
         switch (keyCode) {
-            case Delete:
-                inText.delete();
-                break;
-            case DeleteAll:
-                inText.clear();
-                break;
             case LettersKeyboard:
                 if (keyboardSwitcher.getCurrentKeyboardType() != KeyboardType.LettersKeyboard) {
                     keyboardSwitcher.switchKeyboard(KeyboardType.LettersKeyboard);
                 } else {
                     keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
                 }
-                break;
+                return;
             case FunctionsKeyboard:
                 if (keyboardSwitcher.getCurrentKeyboardType() != KeyboardType.FunctionsKeyboard) {
                     keyboardSwitcher.switchKeyboard(KeyboardType.FunctionsKeyboard);
                 } else {
                     keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
                 }
-                break;
+                return;
             case MoveLeft:
                 inText.moveCursorLeft();
                 return;
             case MoveRight:
                 inText.moveCursorRight();
                 return;
+            case Delete:
+                inText.delete();
+                break;
+            case DeleteAll:
+                inText.clear();
+                break;
             case Brackets:
                 inText.insertBrackets();
-                break;
-            case DoubleFactorial:
-                inText.insert("!!");
                 break;
             case Log:
                 inText.insertBinaryFunction(keyCode.toString().toLowerCase());
@@ -88,6 +87,9 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
                 break;
             case PowN:
                 inText.insert("^");
+                break;
+            case DoubleFactorial:
+                inText.insert("!!");
                 break;
             case Frac:
                 inText.insertFraction();
