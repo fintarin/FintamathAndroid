@@ -142,7 +142,7 @@ public class MathEditText extends MathTextViewBase {
         inputConnection.deleteSurroundingText(1, 0);
         invalidate();
 
-        if (mCurrentEditText.getText().toString().isEmpty()) {
+        if (mCurrentEditText.getText().toString().isEmpty() && getChildCount() != 1) {
             mCurrentEditText.setHint(mInnerHintText);
         }
     }

@@ -27,13 +27,14 @@ import kotlin.Pair;
  * todo
  * сделать, чтобы подсвечивались кнопки abc и f(x) при выборе
  * сделать фон чуть светлее
- * сделать 2 меню вывода
  * сделать, выделение кнопок, которые вызывают попап
  */
 public class MainActivity extends AppCompatActivity {
 
     private MathEditText inText;
     private TextView outText;
+    private TextView outTextFull;
+    private TextView alternativeFormTitle;
 
     private Map<KeyboardType, Pair<KeyboardView, Keyboard>> keyboards;
     private KeyboardView currentKeyboard;
@@ -52,7 +53,12 @@ public class MainActivity extends AppCompatActivity {
         outText = findViewById(R.id.outText);
         outText.setOnTouchListener(this::onTouchOutText);
 
-        calculatorProcessor = new CalculatorProcessor(this, inText, outText);
+        outTextFull = findViewById(R.id.outFullText);
+        outTextFull.setOnTouchListener(this::onTouchOutText);
+
+        alternativeFormTitle = findViewById(R.id.alternativeFormTitle);
+
+        calculatorProcessor = new CalculatorProcessor(this, inText, outText, outTextFull, alternativeFormTitle);
 
         initKeyboards();
         currentKeyboard.setVisibility(View.VISIBLE);
