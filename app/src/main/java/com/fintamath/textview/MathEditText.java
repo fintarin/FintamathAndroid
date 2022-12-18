@@ -72,7 +72,8 @@ public class MathEditText extends MathTextViewBase {
 
         mCurrentEditText = (EditText) inflate.inflate(mEditTextLayout, null);
         mInnerHintText = mCurrentEditText.getHint().toString();
-        appendEditText(mCurrentEditText);
+        insertEditText(mCurrentEditText, -1);
+        mCurrentEditText.setHint(mHintText);
         update();
     }
 
@@ -101,6 +102,26 @@ public class MathEditText extends MathTextViewBase {
         }
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (int i = 0; i < getChildCount(); i++) {
+            View view = getChildAt(i);
+            if (view instanceof EditText) {
+                EditText editText = (EditText) view;
+                if (!editText.getText().toString().isEmpty()) {
+                    return false;
+                }
+            } else if (view instanceof MathTextViewBase) {
+                MathTextViewBase mathTextView = (MathTextViewBase) view;
+                if (!mathTextView.isEmpty()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public void insert(String text) {
@@ -135,31 +156,65 @@ public class MathEditText extends MathTextViewBase {
         moveCursorRight();
     }
 
-    // TODO: implement removing fractions
     public void delete() {
-        InputConnection inputConnection = mCurrentEditText.onCreateInputConnection(new EditorInfo());
-        int cursorPosition = mCurrentEditText.getSelectionStart();
+        if (mCurrentEditText.getSelectionStart() == 0) {
+            MathTextViewBase currentEditTextParent = (MathTextViewBase) mCurrentEditText.getParent();
 
-        if (cursorPosition - 1 >= 0 && cursorPosition < mCurrentEditText.length() &&
-                mCurrentEditText.getText().charAt(cursorPosition - 1) == '(' &&
-                mCurrentEditText.getText().charAt(cursorPosition) == ')') {
-            inputConnection.deleteSurroundingText(1, 1);
-            return;
+            if (!(currentEditTextParent instanceof MathEditText) && currentEditTextParent.isEmpty()) {
+                MathEditText newEditTextParent = (MathEditText) currentEditTextParent.getParent();
+                int i = newEditTextParent.indexOfChild(currentEditTextParent);
+
+                setCurrentEditText((EditText) newEditTextParent.getChildAt(i - 1));
+                mCurrentEditText.setText(mCurrentEditText.getText().toString() +
+                        ((EditText) newEditTextParent.getChildAt(i + 1)).getText().toString());
+                mCurrentEditText.setSelection(mCurrentEditText.getText().length());
+
+                newEditTextParent.removeViewAt(i);
+                newEditTextParent.removeViewAt(i);
+
+                if (newEditTextParent != this && newEditTextParent.getChildCount() == 1) {
+                    View newEditTextParentChild = newEditTextParent.getChildAt(0);
+                            MathTextViewBase newEditTextParentParent = (MathTextViewBase) newEditTextParent.getParent();
+                    int j = newEditTextParentParent.indexOfChild(newEditTextParent);
+
+                    newEditTextParent.removeAllViews();
+                    newEditTextParentParent.removeViewAt(j);
+                    newEditTextParentParent.addView(newEditTextParentChild, j);
+                }
+            } else {
+                moveCursorLeft();
+            }
+        } else {
+            InputConnection inputConnection = mCurrentEditText.onCreateInputConnection(new EditorInfo());
+            int cursorPosition = mCurrentEditText.getSelectionStart();
+
+            if (cursorPosition - 1 >= 0 && cursorPosition < mCurrentEditText.length() &&
+                    mCurrentEditText.getText().charAt(cursorPosition - 1) == '(' &&
+                    mCurrentEditText.getText().charAt(cursorPosition) == ')') {
+                inputConnection.deleteSurroundingText(1, 1);
+                return;
+            }
+
+            inputConnection.deleteSurroundingText(1, 0);
         }
 
-        inputConnection.deleteSurroundingText(1, 0);
+        if (mCurrentEditText.getText().toString().isEmpty()) {
+            if (getChildCount() == 1) {
+                mCurrentEditText.setHint(mHintText);
+            } else {
+                mCurrentEditText.setHint(mInnerHintText);
+            }
+        }
+
         update();
-
-        if (mCurrentEditText.getText().toString().isEmpty() && getChildCount() != 1) {
-            mCurrentEditText.setHint(mInnerHintText);
-        }
     }
 
     public void clear() {
         removeAllViews();
-        appendEmptyEditText();
+        insertEditText((EditText) inflate.inflate(mEditTextLayout, null), -1);
         mCurrentEditText = (EditText) getChildAt(0);
         mCurrentEditText.requestFocus();
+        mCurrentEditText.setHint(mHintText);
         update();
     }
 
@@ -226,7 +281,6 @@ public class MathEditText extends MathTextViewBase {
     @Override
     protected void update() {
         updateViewsRec(this);
-        updateHint();
     }
 
     private void updateViewsRec(MathTextViewBase mathTextView) {
@@ -239,70 +293,57 @@ public class MathEditText extends MathTextViewBase {
         }
     }
 
-    private void updateHint() {
-        if (mCurrentEditText.getText().toString().isEmpty()) {
-            if (getChildCount() == 1) {
-                mCurrentEditText.setHint(mHintText);
-            } else {
-                mCurrentEditText.setHint("");
-            }
-        }
-    }
-
     @Override
     public void setOnTouchListener(OnTouchListener listener) {
         super.setOnTouchListener(listener);
         mOnTouchListener = listener;
     }
 
-    private void appendEditText(EditText editText) {
+    private void insertEditText(EditText editText, int i) {
         setCommonLayoutParams(editText);
         editText.setHint("");
         setEditTextOnTouchEventListener(editText);
-        addView(editText);
-    }
-
-    private void appendEmptyEditText() {
-        appendEditText((EditText) inflate.inflate(mEditTextLayout, null));
+        addView(editText, i);
     }
 
     private void insertMathTextView(MathTextViewBase insertedMathTextView) {
         setCommonLayoutParams(insertedMathTextView);
         setEditTextsOnTouchEventListener(insertedMathTextView);
 
+        int selectionStart = mCurrentEditText.getSelectionStart();
         EditText rightEditText = (EditText) inflate.inflate(mEditTextLayout, null);
-        rightEditText.setText(mCurrentEditText.getText().toString().substring(mCurrentEditText.getSelectionStart()));
-        mCurrentEditText.setText(mCurrentEditText.getText().toString().substring(0, mCurrentEditText.getSelectionStart()));
+        rightEditText.setText(mCurrentEditText.getText().toString().substring(selectionStart));
 
-        MathTextViewBase currentParentMathTextView = (MathTextViewBase) mCurrentEditText.getParent();
+        mCurrentEditText.setText(mCurrentEditText.getText().toString().substring(0, selectionStart));
+        mCurrentEditText.setSelection(selectionStart);
 
-        for (int i = 0; i < currentParentMathTextView.getChildCount(); i++) {
-            final View child = currentParentMathTextView.getChildAt(i);
+        MathTextViewBase currentEditTextParent = (MathTextViewBase) mCurrentEditText.getParent();
 
-            if (child == mCurrentEditText) {
-                if (currentParentMathTextView instanceof MathEditText) {
-                    mCurrentEditText.setHint("");
-                    MathEditText newMathTextView = (MathEditText) currentParentMathTextView;
-                    newMathTextView.addView(insertedMathTextView);
-                    newMathTextView.appendEditText(rightEditText);
-                } else {
-                    MathEditText newMathTextView = new MathEditText(getContext(), mAttrs);
-                    newMathTextView.setOnTouchListener(mOnTouchListener);
-                    newMathTextView.mHintText = "";
-                    newMathTextView.mCurrentEditText.setHint("");
+        int i = currentEditTextParent.indexOfChild(mCurrentEditText);
+        if (currentEditTextParent instanceof MathEditText) {
+            mCurrentEditText.setHint("");
+            MathEditText newMathEditText = (MathEditText) currentEditTextParent;
+            newMathEditText.addView(insertedMathTextView, i + 1);
 
-                    currentParentMathTextView.removeViewAt(i);
-                    currentParentMathTextView.addView(newMathTextView, i);
-
-                    newMathTextView.addView(insertedMathTextView);
-                    newMathTextView.appendEditText(rightEditText);
-                    newMathTextView.mCurrentEditText.setText(mCurrentEditText.getText());
-
-                    setCurrentEditText(newMathTextView.mCurrentEditText);
-                }
-
-                break;
+            if (currentEditTextParent.getChildCount() == i + 2 ||
+                    !(currentEditTextParent.getChildAt(i + 2) instanceof EditText)) {
+                newMathEditText.insertEditText(rightEditText, i + 2);
             }
+        } else {
+            MathEditText newMathEditText = new MathEditText(getContext(), mAttrs);
+            newMathEditText.setOnTouchListener(mOnTouchListener);
+            newMathEditText.mHintText = "";
+            newMathEditText.mCurrentEditText.setHint("");
+
+            currentEditTextParent.removeViewAt(i);
+            currentEditTextParent.addView(newMathEditText, i);
+
+            newMathEditText.addView(insertedMathTextView);
+            newMathEditText.insertEditText(rightEditText, -1);
+            newMathEditText.mCurrentEditText.setText(mCurrentEditText.getText());
+
+            setCurrentEditText(newMathEditText.mCurrentEditText);
+            mCurrentEditText.setSelection(selectionStart);
         }
     }
 
@@ -325,16 +366,17 @@ public class MathEditText extends MathTextViewBase {
     }
 
     private void setCurrentEditText(EditText editText) {
-        if (mCurrentEditText.getHint() == mInnerHintText) {
-            mCurrentEditText.setHint("");
+        if (mCurrentEditText != null) {
+            if (mCurrentEditText.getParent() instanceof MathEditText) {
+                mCurrentEditText.setHint("");
+            }
+
+            mCurrentEditText.clearFocus();
         }
 
-        mCurrentEditText.clearFocus();
         mCurrentEditText = editText;
         mCurrentEditText.requestFocus();
-
-        if (mCurrentEditText.getHint().toString().isEmpty()) {
-            mCurrentEditText.setHint(mInnerHintText);
-        }
+        mCurrentEditText.setHint(mInnerHintText);
+        update();
     }
 }

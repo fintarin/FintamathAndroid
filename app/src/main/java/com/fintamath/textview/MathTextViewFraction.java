@@ -62,6 +62,11 @@ class MathTextViewFraction extends MathTextViewBase {
     }
 
     @Override
+    public boolean isEmpty() {
+        return getTextFromView(getChildAt(NUMERATOR_ID)).isEmpty() && getTextFromView(getChildAt(DENOMINATOR_ID)).isEmpty();
+    }
+
+    @Override
     protected void update() {
         getChildAt(NUMERATOR_ID).measure(0, 0);
         getChildAt(DENOMINATOR_ID).measure(0, 0);

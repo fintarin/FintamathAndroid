@@ -21,6 +21,10 @@ class MathTextViewBase extends LinearLayout {
         return "";
     }
 
+    public boolean isEmpty() {
+        return true;
+    }
+
     protected void update() { }
 
     protected static void setCommonLayoutParams(View view) {
