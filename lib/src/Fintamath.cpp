@@ -4,13 +4,14 @@
 #include <jni.h>
 #include <string>
 
-extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Calculator_calculate(JNIEnv *env, jobject, jstring inputJStr) {
-  std::string inStr = env->GetStringUTFChars(inputJStr, nullptr);
+using namespace fintamath;
 
-  try {
-    auto outExpr = fintamath::Expression(inStr);
-    return env->NewStringUTF((outExpr.toString() + "\n" + outExpr.simplify(false)->toString()).c_str());
-  } catch (const fintamath::Exception &exc) {
-    return env->NewStringUTF(exc.what());
-  }
+extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Calculator_calculate(JNIEnv *env, jobject, jstring inJStr) {
+    std::string inStr = env->GetStringUTFChars(inJStr, nullptr);
+    try {
+        auto outExpr = fintamath::Expression(inStr);
+        return env->NewStringUTF((Expression(*outExpr.simplify(false)).toString(24) + "\n" + outExpr.toString()).c_str());
+    } catch (const fintamath::Exception &exc) {
+        return env->NewStringUTF(exc.what());
+    }
 }
