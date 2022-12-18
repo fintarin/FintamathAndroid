@@ -44,8 +44,6 @@ class MathTextViewBase extends LinearLayout {
             return "";
         }
 
-        stringBuilder.insert(0, "(").append(")");
-
         return stringBuilder.toString();
     }
 }

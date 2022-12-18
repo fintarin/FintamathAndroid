@@ -58,7 +58,7 @@ class MathTextViewFraction extends MathTextViewBase {
 
     @Override
     public String getText() {
-        return getTextFromView(getChildAt(NUMERATOR_ID)) + "/" + getTextFromView(getChildAt(DENOMINATOR_ID));
+        return "(" + getTextFromView(getChildAt(NUMERATOR_ID)) + ")/(" + getTextFromView(getChildAt(DENOMINATOR_ID)) + ")";
     }
 
     @Override
