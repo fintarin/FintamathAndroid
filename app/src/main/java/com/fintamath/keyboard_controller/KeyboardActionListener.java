@@ -1,10 +1,8 @@
-package com.fintamath.keyboard_listener;
+package com.fintamath.keyboard_controller;
 
 import android.inputmethodservice.KeyboardView;
 
 import com.fintamath.calculator.CalculatorProcessor;
-import com.fintamath.keyboard.KeyboardSwitcher;
-import com.fintamath.keyboard.KeyboardType;
 import com.fintamath.textview.MathEditText;
 
 public class KeyboardActionListener implements KeyboardView.OnKeyboardActionListener {

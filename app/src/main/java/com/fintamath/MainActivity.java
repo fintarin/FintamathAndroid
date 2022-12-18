@@ -14,9 +14,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.fintamath.calculator.CalculatorProcessor;
-import com.fintamath.keyboard_listener.KeyboardActionListener;
-import com.fintamath.keyboard.KeyboardSwitcher;
-import com.fintamath.keyboard.KeyboardType;
+import com.fintamath.keyboard_controller.KeyboardActionListener;
+import com.fintamath.keyboard_controller.KeyboardSwitcher;
+import com.fintamath.keyboard_controller.KeyboardType;
 import com.fintamath.textview.MathEditText;
 
 import java.util.Map;

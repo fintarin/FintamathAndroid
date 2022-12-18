@@ -1,4 +1,4 @@
-package com.fintamath.keyboard;
+package com.fintamath.keyboard_controller;
 
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
