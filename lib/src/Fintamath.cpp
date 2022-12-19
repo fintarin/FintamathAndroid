@@ -11,7 +11,7 @@ extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Calculator_calculate(
     std::string inStr = env->GetStringUTFChars(inJStr, nullptr);
     try {
         auto outExpr = Expression(inStr);
-        return env->NewStringUTF((Expression(*outExpr.simplify(false)).toString(24) + "\n" + outExpr.toString()).c_str());
+        return env->NewStringUTF((outExpr.solve(24) + "\n" + outExpr.toString()).c_str());
     } catch (const UndefinedException &exc) {
         return env->NewStringUTF("Undefined");
     } catch (const Exception &exc) {
