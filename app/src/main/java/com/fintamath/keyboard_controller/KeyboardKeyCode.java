@@ -5,7 +5,7 @@ import java.util.Map;
 
 enum KeyboardKeyCode {
     Delete(5996),
-    DeleteAll(5997),
+    NewLine(5997),
     MoveLeft(5998),
     MoveRight(5999),
     LettersKeyboard(6000),

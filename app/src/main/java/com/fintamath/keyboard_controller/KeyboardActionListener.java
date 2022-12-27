@@ -52,8 +52,8 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case Delete:
                 inText.delete();
                 break;
-            case DeleteAll:
-                inText.clear();
+            case NewLine:
+                // TODO
                 break;
             case Brackets:
                 inText.insertBrackets();

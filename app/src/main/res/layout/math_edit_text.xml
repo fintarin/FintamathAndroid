@@ -8,7 +8,7 @@
     android:paddingRight="2dp"
 
     android:maxLines="1"
-    android:inputType="textNoSuggestions"
+    android:inputType="textEmailAddress|textNoSuggestions"
 
     android:background="@color/md_grey_900"
 
