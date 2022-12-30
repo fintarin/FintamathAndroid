@@ -20,10 +20,10 @@
             android:isRepeatable="true" />
         <Key
             android:codes="5997"
-            android:keyLabel="ac" />
+            android:keyLabel="↩" />
         <Key
             android:codes="5996"
-            android:keyLabel="c"
+            android:keyLabel="⌫"
             android:isRepeatable="true" />
     </Row>
 
@@ -47,8 +47,7 @@
 
     <Row>
         <Key
-            android:codes="6006"
-            android:keyLabel="sqrt"/>
+            android:keyLabel="e"/>
         <Key
             android:codes="6024"
             android:keyLabel="exp" />
@@ -65,7 +64,7 @@
 
     <Row>
         <Key
-            android:keyLabel="e"/>
+            android:keyLabel="π"/>
         <Key
             android:keyLabel="!" />
         <Key
@@ -81,7 +80,8 @@
 
     <Row>
         <Key
-            android:keyLabel="π"/>
+            android:codes="6006"
+            android:keyLabel="sqrt"/>
         <Key
             android:codes="6025"
             android:keyLabel="!!" />

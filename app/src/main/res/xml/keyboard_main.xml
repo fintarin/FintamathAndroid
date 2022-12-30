@@ -20,10 +20,10 @@
             android:isRepeatable="true" />
         <Key
             android:codes="5997"
-            android:keyLabel="↵" />
+            android:keyLabel="↩" />
         <Key
             android:codes="5996"
-            android:keyLabel="⤆"
+            android:keyLabel="⌫"
             android:isRepeatable="true" />
     </Row>
 
