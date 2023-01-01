@@ -37,8 +37,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
 
-                    app:hint="Type a math problem..."
-                    app:textViewLayout="@layout/edit_text"
+                    app:hint="@string/math_edit_text_hint"
+                    app:nestedTextViewLayout="@layout/nested_edit_text"
                     app:fractionLineLayout="@layout/fraction_line" />
 
             </HorizontalScrollView>
@@ -81,7 +81,7 @@
                 android:background="@color/md_grey_900"
                 android:textColor="@color/md_grey_200_alpha"
 
-                android:text="Alternative Form"
+                android:text="@string/alternative_form"
                 android:textSize="20sp" />
 
             <HorizontalScrollView

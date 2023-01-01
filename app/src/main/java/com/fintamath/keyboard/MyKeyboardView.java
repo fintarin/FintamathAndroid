@@ -1,5 +1,6 @@
 package com.fintamath.keyboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.inputmethodservice.Keyboard;
@@ -64,6 +65,7 @@ public class MyKeyboardView extends KeyboardView {
         mIsMiniKeyboard = true;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent me) {
         if (mMiniKeyboardOnScreen && mMiniKeyboard != null && mMiniKeyboard.isAttachedToWindow()) {
@@ -149,7 +151,7 @@ public class MyKeyboardView extends KeyboardView {
         final int x = mPopupX + mMiniKeyboardContainer.getPaddingRight() + mCoordinates[0];
         final int y = mPopupY + mMiniKeyboardContainer.getPaddingBottom() + mCoordinates[1];
 
-        mMiniKeyboard.setPopupOffset(x < 0 ? 0 : x, y);
+        mMiniKeyboard.setPopupOffset(Math.max(x, 0), y);
         mMiniKeyboard.setShifted(isShifted());
         mPopupKeyboard.setContentView(mMiniKeyboardContainer);
         mPopupKeyboard.setWidth(mMiniKeyboardContainer.getMeasuredWidth());

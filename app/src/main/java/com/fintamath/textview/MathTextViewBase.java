@@ -1,12 +1,9 @@
 package com.fintamath.textview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.view.ActionMode;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -16,7 +13,7 @@ import android.widget.TextView;
 abstract class MathTextViewBase extends LinearLayout {
 
     public MathTextViewBase(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public MathTextViewBase(Context context, AttributeSet attrs) {
@@ -29,6 +26,7 @@ abstract class MathTextViewBase extends LinearLayout {
 
     abstract protected void update();
 
+    @SuppressLint("ClickableViewAccessibility")
     protected static void setCommonParams(View view) {
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;

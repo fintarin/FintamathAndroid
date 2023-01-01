@@ -1,5 +1,6 @@
 package com.fintamath.textview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.TypedValue;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 
 import com.fintamath.R;
 
+@SuppressLint("ViewConstructor")
 class MathTextViewFraction extends MathTextViewBase {
 
     public static final int NUMERATOR_ID = 0;
@@ -29,7 +31,7 @@ class MathTextViewFraction extends MathTextViewBase {
             int attr = attrArray.getIndex(i);
 
             switch (attr) {
-                case R.styleable.MathTextView_textViewLayout: {
+                case R.styleable.MathTextView_nestedTextViewLayout: {
                     mEditTextLayout = attrArray.getResourceId(attr, 0);
                     break;
                 }

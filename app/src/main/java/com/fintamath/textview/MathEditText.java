@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.fintamath.R;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MathEditText extends MathTextViewBase {
@@ -36,6 +36,10 @@ public class MathEditText extends MathTextViewBase {
             entry("π", "(pi)")
     );
 
+    public MathEditText(Context context) {
+        this(context, (AttributeSet) null);
+    }
+
     public MathEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         mAttrs = context.obtainStyledAttributes(attrs, R.styleable.MathTextView);
@@ -55,7 +59,7 @@ public class MathEditText extends MathTextViewBase {
             int attr = mAttrs.getIndex(i);
 
             switch (attr) {
-                case R.styleable.MathTextView_textViewLayout: {
+                case R.styleable.MathTextView_nestedTextViewLayout: {
                     mEditTextLayout = mAttrs.getResourceId(attr, 0);
                     break;
                 }
@@ -99,7 +103,7 @@ public class MathEditText extends MathTextViewBase {
         }
 
         for (String key : getTextReplacements.keySet()) {
-            stringBuilder = new StringBuilder(stringBuilder.toString().replaceAll(key, getTextReplacements.get(key)));
+            stringBuilder = new StringBuilder(stringBuilder.toString().replaceAll(key, Objects.requireNonNull(getTextReplacements.get(key))));
         }
 
         return stringBuilder.toString();

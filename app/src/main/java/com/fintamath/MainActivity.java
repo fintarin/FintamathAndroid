@@ -4,13 +4,10 @@ import static java.util.Map.entry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.fintamath.calculator.CalculatorProcessor;
@@ -20,20 +17,14 @@ import com.fintamath.keyboard_controller.KeyboardType;
 import com.fintamath.textview.MathEditText;
 
 import java.util.Map;
+import java.util.Objects;
 
 import kotlin.Pair;
 
 public class MainActivity extends AppCompatActivity {
 
     private MathEditText inText;
-    private TextView outText;
-    private TextView outTextFull;
-    private TextView alternativeFormTitle;
-
-    private Map<KeyboardType, Pair<KeyboardView, Keyboard>> keyboards;
     private KeyboardView currentKeyboard;
-    private KeyboardSwitcher keyboardSwitcher;
-
     private CalculatorProcessor calculatorProcessor;
 
     @Override
@@ -42,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         inText = findViewById(R.id.inText);
-        outText = findViewById(R.id.outText);
-        outTextFull = findViewById(R.id.outFullText);
+        TextView outText = findViewById(R.id.outText);
+        TextView outTextFull = findViewById(R.id.outFullText);
 
-        alternativeFormTitle = findViewById(R.id.alternativeFormTitle);
+        TextView alternativeFormTitle = findViewById(R.id.alternativeFormTitle);
 
         calculatorProcessor = new CalculatorProcessor(this, inText, outText, outTextFull, alternativeFormTitle);
 
@@ -56,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initKeyboards() {
-        keyboards = Map.ofEntries(
+        Map<KeyboardType, Pair<KeyboardView, Keyboard>> keyboards = Map.ofEntries(
                 entry(KeyboardType.MainKeyboard, new Pair<>(
                         findViewById(R.id.main_keyboard_view),
                         new Keyboard(this, R.xml.keyboard_main)
@@ -72,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         );
 
         KeyboardType currentKeyboardType = KeyboardType.MainKeyboard;
-        currentKeyboard = keyboards.get(currentKeyboardType).getFirst();
-        keyboardSwitcher = new KeyboardSwitcher(keyboards, currentKeyboard, currentKeyboardType);
+        currentKeyboard = Objects.requireNonNull(keyboards.get(currentKeyboardType)).getFirst();
+        KeyboardSwitcher keyboardSwitcher = new KeyboardSwitcher(keyboards, currentKeyboard, currentKeyboardType);
 
         Map<KeyboardType, KeyboardView.OnKeyboardActionListener> listeners = Map.ofEntries(
                 entry(KeyboardType.MainKeyboard,

@@ -5,6 +5,7 @@ import android.inputmethodservice.KeyboardView;
 import android.view.View;
 
 import java.util.Map;
+import java.util.Objects;
 
 import kotlin.Pair;
 
@@ -22,7 +23,7 @@ public class KeyboardSwitcher {
 
     public void switchKeyboard(KeyboardType keyboardType) {
         currentKeyboard.setVisibility(View.GONE);
-        currentKeyboard = keyboards.get(keyboardType).getFirst();
+        currentKeyboard = Objects.requireNonNull(keyboards.get(keyboardType)).getFirst();
         currentKeyboard.setVisibility(View.VISIBLE);
         currentKeyboardType = keyboardType;
     }
