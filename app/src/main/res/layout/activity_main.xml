@@ -38,7 +38,7 @@
                     android:layout_gravity="center_vertical"
 
                     app:hint="Type a math problem..."
-                    app:textViewLayout="@layout/math_edit_text"
+                    app:textViewLayout="@layout/edit_text"
                     app:fractionLineLayout="@layout/fraction_line" />
 
             </HorizontalScrollView>

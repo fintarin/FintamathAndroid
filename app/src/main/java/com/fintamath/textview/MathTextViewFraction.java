@@ -3,10 +3,7 @@ package com.fintamath.textview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
 
 import com.fintamath.R;
 
@@ -52,8 +49,8 @@ class MathTextViewFraction extends MathTextViewBase {
         addView(inflate.inflate(mFractionLineLayout, null));
         addView(inflate.inflate(mEditTextLayout, null));
 
-        setCommonLayoutParams(getChildAt(NUMERATOR_ID));
-        setCommonLayoutParams(getChildAt(DENOMINATOR_ID));
+        setCommonParams(getChildAt(NUMERATOR_ID));
+        setCommonParams(getChildAt(DENOMINATOR_ID));
     }
 
     @Override

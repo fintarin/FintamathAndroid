@@ -42,13 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         inText = findViewById(R.id.inText);
-        inText.setOnTouchListener(this::onTouchInText);
-
         outText = findViewById(R.id.outText);
-        outText.setOnTouchListener(this::onTouchOutText);
-
         outTextFull = findViewById(R.id.outFullText);
-        outTextFull.setOnTouchListener(this::onTouchOutText);
 
         alternativeFormTitle = findViewById(R.id.alternativeFormTitle);
 
@@ -96,31 +91,5 @@ public class MainActivity extends AppCompatActivity {
             value.getFirst().setKeyboard(value.getSecond());
             value.getFirst().setOnKeyboardActionListener(listeners.get(key));
         });
-    }
-
-    private boolean onTouchInText(View view, MotionEvent event) {
-        hideSystemKeyboard(view);
-
-        if (view.equals(inText)) {
-            inText.requestFocus();
-            currentKeyboard.setVisibility(View.VISIBLE);
-        }
-
-        return true;
-    }
-
-    private boolean onTouchOutText(View view, MotionEvent motionEvent) {
-        if (view.equals(outText)) {
-            currentKeyboard.setVisibility(View.GONE);
-            inText.clearFocus();
-        }
-
-        return true;
-    }
-
-    private void hideSystemKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
