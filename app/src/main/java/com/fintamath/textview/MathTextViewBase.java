@@ -46,7 +46,7 @@ abstract class MathTextViewBase extends LinearLayout {
 
                 if (textView.hasSelection()) {
                     int doubleClickDelay = 100;
-                    textView.onTouchEvent(MotionEvent.obtain(event.getDownTime() + doubleClickDelay, event.getEventTime(),
+                    res = textView.onTouchEvent(MotionEvent.obtain(event.getDownTime() + doubleClickDelay, event.getEventTime(),
                             event.getAction(), event.getX(), event.getY(), event.getMetaState()));
                 }
 

@@ -376,7 +376,7 @@ public class MathEditText extends MathTextViewBase {
         MathEditText baseMathEditText = (MathEditText) baseMathTextView;
 
         insertedEditText.setOnClickListener(v -> {
-            if (insertedEditText != mCurrentEditText) {
+            if (insertedEditText != baseMathEditText.mCurrentEditText) {
                 baseMathEditText.setCurrentEditText(insertedEditText);
             }
         });
