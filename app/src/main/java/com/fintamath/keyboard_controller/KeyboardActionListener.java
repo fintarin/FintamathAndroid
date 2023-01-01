@@ -29,19 +29,20 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
         }
 
         switch (keyCode) {
+            case MainKeyboard:
+                keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
+                return;
             case LettersKeyboard:
-                if (keyboardSwitcher.getCurrentKeyboardType() != KeyboardType.LettersKeyboard) {
-                    keyboardSwitcher.switchKeyboard(KeyboardType.LettersKeyboard);
-                } else {
-                    keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
-                }
+                keyboardSwitcher.switchKeyboard(KeyboardType.LettersKeyboard);
                 return;
             case FunctionsKeyboard:
-                if (keyboardSwitcher.getCurrentKeyboardType() != KeyboardType.FunctionsKeyboard) {
-                    keyboardSwitcher.switchKeyboard(KeyboardType.FunctionsKeyboard);
-                } else {
-                    keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
-                }
+                keyboardSwitcher.switchKeyboard(KeyboardType.FunctionsKeyboard);
+                return;
+            case History:
+                // TODO
+                return;
+            case NewLine:
+                // TODO
                 return;
             case MoveLeft:
                 inText.moveCursorLeft();
@@ -52,8 +53,8 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case Delete:
                 inText.delete();
                 break;
-            case NewLine:
-                // TODO
+            case Clear:
+                inText.clear();
                 break;
             case Brackets:
                 inText.insertBrackets();

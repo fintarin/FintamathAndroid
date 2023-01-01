@@ -5,11 +5,11 @@
 
     <Row>
         <Key
-            android:codes="6000"
-            android:keyLabel="abc" />
+            android:codes="5997"
+            android:keyLabel="ac" />
         <Key
-            android:codes="6001"
-            android:keyLabel="f(x)" />
+            android:codes="6033"
+            android:keyLabel="↻" />
         <Key
             android:codes="5998"
             android:keyLabel="←"
@@ -19,12 +19,26 @@
             android:keyLabel="→"
             android:isRepeatable="true" />
         <Key
-            android:codes="5997"
+            android:codes="6034"
             android:keyLabel="↩" />
         <Key
             android:codes="5996"
             android:keyLabel="⌫"
             android:isRepeatable="true" />
+    </Row>
+
+    <Row
+        android:keyWidth="33%">
+
+        <Key
+            android:codes="6035"
+            android:keyLabel="+/-" />
+        <Key
+            android:codes="6000"
+            android:keyLabel="abc" />
+        <Key
+            android:codes="6001"
+            android:keyLabel="f(x)" />
     </Row>
 
     <Row>

@@ -5,9 +5,10 @@ import java.util.Map;
 
 enum KeyboardKeyCode {
     Delete(5996),
-    NewLine(5997),
+    Clear(5997),
     MoveLeft(5998),
     MoveRight(5999),
+    MainKeyboard(6035),
     LettersKeyboard(6000),
     FunctionsKeyboard(6001),
     Brackets(6002),
@@ -32,6 +33,8 @@ enum KeyboardKeyCode {
     DoubleFactorial(6025),
     Frac(6031),
     Root(6032),
+    History(6033),
+    NewLine(6034),
     ;
 
     private final int value;
