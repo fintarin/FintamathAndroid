@@ -30,6 +30,7 @@ public class MathEditText extends MathTextViewBase {
     private final Map<String, String> getTextReplacements = Map.ofEntries(
             entry("÷", "/"),
             entry("×", "*"),
+            entry("≠", "!="),
             entry("≤", "<="),
             entry("≥", ">="),
             entry("π", "(pi)")

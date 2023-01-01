@@ -105,7 +105,8 @@
         <Key
             android:keyLabel="." />
         <Key
-            android:keyLabel="=" />
+            android:keyLabel="="
+            android:popupKeyboard="@xml/popup_keyboard_main_equal" />
         <Key
             android:keyLabel="+" />
     </Row>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="16.67%"
+    android:keyHeight="9%">
+
+    <Row>
+        <Key
+            android:keyLabel="=" />
+        <Key
+            android:keyLabel="≠"/>
+    </Row>
+
+</Keyboard>
