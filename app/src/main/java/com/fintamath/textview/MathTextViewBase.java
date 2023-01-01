@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-class MathTextViewBase extends LinearLayout {
+abstract class MathTextViewBase extends LinearLayout {
 
     public MathTextViewBase(Context context) {
         super(context);
@@ -23,15 +23,11 @@ class MathTextViewBase extends LinearLayout {
         super(context, attrs);
     }
 
-    public String getText() {
-        return "";
-    }
+    abstract public String getText();
 
-    public boolean isEmpty() {
-        return true;
-    }
+    abstract public boolean isEmpty();
 
-    protected void update() { }
+    abstract protected void update();
 
     protected static void setCommonParams(View view) {
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
