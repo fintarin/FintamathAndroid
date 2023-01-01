@@ -18,6 +18,6 @@
     android:text=""
     android:textSize="20sp"
     android:textColor="@color/md_grey_200"
-    android:textCursorDrawable="@drawable/color_cursor" >
+    android:textCursorDrawable="@drawable/cursor" >
 
 </EditText>
