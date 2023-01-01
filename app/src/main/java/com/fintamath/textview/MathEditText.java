@@ -180,6 +180,8 @@ public class MathEditText extends MathTextViewBase {
                     newEditTextParent.removeAllViews();
                     newEditTextParentParent.removeViewAt(j);
                     newEditTextParentParent.addView(newEditTextParentChild, j);
+
+                    setCurrentEditText(mCurrentEditText);
                 }
             } else {
                 moveCursorLeft();
