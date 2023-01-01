@@ -170,9 +170,10 @@ public class MathEditText extends MathTextViewBase {
                 int i = newEditTextParent.indexOfChild(currentEditTextParent);
 
                 setCurrentEditText((EditText) newEditTextParent.getChildAt(i - 1));
+                int selectionStart = mCurrentEditText.getText().length();
+
                 mCurrentEditText.setText(mCurrentEditText.getText().toString() +
                         ((EditText) newEditTextParent.getChildAt(i + 1)).getText().toString());
-                mCurrentEditText.setSelection(mCurrentEditText.getText().length());
 
                 newEditTextParent.removeViewAt(i);
                 newEditTextParent.removeViewAt(i);
@@ -188,6 +189,8 @@ public class MathEditText extends MathTextViewBase {
 
                     setCurrentEditText(mCurrentEditText);
                 }
+
+                mCurrentEditText.setSelection(selectionStart);
             } else {
                 moveCursorLeft();
             }
