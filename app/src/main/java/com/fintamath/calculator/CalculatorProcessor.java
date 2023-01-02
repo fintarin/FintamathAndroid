@@ -4,26 +4,27 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.fintamath.textview.MathAlternativesTextView;
 import com.fintamath.textview.MathEditText;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class CalculatorProcessor {
 
     private final Activity activity;
-    private final MathEditText inText;
-    private final TextView outText;
-    private final TextView outTextFull;
-    private final View alternativeFormTitle;
+    private final MathEditText inTextView;
+    private final MathAlternativesTextView outTextView;
 
     private final Calculator calculator;
 
     private Thread calcThread;
 
-    public CalculatorProcessor(Activity activity, MathEditText inText, TextView outText, TextView outFullText, View alternativeFormTitle) {
+    public CalculatorProcessor(Activity activity, MathEditText inTextView, MathAlternativesTextView outTextView) {
         this.activity = activity;
-        this.inText = inText;
-        this.outText = outText;
-        this.outTextFull = outFullText;
-        this.alternativeFormTitle = alternativeFormTitle;
+        this.inTextView = inTextView;
+        this.outTextView = outTextView;
         this.calculator = new Calculator();
     }
 
@@ -32,39 +33,23 @@ public class CalculatorProcessor {
             calcThread.interrupt();
         }
 
-        String text = inText.getText();
+        String text = inTextView.getText();
         if (text.isEmpty()) {
-            outText.setText("");
-            outTextFull.setText("");
-            alternativeFormTitle.setVisibility(View.GONE);
+            outTextView.setTexts(null);
             return;
         }
 
         calcThread = new Thread(() -> {
             activity.runOnUiThread(() -> {
-                outText.setText(". . .");
-                outTextFull.setText("");
-                alternativeFormTitle.setVisibility(View.GONE);
+                outTextView.setTexts(List.of(". . ."));
             });
 
             String resData = calculator.calculate(text);
-            int i = resData.indexOf('\n');
 
             if (Thread.currentThread() == calcThread) {
                 activity.runOnUiThread(() -> {
-                    if (i != -1) {
-                        String res = resData.substring(0, resData.indexOf('\n'));
-                        String resFull = resData.substring(resData.indexOf('\n') + 1);
-
-                        outText.setText(res);
-
-                        if (!resFull.isEmpty() && !resFull.equals(res)) {
-                            alternativeFormTitle.setVisibility(View.VISIBLE);
-                            outTextFull.setText(resFull);
-                        }
-                    } else {
-                        outText.setText(resData);
-                    }
+                    List<String> results = List.of(resData.split("\n"));
+                    outTextView.setTexts(results);
                 });
             }
         });

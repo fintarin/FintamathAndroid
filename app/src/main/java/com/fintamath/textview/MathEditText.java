@@ -24,7 +24,7 @@ public class MathEditText extends MathTextViewBase {
     private String mHintText;
     private String mInnerHintText;
 
-    private LayoutInflater inflate;
+    private LayoutInflater mInflate;
     private EditText mCurrentEditText;
 
     private final Map<String, String> getTextReplacements = Map.ofEntries(
@@ -73,9 +73,9 @@ public class MathEditText extends MathTextViewBase {
             }
         }
 
-        inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        mCurrentEditText = (EditText) inflate.inflate(mEditTextLayout, null);
+        mCurrentEditText = (EditText) mInflate.inflate(mEditTextLayout, null);
         mInnerHintText = mCurrentEditText.getHint().toString();
         insertEditText(mCurrentEditText, -1);
         mCurrentEditText.setHint(mHintText);
@@ -221,7 +221,7 @@ public class MathEditText extends MathTextViewBase {
 
     public void clear() {
         removeAllViews();
-        insertEditText((EditText) inflate.inflate(mEditTextLayout, null), -1);
+        insertEditText((EditText) mInflate.inflate(mEditTextLayout, null), -1);
         mCurrentEditText = (EditText) getChildAt(0);
         mCurrentEditText.requestFocus();
         mCurrentEditText.setHint(mHintText);
@@ -323,7 +323,7 @@ public class MathEditText extends MathTextViewBase {
         }
 
         int selectionStart = mCurrentEditText.getSelectionStart();
-        EditText rightEditText = (EditText) inflate.inflate(mEditTextLayout, null);
+        EditText rightEditText = (EditText) mInflate.inflate(mEditTextLayout, null);
         rightEditText.setText(mCurrentEditText.getText().toString().substring(selectionStart));
 
         mCurrentEditText.setText(mCurrentEditText.getText().toString().substring(0, selectionStart));

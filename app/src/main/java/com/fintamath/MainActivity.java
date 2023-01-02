@@ -14,6 +14,7 @@ import com.fintamath.calculator.CalculatorProcessor;
 import com.fintamath.keyboard_controller.KeyboardActionListener;
 import com.fintamath.keyboard_controller.KeyboardSwitcher;
 import com.fintamath.keyboard_controller.KeyboardType;
+import com.fintamath.textview.MathAlternativesTextView;
 import com.fintamath.textview.MathEditText;
 
 import java.util.Map;
@@ -24,6 +25,7 @@ import kotlin.Pair;
 public class MainActivity extends AppCompatActivity {
 
     private MathEditText inText;
+    private MathAlternativesTextView outText;
     private KeyboardView currentKeyboard;
     private CalculatorProcessor calculatorProcessor;
 
@@ -33,12 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         inText = findViewById(R.id.inText);
-        TextView outText = findViewById(R.id.outText);
-        TextView outTextFull = findViewById(R.id.outFullText);
-
-        TextView alternativeFormTitle = findViewById(R.id.alternativeFormTitle);
-
-        calculatorProcessor = new CalculatorProcessor(this, inText, outText, outTextFull, alternativeFormTitle);
+        outText = findViewById(R.id.outText);
+        calculatorProcessor = new CalculatorProcessor(this, inText, outText);
 
         initKeyboards();
         currentKeyboard.setVisibility(View.VISIBLE);

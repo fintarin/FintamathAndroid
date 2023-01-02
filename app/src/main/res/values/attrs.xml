@@ -7,6 +7,12 @@
         <attr name="hint" format="string" />
     </declare-styleable>
 
+    <declare-styleable name="MathAlternativesTextView">
+        <attr name="alternativeLayout" format="reference" />
+        <attr name="alternativeTextViewLayout" format="reference" />
+        <attr name="alternativeDelimiterLayout" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="KeyboardView">
         <!-- Default KeyboardView style. -->
         <attr name="keyboardViewStyle" format="reference" />
