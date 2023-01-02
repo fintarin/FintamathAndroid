@@ -26,9 +26,6 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="100dp"
-                android:padding="10dp"
-                android:paddingStart="8dp"
                 android:scrollbars="none">
 
                 <com.fintamath.textview.MathEditText
@@ -36,7 +33,10 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:minHeight="100dp"
                     android:layout_gravity="center_vertical"
+                    android:padding="10dp"
+                    android:paddingStart="8dp"
 
                     app:hint="@string/math_edit_text_hint"
                     app:nestedTextViewLayout="@layout/nested_edit_text"
@@ -56,7 +56,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
 
-                app:alternativeLayout="@layout/alternative_layout"
+                app:alternativeLayout="@layout/horizontal_scroll_view"
                 app:alternativeTextViewLayout="@layout/alternative_text_view"
                 app:alternativeDelimiterLayout="@layout/alternative_delimiter" />
 

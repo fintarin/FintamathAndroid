@@ -38,6 +38,10 @@ abstract class MathTextViewBase extends LinearLayout {
             textView.setLongClickable(false);
 
             textView.setOnTouchListener((v, event) -> {
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    return true;
+                }
+
                 boolean res = textView.onTouchEvent(event);
 
                 textView.clearFocus();
