@@ -103,7 +103,8 @@
         <Key
             android:keyLabel="0" />
         <Key
-            android:keyLabel="." />
+            android:keyLabel="."
+            android:popupKeyboard="@xml/popup_keyboard_main_point"/>
         <Key
             android:keyLabel="="
             android:popupKeyboard="@xml/popup_keyboard_main_equal" />
