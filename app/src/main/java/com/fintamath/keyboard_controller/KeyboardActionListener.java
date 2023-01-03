@@ -24,6 +24,7 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
 
         if (keyCode == null) {
             inText.insert(String.valueOf((char) primaryCode));
+            keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
             calculatorProcessor.calculate();
             return;
         }
@@ -52,10 +53,12 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
                 return;
             case Delete:
                 inText.delete();
-                break;
+                calculatorProcessor.calculate();
+                return;
             case Clear:
                 inText.clear();
-                break;
+                calculatorProcessor.calculate();
+                return;
             case Brackets:
                 inText.insertBrackets();
                 break;
@@ -96,6 +99,7 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             default:
         }
 
+        keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
         calculatorProcessor.calculate();
     }
 

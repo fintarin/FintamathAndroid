@@ -22,6 +22,10 @@ public class KeyboardSwitcher {
     }
 
     public void switchKeyboard(KeyboardType keyboardType) {
+        if (currentKeyboardType == keyboardType) {
+            return;
+        }
+
         currentKeyboard.setVisibility(View.GONE);
         currentKeyboard = Objects.requireNonNull(keyboards.get(keyboardType)).getFirst();
         currentKeyboard.setVisibility(View.VISIBLE);
