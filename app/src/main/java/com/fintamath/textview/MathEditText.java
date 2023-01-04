@@ -33,7 +33,10 @@ public class MathEditText extends MathTextViewBase {
             entry("≠", "!="),
             entry("≤", "<="),
             entry("≥", ">="),
-            entry("π", "(pi)")
+            entry("π", "(pi)"),
+            entry("¬", "!"),
+            entry("∧", "&&"),
+            entry("∨", "||")
     );
 
     public MathEditText(Context context) {

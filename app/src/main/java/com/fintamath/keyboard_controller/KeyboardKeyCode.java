@@ -11,6 +11,7 @@ enum KeyboardKeyCode {
     MainKeyboard(6035),
     LettersKeyboard(6000),
     FunctionsKeyboard(6001),
+    LogicKeyboard(6038),
     Brackets(6002),
     Pow2(6003),
     Pow3(6004),
@@ -30,11 +31,13 @@ enum KeyboardKeyCode {
     Lg(6022),
     Abs(6023),
     Exp(6024),
-    DoubleFactorial(6025),
+    Derivative(6025),
     Frac(6031),
     Root(6032),
     History(6033),
     NewLine(6034),
+    True(6036),
+    False(6037),
     ;
 
     private final int value;

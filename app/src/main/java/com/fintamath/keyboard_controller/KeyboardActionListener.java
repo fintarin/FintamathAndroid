@@ -22,9 +22,13 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
     @Override public void onKey(int primaryCode, int[] keyCodes) {
         KeyboardKeyCode keyCode = KeyboardKeyCode.valueOf(primaryCode);
 
+        if (primaryCode == ' ') {
+            return;
+        }
+
         if (keyCode == null) {
             inText.insert(String.valueOf((char) primaryCode));
-            keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
+            switchKeyboardToMain();
             calculatorProcessor.calculate();
             return;
         }
@@ -38,6 +42,9 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
                 return;
             case FunctionsKeyboard:
                 keyboardSwitcher.switchKeyboard(KeyboardType.FunctionsKeyboard);
+                return;
+            case LogicKeyboard:
+                keyboardSwitcher.switchKeyboard(KeyboardType.LogicKeyboard);
                 return;
             case History:
                 // TODO
@@ -90,17 +97,27 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case PowN:
                 inText.insert("^");
                 break;
-            case DoubleFactorial:
-                inText.insert("!!");
+            case Derivative:
+                inText.insert("'");
                 break;
             case Frac:
                 inText.insertFraction();
                 break;
+            case True:
+            case False:
+                inText.insert(keyCode.toString().toLowerCase());
+                break;
             default:
         }
 
-        keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
+        switchKeyboardToMain();
         calculatorProcessor.calculate();
+    }
+
+    private void switchKeyboardToMain() {
+        if (keyboardSwitcher.getCurrentKeyboardType() != KeyboardType.LogicKeyboard) {
+            keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard);
+        }
     }
 
     @Override public void onPress(int arg0) {

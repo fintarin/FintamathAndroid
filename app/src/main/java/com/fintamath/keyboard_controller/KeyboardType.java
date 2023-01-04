@@ -4,4 +4,5 @@ public enum KeyboardType {
     MainKeyboard,
     LettersKeyboard,
     FunctionsKeyboard,
+    LogicKeyboard,
 }

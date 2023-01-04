@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
                 entry(KeyboardType.FunctionsKeyboard, new Pair<>(
                         findViewById(R.id.functions_keyboard_view),
                         new Keyboard(this, R.xml.keyboard_functions)
+                )),
+                entry(KeyboardType.LogicKeyboard, new Pair<>(
+                        findViewById(R.id.logic_keyboard_view),
+                        new Keyboard(this, R.xml.keyboard_logic)
                 ))
         );
 
@@ -72,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                         new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
                 ),
                 entry(KeyboardType.FunctionsKeyboard,
+                        new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
+                ),
+                entry(KeyboardType.LogicKeyboard,
                         new KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
                 )
         );

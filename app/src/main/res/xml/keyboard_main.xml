@@ -27,9 +27,7 @@
             android:isRepeatable="true" />
     </Row>
 
-    <Row
-        android:keyWidth="33%">
-
+    <Row android:keyWidth="40%">
         <Key
             android:codes="6035"
             android:keyLabel="+/-" />
@@ -39,6 +37,9 @@
         <Key
             android:codes="6001"
             android:keyLabel="f(x)" />
+        <Key
+            android:codes="6038"
+            android:keyLabel="T/F" />
     </Row>
 
     <Row>
