@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="20%"
+    android:keyWidth="100%"
     android:keyHeight="9%">
 
     <Row>
@@ -27,7 +27,7 @@
             android:isRepeatable="true" />
     </Row>
 
-    <Row android:keyWidth="40%">
+    <Row>
         <Key
             android:codes="6035"
             android:keyLabel="+/-" />

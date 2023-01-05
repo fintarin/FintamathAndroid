@@ -36,8 +36,6 @@ enum KeyboardKeyCode {
     Root(6032),
     History(6033),
     NewLine(6034),
-    True(6036),
-    False(6037),
     ;
 
     private final int value;

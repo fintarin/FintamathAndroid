@@ -103,10 +103,6 @@ public class KeyboardActionListener implements KeyboardView.OnKeyboardActionList
             case Frac:
                 inText.insertFraction();
                 break;
-            case True:
-            case False:
-                inText.insert(keyCode.toString().toLowerCase());
-                break;
             default:
         }
 
