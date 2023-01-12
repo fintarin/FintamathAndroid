@@ -10,4 +10,9 @@
             android:keyLabel="≥"/>
     </Row>
 
+    <Row>
+        <Key
+            android:keyLabel=" " />
+    </Row>
+
 </Keyboard>

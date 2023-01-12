@@ -15,4 +15,9 @@
             android:keyLabel="□ⁿ" />
     </Row>
 
+    <Row>
+        <Key
+            android:keyLabel=" " />
+    </Row>
+
 </Keyboard>

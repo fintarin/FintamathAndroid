@@ -147,7 +147,7 @@ public class MyKeyboardView extends KeyboardView {
         getLocationInWindow(mCoordinates);
         int mPopupX = popupKey.x + getPaddingLeft();
         int mPopupY = popupKey.y + getPaddingTop();
-        mPopupY = mPopupY - mMiniKeyboardContainer.getMeasuredHeight();
+        mPopupY = mPopupY - mMiniKeyboardContainer.getMeasuredHeight() / 2;
         final int x = mPopupX + mMiniKeyboardContainer.getPaddingRight() + mCoordinates[0];
         final int y = mPopupY + mMiniKeyboardContainer.getPaddingBottom() + mCoordinates[1];
 
