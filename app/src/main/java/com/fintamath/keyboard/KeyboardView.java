@@ -134,8 +134,8 @@ public class KeyboardView extends View implements View.OnClickListener {
 
     private Keyboard mKeyboard;
     private int mCurrentKeyIndex = NOT_A_KEY;
-    private int mKeyTextSize = 18;
-    private int mKeyTextColor = 0xFF000000;
+    private int mKeyTextSize;
+    private int mKeyTextColor;
 
     private TextView mPreviewText;
     private View mPreviewTextContainer;
@@ -262,32 +262,12 @@ public class KeyboardView extends View implements View.OnClickListener {
 
         int previewLayout = 0;
 
-        int n = a.getIndexCount();
-
-        for (int i = 0; i < n; i++) {
-            int attr = a.getIndex(i);
-
-            switch (attr) {
-                case R.styleable.KeyboardView_keyBackground:
-                    mKeyBackground = a.getDrawable(attr);
-                    break;
-                case R.styleable.KeyboardView_verticalCorrection:
-                    mVerticalCorrection = a.getDimensionPixelOffset(attr, mVerticalCorrection);
-                    break;
-                case R.styleable.KeyboardView_keyPreviewLayout:
-                    previewLayout = a.getResourceId(attr, previewLayout);
-                    break;
-                case R.styleable.KeyboardView_keyTextSize:
-                    mKeyTextSize = a.getDimensionPixelSize(attr, mKeyTextSize);
-                    break;
-                case R.styleable.KeyboardView_keyTextColor:
-                    mKeyTextColor = a.getColor(attr, mKeyTextColor);
-                    break;
-                case R.styleable.KeyboardView_popupLayout:
-                    mPopupLayout = a.getResourceId(attr, 0);
-                    break;
-            }
-        }
+        mKeyBackground = a.getDrawable(R.styleable.KeyboardView_keyboardKeyBackground);
+        mVerticalCorrection = a.getDimensionPixelOffset(R.styleable.KeyboardView_verticalCorrection, 0);
+        previewLayout = a.getResourceId(R.styleable.KeyboardView_keyboardKeyPreviewLayout, 0);
+        mKeyTextSize = a.getDimensionPixelSize(R.styleable.KeyboardView_keyboardKeyTextSize, 18);
+        mKeyTextColor = a.getColor(R.styleable.KeyboardView_keyboardKeyTextColor, 0xFF000000);
+        mPopupLayout = a.getResourceId(R.styleable.KeyboardView_popupLayout, 0);
 
         a.recycle();
 

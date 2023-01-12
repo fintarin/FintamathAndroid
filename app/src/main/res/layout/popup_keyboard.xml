@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/popup_keyboard_background"
-    app:keyTextColor="@color/text_main"
-    app:keyBackground="@drawable/popup_key_background"
-    app:keyPreviewLayout="@layout/popup_key_preview"
-    app:keyTextSize="@dimen/text_size_main">
+    app:keyboardKeyTextColor="@color/text_main"
+    app:keyboardKeyBackground="@drawable/popup_key_background"
+    app:keyboardKeyPreviewLayout="@layout/popup_key_preview"
+    app:keyboardKeyTextSize="@dimen/text_size_main">
 </com.fintamath.keyboard.KeyboardView>

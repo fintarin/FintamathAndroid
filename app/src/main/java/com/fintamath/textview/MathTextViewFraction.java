@@ -17,33 +17,15 @@ class MathTextViewFraction extends MathTextViewBase {
 
     private static final int FRACTION_LINE_HEIGHT = 1;
 
-    private int mEditTextLayout;
-    private int mFractionLineLayout;
-
-    public MathTextViewFraction(Context context, TypedArray attrArray) {
+    public MathTextViewFraction(Context context, TypedArray attrs) {
         super(context);
 
         setOrientation(VERTICAL);
 
-        int n = attrArray.getIndexCount();
+        int mEditTextLayout = attrs.getResourceId(R.styleable.MathTextView_nestedTextViewLayout, 0);
+        int mFractionLineLayout = attrs.getResourceId(R.styleable.MathTextView_fractionLineLayout, 0);
 
-        for (int i = 0; i < n; i++) {
-            int attr = attrArray.getIndex(i);
-
-            switch (attr) {
-                case R.styleable.MathTextView_nestedTextViewLayout: {
-                    mEditTextLayout = attrArray.getResourceId(attr, 0);
-                    break;
-                }
-                case R.styleable.MathTextView_fractionLineLayout: {
-                    mFractionLineLayout = attrArray.getResourceId(attr, 0);
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
+        attrs.recycle();
 
         LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

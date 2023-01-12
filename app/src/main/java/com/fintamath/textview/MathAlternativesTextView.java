@@ -17,12 +17,12 @@ import java.util.List;
 
 public class MathAlternativesTextView extends LinearLayout {
 
-    private int mTextViewLayout;
-    private int mDelimiterLayout;
-    private int mLayout;
+    private final int mTextViewLayout;
+    private final int mDelimiterLayout;
+    private final int mLayout;
 
-    private LayoutInflater mInflate;
-    private TextView mMainTextView;
+    private final LayoutInflater mInflate;
+    private final TextView mMainTextView;
 
     public MathAlternativesTextView(Context context) {
         this(context, null);
@@ -34,29 +34,12 @@ public class MathAlternativesTextView extends LinearLayout {
         setOrientation(VERTICAL);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MathAlternativesTextView);
-        int n = a.getIndexCount();
 
-        for (int i = 0; i < n; i++) {
-            int attr = a.getIndex(i);
+        mLayout = a.getResourceId(R.styleable.MathAlternativesTextView_alternativeLayout, 0);
+        mTextViewLayout = a.getResourceId(R.styleable.MathAlternativesTextView_alternativeTextViewLayout, 0);
+        mDelimiterLayout = a.getResourceId(R.styleable.MathAlternativesTextView_alternativeDelimiterLayout, 0);
 
-            switch (attr) {
-                case R.styleable.MathAlternativesTextView_alternativeLayout: {
-                    mLayout = a.getResourceId(attr, 0);
-                    break;
-                }
-                case R.styleable.MathAlternativesTextView_alternativeTextViewLayout: {
-                    mTextViewLayout = a.getResourceId(attr, 0);
-                    break;
-                }
-                case R.styleable.MathAlternativesTextView_alternativeDelimiterLayout: {
-                    mDelimiterLayout = a.getResourceId(attr, 0);
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
+        a.recycle();
 
         mInflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

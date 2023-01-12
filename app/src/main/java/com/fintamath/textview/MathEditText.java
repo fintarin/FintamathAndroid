@@ -58,25 +58,10 @@ public class MathEditText extends MathTextViewBase {
     }
 
     private void init(Context context) {
-        int n = mAttrs.getIndexCount();
+        mEditTextLayout = mAttrs.getResourceId(R.styleable.MathTextView_nestedTextViewLayout, 0);
+        mHintText = mAttrs.getString(R.styleable.MathTextView_hint);
 
-        for (int i = 0; i < n; i++) {
-            int attr = mAttrs.getIndex(i);
-
-            switch (attr) {
-                case R.styleable.MathTextView_nestedTextViewLayout: {
-                    mEditTextLayout = mAttrs.getResourceId(attr, 0);
-                    break;
-                }
-                case R.styleable.MathTextView_hint: {
-                    mHintText = mAttrs.getString(attr);
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
+        mAttrs.recycle();
 
         mInflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
