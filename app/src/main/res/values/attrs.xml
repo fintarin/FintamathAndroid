@@ -91,6 +91,10 @@
         <!-- Mode of the keyboard. If the mode doesn't match the
              requested keyboard mode, the key will be skipped. -->
         <attr name="keyboardMode" />
+        <!-- The key background. -->
+        <attr name="keyBackground" format="reference" />
+        <!-- Whether the preview should be displayed. -->
+        <attr name="isPreviewEnabled" format="boolean" />
     </declare-styleable>
 
 </resources>

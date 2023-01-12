@@ -258,6 +258,10 @@ public class Keyboard {
         public CharSequence text;
         /** Popup characters */
         public CharSequence popupCharacters;
+        /** The key background */
+        public Drawable background;
+        /** Whether the preview should be displayed */
+        public boolean isPreviewEnabled;
 
         /**
          * Flags that specify the anchoring to edges of the keyboard for detecting touch events
@@ -362,6 +366,10 @@ public class Keyboard {
             if (codes == null && !TextUtils.isEmpty(label)) {
                 codes = new int[] { label.charAt(0) };
             }
+
+            background = a.getDrawable(R.styleable.Keyboard_Key_keyBackground);
+            isPreviewEnabled = a.getBoolean(R.styleable.Keyboard_Key_isPreviewEnabled, true);
+
             a.recycle();
         }
 

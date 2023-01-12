@@ -12,6 +12,11 @@
     <color name="background_popup_keyboard_key">@color/background_popup_keyboard</color>
     <color name="background_popup_keyboard_key_preview">#00000000</color>
 
+    <color name="background_number_keyboard_key">#313131</color>
+
+    <color name="background_switch_keyboard_key">#262626</color>
+    <color name="background_switch_keyboard_key_enabled">#373737</color>
+
     <color name="text_main">#EEEEEE</color>
     <color name="text_hint">#757575</color>
 </resources>

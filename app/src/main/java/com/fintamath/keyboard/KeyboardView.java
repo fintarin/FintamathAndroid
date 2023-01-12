@@ -626,7 +626,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         canvas.clipRect(mDirtyRect);
 
         final Paint paint = mPaint;
-        final Drawable keyBackground = mKeyBackground;
+        final Drawable defaultKeyBackground = mKeyBackground;
         final Rect clipRegion = mClipRegion;
         final Rect padding = mPadding;
         final int kbdPaddingLeft = getPaddingLeft();
@@ -652,6 +652,9 @@ public class KeyboardView extends View implements View.OnClickListener {
             if (drawSingleKey && invalidKey != key) {
                 continue;
             }
+
+            Drawable keyBackground = key.background != null ? key.background : defaultKeyBackground;
+
             int[] drawableState = key.getCurrentDrawableState();
             keyBackground.setState(drawableState);
 
@@ -848,8 +851,15 @@ public class KeyboardView extends View implements View.OnClickListener {
     private void showKey(final int keyIndex) {
         final PopupWindow previewPopup = mPreviewPopup;
         final Key[] keys = mKeys;
+
         if (keyIndex < 0 || keyIndex >= mKeys.length) return;
+
         Key key = keys[keyIndex];
+        if (!key.isPreviewEnabled) {
+            mPreviewTextContainer.setVisibility(INVISIBLE);
+            return;
+        }
+
         if (key.icon != null) {
             mPreviewText.setCompoundDrawables(null, null, null,
                     key.iconPreview != null ? key.iconPreview : key.icon);
