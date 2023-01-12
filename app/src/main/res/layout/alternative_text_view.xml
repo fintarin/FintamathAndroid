@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:padding="10dp"
-
-    android:background="@color/md_grey_900"
-
     android:maxLines="1"
-
     android:text=""
     android:textSize="20sp"
-    android:textColor="@color/md_grey_200" >
-
+    android:textColor="@color/text_main" >
 </TextView>

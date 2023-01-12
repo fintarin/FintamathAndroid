@@ -5,16 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_grey_900"
+    android:background="@color/background_main"
     tools:context=".MainActivity">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/text_view_layout"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="100dp"
-
         android:layout_alignParentTop="true"
         android:layout_above="@id/keyboard_layout">
 
@@ -30,14 +28,12 @@
 
                 <com.fintamath.textview.MathEditText
                     android:id="@+id/inText"
-
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:minHeight="100dp"
                     android:layout_gravity="center_vertical"
                     android:padding="10dp"
                     android:paddingStart="8dp"
-
                     app:hint="@string/math_edit_text_hint"
                     app:nestedTextViewLayout="@layout/nested_edit_text"
                     app:fractionLineLayout="@layout/fraction_line" />
@@ -47,15 +43,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/md_grey_200_alpha"/>
+                android:background="@color/text_hint"/>
 
             <com.fintamath.textview.MathAlternativesTextView
                 android:id="@+id/outText"
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-
                 app:alternativeLayout="@layout/horizontal_scroll_view"
                 app:alternativeTextViewLayout="@layout/alternative_text_view"
                 app:alternativeDelimiterLayout="@layout/alternative_delimiter" />
@@ -66,63 +60,53 @@
 
     <FrameLayout
         android:id="@+id/keyboard_layout"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_alignParentBottom="true">
 
         <com.fintamath.keyboard.MyKeyboardView
             android:id="@+id/main_keyboard_view"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-
-            android:background="@color/md_grey_900"
-            android:keyTextColor="@color/md_grey_200"
+            android:background="@drawable/keyboard_background"
+            android:keyTextColor="@color/text_main"
             android:keyBackground="@drawable/key_background"
             android:keyPreviewLayout="@layout/key_preview"
-            app:popupLayout="@layout/keyboard_popup" />
+            app:popupLayout="@layout/popup_keyboard" />
 
         <com.fintamath.keyboard.MyKeyboardView
             android:id="@+id/letters_keyboard_view"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:background="@color/md_grey_900"
-
-            android:keyTextColor="@color/md_grey_200"
+            android:background="@drawable/keyboard_background"
+            android:keyTextColor="@color/text_main"
             android:keyBackground="@drawable/key_background"
             android:keyPreviewLayout="@layout/key_preview"
-            app:popupLayout="@layout/keyboard_popup" />
+            app:popupLayout="@layout/popup_keyboard" />
 
         <com.fintamath.keyboard.MyKeyboardView
             android:id="@+id/functions_keyboard_view"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-
-            android:background="@color/md_grey_900"
-            android:keyTextColor="@color/md_grey_200"
+            android:background="@drawable/keyboard_background"
+            android:keyTextColor="@color/text_main"
             android:keyBackground="@drawable/key_background"
             android:keyPreviewLayout="@layout/key_preview"
-            app:popupLayout="@layout/keyboard_popup" />
+            app:popupLayout="@layout/popup_keyboard" />
 
         <com.fintamath.keyboard.MyKeyboardView
             android:id="@+id/logic_keyboard_view"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-
-            android:background="@color/md_grey_900"
-            android:keyTextColor="@color/md_grey_200"
+            android:background="@drawable/keyboard_background"
+            android:keyTextColor="@color/text_main"
             android:keyBackground="@drawable/key_background"
             android:keyPreviewLayout="@layout/key_preview"
-            app:popupLayout="@layout/keyboard_popup" />
+            app:popupLayout="@layout/popup_keyboard" />
 
     </FrameLayout>
 

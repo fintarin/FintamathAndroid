@@ -3,19 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/key_background"
     android:orientation="horizontal">
 
     <com.fintamath.keyboard.MyKeyboardView
         android:id="@id/keyboardView"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:background="@drawable/keyboard_popup_background"
-
-        android:keyTextColor="@color/md_grey_200"
-        android:keyBackground="@drawable/key_background"
-        android:keyPreviewLayout="@layout/key_preview_none" />
+        android:background="@drawable/popup_keyboard_background"
+        android:keyTextColor="@color/text_main"
+        android:keyBackground="@drawable/popup_key_background"
+        android:keyPreviewLayout="@layout/popup_key_preview" />
 
 </LinearLayout>

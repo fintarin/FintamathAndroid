@@ -2,11 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.Fintamath" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/md_grey_900</item>
-        <item name="colorOnPrimary">@color/md_grey_200</item>
+        <item name="colorPrimary">@color/background_main</item>
+        <item name="colorOnPrimary">@color/text_main</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">@color/background_main</item>
+        <item name="android:navigationBarColor">@color/background_keyboard</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>
