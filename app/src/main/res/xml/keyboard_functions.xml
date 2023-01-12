@@ -1,114 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="100%"
-    android:keyHeight="9%">
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="100%"
+    app:keyHeight="9%">
 
     <Row>
         <Key
-            android:codes="5997"
-            android:keyLabel="ac" />
+            app:codes="5997"
+            app:keyLabel="ac" />
         <Key
-            android:codes="6033"
-            android:keyLabel="↻" />
+            app:codes="6033"
+            app:keyLabel="↻" />
         <Key
-            android:codes="5998"
-            android:keyLabel="←"
-            android:isRepeatable="true" />
+            app:codes="5998"
+            app:keyLabel="←"
+            app:isRepeatable="true" />
         <Key
-            android:codes="5999"
-            android:keyLabel="→"
-            android:isRepeatable="true" />
+            app:codes="5999"
+            app:keyLabel="→"
+            app:isRepeatable="true" />
         <Key
-            android:codes="6034"
-            android:keyLabel="↩" />
+            app:codes="6034"
+            app:keyLabel="↩" />
         <Key
-            android:codes="5996"
-            android:keyLabel="⌫"
-            android:isRepeatable="true" />
+            app:codes="5996"
+            app:keyLabel="⌫"
+            app:isRepeatable="true" />
     </Row>
 
     <Row>
         <Key
-            android:codes="6035"
-            android:keyLabel="+/-" />
+            app:codes="6035"
+            app:keyLabel="+/-" />
         <Key
-            android:codes="6000"
-            android:keyLabel="abc" />
+            app:codes="6000"
+            app:keyLabel="abc" />
         <Key
-            android:codes="6001"
-            android:keyLabel="f(x)" />
+            app:codes="6001"
+            app:keyLabel="f(x)" />
         <Key
-            android:codes="6038"
-            android:keyLabel="T/F" />
+            app:codes="6038"
+            app:keyLabel="T/F" />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel="x"
-            android:popupKeyboard="@xml/popup_keyboard_functions_xyz" />
+            app:keyLabel="x"
+            app:popupKeyboard="@xml/popup_keyboard_functions_xyz" />
         <Key
-            android:codes="6006"
-            android:keyLabel="sqrt"/>
+            app:codes="6006"
+            app:keyLabel="sqrt"/>
         <Key
-            android:codes="6019"
-            android:keyLabel="log" />
+            app:codes="6019"
+            app:keyLabel="log" />
         <Key
-            android:codes="6009"
-            android:keyLabel="sin" />
+            app:codes="6009"
+            app:keyLabel="sin" />
         <Key
-            android:codes="6015"
-            android:keyLabel="asin" />
+            app:codes="6015"
+            app:keyLabel="asin" />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel="e"/>
+            app:keyLabel="e"/>
         <Key
-            android:codes="6023"
-            android:keyLabel="abs" />
+            app:codes="6023"
+            app:keyLabel="abs" />
         <Key
-            android:codes="6020"
-            android:keyLabel="ln" />
+            app:codes="6020"
+            app:keyLabel="ln" />
         <Key
-            android:codes="6010"
-            android:keyLabel="cos" />
+            app:codes="6010"
+            app:keyLabel="cos" />
         <Key
-            android:codes="6016"
-            android:keyLabel="acos" />
+            app:codes="6016"
+            app:keyLabel="acos" />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel="π"/>
+            app:keyLabel="π"/>
         <Key
-            android:codes="6024"
-            android:keyLabel="exp" />
+            app:codes="6024"
+            app:keyLabel="exp" />
         <Key
-            android:codes="6021"
-            android:keyLabel="lb" />
+            app:codes="6021"
+            app:keyLabel="lb" />
         <Key
-            android:codes="6011"
-            android:keyLabel="tan" />
+            app:codes="6011"
+            app:keyLabel="tan" />
         <Key
-            android:codes="6017"
-            android:keyLabel="atan" />
+            app:codes="6017"
+            app:keyLabel="atan" />
     </Row>
 
     <Row>
         <Key
-            android:codes="6025"
-            android:keyLabel="□'"/>
+            app:codes="6025"
+            app:keyLabel="□'"/>
         <Key
-            android:keyLabel="!" />
+            app:keyLabel="!" />
         <Key
-            android:codes="6022"
-            android:keyLabel="lg" />
+            app:codes="6022"
+            app:keyLabel="lg" />
         <Key
-            android:codes="6012"
-            android:keyLabel="cot" />
+            app:codes="6012"
+            app:keyLabel="cot" />
         <Key
-            android:codes="6018"
-            android:keyLabel="acot" />
+            app:codes="6018"
+            app:keyLabel="acot" />
     </Row>
 
 </Keyboard>

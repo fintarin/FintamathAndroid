@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <com.fintamath.keyboard.MyKeyboardView
+    <com.fintamath.keyboard.KeyboardView
         android:id="@id/keyboardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/popup_keyboard_background"
-        android:keyTextColor="@color/text_main"
-        android:keyBackground="@drawable/popup_key_background"
-        android:keyPreviewLayout="@layout/popup_key_preview" />
+        app:keyTextColor="@color/text_main"
+        app:keyBackground="@drawable/popup_key_background"
+        app:keyPreviewLayout="@layout/popup_key_preview"
+        app:keyTextSize="@dimen/text_size_main" />
 
 </LinearLayout>

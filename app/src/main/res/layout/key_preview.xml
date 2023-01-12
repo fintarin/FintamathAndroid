@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/background_keyboard_key_preview"
+    android:background="@drawable/popup_key_background_normal"
     android:textColor="@color/text_main"
-    android:textStyle="italic"
-    android:textSize="30sp" >
+    android:textSize="@dimen/text_size_main" >
 </TextView>

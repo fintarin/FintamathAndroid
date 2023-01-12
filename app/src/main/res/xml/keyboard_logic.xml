@@ -1,99 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="100%"
-    android:keyHeight="9%">
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="100%"
+    app:keyHeight="9%">
 
     <Row>
         <Key
-            android:codes="5997"
-            android:keyLabel="ac" />
+            app:codes="5997"
+            app:keyLabel="ac" />
         <Key
-            android:codes="6033"
-            android:keyLabel="↻" />
+            app:codes="6033"
+            app:keyLabel="↻" />
         <Key
-            android:codes="5998"
-            android:keyLabel="←"
-            android:isRepeatable="true" />
+            app:codes="5998"
+            app:keyLabel="←"
+            app:isRepeatable="true" />
         <Key
-            android:codes="5999"
-            android:keyLabel="→"
-            android:isRepeatable="true" />
+            app:codes="5999"
+            app:keyLabel="→"
+            app:isRepeatable="true" />
         <Key
-            android:codes="6034"
-            android:keyLabel="↩" />
+            app:codes="6034"
+            app:keyLabel="↩" />
         <Key
-            android:codes="5996"
-            android:keyLabel="⌫"
-            android:isRepeatable="true" />
+            app:codes="5996"
+            app:keyLabel="⌫"
+            app:isRepeatable="true" />
     </Row>
 
     <Row>
         <Key
-            android:codes="6035"
-            android:keyLabel="+/-" />
+            app:codes="6035"
+            app:keyLabel="+/-" />
         <Key
-            android:codes="6000"
-            android:keyLabel="abc" />
+            app:codes="6000"
+            app:keyLabel="abc" />
         <Key
-            android:codes="6001"
-            android:keyLabel="f(x)" />
+            app:codes="6001"
+            app:keyLabel="f(x)" />
         <Key
-            android:codes="6038"
-            android:keyLabel="T/F" />
+            app:codes="6038"
+            app:keyLabel="T/F" />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel="T" />
+            app:keyLabel="T" />
         <Key
-            android:keyLabel="F"/>
+            app:keyLabel="F"/>
         <Key
-            android:keyLabel="a" />
+            app:keyLabel="a" />
         <Key
-            android:keyLabel="b"/>
+            app:keyLabel="b"/>
         <Key
-            android:keyLabel="c" />
+            app:keyLabel="c" />
     </Row>
 
     <Row>
         <Key
-            android:codes="6002"
-            android:keyLabel="( □ )"
-            android:popupKeyboard="@xml/popup_keyboard_logic_brackets" />
+            app:codes="6002"
+            app:keyLabel="( □ )"
+            app:popupKeyboard="@xml/popup_keyboard_logic_brackets" />
         <Key
-            android:keyLabel="¬" />
+            app:keyLabel="¬" />
         <Key
-            android:keyLabel="∧" />
+            app:keyLabel="∧" />
         <Key
-            android:keyLabel="∨" />
+            app:keyLabel="∨" />
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel=" "/>
+            app:keyLabel=" "/>
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
     </Row>
 
 </Keyboard>

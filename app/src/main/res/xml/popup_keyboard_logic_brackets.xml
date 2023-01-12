@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="20%"
-    android:keyHeight="9%">
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="20%"
+    app:keyHeight="9%">
 
     <Row>
         <Key
-            android:codes="6002"
-            android:keyLabel="( □ )" />
+            app:codes="6002"
+            app:keyLabel="( □ )" />
         <Key
-            android:keyLabel="("/>
+            app:keyLabel="("/>
         <Key
-            android:keyLabel=")" />
+            app:keyLabel=")" />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
     </Row>
 
 </Keyboard>

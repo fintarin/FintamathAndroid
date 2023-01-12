@@ -4,13 +4,12 @@ import static java.util.Map.entry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.fintamath.calculator.CalculatorProcessor;
+import com.fintamath.keyboard.Keyboard;
+import com.fintamath.keyboard.KeyboardView;
 import com.fintamath.keyboard_controller.KeyboardActionListener;
 import com.fintamath.keyboard_controller.KeyboardSwitcher;
 import com.fintamath.keyboard_controller.KeyboardType;

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="16.67%"
-    android:keyHeight="9%">
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="16.67%"
+    app:keyHeight="9%">
 
     <Row>
         <Key
-            android:codes="6003"
-            android:keyLabel="□²" />
+            app:codes="6003"
+            app:keyLabel="□²" />
         <Key
-            android:codes="6004"
-            android:keyLabel="□³"/>
+            app:codes="6004"
+            app:keyLabel="□³"/>
         <Key
-            android:codes="6005"
-            android:keyLabel="□ⁿ" />
+            app:codes="6005"
+            app:keyLabel="□ⁿ" />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
     </Row>
 
 </Keyboard>

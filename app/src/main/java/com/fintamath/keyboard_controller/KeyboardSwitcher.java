@@ -1,8 +1,9 @@
 package com.fintamath.keyboard_controller;
 
-import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
 import android.view.View;
+
+import com.fintamath.keyboard.Keyboard;
+import com.fintamath.keyboard.KeyboardView;
 
 import java.util.Map;
 import java.util.Objects;

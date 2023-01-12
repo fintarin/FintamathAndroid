@@ -9,7 +9,7 @@
     android:inputType="textNoSuggestions|textVisiblePassword"
     android:maxLines="1"
     android:text=""
-    android:textSize="20sp"
+    android:textSize="@dimen/text_size_main"
     android:textColor="@color/text_main"
     android:textCursorDrawable="@drawable/cursor"
     android:hint="@string/nested_edit_text_hint"

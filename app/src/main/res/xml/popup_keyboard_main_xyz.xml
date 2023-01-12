@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:keyWidth="16.67%"
-    android:keyHeight="9%">
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="16.67%"
+    app:keyHeight="9%">
 
     <Row>
         <Key
-            android:keyLabel="x" />
+            app:keyLabel="x" />
         <Key
-            android:keyLabel="y" />
+            app:keyLabel="y" />
         <Key
-            android:keyLabel="z" />
+            app:keyLabel="z" />
     </Row>
 
     <Row>
         <Key
-            android:keyLabel=" " />
+            app:keyLabel=" " />
     </Row>
 
 </Keyboard>
