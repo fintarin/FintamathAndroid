@@ -221,7 +221,6 @@ public class Keyboard {
      * @attr ref android.R.styleable#Keyboard_Key_keyIcon
      * @attr ref android.R.styleable#Keyboard_Key_keyLabel
      * @attr ref android.R.styleable#Keyboard_Key_iconPreview
-     * @attr ref android.R.styleable#Keyboard_Key_isSticky
      * @attr ref android.R.styleable#Keyboard_Key_isRepeatable
      * @attr ref android.R.styleable#Keyboard_Key_isModifier
      * @attr ref android.R.styleable#Keyboard_Key_popupKeyboard
@@ -249,16 +248,12 @@ public class Keyboard {
         public int height;
         /** The horizontal gap before this key */
         public int gap;
-        /** Whether this key is sticky, i.e., a toggle key */
-        public boolean sticky;
         /** X coordinate of the key in the keyboard layout */
         public int x;
         /** Y coordinate of the key in the keyboard layout */
         public int y;
         /** The current pressed state of this key */
         public boolean pressed;
-        /** If this is a sticky key, is it on? */
-        public boolean on;
         /** Text to output when pressed. This can be multiple characters, like ".com" */
         public CharSequence text;
         /** Popup characters */
@@ -282,27 +277,6 @@ public class Keyboard {
         public int popupResId;
         /** Whether this key repeats itself when held down */
         public boolean repeatable;
-
-
-        private final static int[] KEY_STATE_NORMAL_ON = {
-                android.R.attr.state_checkable,
-                android.R.attr.state_checked
-        };
-
-        private final static int[] KEY_STATE_PRESSED_ON = {
-                android.R.attr.state_pressed,
-                android.R.attr.state_checkable,
-                android.R.attr.state_checked
-        };
-
-        private final static int[] KEY_STATE_NORMAL_OFF = {
-                android.R.attr.state_checkable
-        };
-
-        private final static int[] KEY_STATE_PRESSED_OFF = {
-                android.R.attr.state_pressed,
-                android.R.attr.state_checkable
-        };
 
         private final static int[] KEY_STATE_NORMAL = {
         };
@@ -374,8 +348,6 @@ public class Keyboard {
                     R.styleable.Keyboard_Key_isRepeatable, false);
             modifier = a.getBoolean(
                     R.styleable.Keyboard_Key_isModifier, false);
-            sticky = a.getBoolean(
-                    R.styleable.Keyboard_Key_isSticky, false);
             edgeFlags = a.getInt(R.styleable.Keyboard_Key_keyEdgeFlags, 0);
             edgeFlags |= parent.rowEdgeFlags;
 
@@ -405,25 +377,12 @@ public class Keyboard {
         /**
          * Changes the pressed state of the key.
          *
-         * <p>Toggled state of the key will be flipped when all the following conditions are
-         * fulfilled:</p>
-         *
-         * <ul>
-         *     <li>This is a sticky key, that is, {@link #sticky} is {@code true}.
-         *     <li>The parameter {@code inside} is {@code true}.
-         *     <li>{@link android.os.Build.VERSION#SDK_INT} is greater than
-         *         {@link android.os.Build.VERSION_CODES#LOLLIPOP_MR1}.
-         * </ul>
-         *
          * @param inside whether the finger was released inside the key. Works only on Android M and
          * later. See the method document for details.
          * @see #onPressed()
          */
         public void onReleased(boolean inside) {
             pressed = !pressed;
-            if (sticky && inside) {
-                on = !on;
-            }
         }
 
         int[] parseCSV(String value) {
@@ -491,25 +450,10 @@ public class Keyboard {
         public int[] getCurrentDrawableState() {
             int[] states = KEY_STATE_NORMAL;
 
-            if (on) {
-                if (pressed) {
-                    states = KEY_STATE_PRESSED_ON;
-                } else {
-                    states = KEY_STATE_NORMAL_ON;
-                }
-            } else {
-                if (sticky) {
-                    if (pressed) {
-                        states = KEY_STATE_PRESSED_OFF;
-                    } else {
-                        states = KEY_STATE_NORMAL_OFF;
-                    }
-                } else {
-                    if (pressed) {
-                        states = KEY_STATE_PRESSED;
-                    }
-                }
+            if (pressed) {
+                states = KEY_STATE_PRESSED;
             }
+
             return states;
         }
     }
@@ -708,11 +652,6 @@ public class Keyboard {
     }
 
     public boolean setShifted(boolean shiftState) {
-        for (Keyboard.Key shiftKey : mShiftKeys) {
-            if (shiftKey != null) {
-                shiftKey.on = shiftState;
-            }
-        }
         if (mShifted != shiftState) {
             mShifted = shiftState;
             return true;
@@ -786,7 +725,7 @@ public class Keyboard {
     }
 
     protected Keyboard.Key createKeyFromXml(Resources res, Keyboard.Row parent, int x, int y,
-                                                                       XmlResourceParser parser) {
+                                            XmlResourceParser parser) {
         return new Keyboard.Key(res, parent, x, y, parser);
     }
 
