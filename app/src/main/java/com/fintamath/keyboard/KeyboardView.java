@@ -38,8 +38,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -135,8 +137,8 @@ public class KeyboardView extends View implements View.OnClickListener {
     private int mKeyTextSize = 18;
     private int mKeyTextColor = 0xFF000000;
 
-    private FrameLayout mPreviewTextLayout;
     private TextView mPreviewText;
+    private View mPreviewTextContainer;
     private PopupWindow mPreviewPopup;
     private int mPreviewTextSizeLarge;
     // Working variable
@@ -294,14 +296,15 @@ public class KeyboardView extends View implements View.OnClickListener {
             mPreviewText = (TextView) inflate.inflate(previewLayout, null);
             mPreviewTextSizeLarge = (int) mPreviewText.getTextSize();
 
-            mPreviewTextLayout = new FrameLayout(getContext());
-            mPreviewTextLayout.setLayoutParams(new FrameLayout.LayoutParams(0, 0));
-            mPreviewTextLayout.setBackground(mPreviewText.getBackground());
-            mPreviewTextLayout.addView(mPreviewText);
+            FrameLayout previewTextContainer = new FrameLayout(getContext());
+            previewTextContainer.setLayoutParams(new FrameLayout.LayoutParams(0, 0));
+            previewTextContainer.setBackground(mPreviewText.getBackground());
+            previewTextContainer.addView(mPreviewText);
+            mPreviewTextContainer = previewTextContainer;
 
             mPreviewText.setBackground(null);
 
-            mPreviewPopup.setContentView(mPreviewTextLayout);
+            mPreviewPopup.setContentView(mPreviewTextContainer);
             mPreviewPopup.setBackgroundDrawable(null);
         } else {
             mShowPreview = false;
@@ -343,7 +346,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                             showKey(msg.arg1);
                             break;
                         case MSG_REMOVE_PREVIEW:
-                            mPreviewTextLayout.setVisibility(INVISIBLE);
+                            mPreviewTextContainer.setVisibility(INVISIBLE);
                             break;
                         case MSG_REPEAT:
                             if (repeatKey()) {
@@ -850,7 +853,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                 }
             }
             if (keyIndex != NOT_A_KEY) {
-                if (previewPopup.isShowing() && mPreviewTextLayout.getVisibility() == VISIBLE) {
+                if (previewPopup.isShowing() && mPreviewTextContainer.getVisibility() == VISIBLE) {
                     // Show right away, if it's already visible and finger is moving around
                     showKey(keyIndex);
                 } else {
@@ -878,26 +881,24 @@ public class KeyboardView extends View implements View.OnClickListener {
             mPreviewText.setTypeface(Typeface.DEFAULT);
         }
 
-        mPreviewTextLayout.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-                MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
-
-        int popupWidth = key.width;
-        final int popupHeight = key.height * 2;
-
         LayoutParams lpText = mPreviewText.getLayoutParams();
         if (lpText != null) {
-            lpText.width = popupWidth;
-            lpText.height = popupHeight / 2;
+            lpText.width = key.width;
+            lpText.height = key.height;
         }
 
-        LayoutParams lpTextLayout = mPreviewTextLayout.getLayoutParams();
+        final int popupWidth = key.width;
+        final int popupHeightOffset = key.height / 4;
+        final int popupHeight = key.height * 2 + popupHeightOffset;
+
+        LayoutParams lpTextLayout = mPreviewTextContainer.getLayoutParams();
         if (lpTextLayout != null) {
             lpTextLayout.width = popupWidth;
             lpTextLayout.height = popupHeight;
         }
 
-        mPopupPreviewX = key.x - mPreviewTextLayout.getPaddingLeft() + getPaddingLeft();
-        mPopupPreviewY = key.y - key.height;
+        mPopupPreviewX = key.x - mPreviewTextContainer.getPaddingLeft() + getPaddingLeft();
+        mPopupPreviewY = key.y - key.height - popupHeightOffset;
 
         mHandler.removeMessages(MSG_REMOVE_PREVIEW);
         getLocationInWindow(mCoordinates);
@@ -905,7 +906,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         mCoordinates[1] += mMiniKeyboardOffsetY; // Offset may be zero
 
         // Set the preview background state
-        mPreviewTextLayout.getBackground().setState(
+        mPreviewTextContainer.getBackground().setState(
                 key.popupResId != 0 ? LONG_PRESSABLE_STATE_SET : EMPTY_STATE_SET);
         mPopupPreviewX += mCoordinates[0];
         mPopupPreviewY += mCoordinates[1];
@@ -933,7 +934,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                     mPopupPreviewX, mPopupPreviewY);
         }
 
-        mPreviewTextLayout.setVisibility(VISIBLE);
+        mPreviewTextContainer.setVisibility(VISIBLE);
     }
 
     /**
@@ -982,7 +983,6 @@ public class KeyboardView extends View implements View.OnClickListener {
         boolean result = onLongPress(popupKey);
         if (result) {
             mAbortKey = true;
-            showPreview(NOT_A_KEY);
         }
         return result;
     }
@@ -1048,14 +1048,14 @@ public class KeyboardView extends View implements View.OnClickListener {
             mMiniKeyboardCache.put(popupKey, mMiniKeyboardContainer);
         } else {
             mMiniKeyboard = mMiniKeyboardContainer.findViewById(R.id.keyboardView);
-            mMiniKeyboard.mIsMiniKeyboard = true;
         }
 
         int[] mCoordinates = new int[2];
         getLocationInWindow(mCoordinates);
         mPopupX = popupKey.x + getPaddingLeft();
         mPopupY = popupKey.y + getPaddingTop();
-        mPopupY = mPopupY - mMiniKeyboardContainer.getMeasuredHeight() + popupKey.height;
+        final int popupHeightOffset = popupKey.height / 4;
+        mPopupY = mPopupY - mMiniKeyboardContainer.getMeasuredHeight() - popupHeightOffset;
         final int x = mPopupX + mMiniKeyboardContainer.getPaddingRight() + mCoordinates[0];
         final int y = mPopupY + mMiniKeyboardContainer.getPaddingBottom() + mCoordinates[1];
 
@@ -1081,11 +1081,26 @@ public class KeyboardView extends View implements View.OnClickListener {
         final long now = me.getEventTime();
 
         if (mMiniKeyboardOnScreen && mMiniKeyboard != null && mMiniKeyboard.isAttachedToWindow()) {
+            final int widthDelta = mMiniKeyboard.getKeyboard().getKeyWidth() / 2;
+            final int heightDelta = mMiniKeyboard.getKeyboard().getKeyHeight() / 2;
+
             float x = me.getX() - mMiniKeyboard.mMiniKeyboardOffsetX;
-            float y = mMiniKeyboard.getY();
+            float y = -me.getY() - mPreviewTextContainer.getHeight() -
+                    mMiniKeyboard.getHeight() + mMiniKeyboard.mMiniKeyboardOffsetY;
+
+            if (x < mMiniKeyboard.getLeft() - widthDelta
+                    || x > mMiniKeyboard.getRight() + widthDelta
+                    || y < - heightDelta
+                    || y > mPreviewTextContainer.getHeight() + heightDelta) {
+
+                dismissPopupKeyboard();
+                return onTouchEvent(MotionEvent.obtain(now, now,
+                        MotionEvent.ACTION_DOWN, me.getX(), me.getY(), me.getMetaState()));
+            }
 
             x = x >= mMiniKeyboard.getRight() ? mMiniKeyboard.getRight() - 1 : x;
             x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
+            y = mMiniKeyboard.getY();
 
             int action = me.getAction() == MotionEvent.ACTION_MOVE ? MotionEvent.ACTION_DOWN : me.getAction();
 
@@ -1330,6 +1345,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         if (mPopupKeyboard.isShowing()) {
             mPopupKeyboard.dismiss();
             mMiniKeyboardOnScreen = false;
+            showPreview(NOT_A_KEY);
             invalidateAllKeys();
         }
     }

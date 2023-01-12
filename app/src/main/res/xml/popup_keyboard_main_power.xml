@@ -15,9 +15,4 @@
             app:keyLabel="□ⁿ" />
     </Row>
 
-    <Row>
-        <Key
-            app:keyLabel=" " />
-    </Row>
-
 </Keyboard>

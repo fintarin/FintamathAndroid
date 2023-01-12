@@ -13,9 +13,4 @@
             app:keyLabel=")" />
     </Row>
 
-    <Row>
-        <Key
-            app:keyLabel=" " />
-    </Row>
-
 </Keyboard>

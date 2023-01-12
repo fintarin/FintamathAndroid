@@ -12,9 +12,4 @@
             app:keyLabel="z" />
     </Row>
 
-    <Row>
-        <Key
-            app:keyLabel=" " />
-    </Row>
-
 </Keyboard>
