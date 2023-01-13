@@ -79,9 +79,6 @@ public class Keyboard {
     public static final int KEYCODE_DELETE = -5;
     public static final int KEYCODE_ALT = -6;
 
-    /** Keyboard label **/
-    private CharSequence mLabel;
-
     /** Horizontal gap default for all rows */
     private int mDefaultHorizontalGap;
 
@@ -237,6 +234,8 @@ public class Keyboard {
 
         /** Label to display */
         public CharSequence label;
+        /** Top label to display */
+        public CharSequence topLabel;
 
         /** Icon to display instead of a label. Icon takes precedence over a label */
         public Drawable icon;
@@ -361,6 +360,7 @@ public class Keyboard {
                 icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
             }
             label = a.getText(R.styleable.Keyboard_Key_keyLabel);
+            topLabel = a.getText(R.styleable.Keyboard_Key_keyTopLabel);
             text = a.getText(R.styleable.Keyboard_Key_keyOutputText);
 
             if (codes == null && !TextUtils.isEmpty(label)) {

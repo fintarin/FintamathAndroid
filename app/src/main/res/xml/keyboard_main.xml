@@ -66,6 +66,7 @@
         <Key
             app:codes="6002"
             app:keyLabel="( □ )"
+            app:keyTopLabel="( )"
             app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
             app:codes="6031"
@@ -86,9 +87,11 @@
     <Row>
         <Key
             app:keyLabel="&lt;"
+            app:keyTopLabel="≤"
             app:popupKeyboard="@xml/popup_keyboard_main_less" />
         <Key
             app:keyLabel="&gt;"
+            app:keyTopLabel="≥"
             app:popupKeyboard="@xml/popup_keyboard_main_more" />
         <Key
             app:keyLabel="4"
@@ -107,6 +110,7 @@
         <Key
             app:codes="6003"
             app:keyLabel="□²"
+            app:keyTopLabel="□ⁿ"
             app:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
             app:codes="6006"
@@ -127,6 +131,7 @@
     <Row>
         <Key
             app:keyLabel="x"
+            app:keyTopLabel="yz"
             app:popupKeyboard="@xml/popup_keyboard_main_xyz" />
         <Key
             app:keyLabel="%" />
@@ -135,9 +140,11 @@
             app:keyBackground="@drawable/number_key_background" />
         <Key
             app:keyLabel="."
+            app:keyTopLabel=","
             app:popupKeyboard="@xml/popup_keyboard_main_point"/>
         <Key
             app:keyLabel="="
+            app:keyTopLabel="≠"
             app:popupKeyboard="@xml/popup_keyboard_main_equal" />
         <Key
             app:keyLabel="+" />

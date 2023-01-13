@@ -65,6 +65,7 @@
     <Row>
         <Key
             app:keyLabel="x"
+            app:keyTopLabel="yz"
             app:popupKeyboard="@xml/popup_keyboard_functions_xyz" />
         <Key
             app:codes="6006"

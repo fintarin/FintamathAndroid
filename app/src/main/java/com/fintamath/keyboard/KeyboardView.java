@@ -135,7 +135,9 @@ public class KeyboardView extends View implements View.OnClickListener {
     private Keyboard mKeyboard;
     private int mCurrentKeyIndex = NOT_A_KEY;
     private int mKeyTextSize;
+    private int mKeyTopLabelTextSize;
     private int mKeyTextColor;
+    private int mKeyTopLabelTextColor;
 
     private TextView mPreviewText;
     private View mPreviewTextContainer;
@@ -266,7 +268,9 @@ public class KeyboardView extends View implements View.OnClickListener {
         mVerticalCorrection = a.getDimensionPixelOffset(R.styleable.KeyboardView_verticalCorrection, 0);
         previewLayout = a.getResourceId(R.styleable.KeyboardView_keyboardKeyPreviewLayout, 0);
         mKeyTextSize = a.getDimensionPixelSize(R.styleable.KeyboardView_keyboardKeyTextSize, 18);
+        mKeyTopLabelTextSize = a.getDimensionPixelSize(R.styleable.KeyboardView_keyboardKeyTopLabelTextSize, 12);
         mKeyTextColor = a.getColor(R.styleable.KeyboardView_keyboardKeyTextColor, 0xFF000000);
+        mKeyTopLabelTextColor = a.getColor(R.styleable.KeyboardView_keyboardKeyTopLabelTextColor, 0xFF000000);
         mPopupLayout = a.getResourceId(R.styleable.KeyboardView_popupLayout, 0);
 
         a.recycle();
@@ -693,6 +697,25 @@ public class KeyboardView extends View implements View.OnClickListener {
                 key.icon.draw(canvas);
                 canvas.translate(-drawableX, -drawableY);
             }
+
+            String topLabel = key.topLabel == null? null : adjustCase(key.topLabel).toString();
+
+            if (topLabel != null) {
+                paint.setTextSize(mKeyTopLabelTextSize);
+                paint.setTypeface(Typeface.DEFAULT);
+                paint.setColor(mKeyTopLabelTextColor);
+
+                // Draw the text
+                canvas.drawText(topLabel,
+                        (key.width - padding.left - padding.right) * 4 / 5
+                                + padding.left,
+                        (key.height - padding.top - padding.bottom) / 5
+                                + (paint.getTextSize() - paint.descent()) / 5 + padding.top,
+                        paint);
+
+                paint.setColor(mKeyTextColor);
+            }
+
             canvas.translate(-key.x - kbdPaddingLeft, -key.y - kbdPaddingTop);
         }
         mInvalidatedKey = null;
