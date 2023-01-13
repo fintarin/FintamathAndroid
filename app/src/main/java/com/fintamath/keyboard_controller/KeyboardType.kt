@@ -1,6 +1,6 @@
-package com.fintamath.keyboard_controller;
+package com.fintamath.keyboard_controller
 
-public enum KeyboardType {
+enum class KeyboardType {
     MainKeyboard,
     LettersKeyboard,
     FunctionsKeyboard,
