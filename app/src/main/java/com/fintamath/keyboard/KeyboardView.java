@@ -164,8 +164,8 @@ public class KeyboardView extends View implements View.OnClickListener {
     private static final int MSG_LONGPRESS = 4;
 
     private static final int DELAY_BEFORE_PREVIEW = 0;
-    private static final int DELAY_AFTER_PREVIEW = 70;
-    private static final int DEBOUNCE_TIME = 70;
+    private static final int DELAY_AFTER_PREVIEW = 30;
+    private static final int DEBOUNCE_TIME = 30;
 
     private int mVerticalCorrection;
     private int mProximityThreshold;
@@ -215,8 +215,8 @@ public class KeyboardView extends View implements View.OnClickListener {
     private Drawable mKeyBackground;
 
     private static final int REPEAT_INTERVAL = 50; // ~20 keys per second
-    private static final int REPEAT_START_DELAY = 400;
-    private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();
+    private static final int REPEAT_START_DELAY = 300;
+    private static final int LONGPRESS_TIMEOUT = 200;
 
     private static int MAX_NEARBY_KEYS = 12;
     private int[] mDistances = new int[MAX_NEARBY_KEYS];
