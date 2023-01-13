@@ -51,7 +51,7 @@ public class MathEditText extends MathTextViewBase {
         init(context);
     }
 
-    public MathEditText(Context context, TypedArray attrs) {
+    private MathEditText(Context context, TypedArray attrs) {
         super(context);
         mAttrs = attrs;
         init(context);
@@ -61,14 +61,13 @@ public class MathEditText extends MathTextViewBase {
         mEditTextLayout = mAttrs.getResourceId(R.styleable.MathTextView_nestedTextViewLayout, 0);
         mHintText = mAttrs.getString(R.styleable.MathTextView_hint);
 
-        mAttrs.recycle();
-
         mInflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mCurrentEditText = (EditText) mInflate.inflate(mEditTextLayout, null);
         mInnerHintText = mCurrentEditText.getHint().toString();
         insertEditText(mCurrentEditText, -1);
         mCurrentEditText.setHint(mHintText);
+
         update();
     }
 

@@ -25,8 +25,6 @@ class MathTextViewFraction extends MathTextViewBase {
         int mEditTextLayout = attrs.getResourceId(R.styleable.MathTextView_nestedTextViewLayout, 0);
         int mFractionLineLayout = attrs.getResourceId(R.styleable.MathTextView_fractionLineLayout, 0);
 
-        attrs.recycle();
-
         LayoutInflater inflate = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         addView(inflate.inflate(mEditTextLayout, null));
