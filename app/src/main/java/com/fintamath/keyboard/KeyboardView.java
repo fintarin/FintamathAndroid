@@ -871,21 +871,15 @@ public class KeyboardView extends View implements View.OnClickListener {
             mPreviewText.setTypeface(Typeface.DEFAULT);
         }
 
-        LayoutParams lpText = mPreviewText.getLayoutParams();
-        if (lpText != null) {
-            lpText.width = key.width;
-            lpText.height = key.height;
+        LayoutParams lp = mPreviewText.getLayoutParams();
+        if (lp != null) {
+            lp.width = key.width;
+            lp.height = key.height;
         }
 
         final int popupWidth = key.width;
         final int popupHeightOffset = key.height / 4;
         final int popupHeight = key.height * 2 + popupHeightOffset;
-
-        LayoutParams lpTextLayout = mPreviewTextContainer.getLayoutParams();
-        if (lpTextLayout != null) {
-            lpTextLayout.width = popupWidth;
-            lpTextLayout.height = popupHeight;
-        }
 
         mPopupPreviewX = key.x - mPreviewTextContainer.getPaddingLeft() + getPaddingLeft();
         mPopupPreviewY = key.y - key.height - popupHeightOffset;
