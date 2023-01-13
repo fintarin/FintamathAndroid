@@ -705,12 +705,12 @@ public class KeyboardView extends View implements View.OnClickListener {
                 paint.setTypeface(Typeface.DEFAULT);
                 paint.setColor(mKeyTopLabelTextColor);
 
-                // Draw the text
+                // Draw the label text
                 canvas.drawText(topLabel,
-                        (key.width - padding.left - padding.right) * 4 / 5
+                        (key.width - padding.left - padding.right) * 3 / 4
                                 + padding.left,
-                        (key.height - padding.top - padding.bottom) / 5
-                                + (paint.getTextSize() - paint.descent()) / 5 + padding.top,
+                        (key.height - padding.top - padding.bottom) / 4
+                                + (paint.getTextSize() - paint.descent()) / 4 + padding.top,
                         paint);
 
                 paint.setColor(mKeyTextColor);

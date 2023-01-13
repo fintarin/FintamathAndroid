@@ -66,7 +66,7 @@
         <Key
             app:codes="6002"
             app:keyLabel="( □ )"
-            app:keyTopLabel="( )"
+            app:keyTopLabel="﹙﹚"
             app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
             app:codes="6031"
