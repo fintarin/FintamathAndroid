@@ -75,3 +75,6 @@ CMakeFiles/*
 
 # Config
 local.properties
+
+# Release files
+app/release/*
