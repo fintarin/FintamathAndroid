@@ -18,7 +18,7 @@ class CalculatorProcessor(
             calcThread!!.interrupt()
         }
 
-        val text = inTextView.text
+        var text = inTextView.text
         if (text.isEmpty()) {
             outTextView.setTexts(null)
             return

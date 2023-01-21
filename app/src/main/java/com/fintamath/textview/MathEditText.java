@@ -91,6 +91,10 @@ public class MathEditText extends MathTextViewBase {
             return "";
         }
 
+        if (stringBuilder.charAt(stringBuilder.length() - 1) == '=') {
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        }
+
         for (String key : getTextReplacements.keySet()) {
             stringBuilder = new StringBuilder(stringBuilder.toString().replaceAll(key, Objects.requireNonNull(getTextReplacements.get(key))));
         }
