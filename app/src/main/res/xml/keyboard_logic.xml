@@ -88,17 +88,14 @@
         <Key
             app:keyLabel="∨" />
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
+            app:keyLabel="→" />
     </Row>
 
     <Row>
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
+            app:keyLabel="≡" />
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
+            app:keyLabel="≢" />
         <Key
             app:keyLabel=" "
             app:isPreviewEnabled="false" />

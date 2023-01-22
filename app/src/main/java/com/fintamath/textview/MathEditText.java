@@ -38,7 +38,10 @@ public class MathEditText extends MathTextViewBase {
             entry("F", "(false)"),
             entry("¬", "!"),
             entry("∧", "&&"),
-            entry("∨", "||")
+            entry("∨", "||"),
+            entry("→", "->"),
+            entry("≡", "<->"),
+            entry("≢", "!<->")
     );
 
     public MathEditText(Context context) {
