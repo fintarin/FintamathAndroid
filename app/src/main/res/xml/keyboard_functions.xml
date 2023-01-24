@@ -83,7 +83,7 @@
 
     <Row>
         <Key
-            app:keyLabel="e"/>
+            app:keyLabel="ⅇ"/>
         <Key
             app:codes="6023"
             app:keyLabel="abs" />
