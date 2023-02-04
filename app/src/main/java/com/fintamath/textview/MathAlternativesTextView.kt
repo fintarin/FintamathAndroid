@@ -1,5 +1,7 @@
 package com.fintamath.textview
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import kotlin.jvm.JvmOverloads
 import android.widget.LinearLayout
@@ -56,13 +58,21 @@ class MathAlternativesTextView @JvmOverloads constructor(
             }
 
             val alternativeTextView = mInflate.inflate(mTextViewLayout, null) as TextView
+            alternativeTextView.text = texts[i]
+
             addView(mInflate.inflate(mDelimiterLayout, null))
             addTextView(alternativeTextView)
-            alternativeTextView.text = texts[i]
         }
     }
 
     private fun addTextView(textView: TextView) {
+        textView.setOnLongClickListener {
+            val clipboardManager = context.getSystemService(ClipboardManager::class.java)
+            val clipData = ClipData.newPlainText("", (it as TextView).text)
+            clipboardManager.setPrimaryClip(clipData)
+            true
+        }
+
         val scrollView = mInflate.inflate(mLayout, null) as ViewGroup
         scrollView.foregroundGravity = foregroundGravity
         scrollView.addView(textView)
