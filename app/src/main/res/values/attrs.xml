@@ -8,7 +8,6 @@
     </declare-styleable>
 
     <declare-styleable name="MathAlternativesTextView">
-        <attr name="alternativeLayout" format="reference" />
         <attr name="alternativeTextViewLayout" format="reference" />
         <attr name="alternativeDelimiterLayout" format="reference" />
     </declare-styleable>

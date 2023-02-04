@@ -8,8 +8,13 @@ import android.widget.LinearLayout
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.util.AttributeSet
+import android.view.View
 import com.fintamath.R
 import android.view.ViewGroup
+import android.widget.HorizontalScrollView
+import android.widget.ScrollView
+import androidx.core.view.size
+import androidx.core.view.updateLayoutParams
 
 class MathAlternativesTextView @JvmOverloads constructor(
     context: Context,
@@ -18,17 +23,17 @@ class MathAlternativesTextView @JvmOverloads constructor(
 
     private val mTextViewLayout: Int
     private val mDelimiterLayout: Int
-    private val mLayout: Int
 
     private val mInflate: LayoutInflater
-    private val mMainTextView: TextView
+
+    private var mAlternativeTextViews = mutableListOf<TextView>()
+    private var mAlternativeDelimiters = mutableListOf<View>()
 
     init {
         orientation = VERTICAL
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.MathAlternativesTextView)
 
-        mLayout = a.getResourceId(R.styleable.MathAlternativesTextView_alternativeLayout, 0)
         mTextViewLayout =
             a.getResourceId(R.styleable.MathAlternativesTextView_alternativeTextViewLayout, 0)
         mDelimiterLayout =
@@ -38,45 +43,64 @@ class MathAlternativesTextView @JvmOverloads constructor(
 
         mInflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        mMainTextView = mInflate.inflate(mTextViewLayout, null) as TextView
-        addTextView(mMainTextView)
+        addTextView()
     }
 
     fun setTexts(texts: List<String>?) {
-        removeViews(1, childCount - 1)
-
-        if (texts == null || texts.isEmpty()) {
-            mMainTextView.text = ""
+        if (texts == null) {
+            setTexts(listOf(""))
             return
         }
 
-        mMainTextView.text = texts[0]
+        for (i in mAlternativeTextViews.size until texts.size) {
+            addDelimiter()
+            addTextView()
+        }
+
+        mAlternativeTextViews[0].text = texts[0]
+        mAlternativeTextViews[0].requestLayout()
+
+        var uniqueTextsSize = 1
 
         for (i in 1 until texts.size) {
             if (!isTextUnique(texts[i])) {
                 continue
             }
 
-            val alternativeTextView = mInflate.inflate(mTextViewLayout, null) as TextView
-            alternativeTextView.text = texts[i]
+            mAlternativeTextViews[uniqueTextsSize].text = texts[i]
+            mAlternativeTextViews[uniqueTextsSize].requestLayout()
+            mAlternativeDelimiters[uniqueTextsSize - 1].visibility = VISIBLE
 
-            addView(mInflate.inflate(mDelimiterLayout, null))
-            addTextView(alternativeTextView)
+            uniqueTextsSize++
+        }
+
+        for (i in uniqueTextsSize until mAlternativeTextViews.size) {
+            mAlternativeTextViews[i].text = ""
+            mAlternativeDelimiters[i - 1].visibility = GONE
         }
     }
 
-    private fun addTextView(textView: TextView) {
-        textView.setOnLongClickListener {
-            val clipboardManager = context.getSystemService(ClipboardManager::class.java)
-            val clipData = ClipData.newPlainText("", (it as TextView).text)
-            clipboardManager.setPrimaryClip(clipData)
-            true
-        }
+    private fun addTextView() {
+        val textView = mInflate.inflate(mTextViewLayout, null) as TextView
+        textView.setOnLongClickListener(textViewOnLongClick())
 
-        val scrollView = mInflate.inflate(mLayout, null) as ViewGroup
+        mAlternativeTextViews.add(textView)
+
+        val scrollView = HorizontalScrollView(context)
         scrollView.foregroundGravity = foregroundGravity
+        scrollView.isHorizontalScrollBarEnabled = false
         scrollView.addView(textView)
+
         addView(scrollView)
+    }
+
+    private fun addDelimiter() {
+        val delimiter = mInflate.inflate(mDelimiterLayout, null)
+        delimiter.visibility = GONE
+
+        mAlternativeDelimiters.add(delimiter)
+
+        addView(delimiter)
     }
 
     private fun isTextUnique(text: String): Boolean {
@@ -91,5 +115,12 @@ class MathAlternativesTextView @JvmOverloads constructor(
         }
 
         return true
+    }
+
+    private fun textViewOnLongClick(): (v: View) -> Boolean = {
+        val clipboardManager = context.getSystemService(ClipboardManager::class.java)
+        val clipData = ClipData.newPlainText("", (it as TextView).text)
+        clipboardManager.setPrimaryClip(clipData)
+        true
     }
 }

@@ -50,7 +50,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                app:alternativeLayout="@layout/horizontal_scroll_view"
                 app:alternativeTextViewLayout="@layout/alternative_text_view"
                 app:alternativeDelimiterLayout="@layout/alternative_delimiter" />
 
