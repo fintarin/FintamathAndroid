@@ -58,6 +58,7 @@ class MathAlternativesTextView @JvmOverloads constructor(
         }
 
         mAlternativeTextViews[0].text = texts[0]
+        mAlternativeTextViews[0].isLongClickable = mAlternativeTextViews[0].text.isNotEmpty()
         mAlternativeTextViews[0].requestLayout()
 
         var uniqueTextsSize = 1
@@ -68,6 +69,7 @@ class MathAlternativesTextView @JvmOverloads constructor(
             }
 
             mAlternativeTextViews[uniqueTextsSize].text = texts[i]
+            mAlternativeTextViews[uniqueTextsSize].isLongClickable = true
             mAlternativeTextViews[uniqueTextsSize].requestLayout()
             mAlternativeDelimiters[uniqueTextsSize - 1].visibility = VISIBLE
 
@@ -76,12 +78,14 @@ class MathAlternativesTextView @JvmOverloads constructor(
 
         for (i in uniqueTextsSize until mAlternativeTextViews.size) {
             mAlternativeTextViews[i].text = ""
+            mAlternativeTextViews[i].isLongClickable = false
             mAlternativeDelimiters[i - 1].visibility = GONE
         }
     }
 
     private fun addTextView() {
         val textView = mInflate.inflate(mTextViewLayout, null) as TextView
+        textView.isLongClickable = false
         textView.setOnLongClickListener(textViewOnLongClick())
 
         mAlternativeTextViews.add(textView)
