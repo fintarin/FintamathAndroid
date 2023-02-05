@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="20%"
+    app:keyHeight="9%">
+
+    <Row>
+        <Key
+            app:codes="6020"
+            app:keyLabel="ln" />
+        <Key
+            app:codes="6021"
+            app:keyLabel="lb" />
+        <Key
+            app:codes="6022"
+            app:keyLabel="lg" />
+    </Row>
+
+</Keyboard>

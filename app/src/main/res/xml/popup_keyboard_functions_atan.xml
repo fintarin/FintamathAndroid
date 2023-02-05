@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="20%"
+    app:keyHeight="9%">
+
+    <Row>
+        <Key
+            app:codes="6017"
+            app:keyLabel="atan" />
+        <Key
+            app:codes="6045"
+            app:keyLabel="atanh" />
+    </Row>
+
+</Keyboard>

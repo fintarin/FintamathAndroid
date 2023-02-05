@@ -69,72 +69,90 @@
 
     <Row>
         <Key
-            app:keyLabel="x"
-            app:keyTopLabel="yz"
-            app:popupKeyboard="@xml/popup_keyboard_functions_xyz" />
+            app:codes="6036"
+            app:keyLabel="f(□)" />
         <Key
-            app:codes="6006"
-            app:keyLabel="sqrt"/>
+            app:codes="6047"
+            app:keyLabel="□₁"
+            app:keyTopLabel="□ₙ"
+            app:popupKeyboard="@xml/popup_keyboard_functions_indexes" />
         <Key
-            app:codes="6019"
-            app:keyLabel="log" />
+            app:codes="6020"
+            app:keyLabel="ln"
+            app:keyTopLabel="lb lg"
+            app:popupKeyboard="@xml/popup_keyboard_functions_logarithms" />
         <Key
             app:codes="6009"
-            app:keyLabel="sin" />
+            app:keyLabel="sin"
+            app:keyTopLabel="sinh"
+            app:popupKeyboard="@xml/popup_keyboard_functions_sin" />
         <Key
             app:codes="6015"
-            app:keyLabel="asin" />
+            app:keyLabel="asin"
+            app:keyTopLabel="asinh"
+            app:popupKeyboard="@xml/popup_keyboard_functions_asin" />
     </Row>
 
     <Row>
         <Key
             app:keyLabel="ⅇ"/>
         <Key
-            app:codes="6023"
-            app:keyLabel="abs" />
+            app:codes="6052"
+            app:keyLabel="°"/>
         <Key
-            app:codes="6020"
-            app:keyLabel="ln" />
+            app:codes="6019"
+            app:keyLabel="log" />
         <Key
             app:codes="6010"
-            app:keyLabel="cos" />
+            app:keyLabel="cos"
+            app:keyTopLabel="cosh"
+            app:popupKeyboard="@xml/popup_keyboard_functions_cos" />
         <Key
             app:codes="6016"
-            app:keyLabel="acos" />
+            app:keyLabel="acos"
+            app:keyTopLabel="acosh"
+            app:popupKeyboard="@xml/popup_keyboard_functions_acos" />
     </Row>
 
     <Row>
         <Key
             app:keyLabel="π"/>
         <Key
+            app:codes="6023"
+            app:keyLabel="|□|" />
+        <Key
             app:codes="6024"
             app:keyLabel="exp" />
         <Key
-            app:codes="6021"
-            app:keyLabel="lb" />
-        <Key
             app:codes="6011"
-            app:keyLabel="tan" />
+            app:keyLabel="tan"
+            app:keyTopLabel="tanh"
+            app:popupKeyboard="@xml/popup_keyboard_functions_tan" />
         <Key
             app:codes="6017"
-            app:keyLabel="atan" />
+            app:keyLabel="atan"
+            app:keyTopLabel="atanh"
+            app:popupKeyboard="@xml/popup_keyboard_functions_atan" />
     </Row>
 
     <Row>
         <Key
-            app:codes="6025"
-            app:keyLabel="□'"/>
+            app:keyLabel="ⅈ"/>
         <Key
             app:keyLabel="!" />
         <Key
-            app:codes="6022"
-            app:keyLabel="lg" />
+            app:codes="6048"
+            app:keyLabel="sign" />
         <Key
             app:codes="6012"
-            app:keyLabel="cot" />
+            app:keyLabel="cot"
+            app:keyTopLabel="coth"
+            app:popupKeyboard="@xml/popup_keyboard_functions_cot" />
         <Key
             app:codes="6018"
-            app:keyLabel="acot" />
+            app:keyLabel="acot"
+            app:keyTopLabel="acoth"
+            app:popupKeyboard="@xml/popup_keyboard_functions_acot" />
     </Row>
 
 </Keyboard>

@@ -86,12 +86,24 @@ class KeyboardActionListener(
             KeyboardKeyCode.Acos,
             KeyboardKeyCode.Atan,
             KeyboardKeyCode.Acot,
+            KeyboardKeyCode.Sinh,
+            KeyboardKeyCode.Cosh,
+            KeyboardKeyCode.Tanh,
+            KeyboardKeyCode.Coth,
+            KeyboardKeyCode.Asinh,
+            KeyboardKeyCode.Acosh,
+            KeyboardKeyCode.Atanh,
+            KeyboardKeyCode.Acoth,
             KeyboardKeyCode.Ln,
             KeyboardKeyCode.Lb,
             KeyboardKeyCode.Lg,
             KeyboardKeyCode.Abs,
             KeyboardKeyCode.Exp,
-            KeyboardKeyCode.Sqrt -> {
+            KeyboardKeyCode.Sqrt,
+            KeyboardKeyCode.Sign,
+            KeyboardKeyCode.Degrees,
+            KeyboardKeyCode.F,
+            -> {
                 inText.insertUnaryFunction(keyCode.toString().lowercase())
             }
             KeyboardKeyCode.Pow2 -> {
@@ -102,6 +114,15 @@ class KeyboardActionListener(
             }
             KeyboardKeyCode.PowN -> {
                 inText.insert("^")
+            }
+            KeyboardKeyCode.Index1 -> {
+                inText.insert("_1")
+            }
+            KeyboardKeyCode.Index2 -> {
+                inText.insert("_2")
+            }
+            KeyboardKeyCode.IndexN -> {
+                inText.insert("_")
             }
             KeyboardKeyCode.Derivative -> {
                 inText.insert("'")

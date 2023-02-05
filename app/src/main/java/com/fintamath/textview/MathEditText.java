@@ -35,6 +35,7 @@ public class MathEditText extends MathTextViewBase {
             entry("≥", ">="),
             entry("ⅇ", "(E)"),
             entry("π", "(Pi)"),
+            entry("ⅈ", "(I)"),
             entry("T", "(True)"),
             entry("F", "(False)"),
             entry("¬", "!"),
