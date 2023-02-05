@@ -43,7 +43,7 @@
         <Key
             app:codes="6035"
             app:keyLabel="+/-"
-            app:keyBackground="@drawable/switch_enabled_key_background"
+            app:keyBackground="@drawable/switch_key_background"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6000"
@@ -58,7 +58,7 @@
         <Key
             app:codes="6037"
             app:keyLabel="∫xdx"
-            app:keyBackground="@drawable/switch_key_background"
+            app:keyBackground="@drawable/switch_enabled_key_background"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6038"
@@ -69,90 +69,55 @@
 
     <Row>
         <Key
-            app:codes="6002"
-            app:keyLabel="( □ )"
-            app:keyTopLabel="﹙﹚"
-            app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
+            app:codes="6025"
+            app:keyLabel="□'"/>
         <Key
-            app:codes="6031"
-            app:keyLabel="□/□"/>
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="7"
-            app:keyBackground="@drawable/number_key_background" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="8"
-            app:keyBackground="@drawable/number_key_background" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="9"
-            app:keyBackground="@drawable/number_key_background" />
-        <Key
-            app:keyLabel="÷" />
+            app:keyLabel=" "/>
     </Row>
 
     <Row>
         <Key
-            app:keyLabel="&lt;"
-            app:keyTopLabel="≤"
-            app:popupKeyboard="@xml/popup_keyboard_main_less" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="&gt;"
-            app:keyTopLabel="≥"
-            app:popupKeyboard="@xml/popup_keyboard_main_more" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="4"
-            app:keyBackground="@drawable/number_key_background" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="5"
-            app:keyBackground="@drawable/number_key_background" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="6"
-            app:keyBackground="@drawable/number_key_background" />
-        <Key
-            app:keyLabel="×"/>
+            app:keyLabel=" "/>
     </Row>
 
     <Row>
         <Key
-            app:codes="6003"
-            app:keyLabel="□²"
-            app:keyTopLabel="□ⁿ"
-            app:popupKeyboard="@xml/popup_keyboard_main_power" />
+            app:keyLabel=" "/>
         <Key
-            app:codes="6006"
-            app:keyLabel="√□" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="1"
-            app:keyBackground="@drawable/number_key_background" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="2"
-            app:keyBackground="@drawable/number_key_background" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="3"
-            app:keyBackground="@drawable/number_key_background" />
-        <Key
-            app:keyLabel="-" />
+            app:keyLabel=" "/>
     </Row>
 
     <Row>
         <Key
-            app:keyLabel="x"
-            app:keyTopLabel="yz"
-            app:popupKeyboard="@xml/popup_keyboard_main_xyz" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="%" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="0"
-            app:keyBackground="@drawable/number_key_background" />
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="."
-            app:keyTopLabel=","
-            app:popupKeyboard="@xml/popup_keyboard_main_point"/>
+            app:keyLabel=" "/>
         <Key
-            app:keyLabel="="
-            app:keyTopLabel="≠"
-            app:popupKeyboard="@xml/popup_keyboard_main_equal" />
-        <Key
-            app:keyLabel="+" />
+            app:keyLabel=" "/>
     </Row>
 
 </Keyboard>

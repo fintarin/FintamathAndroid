@@ -106,6 +106,20 @@
             app:popupLayout="@layout/popup_keyboard"  />
 
         <com.fintamath.keyboard.KeyboardView
+            android:id="@+id/anaysis_keyboard_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@drawable/keyboard_background"
+            app:keyboardKeyTextColor="@color/text_keyboard"
+            app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
+            app:keyboardKeyBackground="@drawable/key_background"
+            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyTextSize="@dimen/text_size_keyboard"
+            app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
+            app:popupLayout="@layout/popup_keyboard"  />
+
+        <com.fintamath.keyboard.KeyboardView
             android:id="@+id/logic_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

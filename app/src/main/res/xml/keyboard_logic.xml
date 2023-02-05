@@ -56,6 +56,11 @@
             app:keyBackground="@drawable/switch_key_background"
             app:isPreviewEnabled="false" />
         <Key
+            app:codes="6037"
+            app:keyLabel="∫xdx"
+            app:keyBackground="@drawable/switch_key_background"
+            app:isPreviewEnabled="false" />
+        <Key
             app:codes="6038"
             app:keyLabel="T/F"
             app:keyBackground="@drawable/switch_enabled_key_background"

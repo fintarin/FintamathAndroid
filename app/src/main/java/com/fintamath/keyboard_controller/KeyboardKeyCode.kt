@@ -8,6 +8,7 @@ internal enum class KeyboardKeyCode(val value: Int) {
     MainKeyboard(6035),
     LettersKeyboard(6000),
     FunctionsKeyboard(6001),
+    AnalysisKeyboard(6037),
     LogicKeyboard(6038),
     Brackets(6002),
     Pow2(6003),

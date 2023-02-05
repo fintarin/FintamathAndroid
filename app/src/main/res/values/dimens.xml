@@ -8,7 +8,7 @@
     <dimen name="radius_keyboard_key">8dp</dimen>
     <dimen name="radius_keyboard_switch_key">16dp</dimen>
     <dimen name="width_keyboard_key_stroke">2dp</dimen>
-    <dimen name="width_keyboard_switch_key_stroke">6dp</dimen>
+    <dimen name="width_keyboard_switch_key_stroke">3dp</dimen>
 
     <dimen name="width_cursor">1dp</dimen>
 </resources>

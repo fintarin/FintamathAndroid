@@ -49,6 +49,11 @@ class MainActivity : AppCompatActivity() {
                         findViewById(R.id.functions_keyboard_view),
                         Keyboard(this, R.xml.keyboard_functions)
                     ),
+            KeyboardType.AnalysisKeyboard to
+                    Pair(
+                        findViewById(R.id.anaysis_keyboard_view),
+                        Keyboard(this, R.xml.keyboard_analysis)
+                    ),
             KeyboardType.LogicKeyboard to
                     Pair(
                         findViewById(R.id.logic_keyboard_view),
@@ -60,16 +65,11 @@ class MainActivity : AppCompatActivity() {
         currentKeyboard = keyboards[currentKeyboardType]!!.first
         val keyboardSwitcher = KeyboardSwitcher(keyboards, currentKeyboardType)
 
-        val listeners = hashMapOf(
-            KeyboardType.MainKeyboard to
-                    KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText),
-            KeyboardType.LettersKeyboard to
-                    KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText),
-            KeyboardType.FunctionsKeyboard to
-                    KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText),
-            KeyboardType.LogicKeyboard to
-                    KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
-        )
+        val listeners = mutableMapOf<KeyboardType, KeyboardActionListener>()
+        for (type in KeyboardType.values()) {
+            listeners[type] =
+                KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
+        }
 
         keyboards.forEach { (key: KeyboardType, value: Pair<KeyboardView, Keyboard>) ->
             value.first.keyboard = value.second

@@ -4,5 +4,6 @@ enum class KeyboardType {
     MainKeyboard,
     LettersKeyboard,
     FunctionsKeyboard,
+    AnalysisKeyboard,
     LogicKeyboard,
 }

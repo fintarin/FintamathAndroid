@@ -42,6 +42,10 @@ class KeyboardActionListener(
                 keyboardSwitcher.switchKeyboard(KeyboardType.FunctionsKeyboard)
                 return
             }
+            KeyboardKeyCode.AnalysisKeyboard -> {
+                keyboardSwitcher.switchKeyboard(KeyboardType.AnalysisKeyboard)
+                return
+            }
             KeyboardKeyCode.LogicKeyboard -> {
                 keyboardSwitcher.switchKeyboard(KeyboardType.LogicKeyboard)
                 return
