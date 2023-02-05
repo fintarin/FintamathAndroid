@@ -70,8 +70,6 @@
         <attr name="codes" format="integer|string" />
         <!-- The XML keyboard layout of any popup keyboard. -->
         <attr name="popupKeyboard" format="reference" />
-        <!-- The characters to display in the popup keyboard. -->
-        <attr name="popupCharacters" format="string" />
         <!-- Key edge flags. -->
         <attr name="keyEdgeFlags">
             <!-- Key is anchored to the left of the keyboard. -->

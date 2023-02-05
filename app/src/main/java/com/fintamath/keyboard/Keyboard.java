@@ -221,7 +221,6 @@ public class Keyboard {
      * @attr ref android.R.styleable#Keyboard_Key_isRepeatable
      * @attr ref android.R.styleable#Keyboard_Key_isModifier
      * @attr ref android.R.styleable#Keyboard_Key_popupKeyboard
-     * @attr ref android.R.styleable#Keyboard_Key_popupCharacters
      * @attr ref android.R.styleable#Keyboard_Key_keyOutputText
      * @attr ref android.R.styleable#Keyboard_Key_keyEdgeFlags
      */
@@ -255,8 +254,6 @@ public class Keyboard {
         public boolean pressed;
         /** Text to output when pressed. This can be multiple characters, like ".com" */
         public CharSequence text;
-        /** Popup characters */
-        public CharSequence popupCharacters;
         /** The key background */
         public Drawable background;
         /** Whether the preview should be displayed */
@@ -343,8 +340,6 @@ public class Keyboard {
                 iconPreview.setBounds(0, 0, iconPreview.getIntrinsicWidth(),
                         iconPreview.getIntrinsicHeight());
             }
-            popupCharacters = a.getText(
-                    R.styleable.Keyboard_Key_popupCharacters);
             popupResId = a.getResourceId(
                     R.styleable.Keyboard_Key_popupKeyboard, 0);
             repeatable = a.getBoolean(
