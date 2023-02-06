@@ -5,11 +5,11 @@
 
     <Row>
         <Key
-            app:codes="6012"
-            app:keyLabel="cot" />
-        <Key
             app:codes="6042"
             app:keyLabel="coth" />
+        <Key
+            app:codes="6012"
+            app:keyLabel="cot" />
     </Row>
 
 </Keyboard>

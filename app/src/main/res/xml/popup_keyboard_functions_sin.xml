@@ -5,11 +5,11 @@
 
     <Row>
         <Key
-            app:codes="6009"
-            app:keyLabel="sin" />
-        <Key
             app:codes="6039"
             app:keyLabel="sinh" />
+        <Key
+            app:codes="6009"
+            app:keyLabel="sin" />
     </Row>
 
 </Keyboard>

@@ -5,9 +5,9 @@
 
     <Row>
         <Key
-            app:keyLabel="=" />
-        <Key
             app:keyLabel="≠"/>
+        <Key
+            app:keyLabel="=" />
     </Row>
 
 </Keyboard>

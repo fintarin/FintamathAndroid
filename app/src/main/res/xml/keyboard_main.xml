@@ -146,10 +146,12 @@
         <Key
             app:keyLabel="."
             app:keyTopLabel=","
+            app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_main_point"/>
         <Key
             app:keyLabel="="
             app:keyTopLabel="≠"
+            app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_main_equal" />
         <Key
             app:keyLabel="+" />
