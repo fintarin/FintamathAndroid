@@ -37,11 +37,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -151,6 +148,7 @@ public class KeyboardView extends View implements View.OnClickListener {
     private KeyboardView mMiniKeyboard;
     private boolean mMiniKeyboardOnScreen;
     private boolean mIsMiniKeyboard;
+    private int mMiniKeyboardLocationFlags;
     private View mPopupParent;
     private int mMiniKeyboardOffsetX;
     private int mMiniKeyboardOffsetY;
@@ -347,8 +345,26 @@ public class KeyboardView extends View implements View.OnClickListener {
         }
 
         if (mIsMiniKeyboard) {
+            int x = 0;
+            int y = 0;
+
+            switch (mMiniKeyboardLocationFlags) {
+                case Keyboard.POPUP_LOCATION_LEFT: {
+                    break;
+                }
+                case Keyboard.POPUP_LOCATION_RIGHT: {
+                    x = getMeasuredWidth();
+                    break;
+                }
+                case Keyboard.POPUP_LOCATION_CENTER: {
+                    x = getMeasuredWidth() / 2;
+                    break;
+                }
+            }
+
+
             onTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
-                    MotionEvent.ACTION_DOWN, 0, 0, 0));
+                    MotionEvent.ACTION_DOWN, x, y, 0));
         }
     }
 
@@ -1016,6 +1032,7 @@ public class KeyboardView extends View implements View.OnClickListener {
             mMiniKeyboard = (KeyboardView) mMiniKeyboardContainer.findViewById(
                     R.id.keyboardView);
             mMiniKeyboard.mIsMiniKeyboard = true;
+            mMiniKeyboard.mMiniKeyboardLocationFlags = popupKey.popupKeyboardLocationFlags;
 
             mMiniKeyboard.setOnKeyboardActionListener(new OnKeyboardActionListener() {
                 public void onKey(int primaryCode, int[] keyCodes) {
@@ -1063,6 +1080,21 @@ public class KeyboardView extends View implements View.OnClickListener {
         mPopupY = popupKey.y + getPaddingTop();
         final int popupHeightOffset = popupKey.height / 4;
         mPopupY = mPopupY - mMiniKeyboardContainer.getMeasuredHeight() - popupHeightOffset;
+
+        switch (mMiniKeyboard.mMiniKeyboardLocationFlags) {
+            case Keyboard.POPUP_LOCATION_LEFT: {
+                break;
+            }
+            case Keyboard.POPUP_LOCATION_RIGHT: {
+                mPopupX = mPopupX + popupKey.width - mMiniKeyboardContainer.getMeasuredWidth();
+                break;
+            }
+            case Keyboard.POPUP_LOCATION_CENTER: {
+                mPopupX = mPopupX + (popupKey.width - mMiniKeyboardContainer.getMeasuredWidth()) / 2;
+                break;
+            }
+        }
+
         final int x = mPopupX + mMiniKeyboardContainer.getPaddingRight() + mCoordinates[0];
         final int y = mPopupY + mMiniKeyboardContainer.getPaddingBottom() + mCoordinates[1];
 

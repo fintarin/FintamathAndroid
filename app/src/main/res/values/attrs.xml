@@ -77,6 +77,15 @@
             <!-- Key is anchored to the right of the keyboard. -->
             <flag name="right" value="2" />
         </attr>
+        <!-- Popup keyboard location flags. -->
+        <attr name="popupKeyboardLocationFlags">
+            <!-- Popup keyboard is located to the left of the key. -->
+            <flag name="left" value="1" />
+            <!-- Popup keyboard is located to the right of the key. -->
+            <flag name="right" value="2" />
+            <!-- Popup keyboard is located to the center of the key. -->
+            <flag name="center" value="3" />
+        </attr>
         <!-- Whether this is a modifier key such as Alt or Shift. -->
         <attr name="isModifier" format="boolean" />
         <!-- Whether long-pressing on this key will make it repeat. -->

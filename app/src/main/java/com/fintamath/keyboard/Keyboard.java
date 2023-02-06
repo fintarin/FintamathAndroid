@@ -72,6 +72,10 @@ public class Keyboard {
     public static final int EDGE_TOP = 0x04;
     public static final int EDGE_BOTTOM = 0x08;
 
+    public static final int POPUP_LOCATION_LEFT = 0x01;
+    public static final int POPUP_LOCATION_RIGHT = 0x02;
+    public static final int POPUP_LOCATION_CENTER = 0x03;
+
     public static final int KEYCODE_SHIFT = -1;
     public static final int KEYCODE_MODE_CHANGE = -2;
     public static final int KEYCODE_CANCEL = -3;
@@ -266,6 +270,12 @@ public class Keyboard {
          * {@link Keyboard#EDGE_BOTTOM}.
          */
         public int edgeFlags;
+        /**
+         * Flags that specify the location of the keyboard popup relative to the key.
+         * This is a bit mask of
+         * {@link Keyboard#POPUP_LOCATION_LEFT} and {@link Keyboard#POPUP_LOCATION_RIGHT}
+         */
+        public int popupKeyboardLocationFlags;
         /** Whether this is a modifier key, such as Shift or Alt */
         public boolean modifier;
         /** The keyboard that this key belongs to */
@@ -348,6 +358,7 @@ public class Keyboard {
                     R.styleable.Keyboard_Key_isModifier, false);
             edgeFlags = a.getInt(R.styleable.Keyboard_Key_keyEdgeFlags, 0);
             edgeFlags |= parent.rowEdgeFlags;
+            popupKeyboardLocationFlags = a.getInt(R.styleable.Keyboard_Key_popupKeyboardLocationFlags, POPUP_LOCATION_LEFT);
 
             icon = a.getDrawable(
                     R.styleable.Keyboard_Key_keyIcon);
