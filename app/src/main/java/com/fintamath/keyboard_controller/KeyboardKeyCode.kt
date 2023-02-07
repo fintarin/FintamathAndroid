@@ -38,7 +38,7 @@ internal enum class KeyboardKeyCode(val value: Int) {
     Abs(6023),
     Exp(6024),
     Sign(6048),
-    Degrees(6052),
+    Rad(6052),
     Frac(6031),
     History(6033),
     NewLine(6034),

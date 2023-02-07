@@ -101,7 +101,7 @@ class KeyboardActionListener(
             KeyboardKeyCode.Exp,
             KeyboardKeyCode.Sqrt,
             KeyboardKeyCode.Sign,
-            KeyboardKeyCode.Degrees,
+            KeyboardKeyCode.Rad,
             KeyboardKeyCode.F,
             -> {
                 inText.insertUnaryFunction(keyCode.toString().lowercase())
