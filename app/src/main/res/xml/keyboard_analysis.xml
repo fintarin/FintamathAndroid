@@ -72,52 +72,71 @@
             app:codes="6025"
             app:keyLabel="□'"/>
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
     </Row>
 
     <Row>
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
     </Row>
 
     <Row>
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
     </Row>
 
     <Row>
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
-            app:keyLabel=" "/>
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
     </Row>
 
 </Keyboard>
