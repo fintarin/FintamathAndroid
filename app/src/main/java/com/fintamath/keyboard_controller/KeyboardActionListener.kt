@@ -10,11 +10,6 @@ class KeyboardActionListener(
     private val inText: MathEditText
 ) : KeyboardView.OnKeyboardActionListener {
 
-    private val nonSwitchableKeyboardTypes = listOf(
-        KeyboardType.MainKeyboard,
-        KeyboardType.LogicKeyboard,
-    )
-
     override fun onKey(primaryCode: Int, keyCodes: IntArray) {
         if (primaryCode == ' '.code) {
             return
@@ -24,7 +19,6 @@ class KeyboardActionListener(
 
         if (keyCode == null) {
             inText.insert(primaryCode.toChar().toString())
-            switchKeyboardToMain()
             calculatorProcessor.calculate()
             return
         }
@@ -134,14 +128,7 @@ class KeyboardActionListener(
             }
         }
 
-        switchKeyboardToMain()
         calculatorProcessor.calculate()
-    }
-
-    private fun switchKeyboardToMain() {
-        if (!nonSwitchableKeyboardTypes.contains(keyboardSwitcher.currentKeyboardType)) {
-            keyboardSwitcher.switchKeyboard(KeyboardType.MainKeyboard)
-        }
     }
 
     override fun onPress(arg0: Int) {}
