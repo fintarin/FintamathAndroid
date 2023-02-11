@@ -44,9 +44,9 @@ class KeyboardActionListener(
                 keyboardSwitcher.switchKeyboard(KeyboardType.LogicKeyboard)
                 return
             }
-            KeyboardKeyCode.History ->                 // TODO
+            KeyboardKeyCode.Undo ->                 // TODO
                 return
-            KeyboardKeyCode.NewLine ->                 // TODO
+            KeyboardKeyCode.Redo ->                 // TODO
                 return
             KeyboardKeyCode.MoveLeft -> {
                 inText.moveCursorLeft()
