@@ -128,8 +128,6 @@ class KeyboardActionListener(
             KeyboardKeyCode.Frac -> {
                 inText.insertFraction()
             }
-            else -> {
-            }
         }
 
         calculatorProcessor.calculate()

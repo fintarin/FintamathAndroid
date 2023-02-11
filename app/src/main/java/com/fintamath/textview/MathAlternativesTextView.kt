@@ -12,9 +12,6 @@ import android.view.View
 import com.fintamath.R
 import android.view.ViewGroup
 import android.widget.HorizontalScrollView
-import android.widget.ScrollView
-import androidx.core.view.size
-import androidx.core.view.updateLayoutParams
 
 class MathAlternativesTextView @JvmOverloads constructor(
     context: Context,
@@ -26,8 +23,8 @@ class MathAlternativesTextView @JvmOverloads constructor(
 
     private val mInflate: LayoutInflater
 
-    private var mAlternativeTextViews = mutableListOf<TextView>()
-    private var mAlternativeDelimiters = mutableListOf<View>()
+    private val mAlternativeTextViews = mutableListOf<TextView>()
+    private val mAlternativeDelimiters = mutableListOf<View>()
 
     init {
         orientation = VERTICAL
