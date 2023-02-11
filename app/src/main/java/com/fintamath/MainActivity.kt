@@ -5,7 +5,9 @@ import com.fintamath.textview.MathEditText
 import com.fintamath.textview.MathAlternativesTextView
 import com.fintamath.calculator.CalculatorProcessor
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import com.fintamath.keyboard.Keyboard
 import com.fintamath.keyboard.KeyboardView
 import com.fintamath.keyboard_controller.KeyboardType
@@ -75,5 +77,20 @@ class MainActivity : AppCompatActivity() {
             value.first.keyboard = value.second
             value.first.setOnKeyboardActionListener(listeners[key])
         }
+    }
+
+    fun showOverflowButtonPopup(view: View) {
+        val popup = PopupMenu(this, view)
+        val inflater = popup.menuInflater
+        inflater.inflate(R.menu.options_menu, popup.menu)
+        popup.show()
+    }
+
+    fun historyButtonPopup(view: View) {
+        // TODO: implement this
+    }
+
+    fun cameraButtonPopup(view: View) {
+        // TODO: implement this
     }
 }

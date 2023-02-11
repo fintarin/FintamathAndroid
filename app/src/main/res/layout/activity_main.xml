@@ -8,13 +8,71 @@
     android:background="@color/background_main"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:id="@+id/main_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/bar_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/app_name"
+            android:textSize="@dimen/text_size_bar"
+            android:textColor="@color/text_main" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:layout_width="@dimen/diameter_bar_key"
+            android:layout_height="@dimen/diameter_bar_key"
+            android:padding="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bar_key_background"
+            android:src="@drawable/ic_camera"
+            android:contentDescription="@string/camera_button_description"
+            android:onClick="cameraButtonPopup" />
+
+        <ImageButton
+            android:layout_width="@dimen/diameter_bar_key"
+            android:layout_height="@dimen/diameter_bar_key"
+            android:padding="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bar_key_background"
+            android:src="@drawable/ic_history"
+            android:contentDescription="@string/history_button_description"
+            android:onClick="historyButtonPopup" />
+
+        <ImageButton
+            android:layout_width="@dimen/diameter_bar_key"
+            android:layout_height="@dimen/diameter_bar_key"
+            android:padding="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bar_key_background"
+            android:src="@drawable/ic_overflow_holo"
+            android:contentDescription="@string/overflow_button_description"
+            android:onClick="showOverflowButtonPopup" />
+
+    </LinearLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/text_view_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/keyboard_layout">
+        android:layout_above="@id/keyboard_layout"
+        android:layout_below="@id/main_bar"
+        android:background="@color/background_main">
 
         <LinearLayout
             android:layout_width="match_parent"

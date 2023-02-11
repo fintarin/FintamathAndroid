@@ -2,6 +2,11 @@
 <resources>
     <color name="background_main">#2b2b2b</color>
 
+    <color name="background_bar">#262626</color>
+    <color name="background_bar_stroke">#1E1E1E</color>
+    <color name="background_bar_button">@color/background_bar</color>
+    <color name="background_bar_button_pressed">#666666</color>
+
     <color name="background_keyboard">#2f2f2f</color>
     <color name="background_keyboard_key">#2d2d2d</color>
     <color name="background_keyboard_key_pressed">#666666</color>
