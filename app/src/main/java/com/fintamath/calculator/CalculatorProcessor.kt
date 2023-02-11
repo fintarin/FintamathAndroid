@@ -12,13 +12,19 @@ class CalculatorProcessor(
 
     private val calculator: Calculator = Calculator()
     private var calcThread: Thread? = null
+    private var calcHistory: CalculatorHistory = CalculatorHistory()
 
     fun calculate() {
+        calcHistory.addState(inTextView.text)
+        performCalculation()
+    }
+
+    private fun performCalculation() {
         if (calcThread != null && calcThread!!.isAlive) {
             calcThread!!.interrupt()
         }
 
-        var text = inTextView.text
+        val text = inTextView.text
         if (text.isEmpty()) {
             outTextView.setTexts(null)
             return
@@ -36,5 +42,15 @@ class CalculatorProcessor(
         }
 
         calcThread!!.start()
+    }
+
+    fun undo() {
+        inTextView.text = calcHistory.undo()
+        performCalculation()
+    }
+
+    fun redo() {
+        inTextView.text = calcHistory.redo()
+        performCalculation()
     }
 }

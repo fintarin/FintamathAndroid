@@ -44,10 +44,14 @@ class KeyboardActionListener(
                 keyboardSwitcher.switchKeyboard(KeyboardType.LogicKeyboard)
                 return
             }
-            KeyboardKeyCode.Undo ->                 // TODO
+            KeyboardKeyCode.Undo -> {
+                calculatorProcessor.undo()
                 return
-            KeyboardKeyCode.Redo ->                 // TODO
+            }
+            KeyboardKeyCode.Redo -> {
+                calculatorProcessor.redo()
                 return
+            }
             KeyboardKeyCode.MoveLeft -> {
                 inText.moveCursorLeft()
                 return

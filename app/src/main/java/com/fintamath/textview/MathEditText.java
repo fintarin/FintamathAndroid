@@ -107,6 +107,12 @@ public class MathEditText extends MathTextViewBase {
         return stringBuilder.toString();
     }
 
+    public void setText(String text) {
+        clear();
+        mCurrentEditText.setText(text);
+        mCurrentEditText.setSelection(mCurrentEditText.getText().length());
+    }
+
     @Override
     public boolean isEmpty() {
         for (int i = 0; i < getChildCount(); i++) {
