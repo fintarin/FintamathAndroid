@@ -18,27 +18,27 @@ class MathAlternativesTextView @JvmOverloads constructor(
     attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
-    private val mTextViewLayout: Int
-    private val mDelimiterLayout: Int
+    private val textViewLayout: Int
+    private val delimiterLayout: Int
 
-    private val mInflate: LayoutInflater
+    private val inflate: LayoutInflater
 
-    private val mAlternativeTextViews = mutableListOf<TextView>()
-    private val mAlternativeDelimiters = mutableListOf<View>()
+    private val alternativeTextViews = mutableListOf<TextView>()
+    private val alternativeDelimiters = mutableListOf<View>()
 
     init {
         orientation = VERTICAL
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.MathAlternativesTextView)
 
-        mTextViewLayout =
+        textViewLayout =
             a.getResourceId(R.styleable.MathAlternativesTextView_alternativeTextViewLayout, 0)
-        mDelimiterLayout =
+        delimiterLayout =
             a.getResourceId(R.styleable.MathAlternativesTextView_alternativeDelimiterLayout, 0)
 
         a.recycle()
 
-        mInflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         addTextView()
     }
@@ -49,14 +49,14 @@ class MathAlternativesTextView @JvmOverloads constructor(
             return
         }
 
-        for (i in mAlternativeTextViews.size until texts.size) {
+        for (i in alternativeTextViews.size until texts.size) {
             addDelimiter()
             addTextView()
         }
 
-        mAlternativeTextViews[0].text = texts[0]
-        mAlternativeTextViews[0].isLongClickable = mAlternativeTextViews[0].text.isNotEmpty()
-        mAlternativeTextViews[0].requestLayout()
+        alternativeTextViews[0].text = texts[0]
+        alternativeTextViews[0].isLongClickable = alternativeTextViews[0].text.isNotEmpty()
+        alternativeTextViews[0].requestLayout()
 
         var uniqueTextsSize = 1
 
@@ -65,27 +65,27 @@ class MathAlternativesTextView @JvmOverloads constructor(
                 continue
             }
 
-            mAlternativeTextViews[uniqueTextsSize].text = texts[i]
-            mAlternativeTextViews[uniqueTextsSize].isLongClickable = true
-            mAlternativeTextViews[uniqueTextsSize].requestLayout()
-            mAlternativeDelimiters[uniqueTextsSize - 1].visibility = VISIBLE
+            alternativeTextViews[uniqueTextsSize].text = texts[i]
+            alternativeTextViews[uniqueTextsSize].isLongClickable = true
+            alternativeTextViews[uniqueTextsSize].requestLayout()
+            alternativeDelimiters[uniqueTextsSize - 1].visibility = VISIBLE
 
             uniqueTextsSize++
         }
 
-        for (i in uniqueTextsSize until mAlternativeTextViews.size) {
-            mAlternativeTextViews[i].text = ""
-            mAlternativeTextViews[i].isLongClickable = false
-            mAlternativeDelimiters[i - 1].visibility = GONE
+        for (i in uniqueTextsSize until alternativeTextViews.size) {
+            alternativeTextViews[i].text = ""
+            alternativeTextViews[i].isLongClickable = false
+            alternativeDelimiters[i - 1].visibility = GONE
         }
     }
 
     private fun addTextView() {
-        val textView = mInflate.inflate(mTextViewLayout, null) as TextView
+        val textView = inflate.inflate(textViewLayout, null) as TextView
         textView.isLongClickable = false
         textView.setOnLongClickListener(textViewOnLongClick())
 
-        mAlternativeTextViews.add(textView)
+        alternativeTextViews.add(textView)
 
         val scrollView = HorizontalScrollView(context)
         scrollView.foregroundGravity = foregroundGravity
@@ -96,10 +96,10 @@ class MathAlternativesTextView @JvmOverloads constructor(
     }
 
     private fun addDelimiter() {
-        val delimiter = mInflate.inflate(mDelimiterLayout, null)
+        val delimiter = inflate.inflate(delimiterLayout, null)
         delimiter.visibility = GONE
 
-        mAlternativeDelimiters.add(delimiter)
+        alternativeDelimiters.add(delimiter)
 
         addView(delimiter)
     }
