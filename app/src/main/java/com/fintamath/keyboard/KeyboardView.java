@@ -31,8 +31,6 @@ import com.fintamath.keyboard.Keyboard.Key;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -1131,38 +1129,8 @@ public class KeyboardView extends View implements View.OnClickListener {
             }
         }
 
-        final long now = me.getEventTime();
-
         if (mMiniKeyboardOnScreen && mMiniKeyboard != null && mMiniKeyboard.isAttachedToWindow()) {
-            final int widthDelta = mMiniKeyboard.getKeyboard().getKeyWidth() / 2;
-            final int heightDelta = mMiniKeyboard.getKeyboard().getKeyHeight() / 2;
-
-            float x = me.getX() - mMiniKeyboard.mMiniKeyboardOffsetX;
-            float y = -me.getY() - mPreviewTextContainer.getHeight() -
-                    mMiniKeyboard.getHeight() + mMiniKeyboard.mMiniKeyboardOffsetY;
-
-            if (x < mMiniKeyboard.getLeft() - widthDelta
-                    || x > mMiniKeyboard.getRight() + widthDelta
-                    || y < - heightDelta
-                    || y > mPreviewTextContainer.getHeight() + heightDelta) {
-
-                dismissPopupKeyboard();
-                return onTouchEvent(MotionEvent.obtain(now, now,
-                        MotionEvent.ACTION_DOWN, me.getX(), me.getY(), me.getMetaState()));
-            }
-
-            x = x >= mMiniKeyboard.getRight() ? mMiniKeyboard.getRight() - 1 : x;
-            x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
-            y = mMiniKeyboard.getY();
-
-            int action = me.getAction() == MotionEvent.ACTION_MOVE ? MotionEvent.ACTION_DOWN : me.getAction();
-
-            if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
-                return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,
-                        action, x, y, me.getMetaState()));
-            }
-
-            return false;
+            return onMiniKeyboardTouchEvent(me);
         }
 
         // Convert multi-pointer up/down events to single up/down events to
@@ -1170,6 +1138,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         final int pointerCount = me.getPointerCount();
         final int action = me.getAction();
         boolean result = false;
+        final long now = me.getEventTime();
 
         if (pointerCount != mOldPointerCount) {
             if (pointerCount == 1) {
@@ -1344,6 +1313,51 @@ public class KeyboardView extends View implements View.OnClickListener {
         mLastX = touchX;
         mLastY = touchY;
         return true;
+    }
+
+    private boolean onMiniKeyboardTouchEvent(MotionEvent me) {
+        final long now = me.getEventTime();
+        float rawX = me.getRawX();
+        float rawY = me.getRawY();
+
+        final int widthDelta = mMiniKeyboard.getKeyboard().getKeyWidth() / 2;
+        final int heightDelta = mMiniKeyboard.getKeyboard().getKeyHeight() / 2;
+
+        Rect miniKeyboardRect = getViewDrawingRect(mMiniKeyboard);
+        Rect previewRect = getViewDrawingRect(mPreviewTextContainer);
+
+        if (rawX < miniKeyboardRect.left - widthDelta
+                || rawX > miniKeyboardRect.right + widthDelta
+                || rawY < previewRect.top - heightDelta
+                || rawY > previewRect.bottom + heightDelta) {
+
+            dismissPopupKeyboard();
+            return onTouchEvent(MotionEvent.obtain(now, now,
+                    MotionEvent.ACTION_DOWN, me.getX(), me.getY(), me.getMetaState()));
+        }
+
+        float x = me.getX() - mMiniKeyboard.mMiniKeyboardOffsetX;
+        x = x >= mMiniKeyboard.getRight() ? mMiniKeyboard.getRight() - 1 : x;
+        x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
+        float y = mMiniKeyboard.getY() + mMiniKeyboardOffsetY;
+
+        int action = me.getAction() == MotionEvent.ACTION_MOVE ? MotionEvent.ACTION_DOWN : me.getAction();
+
+        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
+            return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,
+                    action, x, y, me.getMetaState()));
+        }
+
+        return false;
+    }
+
+    private Rect getViewDrawingRect(View view) {
+        Rect rect = new Rect();
+        int[] location = new int[2];
+        view.getDrawingRect(rect);
+        view.getLocationOnScreen(location);
+        rect.offset(location[0], location[1]);
+        return rect;
     }
 
     private boolean repeatKey() {
