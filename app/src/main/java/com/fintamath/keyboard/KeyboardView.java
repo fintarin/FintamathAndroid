@@ -16,6 +16,7 @@
 
 package com.fintamath.keyboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -30,10 +31,13 @@ import com.fintamath.keyboard.Keyboard.Key;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -1115,8 +1119,18 @@ public class KeyboardView extends View implements View.OnClickListener {
         return true;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent me) {
+        if (!mIsMiniKeyboard) {
+            switch (me.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+                case MotionEvent.ACTION_UP:
+                    performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+            }
+        }
+
         final long now = me.getEventTime();
 
         if (mMiniKeyboardOnScreen && mMiniKeyboard != null && mMiniKeyboard.isAttachedToWindow()) {
