@@ -12,7 +12,7 @@
     android:textSize="@dimen/text_size_main"
     android:textColor="@color/text_main"
     android:textCursorDrawable="@drawable/cursor"
-    android:hint="@string/nested_edit_text_hint"
+    android:hint="@string/math_edit_text_hint"
     android:textColorHint="@color/text_hint"
     android:importantForAutofill="no" >
 </EditText>

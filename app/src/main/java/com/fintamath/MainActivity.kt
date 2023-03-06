@@ -79,18 +79,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showOverflowButtonPopup(view: View) {
+    fun showOptionsMenu(view: View) {
         val popup = PopupMenu(this, view)
         val inflater = popup.menuInflater
         inflater.inflate(R.menu.options_menu, popup.menu)
         popup.show()
     }
 
-    fun historyButtonPopup(view: View) {
+    fun showHistoryFragment(view: View) {
         // TODO: implement this
     }
 
-    fun cameraButtonPopup(view: View) {
+    fun showCameraFragment(view: View) {
         // TODO: implement this
     }
 }

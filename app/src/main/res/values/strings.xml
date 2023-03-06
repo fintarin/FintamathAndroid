@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">Fintamath</string>
     <string name="alternative_form">Alternative Form</string>
-    <string name="nested_edit_text_hint">□</string>
     <string name="math_edit_text_hint">Type a math problem…</string>
-    <string name="overflow_button_description">Options Menu</string>
-    <string name="camera_button_description">Camera</string>
-    <string name="history_button_description">History</string>
+    <string name="options">Options Menu</string>
+    <string name="camera">Camera</string>
+    <string name="history">History</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
 </resources>

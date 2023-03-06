@@ -38,8 +38,8 @@
             android:paddingEnd="10dp"
             android:background="@drawable/bar_key_background"
             android:src="@drawable/ic_camera"
-            android:contentDescription="@string/camera_button_description"
-            android:onClick="cameraButtonPopup" />
+            android:contentDescription="@string/camera"
+            android:onClick="showCameraFragment" />
 
         <ImageButton
             android:layout_width="@dimen/diameter_bar_key"
@@ -49,8 +49,8 @@
             android:paddingEnd="10dp"
             android:background="@drawable/bar_key_background"
             android:src="@drawable/ic_history"
-            android:contentDescription="@string/history_button_description"
-            android:onClick="historyButtonPopup" />
+            android:contentDescription="@string/history"
+            android:onClick="showHistoryFragment" />
 
         <ImageButton
             android:layout_width="@dimen/diameter_bar_key"
@@ -60,8 +60,8 @@
             android:paddingEnd="10dp"
             android:background="@drawable/bar_key_background"
             android:src="@drawable/ic_overflow_holo"
-            android:contentDescription="@string/overflow_button_description"
-            android:onClick="showOverflowButtonPopup" />
+            android:contentDescription="@string/options"
+            android:onClick="showOptionsMenu" />
 
     </LinearLayout>
 
