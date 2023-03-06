@@ -5,10 +5,10 @@
 
     <Row>
         <Key
-            app:codes="6041"
+            app:keyOutputText="tanh()"
             app:keyLabel="tanh" />
         <Key
-            app:codes="6011"
+            app:keyOutputText="tan()"
             app:keyLabel="tan" />
     </Row>
 

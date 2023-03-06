@@ -5,8 +5,10 @@
 
     <Row>
         <Key
+            app:keyOutputText="&lt;"
             app:keyLabel="&lt;" />
         <Key
+            app:keyOutputText="&lt;="
             app:keyLabel="≤"/>
     </Row>
 

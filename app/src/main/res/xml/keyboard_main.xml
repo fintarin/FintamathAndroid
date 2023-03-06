@@ -71,91 +71,111 @@
 
     <Row>
         <Key
-            app:codes="6002"
+            app:keyOutputText="()"
             app:keyLabel="( □ )"
             app:keyTopLabel="﹙﹚"
             app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
-            app:codes="6031"
-            app:keyLabel="□/□"/>
+            app:keyOutputText="()/()"
+            app:keyLabel="□/□" />
         <Key
+            app:keyOutputText="7"
             app:keyLabel="7"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="8"
             app:keyLabel="8"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="9"
             app:keyLabel="9"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText=" / "
             app:keyLabel="÷" />
     </Row>
 
     <Row>
         <Key
+            app:keyOutputText="&lt;"
             app:keyLabel="&lt;"
             app:keyTopLabel="≤"
             app:popupKeyboard="@xml/popup_keyboard_main_less" />
         <Key
+            app:keyOutputText="&gt;"
             app:keyLabel="&gt;"
             app:keyTopLabel="≥"
             app:popupKeyboard="@xml/popup_keyboard_main_more" />
         <Key
+            app:keyOutputText="4"
             app:keyLabel="4"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="5"
             app:keyLabel="5"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="6"
             app:keyLabel="6"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="*"
             app:keyLabel="×"/>
     </Row>
 
     <Row>
         <Key
-            app:codes="6003"
+            app:keyOutputText="^(2)"
             app:keyLabel="□²"
             app:keyTopLabel="□ⁿ"
             app:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
-            app:codes="6006"
+            app:keyOutputText="sqrt()"
             app:keyLabel="√□" />
         <Key
+            app:keyOutputText="1"
             app:keyLabel="1"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="2"
             app:keyLabel="2"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="3"
             app:keyLabel="3"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="-"
             app:keyLabel="-" />
     </Row>
 
     <Row>
         <Key
+            app:keyOutputText="x"
             app:keyLabel="x"
             app:keyTopLabel="yz"
             app:popupKeyboard="@xml/popup_keyboard_main_xyz" />
         <Key
+            app:keyOutputText="%"
             app:keyLabel="%" />
         <Key
+            app:keyOutputText="0"
             app:keyLabel="0"
             app:keyBackground="@drawable/number_key_background" />
         <Key
+            app:keyOutputText="."
             app:keyLabel="."
             app:keyTopLabel=","
             app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_main_point"/>
         <Key
+            app:keyOutputText="="
             app:keyLabel="="
             app:keyTopLabel="≠"
             app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_main_equal" />
         <Key
+            app:keyOutputText="+"
             app:keyLabel="+" />
     </Row>
 

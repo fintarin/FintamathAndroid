@@ -5,10 +5,10 @@
 
     <Row>
         <Key
-            app:codes="6039"
+            app:keyOutputText="sinh()"
             app:keyLabel="sinh" />
         <Key
-            app:codes="6009"
+            app:keyOutputText="sin()"
             app:keyLabel="sin" />
     </Row>
 

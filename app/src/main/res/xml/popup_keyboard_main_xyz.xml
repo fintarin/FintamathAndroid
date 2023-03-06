@@ -5,10 +5,13 @@
 
     <Row>
         <Key
+            app:keyOutputText="x"
             app:keyLabel="x" />
         <Key
+            app:keyOutputText="y"
             app:keyLabel="y" />
         <Key
+            app:keyOutputText="z"
             app:keyLabel="z" />
     </Row>
 

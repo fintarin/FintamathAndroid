@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_main"
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/main_bar"
+        android:id="@+id/bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -19,8 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:text="@string/app_name"
             android:textSize="@dimen/text_size_bar"
             android:textColor="@color/text_main" />
@@ -66,12 +65,12 @@
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/text_view_layout"
+        android:id="@+id/calculations_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="100dp"
         android:layout_above="@id/keyboard_layout"
-        android:layout_below="@id/main_bar"
+        android:layout_below="@id/bar_layout"
         android:background="@color/background_main">
 
         <LinearLayout
@@ -79,36 +78,38 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <HorizontalScrollView
+            <FrameLayout
+                android:id="@+id/in_text_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="none">
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:clickable="true"
+                android:focusable="true">
 
-                <com.fintamath.textview.MathEditText
-                    android:id="@+id/inText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:minHeight="100dp"
-                    android:layout_gravity="center_vertical"
-                    android:padding="10dp"
-                    android:paddingStart="8dp"
+                <com.fintamath.textview.MathTextView
+                    android:id="@+id/in_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:isEditable="true"
                     app:hint="@string/math_edit_text_hint"
-                    app:nestedTextViewLayout="@layout/nested_edit_text"
-                    app:fractionLineLayout="@layout/fraction_line" />
+                    app:textSize="@dimen/text_size_math_text_view"
+                    app:textColor="@color/text_main" />
 
-            </HorizontalScrollView>
+            </FrameLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="@dimen/delimiter_width"
                 android:background="@color/text_hint"/>
 
             <com.fintamath.textview.MathAlternativesTextView
-                android:id="@+id/outText"
+                android:id="@+id/out_texts"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                app:alternativeTextViewLayout="@layout/alternative_text_view"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="20dp"
+                app:alternativeTextViewLayout="@layout/alternative_math_text_view"
                 app:alternativeDelimiterLayout="@layout/alternative_delimiter" />
 
         </LinearLayout>
@@ -125,7 +126,7 @@
             android:id="@+id/main_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="@drawable/keyboard_background"
             app:keyboardKeyTextColor="@color/text_keyboard"
             app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
@@ -164,7 +165,7 @@
             app:popupLayout="@layout/popup_keyboard"  />
 
         <com.fintamath.keyboard.KeyboardView
-            android:id="@+id/anaysis_keyboard_view"
+            android:id="@+id/analysis_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"

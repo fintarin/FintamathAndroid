@@ -5,10 +5,10 @@
 
     <Row>
         <Key
-            app:codes="6040"
+            app:keyOutputText="cosh()"
             app:keyLabel="cosh" />
         <Key
-            app:codes="6010"
+            app:keyOutputText="cos()"
             app:keyLabel="cos" />
     </Row>
 

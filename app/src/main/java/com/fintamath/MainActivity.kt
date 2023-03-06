@@ -1,35 +1,46 @@
 package com.fintamath
 
-import androidx.appcompat.app.AppCompatActivity
-import com.fintamath.textview.MathEditText
-import com.fintamath.textview.MathAlternativesTextView
-import com.fintamath.calculator.CalculatorProcessor
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.keyboard.Keyboard
 import com.fintamath.keyboard.KeyboardView
-import com.fintamath.keyboard_controller.KeyboardType
-import com.fintamath.keyboard_controller.KeyboardSwitcher
 import com.fintamath.keyboard_controller.KeyboardActionListener
+import com.fintamath.keyboard_controller.KeyboardSwitcher
+import com.fintamath.keyboard_controller.KeyboardType
+import com.fintamath.textview.MathAlternativesTextView
+import com.fintamath.textview.MathTextView
+
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var inText: MathEditText
-    private lateinit var outText: MathAlternativesTextView
-    private lateinit var currentKeyboard: KeyboardView
+
+    private lateinit var inTextLayout: ViewGroup
+    private lateinit var inText: MathTextView
+    private lateinit var outTexts: MathAlternativesTextView
+
     private lateinit var calculatorProcessor: CalculatorProcessor
 
+    private val keyboardTransitionDuration: Long = 300
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        inText = findViewById(R.id.inText)
-        outText = findViewById(R.id.outText)
-        calculatorProcessor = CalculatorProcessor(this, inText, outText)
+        inTextLayout = findViewById(R.id.in_text_layout)
+        inText = findViewById(R.id.in_text)
+        outTexts = findViewById(R.id.out_texts)
+
+        calculatorProcessor = CalculatorProcessor ({ outTexts(it) }, { startLoad() })
 
         initKeyboards()
-        currentKeyboard.visibility = View.VISIBLE
+
+        inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
         inText.requestFocus()
     }
@@ -53,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                     ),
             KeyboardType.AnalysisKeyboard to
                     Pair(
-                        findViewById(R.id.anaysis_keyboard_view),
+                        findViewById(R.id.analysis_keyboard_view),
                         Keyboard(this, R.xml.keyboard_analysis)
                     ),
             KeyboardType.LogicKeyboard to
@@ -64,7 +75,6 @@ class MainActivity : AppCompatActivity() {
         )
 
         val currentKeyboardType = KeyboardType.values().first()
-        currentKeyboard = keyboards[currentKeyboardType]!!.first
         val keyboardSwitcher = KeyboardSwitcher(keyboards, currentKeyboardType)
 
         val listeners = mutableMapOf<KeyboardType, KeyboardActionListener>()
@@ -77,6 +87,24 @@ class MainActivity : AppCompatActivity() {
             value.first.keyboard = value.second
             value.first.setOnKeyboardActionListener(listeners[key])
         }
+    }
+
+    private fun outTexts(it: List<String>) {
+        runOnUiThread {
+            outTexts.setTexts(it)
+        }
+    }
+
+    private fun startLoad() {
+        runOnUiThread {
+            outTexts.setTexts(listOf(getString(R.string.calculation_dots)))
+        }
+    }
+
+    private fun touchInText(event: MotionEvent): Boolean {
+        return inText.dispatchTouchEvent(MotionEvent.obtain(
+            event.downTime, event.eventTime, event.action, event.x, 0f, event.metaState
+        ))
     }
 
     fun showOptionsMenu(view: View) {
@@ -94,3 +122,4 @@ class MainActivity : AppCompatActivity() {
         // TODO: implement this
     }
 }
+ 

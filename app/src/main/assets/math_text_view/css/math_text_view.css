@@ -1,0 +1,141 @@
+body {
+  overflow: hidden;
+  overflow-x: scroll;
+  margin: 0;
+  padding: 0;
+}
+
+span,
+div {
+  display: inline-block;
+  vertical-align: middle;
+  outline: none;
+  white-space: nowrap;
+  text-underline-offset: 0.1em;
+}
+
+span:empty:before,
+div:empty:before {
+  opacity: 0.5;
+  line-height: 0;
+}
+
+.math_text_view {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  min-width: calc(100% - 30px);
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.math_text_view:empty:before {
+  content: attr(hint);
+}
+
+.text:empty:before {
+  content: attr(empty-hint);
+  padding-left: 0.01px;
+  padding-right: 0.01px;
+}
+
+.text_hint {
+  padding: 1px;
+}
+
+.text_hint:empty:before {
+  content: '\2B1A';
+}
+
+.border {
+  float: left;
+}
+
+.binary_operator {
+  margin-left: 4px;
+  margin-right: 4px;
+  opacity: 0.75;
+}
+
+.unary_prefix_operator {
+  opacity: 0.75;
+}
+
+.unary_postfix_operator {
+  opacity: 0.75;
+}
+
+.sup {
+  margin-bottom: 3ex;
+  font-size: 70%;
+}
+
+.sub {
+  margin-top: 3ex;
+  font-size: 70%;
+}
+
+.fraction {
+  text-align: center;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.fraction_line {
+  display: block;
+  border-top: 0.08em solid;
+  opacity: 0.75;
+}
+
+.function:before {
+  content: attr(function_name);
+  margin-right: -1px;
+}
+
+.brackets {
+  border-left: 0.1em solid;
+  border-right: 0.1em solid;
+  border-radius: 0.4em;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.abs {
+  border-left: 0.08em solid;
+  border-right: 0.08em solid;
+  margin-left: 4px;
+  margin-right: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.root {
+  position: relative;
+  border-top: 0.08em solid;
+  border-left: 0.08em solid;
+  transform-origin: bottom left;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  margin-right: 4px;
+  margin-left: 15px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.root:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  height: 40%;
+  width: 0.2em;
+  left: -0.28em;
+  border-top: 0.08em solid;
+  border-right: 0.08em solid;
+  transform: skew(30deg);
+  transform-origin: bottom right;
+  opacity: 0.75;
+}

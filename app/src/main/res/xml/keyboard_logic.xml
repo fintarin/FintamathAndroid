@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
     app:keyWidth="@dimen/keyboard_key_width"
-    app:keyHeight="@dimen/keyboard_key_height">>
+    app:keyHeight="@dimen/keyboard_key_height">
 
     <Row>
         <Key
@@ -71,37 +71,48 @@
 
     <Row>
         <Key
+            app:keyOutputText="True"
             app:keyLabel="T" />
         <Key
+            app:keyOutputText="False"
             app:keyLabel="F"/>
         <Key
+            app:keyOutputText="a"
             app:keyLabel="a" />
         <Key
+            app:keyOutputText="b"
             app:keyLabel="b"/>
         <Key
+            app:keyOutputText="c"
             app:keyLabel="c" />
     </Row>
 
     <Row>
         <Key
-            app:codes="6002"
+            app:keyOutputText="()"
             app:keyLabel="( □ )"
             app:keyTopLabel="﹙﹚"
             app:popupKeyboard="@xml/popup_keyboard_logic_brackets" />
         <Key
+            app:keyOutputText="~"
             app:keyLabel="¬" />
         <Key
+            app:keyOutputText="&amp;"
             app:keyLabel="∧" />
         <Key
+            app:keyOutputText="|"
             app:keyLabel="∨" />
         <Key
+            app:keyOutputText="-&gt;"
             app:keyLabel="⇒" />
     </Row>
 
     <Row>
         <Key
+            app:keyOutputText="&lt;-&gt;"
             app:keyLabel="≡" />
         <Key
+            app:keyOutputText="!&lt;-&gt;"
             app:keyLabel="≢" />
         <Key
             app:keyLabel=" "

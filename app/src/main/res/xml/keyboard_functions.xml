@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
     app:keyWidth="@dimen/keyboard_key_width"
-    app:keyHeight="@dimen/keyboard_key_height">>
+    app:keyHeight="@dimen/keyboard_key_height">
 
     <Row>
         <Key
@@ -71,27 +71,27 @@
 
     <Row>
         <Key
-            app:codes="6036"
+            app:keyOutputText="f()"
             app:keyLabel="f(□)" />
         <Key
-            app:codes="6047"
+            app:keyOutputText="_(1)"
             app:keyLabel="□₁"
             app:keyTopLabel="□ₙ"
             app:popupKeyboard="@xml/popup_keyboard_functions_indexes" />
         <Key
-            app:codes="6020"
+            app:keyOutputText="ln()"
             app:keyLabel="ln"
             app:keyTopLabel="lb lg"
             app:popupKeyboardLocationFlags="center"
             app:popupKeyboard="@xml/popup_keyboard_functions_logarithms" />
         <Key
-            app:codes="6009"
+            app:keyOutputText="sin()"
             app:keyLabel="sin"
             app:keyTopLabel="sinh"
             app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_functions_sin" />
         <Key
-            app:codes="6015"
+            app:keyOutputText="asin()"
             app:keyLabel="asin"
             app:keyTopLabel="asinh"
             app:popupKeyboardLocationFlags="right"
@@ -100,21 +100,22 @@
 
     <Row>
         <Key
-            app:keyLabel="ⅇ"/>
+            app:keyOutputText="E"
+            app:keyLabel="𝘦"/>
         <Key
-            app:codes="6052"
+            app:keyOutputText="°"
             app:keyLabel="°"/>
         <Key
-            app:codes="6019"
+            app:keyOutputText="log(,)"
             app:keyLabel="log" />
         <Key
-            app:codes="6010"
+            app:keyOutputText="cos()"
             app:keyLabel="cos"
             app:keyTopLabel="cosh"
             app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_functions_cos" />
         <Key
-            app:codes="6016"
+            app:keyOutputText="acos()"
             app:keyLabel="acos"
             app:keyTopLabel="acosh"
             app:popupKeyboardLocationFlags="right"
@@ -123,21 +124,22 @@
 
     <Row>
         <Key
+            app:keyOutputText="Pi"
             app:keyLabel="π"/>
         <Key
-            app:codes="6023"
+            app:keyOutputText="abs()"
             app:keyLabel="|□|" />
         <Key
-            app:codes="6024"
+            app:keyOutputText="exp()"
             app:keyLabel="exp" />
         <Key
-            app:codes="6011"
+            app:keyOutputText="tan()"
             app:keyLabel="tan"
             app:keyTopLabel="tanh"
             app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_functions_tan" />
         <Key
-            app:codes="6017"
+            app:keyOutputText="atan()"
             app:keyLabel="atan"
             app:keyTopLabel="atanh"
             app:popupKeyboardLocationFlags="right"
@@ -146,20 +148,22 @@
 
     <Row>
         <Key
-            app:keyLabel="ⅈ"/>
+            app:keyOutputText="I"
+            app:keyLabel="𝘪"/>
         <Key
+            app:keyOutputText="!"
             app:keyLabel="!" />
         <Key
-            app:codes="6048"
+            app:keyOutputText="sign()"
             app:keyLabel="sign" />
         <Key
-            app:codes="6012"
+            app:keyOutputText="cot()"
             app:keyLabel="cot"
             app:keyTopLabel="coth"
             app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_functions_cot" />
         <Key
-            app:codes="6018"
+            app:keyOutputText="acot()"
             app:keyLabel="acot"
             app:keyTopLabel="acoth"
             app:popupKeyboardLocationFlags="right"

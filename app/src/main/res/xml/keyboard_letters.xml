@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
     app:keyWidth="@dimen/keyboard_key_width"
-    app:keyHeight="@dimen/keyboard_key_height">>
+    app:keyHeight="@dimen/keyboard_key_height">
 
     <Row>
         <Key
@@ -71,65 +71,91 @@
 
     <Row>
         <Key
+            app:keyOutputText="a"
             app:keyLabel="a"/>
         <Key
+            app:keyOutputText="b"
             app:keyLabel="b" />
         <Key
+            app:keyOutputText="c"
             app:keyLabel="c" />
         <Key
+            app:keyOutputText="d"
             app:keyLabel="d"/>
         <Key
+            app:keyOutputText="e"
             app:keyLabel="e" />
         <Key
+            app:keyOutputText="f"
             app:keyLabel="f" />
         <Key
+            app:keyOutputText="g"
             app:keyLabel="g" />
         <Key
+            app:keyOutputText="h"
             app:keyLabel="h" />
     </Row>
 
     <Row>
         <Key
+            app:keyOutputText="i"
             app:keyLabel="i"/>
         <Key
+            app:keyOutputText="j"
             app:keyLabel="j" />
         <Key
+            app:keyOutputText="k"
             app:keyLabel="k" />
         <Key
+            app:keyOutputText="l"
             app:keyLabel="l"/>
         <Key
+            app:keyOutputText="m"
             app:keyLabel="m" />
         <Key
+            app:keyOutputText="n"
             app:keyLabel="n" />
         <Key
+            app:keyOutputText="o"
             app:keyLabel="o" />
         <Key
+            app:keyOutputText="p"
             app:keyLabel="p" />
     </Row>
 
     <Row>
         <Key
+            app:keyOutputText="q"
             app:keyLabel="q"/>
         <Key
+            app:keyOutputText="r"
             app:keyLabel="r" />
         <Key
+            app:keyOutputText="s"
             app:keyLabel="s" />
         <Key
+            app:keyOutputText="t"
             app:keyLabel="t"/>
         <Key
+            app:keyOutputText="u"
             app:keyLabel="u" />
         <Key
+            app:keyOutputText="v"
             app:keyLabel="v" />
         <Key
+            app:keyOutputText="w"
             app:keyLabel="w" />
         <Key
+            app:keyOutputText="x"
             app:keyLabel="x" />
     </Row>
 
     <Row>
         <Key
+            app:keyOutputText="y"
             app:keyLabel="y"/>
         <Key
+            app:keyOutputText="z"
             app:keyLabel="z" />
         <Key
             app:keyLabel=" "

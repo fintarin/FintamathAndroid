@@ -2,11 +2,14 @@
 <resources>
     <dimen name="text_size_main">20sp</dimen>
     <dimen name="text_size_bar">22sp</dimen>
+    <dimen name="text_size_math_text_view">22sp</dimen>
     <dimen name="text_size_keyboard">@dimen/text_size_main</dimen>
     <dimen name="text_size_keyboard_top_label">12sp</dimen>
-    <dimen name="text_size_alternative">16sp</dimen>
+    <dimen name="text_size_alternative">18sp</dimen>
 
     <dimen name="diameter_bar_key">48dp</dimen>
+
+    <dimen name="delimiter_width">2dp</dimen>
 
     <dimen name="radius_keyboard_key">8dp</dimen>
     <dimen name="radius_keyboard_switch_key">16dp</dimen>

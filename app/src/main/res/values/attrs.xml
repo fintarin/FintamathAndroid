@@ -2,8 +2,10 @@
 <resources>
 
     <declare-styleable name="MathTextView">
-        <attr name="nestedTextViewLayout" format="reference" />
-        <attr name="fractionLineLayout" format="reference" />
+        <attr name="text" format="string" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="isEditable" format="boolean" />
         <attr name="hint" format="string" />
     </declare-styleable>
 

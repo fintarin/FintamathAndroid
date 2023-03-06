@@ -5,10 +5,10 @@
 
     <Row>
         <Key
-            app:codes="6043"
+            app:keyOutputText="asinh()"
             app:keyLabel="asinh" />
         <Key
-            app:codes="6015"
+            app:keyOutputText="asin()"
             app:keyLabel="asin" />
     </Row>
 

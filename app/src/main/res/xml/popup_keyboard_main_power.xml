@@ -5,13 +5,13 @@
 
     <Row>
         <Key
-            app:codes="6003"
+            app:keyOutputText="^(2)"
             app:keyLabel="□²" />
         <Key
-            app:codes="6004"
+            app:keyOutputText="^(3)"
             app:keyLabel="□³"/>
         <Key
-            app:codes="6005"
+            app:keyOutputText="^()"
             app:keyLabel="□ⁿ" />
     </Row>
 

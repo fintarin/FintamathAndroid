@@ -1,37 +1,34 @@
 package com.fintamath.textview
 
-import android.content.ClipData
-import android.content.ClipboardManager
+import android.annotation.SuppressLint
 import android.content.Context
 import kotlin.jvm.JvmOverloads
 import android.widget.LinearLayout
 import android.view.LayoutInflater
-import android.widget.TextView
 import android.util.AttributeSet
 import android.view.View
 import com.fintamath.R
-import android.view.ViewGroup
-import android.widget.HorizontalScrollView
 
 class MathAlternativesTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : LinearLayout(context, attrs) {
 
-    private val textViewLayout: Int
+    private val mathTextViewLayout: Int
     private val delimiterLayout: Int
 
-    private val inflate: LayoutInflater
+    private var onTouchListener: OnTouchListener? = null
 
-    private val alternativeTextViews = mutableListOf<TextView>()
-    private val alternativeDelimiters = mutableListOf<View>()
+    private val inflate: LayoutInflater
+    private val textViews = mutableListOf<MathTextView>()
+    private val delimiters = mutableListOf<View>()
 
     init {
         orientation = VERTICAL
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.MathAlternativesTextView)
 
-        textViewLayout =
+        mathTextViewLayout =
             a.getResourceId(R.styleable.MathAlternativesTextView_alternativeTextViewLayout, 0)
         delimiterLayout =
             a.getResourceId(R.styleable.MathAlternativesTextView_alternativeDelimiterLayout, 0)
@@ -43,85 +40,53 @@ class MathAlternativesTextView @JvmOverloads constructor(
         addTextView()
     }
 
-    fun setTexts(texts: List<String>?) {
-        if (texts == null) {
-            setTexts(listOf(""))
-            return
-        }
-
-        for (i in alternativeTextViews.size until texts.size) {
+    fun setTexts(texts: List<String>) {
+        for (i in textViews.size until texts.size) {
             addDelimiter()
             addTextView()
         }
 
-        alternativeTextViews[0].text = texts[0]
-        alternativeTextViews[0].isLongClickable = alternativeTextViews[0].text.isNotEmpty()
-        alternativeTextViews[0].requestLayout()
+        textViews[0].text = texts[0]
 
-        var uniqueTextsSize = 1
+        val distinctTexts = texts.distinct()
 
-        for (i in 1 until texts.size) {
-            if (!isTextUnique(texts[i])) {
-                continue
-            }
-
-            alternativeTextViews[uniqueTextsSize].text = texts[i]
-            alternativeTextViews[uniqueTextsSize].isLongClickable = true
-            alternativeTextViews[uniqueTextsSize].requestLayout()
-            alternativeDelimiters[uniqueTextsSize - 1].visibility = VISIBLE
-
-            uniqueTextsSize++
+        for (i in 1 until distinctTexts.size) {
+            textViews[i].text = distinctTexts[i]
+            textViews[i].visibility = VISIBLE
+            delimiters[i - 1].visibility = VISIBLE
         }
 
-        for (i in uniqueTextsSize until alternativeTextViews.size) {
-            alternativeTextViews[i].text = ""
-            alternativeTextViews[i].isLongClickable = false
-            alternativeDelimiters[i - 1].visibility = GONE
+        for (i in distinctTexts.size until textViews.size) {
+            textViews[i].visibility = GONE
+            textViews[i].clear()
+            delimiters[i - 1].visibility = GONE
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    override fun setOnTouchListener(listener: OnTouchListener) {
+        onTouchListener = listener
+
+        for (text in textViews) {
+            text.setOnTouchListener(onTouchListener)
+        }
+
+        super.setOnTouchListener(onTouchListener)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     private fun addTextView() {
-        val textView = inflate.inflate(textViewLayout, null) as TextView
-        textView.isLongClickable = false
-        textView.setOnLongClickListener(textViewOnLongClick())
-
-        alternativeTextViews.add(textView)
-
-        val scrollView = HorizontalScrollView(context)
-        scrollView.foregroundGravity = foregroundGravity
-        scrollView.isHorizontalScrollBarEnabled = false
-        scrollView.addView(textView)
-
-        addView(scrollView)
+        val textView = inflate.inflate(mathTextViewLayout, null) as MathTextView
+        textView.setOnTouchListener(onTouchListener)
+        textViews.add(textView)
+        addView(textView)
     }
 
     private fun addDelimiter() {
         val delimiter = inflate.inflate(delimiterLayout, null)
         delimiter.visibility = GONE
-
-        alternativeDelimiters.add(delimiter)
-
+        delimiter.setOnTouchListener(onTouchListener)
+        delimiters.add(delimiter)
         addView(delimiter)
-    }
-
-    private fun isTextUnique(text: String): Boolean {
-        for (i in 0 until childCount) {
-            val view = getChildAt(i)
-            if (view is ViewGroup) {
-                val textView = view.getChildAt(0) as TextView
-                if (textView.text.toString() == text) {
-                    return false
-                }
-            }
-        }
-
-        return true
-    }
-
-    private fun textViewOnLongClick(): (v: View) -> Boolean = {
-        val clipboardManager = context.getSystemService(ClipboardManager::class.java)
-        val clipData = ClipData.newPlainText("", (it as TextView).text)
-        clipboardManager.setPrimaryClip(clipData)
-        true
     }
 }
