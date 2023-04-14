@@ -23,6 +23,7 @@
     <color name="background_switch_keyboard_key_enabled">#373737</color>
 
     <color name="text_main">#EEEEEE</color>
+    <color name="text_checked">@color/launcher_icon_background</color>
     <color name="text_keyboard">@color/text_main</color>
     <color name="text_keyboard_top_label">#a2a2a2</color>
     <color name="text_hint">#757575</color>

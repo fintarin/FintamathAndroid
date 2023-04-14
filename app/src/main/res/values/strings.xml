@@ -2,6 +2,7 @@
     <string name="app_name">Fintamath</string>
     <string name="alternative_form">Alternative Form</string>
     <string name="math_edit_text_hint">Type a math problem…</string>
+    <string name="back">Back</string>
     <string name="options">Options Menu</string>
     <string name="camera">Camera</string>
     <string name="history">History</string>

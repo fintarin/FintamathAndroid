@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.fintamath.calculator.CalculatorProcessor
+import com.fintamath.history.HistoryFragment
 import com.fintamath.keyboard.Keyboard
 import com.fintamath.keyboard.KeyboardView
 import com.fintamath.keyboard_controller.KeyboardActionListener
@@ -115,7 +116,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showHistoryFragment(view: View) {
-        // TODO: implement this
+        val historyFragment = HistoryFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(android.R.id.content, historyFragment);
+        transaction.addToBackStack(null);
+        transaction.commit()
     }
 
     fun showCameraFragment(view: View) {

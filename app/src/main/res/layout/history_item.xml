@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bar_background">
+
+    <com.fintamath.textview.MathTextView
+        android:id="@+id/historyMathTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        app:textSize="@dimen/text_size_math_text_view"
+        app:textColor="@color/text_main" />
+
+    <ToggleButton
+        android:layout_width="@dimen/diameter_bar_key"
+        android:layout_height="@dimen/diameter_bar_key"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/historyMathTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/bookmark_background"
+        android:textOff=""
+        android:textOn="" />
+
+</RelativeLayout>

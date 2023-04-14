@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".history.HistoryFragment">
+
+    <RelativeLayout
+        android:id="@+id/bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bar_background">
+
+        <ImageButton
+            android:id="@+id/historyBackButton"
+            android:layout_width="48dp"
+            android:layout_height="@dimen/diameter_bar_key"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:background="@drawable/bar_key_background"
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="@string/history"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/text_size_bar"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/historyList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_main"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/history_item"/>
+
+</LinearLayout>
