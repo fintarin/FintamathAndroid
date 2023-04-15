@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:dots_color="@color/text_main"
-        app:dots_count="3"
         app:dots_duration="500"
+        app:dots_count="3"
         app:dots_radius="@dimen/radius_loading_dots">
     </com.fintamath.loading.LoadingView>
 

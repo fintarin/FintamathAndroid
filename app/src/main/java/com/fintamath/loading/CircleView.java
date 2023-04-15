@@ -1,15 +1,9 @@
 package com.fintamath.loading;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.View;
-
-import androidx.annotation.Nullable;
-
-import com.fintamath.R;
 
 public class CircleView extends View {
 
@@ -32,47 +26,9 @@ public class CircleView extends View {
         initValues();
     }
 
-    public CircleView(Context context, int circleRadius, int circleColor, boolean drawOnlyStroke, int strokeWidth) {
-        super(context);
-        this.circleRadius = circleRadius;
-        this.circleColor = circleColor;
-        this.drawOnlyStroke = drawOnlyStroke;
-        this.strokeWidth = strokeWidth;
-        initValues();
-    }
-
     public CircleView(Context context) {
         super(context);
         initValues();
-    }
-
-    public CircleView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initAttributes(attrs);
-        initValues();
-    }
-
-    public CircleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initAttributes(attrs);
-        initValues();
-    }
-
-
-    void initAttributes(AttributeSet attrs) {
-
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CircleView, 0, 0);
-
-        this.circleRadius = typedArray.getDimensionPixelSize(R.styleable.CircleView_circleRadius, 30);
-        this.circleColor = typedArray.getColor(R.styleable.CircleView_circleColor, 0);
-
-        this.drawOnlyStroke = typedArray.getBoolean(R.styleable.CircleView_circleDrawOnlystroke, false);
-
-        if (drawOnlyStroke) {
-            this.strokeWidth = typedArray.getDimensionPixelSize(R.styleable.CircleView_circleStrokeWidth, 0);
-        }
-
-        typedArray.recycle();
     }
 
     private void initValues() {

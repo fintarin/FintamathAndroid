@@ -1,48 +1,52 @@
 package com.fintamath.loading;
 
-import static com.fintamath.loading.LoadingConstant.DEFAULT_COLOR;
-import static com.fintamath.loading.LoadingConstant.DEFAULT_DOTS_COUNT;
-import static com.fintamath.loading.LoadingConstant.DEFAULT_DOTS_RADIUS;
-import static com.fintamath.loading.LoadingConstant.DEFAULT_DURATION;
-import static com.fintamath.loading.LoadingConstant.MAX_JUMP;
-
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
 import com.fintamath.R;
 
 
-public class LoadingView extends BaseLinearLoading {
+public class LoadingView extends LinearLayout {
 
-    private int DOTS_RADIUD = DEFAULT_DOTS_RADIUS;
-    private int DOTS_COUNT = DEFAULT_DOTS_COUNT;
-    private int COLOR = DEFAULT_COLOR;
-    private int DURATION = DEFAULT_DURATION;
+    private int DOTS_RADIUD = 10;
+    private int DOTS_COUNT = 3;
+    private int COLOR = 350;
+    private int DURATION = Color.parseColor("#FF0000");
+    private int MAX_JUMP = 3;
 
     private ObjectAnimator animator[];
     boolean onLayoutReach = false;
 
     public LoadingView(Context context) {
-        super(context);
-        initView(context, null, DEFAULT_DOTS_RADIUS,DEFAULT_DOTS_COUNT, DEFAULT_COLOR);
+        this(context, null);
     }
 
     public LoadingView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView(context, attrs, DEFAULT_DOTS_RADIUS,DEFAULT_DOTS_COUNT, DEFAULT_COLOR);
-    }
 
-    public LoadingView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView(context, attrs, DEFAULT_DOTS_RADIUS,DEFAULT_DOTS_COUNT, DEFAULT_COLOR);
-    }
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LoadingView);
 
+        this.COLOR = a.getColor(R.styleable.LoadingView_dots_color, COLOR);
+        this.DURATION = a.getInt(R.styleable.LoadingView_dots_duration, DURATION);
+        this.DOTS_COUNT = a.getInt(R.styleable.LoadingView_dots_count, DOTS_COUNT);
+        this.DOTS_RADIUD = a.getDimensionPixelSize(R.styleable.LoadingView_dots_radius, DOTS_RADIUD);
+
+        a.recycle();
+
+        adjustView();
+        removeAllViews();
+        addDots();
+    }
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -65,18 +69,24 @@ public class LoadingView extends BaseLinearLoading {
         }
     }
 
-    @Override
-    protected void initView(Context context, @Nullable AttributeSet attrs, int dotsSize, int dotsCount, int color) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LoadingView);
+    private void adjustView() {
+        setOrientation(LinearLayout.HORIZONTAL);
+        setGravity(Gravity.CENTER);
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        setLayoutParams(layoutParams);
+        setBackgroundColor(Color.TRANSPARENT);
+    }
 
-        this.COLOR = a.getColor(R.styleable.LoadingView_dots_color, DEFAULT_COLOR);
-        this.DURATION = a.getInt(R.styleable.LoadingView_dots_duration, DEFAULT_DURATION);
-        this.DOTS_COUNT = a.getInt(R.styleable.LoadingView_dots_count, DEFAULT_DOTS_COUNT);
-        this.DOTS_RADIUD = a.getDimensionPixelSize(R.styleable.LoadingView_dots_radius, DEFAULT_DOTS_RADIUS);
+    private void addDots() {
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        a.recycle();
-
-        super.initView(context, attrs, DOTS_RADIUD,DOTS_COUNT, COLOR);
+        for (int i = 0; i < DOTS_COUNT; i++) {
+            CircleView circleView = new CircleView(getContext(), DOTS_RADIUD, COLOR, true);
+            LinearLayout rel = new LinearLayout(getContext());
+            layoutParams.setMargins(2 * DOTS_RADIUD, 2 * DOTS_RADIUD, 2 * DOTS_RADIUD, 2 * DOTS_RADIUD);
+            rel.addView(circleView);
+            addView(rel, layoutParams);
+        }
     }
 
     private void animateView() {
@@ -92,7 +102,5 @@ public class LoadingView extends BaseLinearLoading {
             animator[i].setStartDelay((DURATION / DOTS_COUNT) * i);
             animator[i].start();
         }
-
     }
-
 }
