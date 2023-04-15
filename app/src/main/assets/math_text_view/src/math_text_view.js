@@ -174,6 +174,7 @@ function insertAtCursor(mathText) {
   if (
     operatorClasses.includes(insElem.lastChild.className) &&
     (childNextElem === null ||
+      childNextElem.className === textBorderClass ||
       supContainerClasses.includes(childNextElem.className) ||
       containerClasses.includes(childNextElem.className))
   ) {

@@ -117,6 +117,12 @@ function callOnSelectedElementChanged() {
       return;
     }
 
+    let prevSibling = elem.previousSibling;
+
+    if (prevSibling !== null && prevSibling.className === unaryPostfixOperatorClass) {
+      return;
+    }
+
     selectedElem = elem;
     selectedElem.setAttribute('empty-hint', textEmptyHintSelected);
     selectedElem.style.textDecoration = 'underline dashed 0.05em';
