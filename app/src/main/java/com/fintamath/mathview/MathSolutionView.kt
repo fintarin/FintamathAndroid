@@ -57,8 +57,12 @@ class MathSolutionView @JvmOverloads constructor(
     }
 
     fun showSolution(texts: List<String>) {
-        showView(alternativesView)
-        alternativesView.setTexts(texts)
+        if (texts.isNotEmpty() && texts.first().isNotEmpty()) {
+            alternativesView.setTexts(texts)
+            showView(alternativesView)
+        } else {
+            hideCurrentView()
+        }
     }
 
     fun showLoading() {
@@ -80,5 +84,13 @@ class MathSolutionView @JvmOverloads constructor(
 
         currentView = view
         currentView!!.visibility = VISIBLE
+    }
+
+    private fun hideCurrentView() {
+        if (currentView != null) {
+            currentView!!.visibility = GONE
+        }
+
+        currentView = null
     }
 }
