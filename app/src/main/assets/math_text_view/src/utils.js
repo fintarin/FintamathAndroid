@@ -908,6 +908,28 @@ function areElementChildrenEmpty(elem) {
 }
 
 /**
+ * Checks if the element does not contain empty text hint elements.
+ *
+ * @param {HTMLSpanElement} elem - The element to check.
+ * @returns {boolean} Whether the element does not contain empty text hint elements.
+ */
+function isComplete(elem) {
+  for (let i = 0; i < elem.childElementCount; i++) {
+    const childElem = elem.children[i];
+
+    if (childElem.className === textHintClass && childElem.innerHTML === '') {
+      return false;
+    }
+
+    if (!isComplete(childElem)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
  * Creates a new HTML span element with the specified class name.
  *
  * @param {string} className - The class name to use for the new element.

@@ -8,5 +8,9 @@
     <string name="history">History</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
-    <string name="calculation_dots">. . .</string>
+    <string name="invalid_input">Invalid input</string>
+    <string name="warning">Warning</string>
+    <string name="invalid_input_message">Sorry, we don\'t quite understand your math problem…</string>
+    <string name="incomplete_input_message">Please, enter a complete math problem.</string>
+    <string name="loading_message">. . .</string>
 </resources>

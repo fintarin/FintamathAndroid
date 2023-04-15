@@ -1,4 +1,4 @@
-package com.fintamath.textview
+package com.fintamath.mathview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -65,6 +65,8 @@ class MathTextView @JvmOverloads constructor(
     private var onLoadedCallbacks: MutableList<(() -> Unit)> = mutableListOf()
 
     private val uiHandler: Handler = Handler(Looper.getMainLooper())
+
+    private var isComplete = true
 
     private val mathTextViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, url: String?) {
@@ -138,6 +140,20 @@ class MathTextView @JvmOverloads constructor(
         onTextChangedListener = listener
     }
 
+    override fun requestFocus(direction: Int, previouslyFocusedRect: Rect?): Boolean {
+        if (!isLoaded) {
+            callOnLoaded {
+                requestFocus(direction, previouslyFocusedRect)
+            }
+        }
+
+        return super.requestFocus(direction, previouslyFocusedRect)
+    }
+
+    fun isComplete(): Boolean {
+        return isComplete
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         requestDisallowInterceptTouchEvent(true)
@@ -163,16 +179,6 @@ class MathTextView @JvmOverloads constructor(
         }
     }
 
-    override fun requestFocus(direction: Int, previouslyFocusedRect: Rect?): Boolean {
-        if (!isLoaded) {
-            callOnLoaded {
-                requestFocus(direction, previouslyFocusedRect)
-            }
-        }
-
-        return super.requestFocus(direction, previouslyFocusedRect)
-    }
-
     override fun evaluateJavascript(script: String, resultCallback: ValueCallback<String>?) {
         callOnLoaded {
             super.evaluateJavascript(script, resultCallback)
@@ -180,8 +186,9 @@ class MathTextView @JvmOverloads constructor(
     }
 
     @JavascriptInterface
-    fun callOnTextChanged(newText: String) {
+    fun callOnTextChanged(newText: String, isCompleteStr: String) {
         textCached = newText
+        isComplete = isCompleteStr == "true"
         onTextChangedListener?.invoke(textCached)
     }
 

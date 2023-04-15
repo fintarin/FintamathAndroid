@@ -9,8 +9,11 @@
         <attr name="hint" format="string" />
     </declare-styleable>
 
-    <declare-styleable name="MathAlternativesTextView">
-        <attr name="alternativeTextViewLayout" format="reference" />
+    <declare-styleable name="MathSolutionView">
+        <attr name="loadingViewLayout" format="reference" />
+        <attr name="invalidInputViewLayout" format="reference" />
+        <attr name="incompleteInputViewLayout" format="reference" />
+        <attr name="alternativeMathTextViewLayout" format="reference" />
         <attr name="alternativeDelimiterLayout" format="reference" />
     </declare-styleable>
 

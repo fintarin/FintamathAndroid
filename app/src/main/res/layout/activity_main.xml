@@ -86,7 +86,7 @@
                 android:clickable="true"
                 android:focusable="true">
 
-                <com.fintamath.textview.MathTextView
+                <com.fintamath.mathview.MathTextView
                     android:id="@+id/in_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,14 +103,17 @@
                 android:layout_height="@dimen/delimiter_width"
                 android:background="@color/text_hint"/>
 
-            <com.fintamath.textview.MathAlternativesTextView
-                android:id="@+id/out_texts"
+            <com.fintamath.mathview.MathSolutionView
+                android:id="@+id/solution"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:paddingBottom="20dp"
-                app:alternativeTextViewLayout="@layout/alternative_math_text_view"
-                app:alternativeDelimiterLayout="@layout/alternative_delimiter" />
+                app:loadingViewLayout="@layout/solution_loading"
+                app:invalidInputViewLayout="@layout/solution_invalid_input"
+                app:incompleteInputViewLayout="@layout/solution_incomplete_input"
+                app:alternativeMathTextViewLayout="@layout/solution_alternative_math_text_view"
+                app:alternativeDelimiterLayout="@layout/solution_alternative_delimiter" />
 
         </LinearLayout>
 

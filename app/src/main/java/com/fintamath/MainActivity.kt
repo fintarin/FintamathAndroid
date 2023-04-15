@@ -14,15 +14,15 @@ import com.fintamath.keyboard.KeyboardView
 import com.fintamath.keyboard_controller.KeyboardActionListener
 import com.fintamath.keyboard_controller.KeyboardSwitcher
 import com.fintamath.keyboard_controller.KeyboardType
-import com.fintamath.textview.MathAlternativesTextView
-import com.fintamath.textview.MathTextView
+import com.fintamath.mathview.MathSolutionView
+import com.fintamath.mathview.MathTextView
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var inTextLayout: ViewGroup
     private lateinit var inText: MathTextView
-    private lateinit var outTexts: MathAlternativesTextView
+    private lateinit var solution: MathSolutionView
 
     private lateinit var calculatorProcessor: CalculatorProcessor
 
@@ -35,9 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         inTextLayout = findViewById(R.id.in_text_layout)
         inText = findViewById(R.id.in_text)
-        outTexts = findViewById(R.id.out_texts)
+        solution = findViewById(R.id.solution)
 
-        calculatorProcessor = CalculatorProcessor ({ outTexts(it) }, { startLoad() })
+        calculatorProcessor = CalculatorProcessor ({ outTexts(it) }, { startLoading() })
 
         initKeyboards()
 
@@ -92,13 +92,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun outTexts(it: List<String>) {
         runOnUiThread {
-            outTexts.setTexts(it)
+            if (!inText.isComplete()) {
+                solution.showIncompleteInput()
+            } else if (it.size == 1 && it.first() == getString(R.string.invalid_input)) {
+                solution.showInvalidInput()
+            } else {
+                solution.showSolution(it)
+            }
         }
     }
 
-    private fun startLoad() {
+    private fun startLoading() {
         runOnUiThread {
-            outTexts.setTexts(listOf(getString(R.string.calculation_dots)))
+            solution.showLoading()
         }
     }
 

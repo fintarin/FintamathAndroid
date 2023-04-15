@@ -1,7 +1,8 @@
-package com.fintamath.textview
+package com.fintamath.mathview
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.TypedArray
 import kotlin.jvm.JvmOverloads
 import android.widget.LinearLayout
 import android.view.LayoutInflater
@@ -9,10 +10,11 @@ import android.util.AttributeSet
 import android.view.View
 import com.fintamath.R
 
-class MathAlternativesTextView @JvmOverloads constructor(
+@SuppressLint("ViewConstructor")
+internal class MathSolutionAlternativesView constructor(
     context: Context,
-    attrs: AttributeSet? = null
-) : LinearLayout(context, attrs) {
+    attrs: TypedArray
+) : LinearLayout(context) {
 
     private val mathTextViewLayout: Int
     private val delimiterLayout: Int
@@ -26,14 +28,10 @@ class MathAlternativesTextView @JvmOverloads constructor(
     init {
         orientation = VERTICAL
 
-        val a = context.obtainStyledAttributes(attrs, R.styleable.MathAlternativesTextView)
-
         mathTextViewLayout =
-            a.getResourceId(R.styleable.MathAlternativesTextView_alternativeTextViewLayout, 0)
+            attrs.getResourceId(R.styleable.MathSolutionView_alternativeMathTextViewLayout, 0)
         delimiterLayout =
-            a.getResourceId(R.styleable.MathAlternativesTextView_alternativeDelimiterLayout, 0)
-
-        a.recycle()
+            attrs.getResourceId(R.styleable.MathSolutionView_alternativeDelimiterLayout, 0)
 
         inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
