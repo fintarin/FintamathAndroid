@@ -17,6 +17,7 @@
         <attr name="alternativeDelimiterLayout" format="reference" />
     </declare-styleable>
 
+
     <declare-styleable name="KeyboardView">
         <!-- Default KeyboardView style. -->
         <attr name="keyboardViewStyle" format="reference" />
@@ -112,6 +113,29 @@
         <attr name="keyBackground" format="reference" />
         <!-- Whether the preview should be displayed. -->
         <attr name="isPreviewEnabled" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="LoadingView">
+        <attr name="dots_color" />
+        <attr name="dots_duration" />
+        <attr name="dots_radius" />
+        <attr name="dots_count" />
+    </declare-styleable>
+
+    <attr name="dots_color" format="color" />
+
+    <attr name="dots_count" format="integer" />
+
+    <attr name="dots_duration" format="integer" />
+
+    <attr name="dots_radius" format="dimension" />
+
+    <declare-styleable name="CircleView">
+        <attr name="circleRadius" format="dimension" />
+        <attr name="circleColor" format="color" />
+        <attr name="circleDrawOnlystroke" format="boolean" />
+        <attr name="circleStrokeWidth" format="dimension" />
     </declare-styleable>
 
 </resources>

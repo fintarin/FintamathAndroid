@@ -27,4 +27,7 @@
     <dimen name="keyboard_functions_key_width">20%</dimen>
     <dimen name="keyboard_analysis_key_width">20%</dimen>
     <dimen name="keyboard_logic_key_width">20%</dimen>
+
+    <dimen name="radius_loading_dots">2.5dp</dimen>
+
 </resources>
