@@ -84,7 +84,7 @@ class LoadingView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         )
 
         for (i in 0 until dotsCount) {
-            val circleView = CircleView(context, dotsRadius, color, true)
+            val circleView = LoadingCircleView(context, dotsRadius, color, true)
             val layout = LinearLayout(context)
             layout.addView(circleView)
             addView(layout, layoutParams)

@@ -1,11 +1,13 @@
 package com.fintamath.loading
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
 
-class CircleView(
+@SuppressLint("ViewConstructor")
+class LoadingCircleView(
     context: Context?,
     var circleRadius: Int,
     var circleColor: Int,
