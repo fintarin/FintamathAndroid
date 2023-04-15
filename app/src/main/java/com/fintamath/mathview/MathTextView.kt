@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewParent
 import android.webkit.JavascriptInterface
 import android.webkit.ValueCallback
@@ -16,9 +15,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ScrollView
 import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
 import java.util.*
 import kotlin.concurrent.schedule
+import kotlin.math.abs
 
 
 class MathTextView @JvmOverloads constructor(
@@ -56,8 +57,13 @@ class MathTextView @JvmOverloads constructor(
             evaluateJavascript("setContentEditable(\"$field\")") { }
         }
 
-    private var textCached: String = ""
-    private var prevTouchY: Float = 0f;
+    var isComplete = true
+        private set
+
+    private var textCached = ""
+    private var prevX = 0f
+    private var prevY = 0f
+    private var wasLastScrollHorizontal = false;
 
     private var onTextChangedListener: ((text: String) -> Unit)? = null
 
@@ -65,8 +71,6 @@ class MathTextView @JvmOverloads constructor(
     private var onLoadedCallbacks: MutableList<(() -> Unit)> = mutableListOf()
 
     private val uiHandler: Handler = Handler(Looper.getMainLooper())
-
-    private var isComplete = true
 
     private val mathTextViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, url: String?) {
@@ -150,33 +154,21 @@ class MathTextView @JvmOverloads constructor(
         return super.requestFocus(direction, previouslyFocusedRect)
     }
 
-    fun isComplete(): Boolean {
-        return isComplete
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        requestDisallowInterceptTouchEvent(true)
-
-        if (event.action == MotionEvent.ACTION_MOVE) {
-            dispatchParentScrollEvent(event)
+        when (event.action) {
+            MotionEvent.ACTION_MOVE -> {
+                if (abs(event.x - prevX) > abs(event.y - prevY)) {
+                    wasLastScrollHorizontal = true
+                    requestDisallowInterceptTouchEvent(true);
+                }
+            }
         }
 
-        prevTouchY = event.y
+        prevX = event.x
+        prevY = event.y
 
         return super.onTouchEvent(event)
-    }
-
-    private fun dispatchParentScrollEvent(event: MotionEvent) {
-        var scrollView: ViewParent? = parent
-
-        while (scrollView != null && scrollView !is NestedScrollView && scrollView !is ScrollView) {
-            scrollView = scrollView.parent
-        }
-
-        if (scrollView != null) {
-            (scrollView as View).scrollBy(0, (prevTouchY - event.y).toInt())
-        }
     }
 
     override fun evaluateJavascript(script: String, resultCallback: ValueCallback<String>?) {

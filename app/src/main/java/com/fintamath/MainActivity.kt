@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun outTexts(it: List<String>) {
         runOnUiThread {
-            if (!inText.isComplete()) {
+            if (!inText.isComplete) {
                 solution.showIncompleteInput()
             } else if (it.size == 1 && it.first() == getString(R.string.invalid_input)) {
                 solution.showInvalidInput()
