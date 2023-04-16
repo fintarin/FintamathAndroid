@@ -490,6 +490,7 @@ function reformatElement(elem) {
   removeEmptyTextsAndBorders(elem);
   reformatTexts(elem);
   concatTexts(elem);
+  reforamalIndexes(elem);
   reformatOperators(elem);
   reformatContainers(elem);
 
@@ -585,6 +586,38 @@ function reformatElement(elem) {
      */
     function isNotEmptyTextElement(elem) {
       return (elem.className === textClass || elem.className === textHintClass) && elem.innerText !== '';
+    }
+  }
+
+  /**
+   * Reformats indexes recursively.
+   *
+   * @param {HTMLSpanElement} elem - The element to reformat texts of.
+   */
+  function reforamalIndexes(elem) {
+    for (let i = 0; i < elem.childElementCount; i++) {
+      const childElem = elem.children[i];
+      reforamalIndexes(childElem);
+
+      if (i < 2) {
+        continue;
+      }
+
+      let prevElem = childElem.previousElementSibling;
+      let prevPrevElem = prevElem.previousElementSibling;
+
+      if (indexContainerClasses.includes(childElem.className) && indexContainerClasses.includes(prevElem.className)) {
+        let bracketsElem = createElement(bracketsClass);
+        bracketsElem.appendChild(prevPrevElem);
+        bracketsElem.appendChild(prevElem);
+        elem.insertBefore(bracketsElem, childElem);
+
+        if (prevPrevElem === selectedElem) {
+          setCursorToElement(selectedElem, selectedOffset);
+        }
+
+        i--;
+      }
     }
   }
 
