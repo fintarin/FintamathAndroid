@@ -72,7 +72,7 @@ function callOnChange() {
   }
 
   const mathText = toMathText(mathTextView.innerHTML, mathTextView.isContentEditable);
-  Android.callOnTextChanged(mathText, isComplete(mathTextView) ? 'true' : 'false');
+  Android.callOnTextChanged(mathText, isComplete(mathTextView, mathText) ? 'true' : 'false');
 }
 
 /**

@@ -22,7 +22,11 @@ std::string makeOutResult(const std::string &res) {
   return res.length() < maxResultLength ? res + "\n" : "";
 }
 
-std::string calculate(const std::string &inStr) {
+std::string calculate(std::string inStr) {
+  if (!inStr.empty() && inStr.back() == '=') {
+    inStr.pop_back();
+  }
+
   try {
     Expression inExpr(inStr);
     Expression solExpr = solve(inExpr);
