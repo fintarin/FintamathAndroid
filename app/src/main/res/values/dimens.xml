@@ -9,7 +9,7 @@
     <dimen name="text_size_output_message">18sp</dimen>
 
     <dimen name="diameter_bar_key">48dp</dimen>
-    <dimen name="diameter_history_key">24dp</dimen>
+    <dimen name="diameter_history_item_key">48dp</dimen>
 
     <dimen name="delimiter_width">2dp</dimen>
 

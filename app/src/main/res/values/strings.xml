@@ -12,5 +12,6 @@
     <string name="warning">Warning</string>
     <string name="invalid_input_message">Sorry, we don\'t quite understand your math problem…</string>
     <string name="incomplete_input_message">Please, enter a complete math problem.</string>
-    <string name="loading_message">. . .</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="trash">Trash</string>
 </resources>

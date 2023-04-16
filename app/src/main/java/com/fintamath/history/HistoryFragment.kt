@@ -35,6 +35,13 @@ class HistoryFragment : Fragment() {
                 "sqrt(1/2)",
                 "ln(tan(x^2)/cot(x^2))",
                 "sqrt((a+b)^2 / (a+c * (1/2)))",
+                "sqrt((a+b)^2 / (a+c * (1/2)))",
+                "sqrt((a+b)^2 / (a+c * (1/2)))",
+                "sqrt((a+b)^2 / (a+c * (1/2)))",
+                "sqrt((a+b)^2 / (a+c * (1/2)))",
+                "sqrt((a+b)^2 / (a+c * (1/2)))",
+                "sqrt((a+b)^2 / (a+c * (1/2)))",
+                "sqrt((a+b)^2 / (a+c * (1/2))) aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa aaaaaaaaaaaaa sqrt(3)",
             ))
         }
 
