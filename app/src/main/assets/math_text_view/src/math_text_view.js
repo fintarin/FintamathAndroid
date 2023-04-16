@@ -151,6 +151,7 @@ function insertAtCursor(mathText) {
 
   if (
     childPrevElem !== null &&
+    childPrevElem.className !== textBorderClass &&
     childPrevElem.className !== binaryOperatorClass &&
     childPrevElem.className !== unaryPrefixOperatorClass &&
     insElem.firstChild !== null &&
@@ -162,6 +163,7 @@ function insertAtCursor(mathText) {
 
   if (
     childNextElem !== null &&
+    childNextElem.className !== textBorderClass &&
     childNextElem.className !== binaryOperatorClass &&
     childNextElem.className !== unaryPostfixOperatorClass &&
     insElem.lastChild !== null &&
@@ -342,28 +344,49 @@ function deleteAtCursor() {
         setCursorToElementEnd(parentElem);
       }
     } else if (prevSibling !== null) {
-      if (
-        prevSibling.className === textClass ||
-        prevSibling.className === textHintClass ||
-        operatorClasses.includes(prevSibling.className)
-      ) {
-        let elem = prevSibling;
+      if (textClasses.includes(prevSibling.className) || operatorClasses.includes(prevSibling.className)) {
+        let prevElem = prevSibling;
 
-        switch (elem.className) {
-          case unaryPrefixOperatorClass:
-          case binaryOperatorClass: {
-            parentElem.insertBefore(createElement(textHintClass), elem.nextSibling);
-            elem = elem.nextSibling;
-            break;
+        if (prevElem.nextElementSibling !== null && operatorClasses.includes(prevElem.nextElementSibling.className)) {
+          let nextElem = prevElem.nextElementSibling;
+
+          switch (nextElem.className) {
+            case unaryPostfixOperatorClass:
+            case binaryOperatorClass: {
+              if (unaryPrefixOperators.includes(nextElem.innerText)) {
+                nextElem.className = unaryPrefixOperatorClass;
+                parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
+              } else {
+                parentElem.insertBefore(createElement(textHintClass), prevElem.nextSibling);
+              }
+
+              prevElem = prevElem.nextSibling;
+
+              break;
+            }
+            case unaryPrefixOperatorClass: {
+              parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
+              prevElem = prevElem.nextSibling;
+              break;
+            }
           }
-          case unaryPostfixOperatorClass: {
-            parentElem.insertBefore(createElement(textClass), elem.nextSibling);
-            elem = elem.nextSibling;
-            break;
+        } else {
+          switch (prevElem.className) {
+            case unaryPrefixOperatorClass:
+            case binaryOperatorClass: {
+              parentElem.insertBefore(createElement(textHintClass), prevElem.nextSibling);
+              prevElem = prevElem.nextSibling;
+              break;
+            }
+            case unaryPostfixOperatorClass: {
+              parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
+              prevElem = prevElem.nextSibling;
+              break;
+            }
           }
         }
 
-        setCursorToElementEnd(elem);
+        setCursorToElementEnd(prevElem);
       } else {
         let elem = createElement(textClass);
         parentElem.insertBefore(elem, prevSibling.nextSibling);

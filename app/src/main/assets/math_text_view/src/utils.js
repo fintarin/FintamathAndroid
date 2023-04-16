@@ -617,7 +617,8 @@ function reformatElement(elem) {
         binaryOperators.includes(childElem.innerText) &&
         childElem.previousElementSibling !== null &&
         childElem.previousElementSibling.className !== binaryOperatorClass &&
-        childElem.previousElementSibling.className !== unaryPrefixOperatorClass
+        childElem.previousElementSibling.className !== unaryPrefixOperatorClass &&
+        (childElem.previousElementSibling.className !== textClass || childElem.previousElementSibling.innerHTML !== '')
       ) {
         childElem.className = binaryOperatorClass;
       }
