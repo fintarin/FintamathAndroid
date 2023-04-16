@@ -16,12 +16,10 @@ class CalculatorProcessor(
     private var calcThread: Thread? = null
 
     fun calculate(exprStr : String) {
-        loadingCallback.invoke()
-
         calcThread = null
 
         if (exprStr.isEmpty()) {
-            outTextsCallback.invoke(listOf(exprStr))
+            calculationCallback.invoke(listOf(exprStr))
             return
         }
 
@@ -30,10 +28,18 @@ class CalculatorProcessor(
         }
 
         calcThread!!.start()
+
+        Timer().schedule(loadingDelay) {
+            if (calcThread != null && calcThread!!.isAlive) {
+                loadingCallback.invoke()
+            }
+        }
     }
 
     private  fun onCalculated(result: List<String>) {
-        outTextsCallback.invoke(result)
-        calcThread = null
+        if (calcThread != null) {
+            calcThread = null
+            outTextsCallback.invoke(result)
+        }
     }
 }

@@ -10,7 +10,6 @@
 
 using namespace fintamath;
 
-constexpr int32_t sleepTimeMs = 500000;
 constexpr int32_t maxResultLength = 10000;
 constexpr int32_t maxSolutionLength = 1000000;
 
@@ -66,10 +65,6 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
     calcPid = pid;
 
     waitpid(pid, nullptr, 0);
-
-    if (pid == calcPid) {
-      usleep(sleepTimeMs);
-    }
 
     if (pid == calcPid) {
       jclass clazz = env->GetObjectClass(instance);
