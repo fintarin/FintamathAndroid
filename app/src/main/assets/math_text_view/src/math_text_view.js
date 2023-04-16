@@ -342,7 +342,11 @@ function deleteAtCursor() {
         setCursorToElementEnd(parentElem);
       }
     } else if (prevSibling !== null) {
-      if (textClasses.includes(prevSibling.className) || operatorClasses.includes(prevSibling.className)) {
+      if (
+        prevSibling.className === textClass ||
+        prevSibling.className === textHintClass ||
+        operatorClasses.includes(prevSibling.className)
+      ) {
         let elem = prevSibling;
 
         switch (elem.className) {
