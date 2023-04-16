@@ -1,6 +1,6 @@
-#include "fintamath/exceptions/Exception.hpp"
 #include "fintamath/exceptions/UndefinedException.hpp"
 #include "fintamath/expressions/Expression.hpp"
+#include "fintamath/expressions/ExpressionFunctions.hpp"
 
 #include <jni.h>
 #include <string>
@@ -15,12 +15,14 @@ std::string makeOutResult(const std::string &res) {
 extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Calculator_calculate(JNIEnv *env, jobject, jstring inJStr) {
   std::string inStr = env->GetStringUTFChars(inJStr, nullptr);
   try {
-    Expression resExpr(inStr);
-    std::string res = makeOutResult(resExpr.toString());
-    std::string resPrecise10 = makeOutResult(resExpr.solve(10));
-    std::string resPrecise50 = makeOutResult(resExpr.solve(50));
+    Expression inExpr(inStr);
+    Expression solExpr = solve(inExpr);
+    Expression solPrecise10Expr = solExpr.precise(10);
 
-    std::string resArray = res + resPrecise10 + resPrecise50;
+    std::string resArray = makeOutResult(solExpr.toString()) +          //
+                           makeOutResult(solPrecise10Expr.toString()) + //
+                           makeOutResult(inExpr.toString());            //
+
     resArray.pop_back();
 
     return env->NewStringUTF(resArray.c_str());
