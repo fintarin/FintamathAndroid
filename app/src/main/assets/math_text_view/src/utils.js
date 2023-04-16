@@ -612,9 +612,7 @@ function reformatElement(elem) {
         bracketsElem.appendChild(prevElem);
         elem.insertBefore(bracketsElem, childElem);
 
-        if (prevPrevElem === selectedElem) {
-          setCursorToElement(selectedElem, selectedOffset);
-        }
+        setCursorToElement(selectedElem, selectedOffset);
 
         i--;
       }
