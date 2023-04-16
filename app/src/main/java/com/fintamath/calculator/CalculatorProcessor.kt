@@ -8,16 +8,17 @@ class CalculatorProcessor(
     private val loadingCallback: () -> Unit
 ) {
 
-    private val loadDelay: Long = 100
+    private val loadingDelay: Long = 100
 
-    private val calculator: Calculator = Calculator()
+    private val calculationCallback: (result: List<String>) -> Unit = { onCalculated(it) }
+
+    private val calculator: Calculator = Calculator(outTextsCallback)
     private var calcThread: Thread? = null
 
     fun calculate(exprStr : String) {
-        if (calcThread != null && calcThread!!.isAlive) {
-            calcThread!!.interrupt()
-            calcThread = null
-        }
+        loadingCallback.invoke()
+
+        calcThread = null
 
         if (exprStr.isEmpty()) {
             outTextsCallback.invoke(listOf(exprStr))
@@ -25,19 +26,14 @@ class CalculatorProcessor(
         }
 
         calcThread = Thread {
-            val resData = calculator.calculate(exprStr)
-
-            if (Thread.currentThread() === calcThread) {
-                outTextsCallback.invoke(listOf(*resData.split("\n").toTypedArray()))
-            }
+            calculator.calculate(exprStr)
         }
 
         calcThread!!.start()
+    }
 
-        Timer().schedule(loadDelay) {
-            if (calcThread != null && calcThread!!.isAlive) {
-                loadingCallback.invoke()
-            }
-        }
+    private  fun onCalculated(result: List<String>) {
+        outTextsCallback.invoke(result)
+        calcThread = null
     }
 }
