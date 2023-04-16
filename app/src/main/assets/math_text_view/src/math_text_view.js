@@ -347,28 +347,35 @@ function deleteAtCursor() {
     } else if (prevSibling !== null) {
       if (textClasses.includes(prevSibling.className) || operatorClasses.includes(prevSibling.className)) {
         let prevElem = prevSibling;
+        let nextElem = prevElem.nextElementSibling;
 
-        if (prevElem.nextElementSibling !== null && operatorClasses.includes(prevElem.nextElementSibling.className)) {
-          let nextElem = prevElem.nextElementSibling;
+        if (
+          nextElem !== null &&
+          (operatorClasses.includes(nextElem.className) || indexContainerClasses.includes(nextElem.className))
+        ) {
+          if (indexContainerClasses.includes(nextElem.className)) {
+            parentElem.insertBefore(createElement(textHintClass), prevElem.nextSibling);
+            prevElem = prevElem.nextSibling;
+          } else {
+            switch (nextElem.className) {
+              case unaryPostfixOperatorClass:
+              case binaryOperatorClass: {
+                if (unaryPrefixOperators.includes(nextElem.innerText)) {
+                  nextElem.className = unaryPrefixOperatorClass;
+                  parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
+                } else {
+                  parentElem.insertBefore(createElement(textHintClass), prevElem.nextSibling);
+                }
 
-          switch (nextElem.className) {
-            case unaryPostfixOperatorClass:
-            case binaryOperatorClass: {
-              if (unaryPrefixOperators.includes(nextElem.innerText)) {
-                nextElem.className = unaryPrefixOperatorClass;
-                parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
-              } else {
-                parentElem.insertBefore(createElement(textHintClass), prevElem.nextSibling);
+                prevElem = prevElem.nextSibling;
+
+                break;
               }
-
-              prevElem = prevElem.nextSibling;
-
-              break;
-            }
-            case unaryPrefixOperatorClass: {
-              parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
-              prevElem = prevElem.nextSibling;
-              break;
+              case unaryPrefixOperatorClass: {
+                parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
+                prevElem = prevElem.nextSibling;
+                break;
+              }
             }
           }
         } else {
