@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,19 +10,19 @@
     android:paddingEnd="15dp">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/diameter_warning"
+        android:layout_height="@dimen/diameter_warning"
         android:layout_gravity="center"
         android:paddingEnd="10dp"
         android:src="@drawable/ic_warning"
+        app:tint="@color/text_message"
         android:contentDescription="@string/warning"
         tools:ignore="RtlSymmetry" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:text="@string/incomplete_input_message"
         android:textSize="@dimen/text_size_output_message"
-        android:textColor="@color/text_main" />
+        android:textColor="@color/text_hint" />
 </LinearLayout>

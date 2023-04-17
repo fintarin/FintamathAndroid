@@ -6,10 +6,11 @@
     <dimen name="text_size_keyboard">@dimen/text_size_main</dimen>
     <dimen name="text_size_keyboard_top_label">12sp</dimen>
     <dimen name="text_size_alternative">18sp</dimen>
-    <dimen name="text_size_output_message">18sp</dimen>
+    <dimen name="text_size_output_message">16sp</dimen>
 
     <dimen name="diameter_bar_key">48dp</dimen>
     <dimen name="diameter_history_item_key">48dp</dimen>
+    <dimen name="diameter_warning">24dp</dimen>
 
     <dimen name="delimiter_width">2dp</dimen>
 
