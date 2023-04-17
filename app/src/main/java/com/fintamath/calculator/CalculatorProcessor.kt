@@ -17,14 +17,14 @@ class CalculatorProcessor(
     private var calcThread: Thread? = null
     private var calcThreadId: AtomicLong = AtomicLong(-1)
 
-    fun calculate(exprStr : String) {
-        if (exprStr.isEmpty()) {
+    fun calculate(str : String) {
+        if (str.isEmpty()) {
             onCalculated(listOf(""))
             return
         }
 
         calcThread = Thread {
-            calculator.calculate(exprStr)
+            calculator.calculate(str)
         }
 
         calcThread!!.start()

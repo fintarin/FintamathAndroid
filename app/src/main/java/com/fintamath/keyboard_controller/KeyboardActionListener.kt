@@ -11,8 +11,16 @@ class KeyboardActionListener(
 ) : KeyboardView.OnKeyboardActionListener {
 
     init {
-        inText.setOnTextChangedListener {
-            calculatorProcessor.calculate(it)
+        inText.setOnTextChangedListener { inStr ->
+            var str: String = ""
+
+            str = if (inStr.isNotEmpty() && inStr.last() == '=' && inStr.count { it == '=' } == 1) {
+                inStr.substring(0, inStr.length - 1);
+            } else {
+                inStr
+            }
+
+            calculatorProcessor.calculate(str)
         }
     }
 

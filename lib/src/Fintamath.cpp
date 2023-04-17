@@ -23,10 +23,6 @@ std::string makeOutResult(const std::string &res) {
 }
 
 std::string calculate(std::string inStr) {
-  if (!inStr.empty() && inStr.back() == '=') {
-    inStr.pop_back();
-  }
-
   try {
     Expression inExpr(inStr);
     Expression solExpr = solve(inExpr);
