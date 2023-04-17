@@ -1,6 +1,7 @@
 package com.fintamath.calculator
 
 import java.util.Timer
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.schedule
 
 class CalculatorProcessor(
@@ -10,16 +11,15 @@ class CalculatorProcessor(
 
     private val loadingDelay: Long = 100
 
-    private val calculationCallback: (result: List<String>) -> Unit = { onCalculated(it) }
+    private val calculationCallback: (result: List<String>) -> Unit = { onCalculatedThreadChecked(it) }
 
-    private val calculator: Calculator = Calculator(outTextsCallback)
+    private val calculator: Calculator = Calculator(calculationCallback)
     private var calcThread: Thread? = null
+    private var calcThreadId: AtomicLong = AtomicLong(-1)
 
     fun calculate(exprStr : String) {
-        calcThread = null
-
         if (exprStr.isEmpty()) {
-            calculationCallback.invoke(listOf(exprStr))
+            onCalculated(listOf(""))
             return
         }
 
@@ -29,17 +29,24 @@ class CalculatorProcessor(
 
         calcThread!!.start()
 
+        val calcThreadLocalId = calcThread!!.id
+        calcThreadId.set(calcThreadLocalId)
+
         Timer().schedule(loadingDelay) {
-            if (calcThread != null && calcThread!!.isAlive) {
+            if (calcThreadLocalId == calcThreadId.get()) {
                 loadingCallback.invoke()
             }
         }
     }
 
-    private  fun onCalculated(result: List<String>) {
-        if (calcThread != null) {
-            calcThread = null
-            outTextsCallback.invoke(result)
+    private fun onCalculatedThreadChecked(result: List<String>) {
+        if (Thread.currentThread().id == calcThreadId.get()) {
+            onCalculated(result)
         }
+    }
+
+    private fun onCalculated(result: List<String>) {
+        calcThreadId.set(-1)
+        outTextsCallback.invoke(result)
     }
 }

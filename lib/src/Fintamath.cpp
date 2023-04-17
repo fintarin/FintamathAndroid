@@ -62,10 +62,13 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
   if (pid == 0) {
     std::string solutionStr = calculate(inStr);
     size_t solutionStrLen = solutionStr.length();
+
     solutionStr.copy(solutionStrShared, solutionStrLen);
     solutionStrShared[solutionStrLen] = '\0';
+
+    _exit(0);
   }
-  else {
+  else if (pid != -1) {
     calcPid = pid;
 
     waitpid(pid, nullptr, 0);
