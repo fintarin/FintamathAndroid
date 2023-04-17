@@ -965,6 +965,7 @@ function isComplete(elem, mathText) {
       prevLastChild !== null &&
       lastChild.innerHTML === '' &&
       prevLastChild.innerHTML === '=' &&
+      mathText.length > 1 &&
       mathText.split('=').length - 1 === 1
     ) {
       return true;

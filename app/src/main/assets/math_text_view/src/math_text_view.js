@@ -362,9 +362,9 @@ function deleteAtCursor() {
               case binaryOperatorClass: {
                 if (unaryPrefixOperators.includes(nextElem.innerText)) {
                   nextElem.className = unaryPrefixOperatorClass;
-                  parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
+                  parentElem.insertBefore(createElement(textClass), nextElem);
                 } else {
-                  parentElem.insertBefore(createElement(textHintClass), prevElem.nextSibling);
+                  parentElem.insertBefore(createElement(textHintClass), nextElem);
                 }
 
                 prevElem = prevElem.nextSibling;

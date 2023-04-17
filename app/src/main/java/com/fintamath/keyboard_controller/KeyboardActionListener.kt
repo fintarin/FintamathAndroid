@@ -14,7 +14,7 @@ class KeyboardActionListener(
         inText.setOnTextChangedListener { inStr ->
             var str: String = ""
 
-            str = if (inStr.isNotEmpty() && inStr.last() == '=' && inStr.count { it == '=' } == 1) {
+            str = if (inStr.length > 1 && inStr.last() == '=' && inStr.count { it == '=' } == 1) {
                 inStr.substring(0, inStr.length - 1);
             } else {
                 inStr
