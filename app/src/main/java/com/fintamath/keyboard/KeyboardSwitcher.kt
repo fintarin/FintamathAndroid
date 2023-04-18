@@ -1,8 +1,8 @@
-package com.fintamath.keyboard_controller
+package com.fintamath.keyboard
 
 import android.view.View
-import com.fintamath.keyboard.Keyboard
-import com.fintamath.keyboard.KeyboardView
+import com.fintamath.widget.keyboard.Keyboard
+import com.fintamath.widget.keyboard.KeyboardView
 
 class KeyboardSwitcher(
     private val keyboards: Map<KeyboardType, Pair<KeyboardView, Keyboard>>,

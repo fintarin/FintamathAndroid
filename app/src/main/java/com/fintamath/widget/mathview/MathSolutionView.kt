@@ -1,4 +1,4 @@
-package com.fintamath.mathview
+package com.fintamath.widget.mathview
 
 import android.content.Context
 import kotlin.jvm.JvmOverloads

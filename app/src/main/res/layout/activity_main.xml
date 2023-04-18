@@ -86,7 +86,7 @@
                 android:clickable="true"
                 android:focusable="true">
 
-                <com.fintamath.mathview.MathTextView
+                <com.fintamath.widget.mathview.MathTextView
                     android:id="@+id/in_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                 android:layout_height="@dimen/delimiter_width"
                 android:background="@drawable/dashed_line_background"/>
 
-            <com.fintamath.mathview.MathSolutionView
+            <com.fintamath.widget.mathview.MathSolutionView
                 android:id="@+id/solution"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <com.fintamath.keyboard.KeyboardView
+        <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/main_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
             app:popupLayout="@layout/popup_keyboard" />
 
-        <com.fintamath.keyboard.KeyboardView
+        <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/letters_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
             app:popupLayout="@layout/popup_keyboard"  />
 
-        <com.fintamath.keyboard.KeyboardView
+        <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/functions_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
             app:popupLayout="@layout/popup_keyboard"  />
 
-        <com.fintamath.keyboard.KeyboardView
+        <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/analysis_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
             app:popupLayout="@layout/popup_keyboard"  />
 
-        <com.fintamath.keyboard.KeyboardView
+        <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/logic_keyboard_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

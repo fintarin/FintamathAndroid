@@ -1,4 +1,4 @@
-package com.fintamath.keyboard_controller
+package com.fintamath.keyboard
 
 enum class KeyboardType {
     MainKeyboard,

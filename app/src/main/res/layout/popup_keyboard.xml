@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.fintamath.keyboard.KeyboardView
+<com.fintamath.widget.keyboard.KeyboardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/keyboardView"
@@ -11,4 +11,4 @@
     app:keyboardKeyPreviewLayout="@layout/popup_key_preview"
     app:keyboardKeyTextSize="@dimen/text_size_keyboard"
     app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label" >
-</com.fintamath.keyboard.KeyboardView>
+</com.fintamath.widget.keyboard.KeyboardView>

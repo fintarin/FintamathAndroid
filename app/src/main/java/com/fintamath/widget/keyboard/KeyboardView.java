@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.fintamath.keyboard;
+package com.fintamath.widget.keyboard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -27,7 +27,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import com.fintamath.keyboard.Keyboard.Key;
+import com.fintamath.widget.keyboard.Keyboard.Key;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;

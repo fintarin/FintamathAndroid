@@ -8,15 +8,15 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.fintamath.calculator.CalculatorProcessor
-import com.fintamath.history.HistoryFragment
-import com.fintamath.history.HistoryStorage
-import com.fintamath.keyboard.Keyboard
-import com.fintamath.keyboard.KeyboardView
-import com.fintamath.keyboard_controller.KeyboardActionListener
-import com.fintamath.keyboard_controller.KeyboardSwitcher
-import com.fintamath.keyboard_controller.KeyboardType
-import com.fintamath.mathview.MathSolutionView
-import com.fintamath.mathview.MathTextView
+import com.fintamath.fragment.history.HistoryFragment
+import com.fintamath.fragment.history.HistoryStorage
+import com.fintamath.widget.keyboard.Keyboard
+import com.fintamath.widget.keyboard.KeyboardView
+import com.fintamath.keyboard.KeyboardActionListener
+import com.fintamath.keyboard.KeyboardSwitcher
+import com.fintamath.keyboard.KeyboardType
+import com.fintamath.widget.mathview.MathSolutionView
+import com.fintamath.widget.mathview.MathTextView
 import java.util.*
 import kotlin.concurrent.schedule
 

@@ -1,4 +1,4 @@
-package com.fintamath.history
+package com.fintamath.fragment.history
 
 import android.os.Bundle
 import android.view.LayoutInflater

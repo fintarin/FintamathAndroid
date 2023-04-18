@@ -1,4 +1,4 @@
-package com.fintamath.history
+package com.fintamath.fragment.history
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView

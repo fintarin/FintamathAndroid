@@ -1,4 +1,4 @@
-package com.fintamath.history
+package com.fintamath.fragment.history
 
 import android.view.View
 import android.widget.ImageButton
@@ -6,7 +6,7 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
-import com.fintamath.mathview.MathTextView
+import com.fintamath.widget.mathview.MathTextView
 
 class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val mathTextView: MathTextView

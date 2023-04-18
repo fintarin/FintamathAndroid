@@ -1,4 +1,4 @@
-package com.fintamath.keyboard_controller
+package com.fintamath.keyboard
 
 internal enum class KeyboardKeyCode(val value: Int) {
     Delete(5996),

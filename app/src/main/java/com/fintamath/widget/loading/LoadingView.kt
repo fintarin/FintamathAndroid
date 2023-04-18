@@ -1,4 +1,4 @@
-package com.fintamath.loading
+package com.fintamath.widget.loading
 
 import kotlin.jvm.JvmOverloads
 import android.widget.LinearLayout

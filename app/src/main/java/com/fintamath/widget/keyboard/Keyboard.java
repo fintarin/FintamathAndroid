@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.fintamath.keyboard;
+package com.fintamath.widget.keyboard;
 
 import android.content.Context;
 import android.content.res.Resources;

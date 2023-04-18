@@ -1,4 +1,4 @@
-package com.fintamath.mathview
+package com.fintamath.widget.mathview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,14 +8,10 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.ViewParent
 import android.webkit.JavascriptInterface
 import android.webkit.ValueCallback
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ScrollView
-import androidx.core.widget.NestedScrollView
-import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
 import java.util.*
 import kotlin.concurrent.schedule

@@ -1,8 +1,8 @@
-package com.fintamath.keyboard_controller
+package com.fintamath.keyboard
 
 import com.fintamath.calculator.CalculatorProcessor
-import com.fintamath.keyboard.KeyboardView
-import com.fintamath.mathview.MathTextView
+import com.fintamath.widget.keyboard.KeyboardView
+import com.fintamath.widget.mathview.MathTextView
 
 class KeyboardActionListener(
     private val calculatorProcessor: CalculatorProcessor,

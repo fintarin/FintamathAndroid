@@ -1,4 +1,4 @@
-package com.fintamath.loading
+package com.fintamath.widget.loading
 
 import android.annotation.SuppressLint
 import android.content.Context

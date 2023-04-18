@@ -1,12 +1,10 @@
-package com.fintamath.mathview
+package com.fintamath.widget.mathview
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
-import kotlin.jvm.JvmOverloads
 import android.widget.LinearLayout
 import android.view.LayoutInflater
-import android.util.AttributeSet
 import android.view.View
 import com.fintamath.R
 

@@ -15,7 +15,7 @@
         android:background="@drawable/history_item_background"
         android:orientation="vertical">
 
-        <com.fintamath.mathview.MathTextView
+        <com.fintamath.widget.mathview.MathTextView
             android:id="@+id/historyMathTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
