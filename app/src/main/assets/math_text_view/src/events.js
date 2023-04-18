@@ -71,8 +71,15 @@ function callOnChange() {
     return;
   }
 
-  const mathText = toMathText(mathTextView.innerHTML, mathTextView.isContentEditable);
-  Android.callOnTextChanged(mathText, isComplete(mathTextView, mathText) ? 'true' : 'false');
+  let mathText = toMathText(mathTextView.innerHTML, mathTextView.isContentEditable);
+  let isMathTextComplete = isComplete(mathTextView) ? 'true' : 'false';
+
+  if (mathText.length > 1 && mathText.charAt(mathText.length - 1) === '=' && mathText.split('=').length - 1 === 1) {
+    mathText = mathText.substring(0, mathText.length - 1);
+    isMathTextComplete = 'true';
+  }
+
+  Android.callOnTextChanged(mathText, isMathTextComplete);
 }
 
 /**

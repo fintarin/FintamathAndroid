@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:top="-8dp" android:left="-8dp" android:right="-8dp">
-        <shape android:shape="rectangle">
-            <solid android:color="@color/background_history"/>
-            <stroke android:color="@color/background_history_item_stroke" android:width="1dp"/>
-        </shape>
-    </item>
-</layer-list>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:state_focused="false"
+        android:state_selected="false"
+        android:state_pressed="false"
+        android:drawable="@drawable/history_item_background_normal" />
+
+    <item
+        android:state_pressed="true"
+        android:drawable="@drawable/history_item_background_pressed" />
+
+</selector>

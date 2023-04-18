@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.history.HistoryFragment
+import com.fintamath.history.HistoryStorage
 import com.fintamath.keyboard.Keyboard
 import com.fintamath.keyboard.KeyboardView
 import com.fintamath.keyboard_controller.KeyboardActionListener
@@ -16,6 +17,8 @@ import com.fintamath.keyboard_controller.KeyboardSwitcher
 import com.fintamath.keyboard_controller.KeyboardType
 import com.fintamath.mathview.MathSolutionView
 import com.fintamath.mathview.MathTextView
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +29,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var calculatorProcessor: CalculatorProcessor
 
-    private val keyboardTransitionDuration: Long = 300
+    private lateinit var historyFragment: HistoryFragment
+
+    private val saveToHistoryDelay: Long = 2000
+    private var saveToHistoryTask: TimerTask? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +43,13 @@ class MainActivity : AppCompatActivity() {
         inText = findViewById(R.id.in_text)
         solution = findViewById(R.id.solution)
 
-        calculatorProcessor = CalculatorProcessor ({ outTexts(it) }, { startLoading() })
+        calculatorProcessor = CalculatorProcessor (
+            { outTexts(it) },
+            { startLoading() }
+        )
 
         initKeyboards()
+        initFragments()
 
         inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
@@ -90,14 +100,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initFragments() {
+        historyFragment = HistoryFragment()
+        historyFragment.onCalculate = { inText.text = it }
+    }
+
     private fun outTexts(it: List<String>) {
         runOnUiThread {
+            saveToHistoryTask?.cancel()
+            saveToHistoryTask = null
+
             if (!inText.isComplete) {
                 solution.showIncompleteInput()
-            } else if (it.size == 1 && it.first() == getString(R.string.invalid_input)) {
+            } else if (it.isEmpty() || it.first() == "") {
+                solution.hideCurrentView()
+            } else if (it.first() == getString(R.string.invalid_input)) {
                 solution.showInvalidInput()
             } else {
                 solution.showSolution(it)
+                saveToHistoryTask = Timer().schedule(saveToHistoryDelay) { callOnSaveToHistory() }
             }
         }
     }
@@ -114,6 +135,14 @@ class MainActivity : AppCompatActivity() {
         ))
     }
 
+    private fun callOnSaveToHistory() {
+        runOnUiThread {
+            HistoryStorage.save(inText.text)
+            saveToHistoryTask?.cancel()
+            saveToHistoryTask = null
+        }
+    }
+
     fun showOptionsMenu(view: View) {
         val popup = PopupMenu(this, view)
         val inflater = popup.menuInflater
@@ -122,7 +151,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showHistoryFragment(view: View) {
-        val historyFragment = HistoryFragment()
+        saveToHistoryTask?.cancel()
+        saveToHistoryTask?.run();
+        saveToHistoryTask = null
+
+        inText.clearFocus()
+
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(android.R.id.content, historyFragment);
         transaction.addToBackStack(null);

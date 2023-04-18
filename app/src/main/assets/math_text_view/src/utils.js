@@ -565,10 +565,12 @@ function reformatElement(elem) {
       if (prevSibling !== null && isNotEmptyTextElement(childElem) && isNotEmptyTextElement(prevSibling)) {
         let offset = -1;
 
-        if (childElem == selectedElem || childElem == selectedElem.parentElement) {
-          offset = prevSibling.innerText.length + selectedOffset;
-        } else if (prevSibling === selectedElem || prevSibling === selectedElem.parentElement) {
-          offset = selectedOffset;
+        if (selectedElem !== null) {
+          if (childElem == selectedElem || childElem == selectedElem.parentElement) {
+            offset = prevSibling.innerText.length + selectedOffset;
+          } else if (prevSibling === selectedElem || prevSibling === selectedElem.parentElement) {
+            offset = selectedOffset;
+          }
         }
 
         prevSibling.innerText += childElem.innerText;
@@ -952,51 +954,22 @@ function areElementChildrenEmpty(elem) {
  * Also returns true if the element is similar to 'x = '.
  *
  * @param {HTMLSpanElement} elem - The element to check.
- * @param {string} mathText - The math text to check.
  * @returns {boolean} Whether the element does not contain empty text hint elements.
  */
-function isComplete(elem, mathText) {
-  if (elem.innerHTML !== '') {
-    let lastChild = elem.lastElementChild;
-    let prevLastChild = lastChild.previousElementSibling;
+function isComplete(elem) {
+  for (let i = 0; i < elem.childElementCount; i++) {
+    const childElem = elem.children[i];
 
-    if (
-      lastChild !== null &&
-      prevLastChild !== null &&
-      lastChild.innerHTML === '' &&
-      prevLastChild.innerHTML === '=' &&
-      mathText.length > 1 &&
-      mathText.split('=').length - 1 === 1
-    ) {
-      return true;
+    if (childElem.className === textHintClass && childElem.innerHTML === '') {
+      return false;
+    }
+
+    if (!isComplete(childElem)) {
+      return false;
     }
   }
 
-  return isCompleteRec(elem);
-
-  //---------------------------------------------------------------------------------------------------------//
-
-  /**
-   * Checks recursively if the element does not contain empty text hint elements.
-   *
-   * @param {HTMLSpanElement} elem - The element to check.
-   * @returns {boolean} Whether the element does not contain empty text hint elements.
-   */
-  function isCompleteRec(elem) {
-    for (let i = 0; i < elem.childElementCount; i++) {
-      const childElem = elem.children[i];
-
-      if (childElem.className === textHintClass && childElem.innerHTML === '') {
-        return false;
-      }
-
-      if (!isCompleteRec(childElem)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
+  return true;
 }
 
 /**

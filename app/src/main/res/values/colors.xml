@@ -8,7 +8,6 @@
     <color name="background_bar_button_pressed">#666666</color>
 
     <color name="background_history">@color/background_main</color>
-    <color name="background_history_item_stroke">#1E1E1E</color>
     <color name="background_history_item_button">@color/background_history</color>
     <color name="background_history_item_button_pressed">#666666</color>
 
