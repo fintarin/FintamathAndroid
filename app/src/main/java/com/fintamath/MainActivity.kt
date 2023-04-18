@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         initFragments()
 
         inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
+        inText.setOnFocusChangeListener { _, state -> callOnInTextFocusChange(state) }
 
         inText.requestFocus()
     }
@@ -135,6 +136,12 @@ class MainActivity : AppCompatActivity() {
         ))
     }
 
+    private fun callOnInTextFocusChange(state: Boolean) {
+        if (!state) {
+            inText.requestFocus()
+        }
+    }
+
     private fun callOnSaveToHistory() {
         runOnUiThread {
             HistoryStorage.save(inText.text)
@@ -152,14 +159,14 @@ class MainActivity : AppCompatActivity() {
 
     fun showHistoryFragment(view: View) {
         saveToHistoryTask?.cancel()
-        saveToHistoryTask?.run();
+        saveToHistoryTask?.run()
         saveToHistoryTask = null
 
         inText.clearFocus()
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(android.R.id.content, historyFragment);
-        transaction.addToBackStack(null);
+        transaction.replace(android.R.id.content, historyFragment)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 
