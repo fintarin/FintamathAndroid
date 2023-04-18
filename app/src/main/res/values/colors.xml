@@ -7,9 +7,9 @@
     <color name="background_bar_button">@color/background_bar</color>
     <color name="background_bar_button_pressed">#666666</color>
 
-    <color name="background_history">@color/background_main</color>
+    <color name="background_history">@color/background_number_keyboard_key</color>
     <color name="background_history_item_button">@color/background_history</color>
-    <color name="background_history_item_button_pressed">#666666</color>
+    <color name="background_history_item_button_pressed">@color/background_keyboard_key_pressed</color>
 
     <color name="background_keyboard">#2f2f2f</color>
     <color name="background_keyboard_key">#2d2d2d</color>
@@ -17,7 +17,7 @@
     <color name="background_keyboard_key_preview">#212121</color>
     <color name="background_keyboard_key_stroke">@color/background_keyboard</color>
 
-    <color name="background_popup_keyboard">@color/background_keyboard_key_preview</color>
+    <color name="background_popup_keyboard">#3B3B3B</color>
     <color name="background_popup_keyboard_key">@color/background_popup_keyboard</color>
     <color name="background_popup_keyboard_key_preview">#00000000</color>
 

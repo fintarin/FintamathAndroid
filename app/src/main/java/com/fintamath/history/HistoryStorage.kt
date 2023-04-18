@@ -1,5 +1,7 @@
 package com.fintamath.history
 
+import java.time.LocalDateTime
+
 object HistoryStorage {
 
     var onItemRemoved: ((Int) -> Unit)? = null
@@ -24,7 +26,7 @@ object HistoryStorage {
                 onItemRemoved?.invoke(maxItemsNum)
             }
 
-            historyList.add(0, HistoryItem(text, false))
+            historyList.add(0, HistoryItem(text, false, LocalDateTime.now()))
             onItemRemoved?.invoke(0)
         }
 

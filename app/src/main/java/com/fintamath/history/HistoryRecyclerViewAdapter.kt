@@ -7,6 +7,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.fintamath.R
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class HistoryRecyclerViewAdapter() : RecyclerView.Adapter<HistoryItemViewHolder>() {
 
@@ -41,6 +44,7 @@ class HistoryRecyclerViewAdapter() : RecyclerView.Adapter<HistoryItemViewHolder>
         val historyList = HistoryStorage.getList()
         viewHolder.mathTextView.text = historyList[viewHolder.adapterPosition].text
         viewHolder.bookmarkButton.isChecked = historyList[viewHolder.adapterPosition].isBookmarked
+        viewHolder.dateTextView.text = formatDataTime(historyList[viewHolder.adapterPosition].dateTime)
     }
 
     private fun callOnBookmarkButtonCheckedChangeListener(viewHolder: HistoryItemViewHolder, isChecked: Boolean) {
@@ -52,5 +56,9 @@ class HistoryRecyclerViewAdapter() : RecyclerView.Adapter<HistoryItemViewHolder>
     private fun callOnRemoveButtonClicked(viewHolder: HistoryItemViewHolder) {
         val index = viewHolder.adapterPosition
         HistoryStorage.remove(index)
+    }
+
+    private fun formatDataTime(dataTime: LocalDateTime): String {
+        return dataTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
     }
 }

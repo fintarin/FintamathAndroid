@@ -24,6 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/invalid_input_message"
-        android:textSize="@dimen/text_size_output_message"
+        android:textSize="@dimen/text_size_message"
         android:textColor="@color/text_hint" />
 </LinearLayout>

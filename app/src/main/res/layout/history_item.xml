@@ -4,47 +4,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/history_item_background">
-
-    <com.fintamath.mathview.MathTextView
-        android:id="@+id/historyMathTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        app:textSize="@dimen/text_size_math_text_view"
-        app:textColor="@color/text_main" />
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:background="@color/background_main"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="5dp">
+        android:background="@drawable/history_item_background"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/historyDeleteButton"
-            android:layout_width="@dimen/diameter_history_item_button"
-            android:layout_height="@dimen/diameter_history_item_button"
-            android:background="@drawable/history_item_button_background"
-            android:src="@drawable/ic_trash"
-            android:contentDescription="@string/trash" />
+        <com.fintamath.mathview.MathTextView
+            android:id="@+id/historyMathTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:textSize="@dimen/text_size_math_text_view"
+            app:textColor="@color/text_main" />
 
-        <ToggleButton
-            android:id="@+id/historyBookmarkButton"
-            android:layout_width="@dimen/diameter_history_item_button"
-            android:layout_height="@dimen/diameter_history_item_button"
-            android:background="@drawable/history_item_bookmark_background"
-            android:textOff=""
-            android:textOn=""
-            android:contentDescription="@string/bookmark" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/delimiter_width"
+            android:background="@drawable/dashed_line_background"/>
 
-        <ImageButton
-            android:id="@+id/calculateButton"
-            android:layout_width="@dimen/diameter_history_item_button"
-            android:layout_height="@dimen/diameter_history_item_button"
-            android:background="@drawable/history_item_button_background"
-            android:src="@drawable/ic_calculate"
-            android:contentDescription="@string/calculate" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
+
+            <TextView
+                android:id="@+id/dateTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/text_size_message"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/historyDeleteButton"
+                android:layout_width="@dimen/diameter_history_item_button"
+                android:layout_height="@dimen/diameter_history_item_button"
+                android:background="@drawable/history_item_button_background"
+                android:src="@drawable/ic_trash"
+                android:contentDescription="@string/trash" />
+
+            <ToggleButton
+                android:id="@+id/historyBookmarkButton"
+                android:layout_width="@dimen/diameter_history_item_button"
+                android:layout_height="@dimen/diameter_history_item_button"
+                android:background="@drawable/history_item_bookmark_background"
+                android:textOff=""
+                android:textOn=""
+                android:contentDescription="@string/bookmark" />
+
+            <ImageButton
+                android:id="@+id/calculateButton"
+                android:layout_width="@dimen/diameter_history_item_button"
+                android:layout_height="@dimen/diameter_history_item_button"
+                android:background="@drawable/history_item_button_background"
+                android:src="@drawable/ic_calculate"
+                android:contentDescription="@string/calculate" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
