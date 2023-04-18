@@ -51,8 +51,10 @@ class MainActivity : AppCompatActivity() {
         initKeyboards()
         initFragments()
 
-        inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
+        inText.setOnTextChangedListener { text -> calculatorProcessor.calculate(text) }
         inText.setOnFocusChangeListener { _, state -> callOnInTextFocusChange(state) }
+
+        inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
         inText.requestFocus()
     }
@@ -91,8 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         val listeners = mutableMapOf<KeyboardType, KeyboardActionListener>()
         for (type in KeyboardType.values()) {
-            listeners[type] =
-                KeyboardActionListener(calculatorProcessor, keyboardSwitcher, inText)
+            listeners[type] = KeyboardActionListener(keyboardSwitcher, inText)
         }
 
         keyboards.forEach { (key: KeyboardType, value: Pair<KeyboardView, Keyboard>) ->

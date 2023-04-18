@@ -1,18 +1,12 @@
 package com.fintamath.keyboard
 
-import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.widget.keyboard.KeyboardView
 import com.fintamath.widget.mathview.MathTextView
 
 class KeyboardActionListener(
-    private val calculatorProcessor: CalculatorProcessor,
     private val keyboardSwitcher: KeyboardSwitcher,
     private val inText: MathTextView
 ) : KeyboardView.OnKeyboardActionListener {
-
-    init {
-        inText.setOnTextChangedListener { text -> calculatorProcessor.calculate(text) }
-    }
 
     override fun onKey(primaryCode: Int, keyCodes: IntArray) {
         val keyCode = KeyboardKeyCode.fromInt(primaryCode) ?: return
