@@ -22,7 +22,7 @@ std::string makeOutResult(const std::string &res) {
   return res.length() < maxResultLength ? res + "\n" : "";
 }
 
-std::string calculate(std::string inStr) {
+std::string calculate(const std::string& inStr) {
   try {
     Expression inExpr(inStr);
     Expression solExpr = solve(inExpr);
