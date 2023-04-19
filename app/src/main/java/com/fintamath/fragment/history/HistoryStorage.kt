@@ -56,7 +56,7 @@ object HistoryStorage {
     }
 
     fun saveItem(text: String) {
-        if (!isTextUnique(text)) {
+        if (historyList.isNotEmpty() && historyList.first().text == text) {
             return
         }
 
@@ -88,9 +88,5 @@ object HistoryStorage {
 
     private fun countNonBookmarkedItems(): Int {
         return historyList.count { !it.isBookmarked }
-    }
-
-    private fun isTextUnique(text: String): Boolean {
-        return !historyList.any { it.text == text }
     }
 }
