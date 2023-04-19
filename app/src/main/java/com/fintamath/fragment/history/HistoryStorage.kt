@@ -8,7 +8,6 @@ import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.time.LocalDateTime
-import kotlin.concurrent.thread
 
 
 object HistoryStorage {
@@ -65,7 +64,7 @@ object HistoryStorage {
             onItemRemoved?.invoke(maxItemsNum)
         }
 
-        historyList.add(0, HistoryItem(text, false, LocalDateTime.now().toString()))
+        historyList.add(countBookmarkedItems(), HistoryItem(text, false, LocalDateTime.now().toString()))
         onItemRemoved?.invoke(0)
     }
 
@@ -74,16 +73,56 @@ object HistoryStorage {
         onItemRemoved?.invoke(index)
     }
 
-    fun setItemIsBookmarked(index: Int, isBookmarked: Boolean) {
-        if (historyList[index].isBookmarked != isBookmarked) {
-            historyList[index].isBookmarked = isBookmarked
+    fun bookmarkItem(index: Int, isBookmarked: Boolean) {
+        if (historyList[index].isBookmarked == isBookmarked) {
+            return
         }
+
+        val historyItem = historyList[index]
+        historyItem.isBookmarked = isBookmarked
+        moveItemOnBookmarkChange(historyItem, index)
+    }
+
+    private fun moveItemOnBookmarkChange(item: HistoryItem, index: Int) {
+        historyList.removeAt(index)
+
+        val insertIndex = findNewIndexOfItemOnBookmarkChange(item)
+        historyList.add(insertIndex, item)
+
+        onItemRemoved?.invoke(index)
+        onItemInserted?.invoke(insertIndex)
+    }
+
+    private fun findNewIndexOfItemOnBookmarkChange(item: HistoryItem): Int {
+        val dateTime = LocalDateTime.parse(item.dateTimeString)
+
+        val index = historyList.indexOfFirst {
+            if (it.isBookmarked != item.isBookmarked) {
+                return@indexOfFirst false
+            }
+
+            val itDateTime = LocalDateTime.parse(it.dateTimeString)
+            return@indexOfFirst itDateTime.isBefore(dateTime)
+        }
+
+        if (index == -1) {
+            return if (item.isBookmarked) countBookmarkedItems() else historyList.size
+        }
+
+        return index
     }
 
     private fun removeLastNonBookmarkedItem() {
-        val i = historyList.indexOfLast { !it.isBookmarked }
-        historyList.removeAt(i)
-        onItemRemoved?.invoke(i)
+        if (historyList.isEmpty() || historyList.last().isBookmarked) {
+            return
+        }
+
+        historyList.removeAt(historyList.size - 1)
+        onItemRemoved?.invoke(historyList.size - 1)
+    }
+
+    private fun countBookmarkedItems(): Int {
+        return historyList.count { it.isBookmarked }
     }
 
     private fun countNonBookmarkedItems(): Int {

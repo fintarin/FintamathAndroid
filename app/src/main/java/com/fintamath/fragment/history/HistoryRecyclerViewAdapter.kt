@@ -61,7 +61,7 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemViewHolder>()
     private fun callOnBookmarkButtonCheckedChangeListener(viewHolder: HistoryItemViewHolder, isChecked: Boolean) {
         viewHolder.removeButton.visibility = if (isChecked) GONE else VISIBLE
         val index = viewHolder.absoluteAdapterPosition
-        HistoryStorage.setItemIsBookmarked(index, isChecked)
+        HistoryStorage.bookmarkItem(index, isChecked)
     }
 
     private fun callOnRemoveButtonClicked(viewHolder: HistoryItemViewHolder) {
