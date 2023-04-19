@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
+import java.io.File
 
 class HistoryFragment : Fragment() {
 
@@ -41,7 +42,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun executeBack() {
-        activity?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
     private fun callOnCalculate(text: String) {

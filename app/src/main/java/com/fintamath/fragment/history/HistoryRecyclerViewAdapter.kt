@@ -11,11 +11,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
-class HistoryRecyclerViewAdapter() : RecyclerView.Adapter<HistoryItemViewHolder>() {
+class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemViewHolder>() {
 
     var onCalculate: ((String) -> Unit)? = null
 
     init {
+        HistoryStorage.onItemsLoaded = { start, end -> notifyItemRangeChanged(start, end) }
         HistoryStorage.onItemRemoved = { notifyItemRemoved(it) }
         HistoryStorage.onItemInserted = { notifyItemInserted(it) }
     }
@@ -29,36 +30,37 @@ class HistoryRecyclerViewAdapter() : RecyclerView.Adapter<HistoryItemViewHolder>
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(viewHolder: HistoryItemViewHolder, position: Int) {
-        viewHolder.removeButton.setOnClickListener { _ ->
+        viewHolder.removeButton.setOnClickListener {
             callOnRemoveButtonClicked(viewHolder)
         }
         viewHolder.bookmarkButton.setOnCheckedChangeListener { _, isChecked ->
             callOnBookmarkButtonCheckedChangeListener(viewHolder, isChecked)
         }
-        viewHolder.calculateButton.setOnClickListener { _ ->
+        viewHolder.calculateButton.setOnClickListener {
             onCalculate?.invoke(viewHolder.mathTextView.text)
         }
     }
 
     override fun onViewAttachedToWindow(viewHolder: HistoryItemViewHolder) {
         val historyList = HistoryStorage.getList()
-        viewHolder.mathTextView.text = historyList[viewHolder.adapterPosition].text
-        viewHolder.bookmarkButton.isChecked = historyList[viewHolder.adapterPosition].isBookmarked
-        viewHolder.dateTextView.text = formatDataTime(historyList[viewHolder.adapterPosition].dateTime)
+        viewHolder.mathTextView.text = historyList[viewHolder.absoluteAdapterPosition].text
+        viewHolder.bookmarkButton.isChecked = historyList[viewHolder.absoluteAdapterPosition].isBookmarked
+        viewHolder.dateTextView.text = formatDataTime(historyList[viewHolder.absoluteAdapterPosition].dateTimeString)
     }
 
     private fun callOnBookmarkButtonCheckedChangeListener(viewHolder: HistoryItemViewHolder, isChecked: Boolean) {
         viewHolder.removeButton.visibility = if (isChecked) GONE else VISIBLE
-        val index = viewHolder.adapterPosition
-        HistoryStorage.setIsBookmarked(index, isChecked)
+        val index = viewHolder.absoluteAdapterPosition
+        HistoryStorage.setItemIsBookmarked(index, isChecked)
     }
 
     private fun callOnRemoveButtonClicked(viewHolder: HistoryItemViewHolder) {
-        val index = viewHolder.adapterPosition
-        HistoryStorage.remove(index)
+        val index = viewHolder.absoluteAdapterPosition
+        HistoryStorage.removeItem(index)
     }
 
-    private fun formatDataTime(dataTime: LocalDateTime): String {
+    private fun formatDataTime(dataTimeString: String): String {
+        val dataTime = LocalDateTime.parse(dataTimeString)
         return dataTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
     }
 }

@@ -17,15 +17,17 @@ import com.fintamath.keyboard.KeyboardSwitcher
 import com.fintamath.keyboard.KeyboardType
 import com.fintamath.widget.mathview.MathSolutionView
 import com.fintamath.widget.mathview.MathTextView
+import java.io.File
 import java.util.*
 import kotlin.concurrent.schedule
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var inTextLayout: ViewGroup
-    private lateinit var inText: MathTextView
-    private lateinit var solution: MathSolutionView
+    private lateinit var inTextView: MathTextView
+    private lateinit var solutionView: MathSolutionView
 
     private lateinit var calculatorProcessor: CalculatorProcessor
 
@@ -39,9 +41,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        loadDataFromFiles()
+
         inTextLayout = findViewById(R.id.in_text_layout)
-        inText = findViewById(R.id.in_text)
-        solution = findViewById(R.id.solution)
+        inTextView = findViewById(R.id.in_text)
+        solutionView = findViewById(R.id.solution)
 
         calculatorProcessor = CalculatorProcessor (
             { outTexts(it) },
@@ -49,14 +53,33 @@ class MainActivity : AppCompatActivity() {
         )
 
         initKeyboards()
+
         initFragments()
 
-        inText.setOnTextChangedListener { text -> calculatorProcessor.calculate(text) }
-        inText.setOnFocusChangeListener { _, state -> callOnInTextFocusChange(state) }
+        inTextView.setOnTextChangedListener { text -> calculatorProcessor.calculate(text) }
+        inTextView.setOnFocusChangeListener { _, state -> callOnInTextFocusChange(state) }
 
         inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
-        inText.requestFocus()
+        inTextView.requestFocus()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        saveDataToFiles()
+    }
+
+    private fun loadDataFromFiles() {
+        val historyFile = File(applicationContext.filesDir.path + R.string.history_filename)
+        historyFile.createNewFile()
+        HistoryStorage.loadFromFile(historyFile)
+    }
+
+    private fun saveDataToFiles() {
+        val historyFile = File(applicationContext.filesDir.path + R.string.history_filename)
+        historyFile.createNewFile()
+        HistoryStorage.saveToFile(historyFile)
     }
 
     private fun initKeyboards() {
@@ -93,7 +116,7 @@ class MainActivity : AppCompatActivity() {
 
         val listeners = mutableMapOf<KeyboardType, KeyboardActionListener>()
         for (type in KeyboardType.values()) {
-            listeners[type] = KeyboardActionListener(keyboardSwitcher, inText)
+            listeners[type] = KeyboardActionListener(keyboardSwitcher, inTextView)
         }
 
         keyboards.forEach { (key: KeyboardType, value: Pair<KeyboardView, Keyboard>) ->
@@ -104,7 +127,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFragments() {
         historyFragment = HistoryFragment()
-        historyFragment.onCalculate = { inText.text = it }
+        historyFragment.onCalculate = { inTextView.text = it }
     }
 
     private fun outTexts(it: List<String>) {
@@ -112,14 +135,14 @@ class MainActivity : AppCompatActivity() {
             saveToHistoryTask?.cancel()
             saveToHistoryTask = null
 
-            if (!inText.isComplete) {
-                solution.showIncompleteInput()
+            if (!inTextView.isComplete) {
+                solutionView.showIncompleteInput()
             } else if (it.isEmpty() || it.first() == "") {
-                solution.hideCurrentView()
+                solutionView.hideCurrentView()
             } else if (it.first() == getString(R.string.invalid_input)) {
-                solution.showInvalidInput()
+                solutionView.showInvalidInput()
             } else {
-                solution.showSolution(it)
+                solutionView.showSolution(it)
                 saveToHistoryTask = Timer().schedule(saveToHistoryDelay) { callOnSaveToHistory() }
             }
         }
@@ -127,25 +150,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLoading() {
         runOnUiThread {
-            solution.showLoading()
+            solutionView.showLoading()
         }
     }
 
     private fun touchInText(event: MotionEvent): Boolean {
-        return inText.dispatchTouchEvent(MotionEvent.obtain(
+        return inTextView.dispatchTouchEvent(MotionEvent.obtain(
             event.downTime, event.eventTime, event.action, event.x, 0f, event.metaState
         ))
     }
 
     private fun callOnInTextFocusChange(state: Boolean) {
         if (!state) {
-            inText.requestFocus()
+            inTextView.requestFocus()
         }
     }
 
     private fun callOnSaveToHistory() {
         runOnUiThread {
-            HistoryStorage.save(inText.text)
+            HistoryStorage.saveItem(inTextView.text)
             saveToHistoryTask?.cancel()
             saveToHistoryTask = null
         }
@@ -163,7 +186,7 @@ class MainActivity : AppCompatActivity() {
         saveToHistoryTask?.run()
         saveToHistoryTask = null
 
-        inText.clearFocus()
+        inTextView.clearFocus()
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(android.R.id.content, historyFragment)

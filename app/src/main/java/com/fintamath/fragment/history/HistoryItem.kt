@@ -1,9 +1,10 @@
 package com.fintamath.fragment.history
 
-import java.time.LocalDateTime
+import kotlinx.serialization.Serializable
 
-data class HistoryItem (
+@Serializable
+data class HistoryItem(
     var text: String,
     var isBookmarked: Boolean,
-    var dateTime: LocalDateTime,
+    var dateTimeString: String,
 )

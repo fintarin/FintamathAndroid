@@ -15,4 +15,6 @@
     <string name="bookmark">Bookmark</string>
     <string name="trash">Trash</string>
     <string name="calculate">Calculate</string>
+
+    <string name="history_filename">history.json</string>
 </resources>
