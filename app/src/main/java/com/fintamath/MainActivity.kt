@@ -67,6 +67,10 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
+        saveToHistoryTask?.cancel()
+        saveToHistoryTask?.run()
+        saveToHistoryTask = null
+
         saveDataToFiles()
     }
 
