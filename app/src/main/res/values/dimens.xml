@@ -6,7 +6,8 @@
     <dimen name="text_size_keyboard">@dimen/text_size_main</dimen>
     <dimen name="text_size_keyboard_top_label">12sp</dimen>
     <dimen name="text_size_alternative">18sp</dimen>
-    <dimen name="text_size_message">16sp</dimen>
+    <dimen name="text_size_solution_message">16sp</dimen>
+    <dimen name="text_size_empty_history_message">18sp</dimen>
 
     <dimen name="diameter_bar_key">48dp</dimen>
     <dimen name="diameter_history_item_button">36dp</dimen>

@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_main"
-                android:textSize="@dimen/text_size_message"/>
+                android:textSize="@dimen/text_size_solution_message"/>
 
             <Space
                 android:layout_width="0dp"

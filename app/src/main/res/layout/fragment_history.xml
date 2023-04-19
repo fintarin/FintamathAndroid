@@ -45,8 +45,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
+            android:gravity="center"
             android:text="@string/empty_history_message"
-            android:textSize="@dimen/text_size_message"
+            android:textSize="@dimen/text_size_empty_history_message"
             android:textColor="@color/text_hint" />
 
         <androidx.recyclerview.widget.RecyclerView

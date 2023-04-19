@@ -23,6 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/incomplete_input_message"
-        android:textSize="@dimen/text_size_message"
+        android:textSize="@dimen/text_size_solution_message"
         android:textColor="@color/text_hint" />
 </LinearLayout>
