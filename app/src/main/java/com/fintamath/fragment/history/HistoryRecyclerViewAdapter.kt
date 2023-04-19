@@ -1,11 +1,11 @@
 package com.fintamath.fragment.history
 
 import android.annotation.SuppressLint
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -13,12 +13,22 @@ import java.time.format.FormatStyle
 
 class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemViewHolder>() {
 
+    var onItemsCountChange: ((Int) -> Unit)? = null
     var onCalculate: ((String) -> Unit)? = null
 
     init {
-        HistoryStorage.onItemsLoaded = { start, end -> notifyItemRangeChanged(start, end) }
-        HistoryStorage.onItemRemoved = { notifyItemRemoved(it) }
-        HistoryStorage.onItemInserted = { notifyItemInserted(it) }
+        HistoryStorage.onItemsLoaded = { start, end ->
+            notifyItemRangeChanged(start, end)
+            onItemsCountChange?.invoke(itemCount)
+        }
+        HistoryStorage.onItemRemoved = {
+            notifyItemRemoved(it)
+            onItemsCountChange?.invoke(itemCount)
+        }
+        HistoryStorage.onItemInserted = {
+            notifyItemInserted(it)
+            onItemsCountChange?.invoke(itemCount)
+        }
     }
 
     override fun getItemCount() = HistoryStorage.getList().size

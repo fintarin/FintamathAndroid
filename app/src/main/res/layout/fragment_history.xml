@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background_main"
     tools:context=".fragment.history.HistoryFragment">
 
     <RelativeLayout
@@ -35,14 +36,28 @@
 
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/historyList"
+    <RelativeLayout 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:background="@color/background_main"
-        app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/history_item"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/emptyHistoryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="@string/empty_history_message"
+            android:textSize="@dimen/text_size_message"
+            android:textColor="@color/text_hint" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/historyList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/history_item"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
