@@ -21,15 +21,15 @@ object HistoryStorage {
     private var historyList = arrayListOf<HistoryItemData>()
 
     fun loadFromFile(file: File) {
-        var historyData: String
+        var encodedHistoryList: String
 
         val reader = FileReader(file)
         reader.use {
-            historyData = reader.readText()
+            encodedHistoryList = reader.readText()
         }
 
         historyList = try {
-            Json.decodeFromString(historyData)
+            Json.decodeFromString(encodedHistoryList)
         } catch (exc: SerializationException) {
             arrayListOf()
         }
@@ -38,7 +38,7 @@ object HistoryStorage {
     }
 
     fun saveToFile(file: File) {
-        val historyData = try {
+        val encodedHistoryList = try {
             Json.encodeToString(historyList)
         } catch (exc: SerializationException) {
             ""
@@ -46,7 +46,7 @@ object HistoryStorage {
 
         val writer = FileWriter(file)
         writer.use {
-            writer.write(historyData)
+            writer.write(encodedHistoryList)
         }
     }
 

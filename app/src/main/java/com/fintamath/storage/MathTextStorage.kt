@@ -11,33 +11,33 @@ import java.io.FileWriter
 
 object MathTextStorage {
 
-    var text: String = ""
+    var mathTextData: MathTextData = MathTextData("")
 
     fun loadFromFile(file: File) {
-        var textData: String
+        var encodedMathTextData: String
 
         val reader = FileReader(file)
         reader.use {
-            textData = reader.readText()
+            encodedMathTextData = reader.readText()
         }
 
-        text = try {
-            Json.decodeFromString(textData)
+        mathTextData = try {
+            Json.decodeFromString(encodedMathTextData)
         } catch (exc: SerializationException) {
-            ""
+            MathTextData("")
         }
     }
 
     fun saveToFile(file: File) {
-        val historyData = try {
-            Json.encodeToString(text)
+        val encodedMathTextData = try {
+            Json.encodeToString(mathTextData)
         } catch (exc: SerializationException) {
             ""
         }
 
         val writer = FileWriter(file)
         writer.use {
-            writer.write(historyData)
+            writer.write(encodedMathTextData)
         }
     }
 }

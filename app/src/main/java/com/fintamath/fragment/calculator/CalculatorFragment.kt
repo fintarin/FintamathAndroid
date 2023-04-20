@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.findNavController
+import androidx.navigation.navOptions
 import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.storage.HistoryStorage
+import com.fintamath.storage.MathTextData
 import com.fintamath.storage.MathTextStorage
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
@@ -32,22 +35,29 @@ class CalculatorFragment : Fragment() {
     private val saveToHistoryDelay: Long = 2000
     private var saveToHistoryTask: TimerTask? = null
 
+    private var fragmentView: View? = null
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val fragmentView = inflater.inflate(R.layout.fragment_calculator, container, false)
+        if (fragmentView == null) {
+            fragmentView = inflater.inflate(R.layout.fragment_calculator, container, false)
 
-        initMathTexts(fragmentView)
-        initProcessors()
-        initKeyboards(fragmentView)
-        initButtons(fragmentView)
+            initMathTexts(fragmentView!!)
+            initProcessors()
+            initKeyboards(fragmentView!!)
+            initButtons(fragmentView!!)
+        }
 
-        inTextView.text = MathTextStorage.text
+        if (inTextView.text != MathTextStorage.mathTextData.text) {
+            inTextView.text = MathTextStorage.mathTextData.text
+        }
+
         inTextView.requestFocus()
 
-        return fragmentView
+        return fragmentView!!
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -56,6 +66,7 @@ class CalculatorFragment : Fragment() {
         inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
         inTextView = fragmentView.findViewById(R.id.inText)
+        inTextView.text = MathTextStorage.mathTextData.text
         inTextView.setOnTextChangedListener { callOnInTextChange(it) }
         inTextView.setOnFocusChangeListener { _, state -> callOnInTextFocusChange(state) }
 
@@ -124,7 +135,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun callOnInTextChange(text: String) {
-        MathTextStorage.text = text
+        MathTextStorage.mathTextData = MathTextData(text)
         calculatorProcessor.calculate(text)
     }
 

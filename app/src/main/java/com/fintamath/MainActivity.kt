@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         historyFile.createNewFile()
         HistoryStorage.loadFromFile(historyFile)
 
-        val textFile = File(applicationContext.cacheDir.path + R.string.text_filename)
+        val textFile = File(applicationContext.cacheDir.path + R.string.math_text_filename)
         textFile.createNewFile()
         MathTextStorage.loadFromFile(textFile)
     }
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         historyFile.createNewFile()
         HistoryStorage.saveToFile(historyFile)
 
-        val textFile = File(applicationContext.cacheDir.path + R.string.text_filename)
+        val textFile = File(applicationContext.cacheDir.path + R.string.math_text_filename)
         textFile.createNewFile()
         MathTextStorage.saveToFile(textFile)
     }
