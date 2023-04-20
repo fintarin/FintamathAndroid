@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
 import com.fintamath.widget.mathview.MathTextView
 
-class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+internal class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val mathTextView: MathTextView
     var removeButton: ImageButton
     var bookmarkButton: ToggleButton
@@ -19,7 +19,7 @@ class HistoryItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         mathTextView = view.findViewById(R.id.historyMathTextView)
         removeButton = view.findViewById(R.id.historyDeleteButton)
         bookmarkButton = view.findViewById(R.id.historyBookmarkButton)
-        calculateButton = view.findViewById(R.id.calculateButton)
+        calculateButton = view.findViewById(R.id.historyCalculateButton)
         dateTextView = view.findViewById(R.id.dateTimeTextView)
     }
 }

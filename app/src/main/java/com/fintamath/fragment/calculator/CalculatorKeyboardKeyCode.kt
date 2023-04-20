@@ -1,6 +1,6 @@
-package com.fintamath.keyboard
+package com.fintamath.fragment.calculator
 
-internal enum class KeyboardKeyCode(val value: Int) {
+internal enum class CalculatorKeyboardKeyCode(val value: Int) {
     Delete(5996),
     Clear(5997),
     MoveLeft(5998),

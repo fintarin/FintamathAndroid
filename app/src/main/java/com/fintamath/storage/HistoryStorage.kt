@@ -1,4 +1,4 @@
-package com.fintamath.fragment.history
+package com.fintamath.storage
 
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
@@ -18,10 +18,10 @@ object HistoryStorage {
 
     private const val maxItemsNum = 50
 
-    private var historyList = arrayListOf<HistoryItem>()
+    private var historyList = arrayListOf<HistoryItemData>()
 
     fun loadFromFile(file: File) {
-        var historyData = ""
+        var historyData: String
 
         val reader = FileReader(file)
         reader.use {
@@ -50,12 +50,12 @@ object HistoryStorage {
         }
     }
 
-    fun getList(): MutableList<HistoryItem> {
+    fun getList(): MutableList<HistoryItemData> {
         return historyList
     }
 
     fun saveItem(text: String) {
-        if (historyList.isNotEmpty() && historyList.first().text == text) {
+        if (historyList.isNotEmpty() && historyList.first().mathTextData.text == text) {
             return
         }
 
@@ -64,7 +64,11 @@ object HistoryStorage {
             onItemRemoved?.invoke(maxItemsNum)
         }
 
-        historyList.add(countBookmarkedItems(), HistoryItem(text, false, LocalDateTime.now().toString()))
+        historyList.add(countBookmarkedItems(), HistoryItemData(
+            MathTextData(text),
+            false,
+            LocalDateTime.now().toString()
+        ))
         onItemRemoved?.invoke(0)
     }
 
@@ -83,7 +87,7 @@ object HistoryStorage {
         moveItemOnBookmarkChange(historyItem, index)
     }
 
-    private fun moveItemOnBookmarkChange(item: HistoryItem, index: Int) {
+    private fun moveItemOnBookmarkChange(item: HistoryItemData, index: Int) {
         historyList.removeAt(index)
 
         val insertIndex = findNewIndexOfItemOnBookmarkChange(item)
@@ -93,7 +97,7 @@ object HistoryStorage {
         onItemInserted?.invoke(insertIndex)
     }
 
-    private fun findNewIndexOfItemOnBookmarkChange(item: HistoryItem): Int {
+    private fun findNewIndexOfItemOnBookmarkChange(item: HistoryItemData): Int {
         val dateTime = LocalDateTime.parse(item.dateTimeString)
 
         val index = historyList.indexOfFirst {

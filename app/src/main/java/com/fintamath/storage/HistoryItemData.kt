@@ -1,10 +1,10 @@
-package com.fintamath.fragment.history
+package com.fintamath.storage
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HistoryItem(
-    var text: String,
+data class HistoryItemData(
+    var mathTextData: MathTextData,
     var isBookmarked: Boolean,
     var dateTimeString: String,
 )

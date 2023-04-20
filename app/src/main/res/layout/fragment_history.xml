@@ -10,7 +10,7 @@
     tools:context=".fragment.history.HistoryFragment">
 
     <RelativeLayout
-        android:id="@+id/bar_layout"
+        android:id="@+id/historyBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bar_background">

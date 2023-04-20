@@ -1,6 +1,6 @@
-package com.fintamath.keyboard
+package com.fintamath.fragment.calculator
 
-enum class KeyboardType {
+internal enum class CalculatorKeyboardType {
     MainKeyboard,
     LettersKeyboard,
     FunctionsKeyboard,

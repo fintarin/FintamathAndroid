@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
+import com.fintamath.storage.HistoryStorage
+import com.fintamath.storage.MathTextStorage
 
 class HistoryFragment : Fragment() {
-
-    var onCalculate: ((String) -> Unit)? = null
 
     private lateinit var historyListView: RecyclerView
     private lateinit var emptyHistoryTextView: TextView
@@ -62,7 +62,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun callOnCalculate(text: String) {
-        onCalculate?.invoke(text)
+        MathTextStorage.text = text
         executeBack()
     }
 }

@@ -7,11 +7,12 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
+import com.fintamath.storage.HistoryStorage
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
-class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemViewHolder>() {
+internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemViewHolder>() {
 
     var onItemsCountChange: ((Int) -> Unit)? = null
     var onCalculate: ((String) -> Unit)? = null
@@ -53,7 +54,7 @@ class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemViewHolder>()
 
     override fun onViewAttachedToWindow(viewHolder: HistoryItemViewHolder) {
         val historyList = HistoryStorage.getList()
-        viewHolder.mathTextView.text = historyList[viewHolder.absoluteAdapterPosition].text
+        viewHolder.mathTextView.text = historyList[viewHolder.absoluteAdapterPosition].mathTextData.text
         viewHolder.bookmarkButton.isChecked = historyList[viewHolder.absoluteAdapterPosition].isBookmarked
         viewHolder.dateTextView.text = formatDataTime(historyList[viewHolder.absoluteAdapterPosition].dateTimeString)
     }

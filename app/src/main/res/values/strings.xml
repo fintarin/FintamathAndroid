@@ -18,4 +18,5 @@
     <string name="calculate">Calculate</string>
 
     <string name="history_filename">history.json</string>
+    <string name="text_filename">math_text.json</string>
 </resources>

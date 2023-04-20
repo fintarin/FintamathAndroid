@@ -64,7 +64,7 @@
                 android:contentDescription="@string/bookmark" />
 
             <ImageButton
-                android:id="@+id/calculateButton"
+                android:id="@+id/historyCalculateButton"
                 android:layout_width="@dimen/diameter_history_item_button"
                 android:layout_height="@dimen/diameter_history_item_button"
                 android:background="@drawable/history_item_button_background"

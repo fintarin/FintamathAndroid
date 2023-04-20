@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calculatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_main"
+    tools:context=".fragment.calculator.CalculatorFragment">
+
+    <LinearLayout
+        android:id="@+id/calculatorBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/bar_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="@string/app_name"
+            android:textSize="@dimen/text_size_bar"
+            android:textColor="@color/text_main" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/cameraButton"
+            android:layout_width="@dimen/diameter_bar_key"
+            android:layout_height="@dimen/diameter_bar_key"
+            android:padding="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bar_key_background"
+            android:src="@drawable/ic_camera"
+            android:contentDescription="@string/camera"/>
+
+        <ImageButton
+            android:id="@+id/historyButton"
+            android:layout_width="@dimen/diameter_bar_key"
+            android:layout_height="@dimen/diameter_bar_key"
+            android:padding="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bar_key_background"
+            android:src="@drawable/ic_history"
+            android:contentDescription="@string/history"/>
+
+        <ImageButton
+            android:id="@+id/optionsButton"
+            android:layout_width="@dimen/diameter_bar_key"
+            android:layout_height="@dimen/diameter_bar_key"
+            android:padding="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/bar_key_background"
+            android:src="@drawable/ic_overflow_holo"
+            android:contentDescription="@string/options" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/mathTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:layout_above="@id/keyboardLayout"
+        android:layout_below="@id/calculatorBarLayout"
+        android:background="@color/background_main">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/inMathTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <com.fintamath.widget.mathview.MathTextView
+                    android:id="@+id/inText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:isEditable="true"
+                    app:hint="@string/math_edit_text_hint"
+                    app:textSize="@dimen/text_size_math_text_view"
+                    app:textColor="@color/text_main" />
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/delimiter_width"
+                android:background="@drawable/dashed_line_background"/>
+
+            <com.fintamath.widget.mathview.MathSolutionView
+                android:id="@+id/solution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="20dp"
+                app:loadingViewLayout="@layout/solution_loading"
+                app:invalidInputViewLayout="@layout/solution_invalid_input"
+                app:incompleteInputViewLayout="@layout/solution_incomplete_input"
+                app:alternativeMathTextViewLayout="@layout/solution_alternative_math_text_view"
+                app:alternativeDelimiterLayout="@layout/solution_alternative_delimiter" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/keyboardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.fintamath.widget.keyboard.KeyboardView
+            android:id="@+id/mainKeyboardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:background="@drawable/keyboard_background"
+            app:keyboardKeyTextColor="@color/text_keyboard"
+            app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
+            app:keyboardKeyBackground="@drawable/key_background"
+            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyTextSize="@dimen/text_size_keyboard"
+            app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
+            app:popupLayout="@layout/popup_keyboard" />
+
+        <com.fintamath.widget.keyboard.KeyboardView
+            android:id="@+id/lettersKeyboardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@drawable/keyboard_background"
+            app:keyboardKeyTextColor="@color/text_keyboard"
+            app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
+            app:keyboardKeyBackground="@drawable/key_background"
+            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyTextSize="@dimen/text_size_keyboard"
+            app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
+            app:popupLayout="@layout/popup_keyboard"  />
+
+        <com.fintamath.widget.keyboard.KeyboardView
+            android:id="@+id/functionsKeyboardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@drawable/keyboard_background"
+            app:keyboardKeyTextColor="@color/text_keyboard"
+            app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
+            app:keyboardKeyBackground="@drawable/key_background"
+            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyTextSize="@dimen/text_size_keyboard"
+            app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
+            app:popupLayout="@layout/popup_keyboard"  />
+
+        <com.fintamath.widget.keyboard.KeyboardView
+            android:id="@+id/analysisKeyboardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@drawable/keyboard_background"
+            app:keyboardKeyTextColor="@color/text_keyboard"
+            app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
+            app:keyboardKeyBackground="@drawable/key_background"
+            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyTextSize="@dimen/text_size_keyboard"
+            app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
+            app:popupLayout="@layout/popup_keyboard"  />
+
+        <com.fintamath.widget.keyboard.KeyboardView
+            android:id="@+id/logicKeyboardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@drawable/keyboard_background"
+            app:keyboardKeyTextColor="@color/text_keyboard"
+            app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
+            app:keyboardKeyBackground="@drawable/key_background"
+            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyTextSize="@dimen/text_size_keyboard"
+            app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
+            app:popupLayout="@layout/popup_keyboard"  />
+
+    </FrameLayout>
+
+</RelativeLayout>

@@ -1,12 +1,12 @@
-package com.fintamath.keyboard
+package com.fintamath.fragment.calculator
 
 import android.view.View
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
 
-class KeyboardSwitcher(
-    private val keyboards: Map<KeyboardType, Pair<KeyboardView, Keyboard>>,
-    var currentKeyboardType: KeyboardType
+internal class CalculatorKeyboardSwitcher(
+    private val keyboards: Map<CalculatorKeyboardType, Pair<KeyboardView, Keyboard>>,
+    var currentKeyboardType: CalculatorKeyboardType
 ) {
 
     private var currentKeyboard: KeyboardView
@@ -15,7 +15,7 @@ class KeyboardSwitcher(
         currentKeyboard = keyboards[currentKeyboardType]!!.first
     }
 
-    fun switchKeyboard(keyboardType: KeyboardType) {
+    fun switchKeyboard(keyboardType: CalculatorKeyboardType) {
         if (currentKeyboardType === keyboardType) {
             return
         }
