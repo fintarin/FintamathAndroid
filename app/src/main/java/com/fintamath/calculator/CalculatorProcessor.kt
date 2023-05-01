@@ -1,8 +1,9 @@
 package com.fintamath.calculator
 
 import java.util.Timer
-import java.util.concurrent.atomic.AtomicLong
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.schedule
+import kotlin.concurrent.thread
 
 class CalculatorProcessor(
     private val outTextsCallback: (result: List<String>) -> Unit,
@@ -11,42 +12,33 @@ class CalculatorProcessor(
 
     private val loadingDelay: Long = 100
 
-    private val calculationCallback: (result: List<String>) -> Unit = { onCalculatedThreadChecked(it) }
-
-    private val calculator: Calculator = Calculator(calculationCallback)
-    private var calcThread: Thread? = null
-    private var calcThreadId: AtomicLong = AtomicLong(-1)
+    private val calculator: Calculator = Calculator { onCalculated(it) }
+    private var isCalculating = AtomicBoolean(false)
 
     fun calculate(str : String) {
-        if (str.isEmpty()) {
-            onCalculated(listOf(""))
-            return
-        }
+        isCalculating.set(true)
 
-        calcThread = Thread {
+        thread {
             calculator.calculate(str)
         }
 
-        calcThread!!.start()
-
-        val calcThreadLocalId = calcThread!!.id
-        calcThreadId.set(calcThreadLocalId)
-
         Timer().schedule(loadingDelay) {
-            if (calcThreadLocalId == calcThreadId.get()) {
+            if (isCalculating.get()) {
                 loadingCallback.invoke()
             }
         }
     }
 
-    private fun onCalculatedThreadChecked(result: List<String>) {
-        if (Thread.currentThread().id == calcThreadId.get()) {
-            onCalculated(result)
+    fun stopCurrentCalculations() {
+        isCalculating.set(false)
+
+        thread {
+            calculator.stopCurrentCalculations()
         }
     }
 
     private fun onCalculated(result: List<String>) {
-        calcThreadId.set(-1)
+        isCalculating.set(false)
         outTextsCallback.invoke(result)
     }
 }

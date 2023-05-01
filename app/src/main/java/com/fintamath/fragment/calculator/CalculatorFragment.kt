@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.findNavController
-import androidx.navigation.navOptions
 import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.storage.HistoryStorage
@@ -31,11 +29,10 @@ class CalculatorFragment : Fragment() {
     private lateinit var inTextView: MathTextView
     private lateinit var solutionView: MathSolutionView
     private lateinit var calculatorProcessor: CalculatorProcessor
+    private var fragmentView: View? = null
 
     private val saveToHistoryDelay: Long = 2000
     private var saveToHistoryTask: TimerTask? = null
-
-    private var fragmentView: View? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -137,37 +134,50 @@ class CalculatorFragment : Fragment() {
     override fun onPause() {
         super.onPause()
 
-        saveToHistoryTask?.cancel()
-        saveToHistoryTask?.run()
-        saveToHistoryTask = null
+        runSaveToHistoryTask()
     }
 
     private fun callOnInTextChange(text: String) {
         MathTextStorage.mathTextData = MathTextData(text)
-        calculatorProcessor.calculate(text)
+
+        if (inTextView.text.isEmpty()) {
+            solutionView.hideCurrentView()
+            cancelSaveToHistoryTask()
+            calculatorProcessor.stopCurrentCalculations()
+        } else if (!inTextView.isComplete) {
+            solutionView.showIncompleteInput()
+            cancelSaveToHistoryTask()
+            calculatorProcessor.stopCurrentCalculations()
+        } else {
+            calculatorProcessor.calculate(text)
+        }
     }
 
-    private fun outTexts(it: List<String>) {
-        requireActivity().runOnUiThread {
-            saveToHistoryTask?.cancel()
-            saveToHistoryTask = null
+    private fun outTexts(texts: List<String>) {
+        // TODO: lock
 
-            if (!inTextView.isComplete) {
-                solutionView.showIncompleteInput()
-            } else if (it.isEmpty() || it.first() == "") {
-                solutionView.hideCurrentView()
-            } else if (it.first() == getString(R.string.invalid_input)) {
+        requireActivity().runOnUiThread {
+            cancelSaveToHistoryTask()
+
+            if (texts.first() == getString(R.string.invalid_input)) {
                 solutionView.showInvalidInput()
             } else {
-                solutionView.showSolution(it)
-                saveToHistoryTask = Timer().schedule(saveToHistoryDelay) { callOnSaveToHistory() }
+                solutionView.showSolution(texts)
+                saveToHistoryTask =
+                    Timer().schedule(saveToHistoryDelay) { callOnSaveToHistory() }
             }
+
+            // TODO: unlock
         }
     }
 
     private fun startLoading() {
+        // TODO: lock
+
         requireActivity().runOnUiThread {
             solutionView.showLoading()
+
+            // TODO: unlock
         }
     }
 
@@ -186,8 +196,7 @@ class CalculatorFragment : Fragment() {
     private fun callOnSaveToHistory() {
         requireActivity().runOnUiThread {
             HistoryStorage.saveItem(inTextView.text)
-            saveToHistoryTask?.cancel()
-            saveToHistoryTask = null
+            cancelSaveToHistoryTask()
         }
     }
 
@@ -199,16 +208,23 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun showHistoryFragment(view: View) {
-        saveToHistoryTask?.cancel()
-        saveToHistoryTask?.run()
-        saveToHistoryTask = null
-
+        runSaveToHistoryTask()
         inTextView.clearFocus()
-
         view.findNavController().navigate(R.id.action_calculatorFragment_to_historyFragment)
     }
 
     private fun showCameraFragment(view: View) {
         // TODO: implement
+    }
+
+    private fun runSaveToHistoryTask() {
+        saveToHistoryTask?.cancel()
+        saveToHistoryTask?.run()
+        saveToHistoryTask = null
+    }
+
+    private fun cancelSaveToHistoryTask() {
+        saveToHistoryTask?.cancel()
+        saveToHistoryTask = null
     }
 }

@@ -6,6 +6,8 @@ internal class Calculator(
 
     external fun calculate(str: String)
 
+    external fun stopCurrentCalculations();
+
     private fun onCalculated(str: String) {
         calculationCallback.invoke(listOf(*str.split("\n").toTypedArray()))
     }

@@ -2,6 +2,7 @@
 #include "fintamath/expressions/Expression.hpp"
 #include "fintamath/expressions/ExpressionFunctions.hpp"
 
+#include <android/log.h>
 #include <jni.h>
 #include <string>
 #include <sys/mman.h>
@@ -9,6 +10,8 @@
 #include <unistd.h>
 
 using namespace fintamath;
+
+static const char *loggerTag = "com.fintamath.lib";
 
 constexpr int32_t maxResultLength = 10000;
 constexpr int32_t maxSolutionLength = 1000000;
@@ -22,7 +25,7 @@ std::string makeOutResult(const std::string &res) {
   return res.length() < maxResultLength ? res + "\n" : "";
 }
 
-std::string calculate(const std::string& inStr) {
+std::string calculate(const std::string &inStr) {
   try {
     Expression inExpr(inStr);
     Expression solExpr = solve(inExpr);
@@ -44,12 +47,16 @@ std::string calculate(const std::string& inStr) {
   }
 }
 
-extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNIEnv *env, jobject instance,
-                                                                             jstring inJStr) {
+void stopCurrentCalculations() {
   if (calcPid != -1) {
     kill(calcPid, SIGKILL);
     calcPid = -1;
   }
+}
+
+extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNIEnv *env, jobject instance,
+                                                                             jstring inJStr) {
+  stopCurrentCalculations();
 
   std::string inStr = env->GetStringUTFChars(inJStr, nullptr);
 
@@ -67,6 +74,8 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
   else if (pid != -1) {
     calcPid = pid;
 
+    __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "Calculations started. pid = %d", pid);
+
     waitpid(pid, nullptr, 0);
 
     if (pid == calcPid) {
@@ -75,6 +84,16 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
 
       env->CallVoidMethod(instance, callbackId, env->NewStringUTF(solutionStrShared));
       env->DeleteLocalRef(clazz);
+
+      __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "Calculations ended. pid = %d", pid);
+    }
+    else {
+      __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "Calculations stopped. pid = %d", pid);
     }
   }
+}
+
+extern "C" JNIEXPORT void JNICALL Java_com_fintamath_calculator_Calculator_stopCurrentCalculations(JNIEnv *env,
+                                                                                                   jobject instance) {
+  stopCurrentCalculations();
 }

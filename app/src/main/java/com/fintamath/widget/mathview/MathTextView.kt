@@ -1,7 +1,9 @@
 package com.fintamath.widget.mathview
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Handler
@@ -177,7 +179,10 @@ class MathTextView @JvmOverloads constructor(
     fun callOnTextChanged(newText: String, isCompleteStr: String) {
         textCached = newText
         isComplete = isCompleteStr == "true"
-        onTextChangedListener?.invoke(textCached)
+
+        getActivity()?.runOnUiThread {
+            onTextChangedListener?.invoke(newText)
+        }
     }
 
     private fun callOnLoaded(callback: () -> Unit) {
@@ -198,5 +203,19 @@ class MathTextView @JvmOverloads constructor(
 
     private fun toPx(size: Int): Int {
         return (size  * resources.displayMetrics.scaledDensity).toInt()
+    }
+
+    private fun getActivity(): Activity? {
+        var activityContext: Context? = context
+
+        while (activityContext is ContextWrapper) {
+            if (activityContext is Activity) {
+                return activityContext
+            }
+
+            activityContext = activityContext.baseContext
+        }
+
+        return null
     }
 }
