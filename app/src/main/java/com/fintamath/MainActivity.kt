@@ -29,19 +29,11 @@ class MainActivity : AppCompatActivity() {
         val historyFile = File(applicationContext.filesDir.path + R.string.history_filename)
         historyFile.createNewFile()
         HistoryStorage.loadFromFile(historyFile)
-
-        val textFile = File(applicationContext.cacheDir.path + R.string.math_text_filename)
-        textFile.createNewFile()
-        MathTextStorage.loadFromFile(textFile)
     }
 
     private fun saveToFiles() {
         val historyFile = File(applicationContext.filesDir.path + R.string.history_filename)
         historyFile.createNewFile()
         HistoryStorage.saveToFile(historyFile)
-
-        val textFile = File(applicationContext.cacheDir.path + R.string.math_text_filename)
-        textFile.createNewFile()
-        MathTextStorage.saveToFile(textFile)
     }
 }

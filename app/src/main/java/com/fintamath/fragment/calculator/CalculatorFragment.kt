@@ -134,6 +134,14 @@ class CalculatorFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        saveToHistoryTask?.cancel()
+        saveToHistoryTask?.run()
+        saveToHistoryTask = null
+    }
+
     private fun callOnInTextChange(text: String) {
         MathTextStorage.mathTextData = MathTextData(text)
         calculatorProcessor.calculate(text)
