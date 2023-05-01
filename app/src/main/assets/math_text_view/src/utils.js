@@ -616,7 +616,10 @@ function reformatElement(elem) {
       let prevElem = childElem.previousElementSibling;
       let prevPrevElem = prevElem.previousElementSibling;
 
-      if (indexContainerClasses.includes(childElem.className) && indexContainerClasses.includes(prevElem.className)) {
+      if (
+        indexContainerClasses.includes(prevElem.className) &&
+        (indexContainerClasses.includes(childElem.className) || childElem.className === unaryPostfixOperatorClass)
+      ) {
         let bracketsElem = createElement(bracketsClass);
         bracketsElem.appendChild(prevPrevElem);
         bracketsElem.appendChild(prevElem);
