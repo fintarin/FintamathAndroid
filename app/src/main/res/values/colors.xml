@@ -3,7 +3,7 @@
     <color name="background_main">#2b2b2b</color>
 
     <color name="background_bar">#262626</color>
-    <color name="background_bar_stroke">#1E1E1E</color>
+    <color name="background_bar_stroke">#99262626</color>
     <color name="background_bar_button">@color/background_bar</color>
     <color name="background_bar_button_pressed">#666666</color>
 
