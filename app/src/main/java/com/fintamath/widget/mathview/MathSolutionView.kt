@@ -16,12 +16,13 @@ class MathSolutionView @JvmOverloads constructor(
     private val loadingViewLayout: Int
     private val invalidInputViewLayout: Int
     private val incompleteInputViewLayout: Int
+    private val characterLimitExceededViewLayout: Int
 
-    private val inflate: LayoutInflater
     private val alternativesView: MathSolutionAlternativesView
     private val loadingView: View
     private val invalidInputView: View
     private val incompleteInputView: View
+    private val characterLimitExceededView: View
 
     private var currentView: View? = null
 
@@ -34,6 +35,8 @@ class MathSolutionView @JvmOverloads constructor(
             a.getResourceId(R.styleable.MathSolutionView_invalidInputViewLayout, 0)
         incompleteInputViewLayout =
             a.getResourceId(R.styleable.MathSolutionView_incompleteInputViewLayout, 0)
+        characterLimitExceededViewLayout =
+            a.getResourceId(R.styleable.MathSolutionView_characterLimitExceededViewLayout, 0)
 
         alternativesView = MathSolutionAlternativesView(context, a)
         alternativesView.visibility = GONE
@@ -41,7 +44,7 @@ class MathSolutionView @JvmOverloads constructor(
 
         a.recycle()
 
-        inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         loadingView = inflate.inflate(loadingViewLayout, null)
         loadingView.visibility = GONE
@@ -54,6 +57,10 @@ class MathSolutionView @JvmOverloads constructor(
         incompleteInputView = inflate.inflate(incompleteInputViewLayout, null)
         incompleteInputView.visibility = GONE
         addView(incompleteInputView)
+
+        characterLimitExceededView = inflate.inflate(characterLimitExceededViewLayout, null)
+        characterLimitExceededView.visibility = GONE
+        addView(characterLimitExceededView)
     }
 
     fun showSolution(texts: List<String>) {
@@ -71,6 +78,10 @@ class MathSolutionView @JvmOverloads constructor(
 
     fun showIncompleteInput() {
         showView(incompleteInputView)
+    }
+
+    fun showCharacterLimitExceeded() {
+        showView(characterLimitExceededView)
     }
 
     fun hideCurrentView() {

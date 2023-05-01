@@ -9,8 +9,10 @@
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="invalid_input">Invalid input</string>
+    <string name="character_limit_exceeded">Character limit exceeded</string>
     <string name="warning">Warning</string>
     <string name="invalid_input_message">Sorry, we don\'t quite understand your math problem…</string>
+    <string name="character_limit_exceeded_message">Sorry, solution character limit exceeded…</string>
     <string name="incomplete_input_message">Please, enter a complete math problem.</string>
     <string name="empty_history_message">No calculation history found.\nStart any calculation and the history will appear.</string>
     <string name="bookmark">Bookmark</string>

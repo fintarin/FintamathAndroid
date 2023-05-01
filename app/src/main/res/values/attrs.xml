@@ -13,6 +13,7 @@
         <attr name="loadingViewLayout" format="reference" />
         <attr name="invalidInputViewLayout" format="reference" />
         <attr name="incompleteInputViewLayout" format="reference" />
+        <attr name="characterLimitExceededViewLayout" format="reference" />
         <attr name="alternativeMathTextViewLayout" format="reference" />
         <attr name="alternativeDelimiterLayout" format="reference" />
     </declare-styleable>

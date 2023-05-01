@@ -156,6 +156,8 @@ class CalculatorFragment : Fragment() {
     private fun outTexts(texts: List<String>) {
         if (texts.first() == getString(R.string.invalid_input)) {
             solutionView.showInvalidInput()
+        } else if (texts.first() == getString(R.string.character_limit_exceeded)) {
+            solutionView.showCharacterLimitExceeded()
         } else {
             solutionView.showSolution(texts)
 

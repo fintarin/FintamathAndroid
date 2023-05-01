@@ -112,6 +112,7 @@
                 app:loadingViewLayout="@layout/solution_loading"
                 app:invalidInputViewLayout="@layout/solution_invalid_input"
                 app:incompleteInputViewLayout="@layout/solution_incomplete_input"
+                app:characterLimitExceededViewLayout="@layout/solution_character_limit_exceeded"
                 app:alternativeMathTextViewLayout="@layout/solution_alternative_math_text_view"
                 app:alternativeDelimiterLayout="@layout/solution_alternative_delimiter" />
 

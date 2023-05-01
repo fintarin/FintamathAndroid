@@ -35,6 +35,10 @@ std::string calculate(const std::string &inStr) {
                             makeOutResult(solPrecise10Expr.toString()) + //
                             makeOutResult(inExpr.toString());            //
 
+    if (solutions.empty() || solutions.size() > maxSolutionLength) {
+      return "Character limit exceeded";
+    }
+
     solutions.pop_back();
 
     return solutions;
