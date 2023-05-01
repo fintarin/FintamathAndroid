@@ -6,13 +6,15 @@ import kotlin.concurrent.schedule
 import kotlin.concurrent.thread
 
 class CalculatorProcessor(
-    private val outTextsCallback: (result: List<String>) -> Unit,
-    private val loadingCallback: () -> Unit
+    private val callbacksThread: (() -> Unit) -> Unit,
+    private val outTextsCallback: (List<String>) -> Unit,
+    private val loadingCallback: () -> Unit,
 ) {
 
     private val loadingDelay: Long = 100
 
     private val calculator: Calculator = Calculator { onCalculated(it) }
+
     private var isCalculating = AtomicBoolean(false)
 
     fun calculate(str : String) {
@@ -23,8 +25,10 @@ class CalculatorProcessor(
         }
 
         Timer().schedule(loadingDelay) {
-            if (isCalculating.get()) {
-                loadingCallback.invoke()
+            callbacksThread {
+                if (isCalculating.get()) {
+                    loadingCallback.invoke()
+                }
             }
         }
     }
@@ -38,7 +42,9 @@ class CalculatorProcessor(
     }
 
     private fun onCalculated(result: List<String>) {
-        isCalculating.set(false)
-        outTextsCallback.invoke(result)
+        callbacksThread {
+            isCalculating.set(false)
+            outTextsCallback.invoke(result)
+        }
     }
 }

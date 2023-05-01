@@ -72,6 +72,7 @@ class CalculatorFragment : Fragment() {
 
     private fun initProcessors() {
         calculatorProcessor = CalculatorProcessor (
+            { requireActivity().runOnUiThread { it.invoke() } },
             { outTexts(it) },
             { startLoading() }
         )
@@ -139,14 +140,13 @@ class CalculatorFragment : Fragment() {
 
     private fun callOnInTextChange(text: String) {
         MathTextStorage.mathTextData = MathTextData(text)
+        cancelSaveToHistoryTask()
 
         if (inTextView.text.isEmpty()) {
             solutionView.hideCurrentView()
-            cancelSaveToHistoryTask()
             calculatorProcessor.stopCurrentCalculations()
         } else if (!inTextView.isComplete) {
             solutionView.showIncompleteInput()
-            cancelSaveToHistoryTask()
             calculatorProcessor.stopCurrentCalculations()
         } else {
             calculatorProcessor.calculate(text)
@@ -154,31 +154,21 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun outTexts(texts: List<String>) {
-        // TODO: lock
+        if (texts.first() == getString(R.string.invalid_input)) {
+            solutionView.showInvalidInput()
+        } else {
+            solutionView.showSolution(texts)
 
-        requireActivity().runOnUiThread {
-            cancelSaveToHistoryTask()
-
-            if (texts.first() == getString(R.string.invalid_input)) {
-                solutionView.showInvalidInput()
-            } else {
-                solutionView.showSolution(texts)
-                saveToHistoryTask =
-                    Timer().schedule(saveToHistoryDelay) { callOnSaveToHistory() }
+            saveToHistoryTask = Timer().schedule(saveToHistoryDelay) {
+                requireActivity().runOnUiThread {
+                    callOnSaveToHistory()
+                }
             }
-
-            // TODO: unlock
         }
     }
 
     private fun startLoading() {
-        // TODO: lock
-
-        requireActivity().runOnUiThread {
-            solutionView.showLoading()
-
-            // TODO: unlock
-        }
+        solutionView.showLoading()
     }
 
     private fun callOnInTextFocusChange(state: Boolean) {
@@ -194,10 +184,8 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun callOnSaveToHistory() {
-        requireActivity().runOnUiThread {
-            HistoryStorage.saveItem(inTextView.text)
-            cancelSaveToHistoryTask()
-        }
+        HistoryStorage.saveItem(inTextView.text)
+        cancelSaveToHistoryTask()
     }
 
     private fun showOptionsMenu(view: View) {
