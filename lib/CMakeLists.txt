@@ -6,15 +6,13 @@ set(CMAKE_CONFIGURATION_TYPES
     "Release"
     CACHE STRING "" FORCE)
 
-set(BUILD_SHARED_LIBS ON)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_library(log log)
-
 add_subdirectory(fintamath)
+
+find_library(log log)
 
 file(
   GLOB_RECURSE
@@ -25,4 +23,4 @@ file(
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PUBLIC fintamath log)
+target_link_libraries(${PROJECT_NAME} PRIVATE fintamath log)
