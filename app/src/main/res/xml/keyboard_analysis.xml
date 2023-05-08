@@ -71,14 +71,14 @@
 
     <Row>
         <Key
-            app:keyOutputText="'"
+            app:keyOutputText="derivative(,)"
             app:keyLabel="□'"/>
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
+            app:keyOutputText="min(,)"
+            app:keyLabel="min" />
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
+            app:keyOutputText="max(,)"
+            app:keyLabel="max" />
         <Key
             app:keyLabel=" "
             app:isPreviewEnabled="false" />
