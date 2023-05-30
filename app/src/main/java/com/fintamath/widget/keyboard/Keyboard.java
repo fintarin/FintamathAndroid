@@ -369,8 +369,12 @@ public class Keyboard {
             topLabel = a.getText(R.styleable.Keyboard_Key_keyTopLabel);
             text = a.getText(R.styleable.Keyboard_Key_keyOutputText);
 
-            if (codes == null && !TextUtils.isEmpty(label)) {
-                codes = new int[] { label.charAt(0) };
+            if (codes == null) {
+                if (!TextUtils.isEmpty(label)) {
+                    codes = new int[] { label.charAt(0) };
+                } else {
+                    codes = new int[] { -1 };
+                }
             }
 
             background = a.getDrawable(R.styleable.Keyboard_Key_keyBackground);
