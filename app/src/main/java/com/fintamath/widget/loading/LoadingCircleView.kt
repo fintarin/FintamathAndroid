@@ -9,14 +9,14 @@ import android.view.View
 @SuppressLint("ViewConstructor")
 class LoadingCircleView(
     context: Context?,
-    var circleRadius: Int,
-    var circleColor: Int,
-    var isAntiAlias: Boolean
+    private var circleRadius: Int,
+    circleColor: Int,
+    isAntiAlias: Boolean
 ) : View(context) {
 
-    var strokeWidth = 0
+    private var strokeWidth = 0
 
-    var drawOnlyStroke = false
+    private var drawOnlyStroke = false
 
     private var xyCoordinates = 0.0f
     private val paint = Paint()

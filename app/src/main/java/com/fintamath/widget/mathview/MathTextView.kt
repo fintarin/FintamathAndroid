@@ -61,7 +61,7 @@ class MathTextView @JvmOverloads constructor(
     private var textCached = ""
     private var prevX = 0f
     private var prevY = 0f
-    private var wasLastScrollHorizontal = false;
+    private var wasLastScrollHorizontal = false
 
     private var onTextChangedListener: ((text: String) -> Unit)? = null
 
@@ -158,7 +158,7 @@ class MathTextView @JvmOverloads constructor(
             MotionEvent.ACTION_MOVE -> {
                 if (abs(event.x - prevX) > abs(event.y - prevY)) {
                     wasLastScrollHorizontal = true
-                    requestDisallowInterceptTouchEvent(true);
+                    requestDisallowInterceptTouchEvent(true)
                 }
             }
         }

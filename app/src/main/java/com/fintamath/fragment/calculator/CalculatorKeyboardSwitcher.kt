@@ -6,7 +6,7 @@ import com.fintamath.widget.keyboard.KeyboardView
 
 internal class CalculatorKeyboardSwitcher(
     private val keyboards: Map<CalculatorKeyboardType, Pair<KeyboardView, Keyboard>>,
-    var currentKeyboardType: CalculatorKeyboardType
+    private var currentKeyboardType: CalculatorKeyboardType
 ) {
 
     private var currentKeyboard: KeyboardView

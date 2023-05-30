@@ -19,19 +19,19 @@ class LoadingView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     private var dotsRadius = 10
     private var dotsCount = 3
-    private var color = 350
-    private var duration = Color.parseColor("#FF0000")
+    private var color = Color.parseColor("#FF0000")
+    private var animationDuration = 350
     private val maxJump = 3
 
     private var animator: Array<ObjectAnimator?>? = null
 
-    var onLayoutReach = false
+    private var onLayoutReach = false
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.LoadingView)
 
-        color = a.getColor(R.styleable.LoadingView_dots_color, color)
-        duration = a.getInt(R.styleable.LoadingView_dots_duration, duration)
+        color = a.getColor(R.styleable.LoadingView_dots_color, Color.parseColor("#FF0000"))
+        animationDuration = a.getInt(R.styleable.LoadingView_dots_duration, 10)
         dotsCount = a.getInt(R.styleable.LoadingView_dots_count, dotsCount)
         dotsRadius = a.getDimensionPixelSize(R.styleable.LoadingView_dots_radius, dotsRadius)
 
@@ -55,10 +55,14 @@ class LoadingView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         super.onDetachedFromWindow()
 
         for (i in 0 until dotsCount) {
-            if (animator != null && animator!![i]!!.isRunning) {
-                animator!![i]!!.removeAllListeners()
-                animator!![i]!!.end()
-                animator!![i]!!.cancel()
+            animator?.apply {
+                this[i]?.apply {
+                    if (isRunning) {
+                        removeAllListeners()
+                        end()
+                        cancel()
+                    }
+                }
             }
         }
     }
@@ -100,12 +104,13 @@ class LoadingView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             val y = PropertyValuesHolder.ofFloat(TRANSLATION_Y, (-height / maxJump).toFloat())
             val x = PropertyValuesHolder.ofFloat(TRANSLATION_X, 0f)
 
-            animator!![i] = ObjectAnimator.ofPropertyValuesHolder(getChildAt(i), x, y)
-            animator!![i]!!.repeatCount = -1
-            animator!![i]!!.repeatMode = ValueAnimator.REVERSE
-            animator!![i]!!.duration = duration.toLong()
-            animator!![i]!!.startDelay = (duration / dotsCount * i).toLong()
-            animator!![i]!!.start()
+            animator!![i] = ObjectAnimator.ofPropertyValuesHolder(getChildAt(i), x, y).apply {
+                repeatCount = -1
+                repeatMode = ValueAnimator.REVERSE
+                duration = animationDuration.toLong()
+                startDelay = duration / dotsCount * i
+                start()
+            }
         }
     }
 }
