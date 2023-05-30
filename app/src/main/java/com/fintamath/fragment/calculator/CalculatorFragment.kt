@@ -93,7 +93,7 @@ class CalculatorFragment : Fragment() {
         val keyboards = hashMapOf<CalculatorKeyboardType, Pair<KeyboardView, Keyboard>>(
             CalculatorKeyboardType.MainKeyboard to
                     Pair(
-                        fragmentView. findViewById(R.id.mainKeyboardView),
+                        fragmentView.findViewById(R.id.mainKeyboardView),
                         Keyboard(requireContext(), R.xml.keyboard_main)
                     ),
             CalculatorKeyboardType.LettersKeyboard to
