@@ -55,15 +55,15 @@ import java.util.Map;
  * A view that renders a virtual {@link Keyboard}. It handles rendering of keys and
  * detecting key presses and touch movements.
  *
- * @attr ref android.R.styleable#KeyboardView_keyBackground
- * @attr ref android.R.styleable#KeyboardView_keyPreviewLayout
- * @attr ref android.R.styleable#KeyboardView_keyPreviewOffset
- * @attr ref android.R.styleable#KeyboardView_keyPreviewHeight
- * @attr ref android.R.styleable#KeyboardView_labelTextSize
- * @attr ref android.R.styleable#KeyboardView_keyTextSize
- * @attr ref android.R.styleable#KeyboardView_keyTextColor
- * @attr ref android.R.styleable#KeyboardView_verticalCorrection
- * @attr ref android.R.styleable#KeyboardView_popupLayout
+ * @attr ref com.fintamath.R.styleable#KeyboardView_keyBackground
+ * @attr ref com.fintamath.R.styleable#KeyboardView_keyPreviewLayout
+ * @attr ref com.fintamath.R.styleable#KeyboardView_keyPreviewOffset
+ * @attr ref com.fintamath.R.styleable#KeyboardView_keyPreviewHeight
+ * @attr ref com.fintamath.R.styleable#KeyboardView_labelTextSize
+ * @attr ref com.fintamath.R.styleable#KeyboardView_keyTextSize
+ * @attr ref com.fintamath.R.styleable#KeyboardView_keyTextColor
+ * @attr ref com.fintamath.R.styleable#KeyboardView_verticalCorrection
+ * @attr ref com.fintamath.R.styleable#KeyboardView_popupLayout
  */
 public class KeyboardView extends View implements View.OnClickListener {
 

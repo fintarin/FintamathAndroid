@@ -53,10 +53,10 @@ import java.util.StringTokenizer;
  *     ...
  * &lt;/Keyboard&gt;
  * </pre>
- * @attr ref android.R.styleable#Keyboard_keyWidth
- * @attr ref android.R.styleable#Keyboard_keyHeight
- * @attr ref android.R.styleable#Keyboard_horizontalGap
- * @attr ref android.R.styleable#Keyboard_verticalGap
+ * @attr ref com.fintamath.R.styleable#Keyboard_keyWidth
+ * @attr ref com.fintamath.R.styleable#Keyboard_keyHeight
+ * @attr ref com.fintamath.R.styleable#Keyboard_horizontalGap
+ * @attr ref com.fintamath.R.styleable#Keyboard_verticalGap
  */
 public class Keyboard {
 
@@ -152,12 +152,12 @@ public class Keyboard {
      * Container for keys in the keyboard. All keys in a row are at the same Y-coordinate.
      * Some of the key size defaults can be overridden per row from what the {@link Keyboard}
      * defines.
-     * @attr ref android.R.styleable#Keyboard_keyWidth
-     * @attr ref android.R.styleable#Keyboard_keyHeight
-     * @attr ref android.R.styleable#Keyboard_horizontalGap
-     * @attr ref android.R.styleable#Keyboard_verticalGap
-     * @attr ref android.R.styleable#Keyboard_Row_rowEdgeFlags
-     * @attr ref android.R.styleable#Keyboard_Row_keyboardMode
+     * @attr ref com.fintamath.R.styleable#Keyboard_keyWidth
+     * @attr ref com.fintamath.R.styleable#Keyboard_keyHeight
+     * @attr ref com.fintamath.R.styleable#Keyboard_horizontalGap
+     * @attr ref com.fintamath.R.styleable#Keyboard_verticalGap
+     * @attr ref com.fintamath.R.styleable#Keyboard_Row_rowEdgeFlags
+     * @attr ref com.fintamath.R.styleable#Keyboard_Row_keyboardMode
      */
     public static class Row {
         /** Default width of a key in this row. */
@@ -215,18 +215,22 @@ public class Keyboard {
     /**
      * Class for describing the position and characteristics of a single key in the keyboard.
      *
-     * @attr ref android.R.styleable#Keyboard_keyWidth
-     * @attr ref android.R.styleable#Keyboard_keyHeight
-     * @attr ref android.R.styleable#Keyboard_horizontalGap
-     * @attr ref android.R.styleable#Keyboard_Key_codes
-     * @attr ref android.R.styleable#Keyboard_Key_keyIcon
-     * @attr ref android.R.styleable#Keyboard_Key_keyLabel
-     * @attr ref android.R.styleable#Keyboard_Key_iconPreview
-     * @attr ref android.R.styleable#Keyboard_Key_isRepeatable
-     * @attr ref android.R.styleable#Keyboard_Key_isModifier
-     * @attr ref android.R.styleable#Keyboard_Key_popupKeyboard
-     * @attr ref android.R.styleable#Keyboard_Key_keyOutputText
-     * @attr ref android.R.styleable#Keyboard_Key_keyEdgeFlags
+     * @attr ref com.fintamath.R.styleable#Keyboard_keyWidth
+     * @attr ref com.fintamath.R.styleable#Keyboard_keyHeight
+     * @attr ref com.fintamath.R.styleable#Keyboard_horizontalGap
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_codes
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_keyIcon
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_keyLabel
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_keyTopLabel
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_keyBackground
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_iconPreview
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_isRepeatable
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_isModifier
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_isPreviewEnabled
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_popupKeyboard
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_keyOutputText
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_keyEdgeFlags
+     * @attr ref com.fintamath.R.styleable#Keyboard_Key_popupKeyboardLocationFlags
      */
     public static class Key {
         /**
