@@ -72,7 +72,7 @@
     <Row>
         <Key
             app:keyOutputText="()"
-            app:keyLabel="( □ )"
+            app:keyIcon="@drawable/ic_key_brackets"
             app:keyTopLabel="﹙﹚"
             app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
