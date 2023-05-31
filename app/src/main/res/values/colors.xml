@@ -18,7 +18,6 @@
 
     <color name="background_popup_keyboard">#333333</color>
     <color name="background_popup_keyboard_key">@color/background_popup_keyboard</color>
-    <color name="background_popup_keyboard_key_preview">#00000000</color>
 
     <color name="background_number_key">#373737</color>
 

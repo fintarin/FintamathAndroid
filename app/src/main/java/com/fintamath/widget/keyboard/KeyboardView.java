@@ -892,6 +892,10 @@ public class KeyboardView extends View implements View.OnClickListener {
             return;
         }
 
+        if (mIsMiniKeyboard) {
+            return;
+        }
+
         if (key.icon != null) {
             Drawable previewIcon = (key.iconPreview != null ? key.iconPreview : key.icon)
                     .getConstantState().newDrawable();
