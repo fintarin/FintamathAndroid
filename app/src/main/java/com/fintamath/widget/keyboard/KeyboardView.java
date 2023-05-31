@@ -16,6 +16,8 @@
 
 package com.fintamath.widget.keyboard;
 
+import static java.lang.Math.abs;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -32,6 +34,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -374,8 +377,8 @@ public class KeyboardView extends View implements View.OnClickListener {
                 public boolean onFling(MotionEvent me1, MotionEvent me2,
                                        float velocityX, float velocityY) {
                     if (mPossiblePoly) return false;
-                    final float absX = Math.abs(velocityX);
-                    final float absY = Math.abs(velocityY);
+                    final float absX = abs(velocityX);
+                    final float absY = abs(velocityY);
                     float deltaX = me2.getX() - me1.getX();
                     float deltaY = me2.getY() - me1.getY();
                     int travelX = getWidth() / 2; // Half the keyboard width
@@ -890,8 +893,14 @@ public class KeyboardView extends View implements View.OnClickListener {
         }
 
         if (key.icon != null) {
-            mPreviewText.setCompoundDrawables(null, null, null,
-                    key.iconPreview != null ? key.iconPreview : key.icon);
+            Drawable previewIcon = (key.iconPreview != null ? key.iconPreview : key.icon)
+                    .getConstantState().newDrawable();
+
+            int previewIconX = abs(key.width - key.icon.getIntrinsicWidth()) / 2;
+            previewIcon.setBounds(previewIconX, 0,
+                    previewIconX + key.icon.getIntrinsicWidth(), key.icon.getIntrinsicHeight());
+
+            mPreviewText.setCompoundDrawables(previewIcon, null, null, null);
             mPreviewText.setText(null);
         } else {
             mPreviewText.setCompoundDrawables(null, null, null, null);
@@ -923,19 +932,6 @@ public class KeyboardView extends View implements View.OnClickListener {
                 key.popupResId != 0 ? LONG_PRESSABLE_STATE_SET : EMPTY_STATE_SET);
         mPopupPreviewX += mCoordinates[0];
         mPopupPreviewY += mCoordinates[1];
-
-        // If the popup cannot be shown above the key, put it on the side
-        getLocationOnScreen(mCoordinates);
-        if (mPopupPreviewY + mCoordinates[1] < 0) {
-            // If the key you're pressing is on the left side of the keyboard, show the popup on
-            // the right, offset by enough to see at least one key to the left/right.
-            if (key.x + key.width <= getWidth() / 2) {
-                mPopupPreviewX += (int) (key.width * 2.5);
-            } else {
-                mPopupPreviewX -= (int) (key.width * 2.5);
-            }
-            mPopupPreviewY += popupHeight;
-        }
 
         if (previewPopup.isShowing()) {
             previewPopup.update(mPopupPreviewX, mPopupPreviewY,
