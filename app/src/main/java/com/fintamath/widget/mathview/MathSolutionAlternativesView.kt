@@ -28,7 +28,6 @@ internal class MathSolutionAlternativesView constructor(
 
         mathTextViewLayout =
             attrs.getResourceId(R.styleable.MathSolutionView_alternativeMathTextViewLayout, 0)
-        // TODO: implement different delimiters, e.g. 'Approximation', 'Alternative form', 'Graph' for the same solution
         delimiterLayout =
             attrs.getResourceId(R.styleable.MathSolutionView_alternativeDelimiterLayout, 0)
 
