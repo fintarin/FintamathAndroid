@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:paddingStart="15dp"
     android:paddingEnd="15dp"
-    android:text="@string/alternative_form"
+    android:text="@string/approximation"
     android:textSize="@dimen/text_size_alternative"
     android:textColor="@color/text_hint" >
 </TextView>
