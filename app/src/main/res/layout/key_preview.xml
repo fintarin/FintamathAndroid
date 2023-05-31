@@ -6,5 +6,5 @@
     android:gravity="center"
     android:background="@drawable/popup_key_background_normal"
     android:textColor="@color/text_main"
-    android:textSize="@dimen/text_size_main" >
+    android:textSize="@dimen/text_size_keyboard" >
 </TextView>
