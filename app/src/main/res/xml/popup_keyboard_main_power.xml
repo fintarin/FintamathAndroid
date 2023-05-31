@@ -9,7 +9,7 @@
             app:keyIcon="@drawable/ic_key_pow2" />
         <Key
             app:keyOutputText="^(3)"
-            app:keyLabel="□³"/>
+            app:keyIcon="@drawable/ic_key_pow3"/>
         <Key
             app:keyOutputText="^()"
             app:keyLabel="□ⁿ" />
