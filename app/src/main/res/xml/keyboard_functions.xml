@@ -149,7 +149,7 @@
     <Row>
         <Key
             app:keyOutputText="I"
-            app:keyLabel="𝘪"/>
+            app:keyLabel="𝑖"/>
         <Key
             app:keyOutputText="!"
             app:keyLabel="!" />
