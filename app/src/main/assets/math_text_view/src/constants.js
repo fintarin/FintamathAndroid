@@ -38,6 +38,7 @@ const mathHtmlMap = {
   '!<->': String.fromCodePoint(0x2262),
   '<->': String.fromCodePoint(0x2261),
   '->': String.fromCodePoint(0x21d2),
+  '-': String.fromCodePoint(0x2212),
   E: String.fromCodePoint(0x1d626),
   Pi: String.fromCodePoint(0x03c0),
   I: String.fromCodePoint(0x1d62a),
@@ -52,7 +53,7 @@ const mathEditableHtmlMap = {
 // Define arrays of common binary, prefix, and postfix operators
 const binaryOperators = [
   '+',
-  '-',
+  mathHtmlMap['-'],
   mathHtmlMap['*'],
   mathHtmlMap[' / '],
   '=',
@@ -68,7 +69,7 @@ const binaryOperators = [
   mathHtmlMap['!<->'],
   ',',
 ];
-const unaryPrefixOperators = ['+', '-', mathHtmlMap['~']];
+const unaryPrefixOperators = ['+', mathHtmlMap['-'], mathHtmlMap['~']];
 const unaryPostfixOperators = ['%', '!', '°', "'"];
 
 // Define constants for text styling

@@ -44,7 +44,7 @@
     <Row>
         <Key
             app:codes="6035"
-            app:keyLabel="+/-"
+            app:keyLabel="+/−"
             app:keyBackground="@drawable/switch_key_background"
             app:isPreviewEnabled="false" />
         <Key
