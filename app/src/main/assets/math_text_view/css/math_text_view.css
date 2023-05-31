@@ -1,3 +1,8 @@
+@font-face {
+  font-family: mathFont;
+  src: url(../font/noto_sans_math_regular.ttf);
+}
+
 body {
   overflow: hidden;
   overflow-x: scroll;
@@ -7,6 +12,7 @@ body {
 
 span,
 div {
+  font-family: mathFont;
   display: inline-block;
   vertical-align: middle;
   outline: none;
