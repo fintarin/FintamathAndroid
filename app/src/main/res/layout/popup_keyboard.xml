@@ -10,5 +10,6 @@
     app:keyboardKeyBackground="@drawable/popup_key_background"
     app:keyboardKeyPreviewLayout="@layout/popup_key_preview"
     app:keyboardKeyTextSize="@dimen/text_size_keyboard"
-    app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label" >
+    app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
+    app:keyboardFontFamily="@font/noto_sans_math_regular"  >
 </com.fintamath.widget.keyboard.KeyboardView>

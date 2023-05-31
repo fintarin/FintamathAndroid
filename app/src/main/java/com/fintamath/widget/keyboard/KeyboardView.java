@@ -65,6 +65,7 @@ import java.util.Map;
  * @attr ref com.fintamath.R.styleable#KeyboardView_keyTextColor
  * @attr ref com.fintamath.R.styleable#KeyboardView_verticalCorrection
  * @attr ref com.fintamath.R.styleable#KeyboardView_popupLayout
+ * @attr ref com.fintamath.R.styleable#KeyboardView_keyboardFontFamily
  */
 public class KeyboardView extends View implements View.OnClickListener {
 
@@ -203,6 +204,7 @@ public class KeyboardView extends View implements View.OnClickListener {
     private boolean mPossiblePoly;
     private final SwipeTracker mSwipeTracker = new SwipeTracker();
     private final int mSwipeThreshold;
+    private final Typeface mFontFamily;
 
     // Variables for dealing with multiple pointers
     private int mOldPointerCount = 1;
@@ -267,6 +269,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         mKeyTextColor = a.getColor(R.styleable.KeyboardView_keyboardKeyTextColor, 0xFF000000);
         mKeyTopLabelTextColor = a.getColor(R.styleable.KeyboardView_keyboardKeyTopLabelTextColor, 0xFF000000);
         mPopupLayout = a.getResourceId(R.styleable.KeyboardView_popupLayout, 0);
+        mFontFamily = a.getFont(R.styleable.KeyboardView_keyboardFontFamily);
 
         a.recycle();
 
@@ -678,7 +681,7 @@ public class KeyboardView extends View implements View.OnClickListener {
 
             if (label != null) {
                 paint.setTextSize(mKeyTextSize);
-                paint.setTypeface(Typeface.DEFAULT);
+                paint.setTypeface(mFontFamily);
 
                 // Draw the text
                 canvas.drawText(label,
@@ -705,7 +708,7 @@ public class KeyboardView extends View implements View.OnClickListener {
 
             if (topLabel != null) {
                 paint.setTextSize(mKeyTopLabelTextSize);
-                paint.setTypeface(Typeface.DEFAULT);
+                paint.setTypeface(mFontFamily);
                 paint.setColor(mKeyTopLabelTextColor);
 
                 // Draw the label text
@@ -894,7 +897,7 @@ public class KeyboardView extends View implements View.OnClickListener {
             mPreviewText.setCompoundDrawables(null, null, null, null);
             mPreviewText.setText(getPreviewText(key));
             mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPreviewTextSizeLarge);
-            mPreviewText.setTypeface(Typeface.DEFAULT);
+            mPreviewText.setTypeface(mFontFamily);
         }
 
         LayoutParams lp = mPreviewText.getLayoutParams();

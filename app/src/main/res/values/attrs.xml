@@ -40,6 +40,8 @@
         <attr name="verticalCorrection" format="dimension" />
         <!-- Layout resource for popup keyboards. -->
         <attr name="popupLayout" format="reference" />
+        <!-- Font family for labels. -->
+        <attr name="keyboardFontFamily" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="KeyboardViewPreviewState">

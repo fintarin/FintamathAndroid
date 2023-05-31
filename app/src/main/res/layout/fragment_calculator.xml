@@ -138,7 +138,8 @@
             app:keyboardKeyPreviewLayout="@layout/key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard" />
+            app:popupLayout="@layout/popup_keyboard"
+            app:keyboardFontFamily="@font/noto_sans_math_regular" />
 
         <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/lettersKeyboardView"
@@ -152,7 +153,8 @@
             app:keyboardKeyPreviewLayout="@layout/key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"  />
+            app:popupLayout="@layout/popup_keyboard"
+            app:keyboardFontFamily="@font/noto_sans_math_regular"  />
 
         <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/functionsKeyboardView"
@@ -166,7 +168,8 @@
             app:keyboardKeyPreviewLayout="@layout/key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"  />
+            app:popupLayout="@layout/popup_keyboard"
+            app:keyboardFontFamily="@font/noto_sans_math_regular"  />
 
         <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/analysisKeyboardView"
@@ -180,7 +183,8 @@
             app:keyboardKeyPreviewLayout="@layout/key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"  />
+            app:popupLayout="@layout/popup_keyboard"
+            app:keyboardFontFamily="@font/noto_sans_math_regular"  />
 
         <com.fintamath.widget.keyboard.KeyboardView
             android:id="@+id/logicKeyboardView"
@@ -194,7 +198,8 @@
             app:keyboardKeyPreviewLayout="@layout/key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"  />
+            app:popupLayout="@layout/popup_keyboard"
+            app:keyboardFontFamily="@font/noto_sans_math_regular" />
 
     </FrameLayout>
 
