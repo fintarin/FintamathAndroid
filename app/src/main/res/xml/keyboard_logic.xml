@@ -91,7 +91,7 @@
         <Key
             app:keyOutputText="()"
             app:keyIcon="@drawable/ic_key_brackets"
-            app:keyTopLabel="﹙﹚"
+            app:keyTopLabel="(  )"
             app:popupKeyboard="@xml/popup_keyboard_logic_brackets" />
         <Key
             app:keyOutputText="~"

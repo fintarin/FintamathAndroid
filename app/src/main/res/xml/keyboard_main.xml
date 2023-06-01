@@ -73,7 +73,7 @@
         <Key
             app:keyOutputText="()"
             app:keyIcon="@drawable/ic_key_brackets"
-            app:keyTopLabel="﹙﹚"
+            app:keyTopLabel="(  )"
             app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
             app:keyOutputText="()/()"
@@ -127,7 +127,7 @@
         <Key
             app:keyOutputText="^(2)"
             app:keyIcon="@drawable/ic_key_pow2"
-            app:keyTopLabel="□ⁿ"
+            app:keyTopLabel="⬚ⁿ"
             app:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
             app:keyOutputText="sqrt()"
