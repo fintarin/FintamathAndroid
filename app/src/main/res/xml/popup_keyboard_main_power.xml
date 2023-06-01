@@ -12,7 +12,7 @@
             app:keyIcon="@drawable/ic_key_pow3"/>
         <Key
             app:keyOutputText="^()"
-            app:keyLabel="□ⁿ" />
+            app:keyIcon="@drawable/ic_key_pow" />
     </Row>
 
 </Keyboard>
