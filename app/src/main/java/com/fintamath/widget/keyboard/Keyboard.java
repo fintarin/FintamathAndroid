@@ -240,6 +240,8 @@ public class Keyboard {
 
         /** Icon to display instead of a label. Icon takes precedence over a label */
         public Drawable icon;
+        /** Top icon to display instead of a top label. Top icon takes precedence over a top label */
+        public Drawable topIcon;
         /** Preview version of the icon, for the preview popup */
         public Drawable iconPreview;
         /** Width of the key, not including the gap */
@@ -362,6 +364,11 @@ public class Keyboard {
                     R.styleable.Keyboard_Key_keyIcon);
             if (icon != null) {
                 icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+            }
+            topIcon = a.getDrawable(
+                    R.styleable.Keyboard_Key_keyTopIcon);
+            if (topIcon != null) {
+                topIcon.setBounds(0, 0, topIcon.getIntrinsicWidth(), topIcon.getIntrinsicHeight());
             }
             label = a.getText(R.styleable.Keyboard_Key_keyLabel);
             topLabel = a.getText(R.styleable.Keyboard_Key_keyTopLabel);

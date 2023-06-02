@@ -109,6 +109,8 @@
         <attr name="keyIcon" format="reference" />
         <!-- The label to display in the top corner of the key. -->
         <attr name="keyTopLabel" format="string" />
+        <!-- The icon to display in the top corner of the key instead of top label. -->
+        <attr name="keyTopIcon" format="reference" />
         <!-- Mode of the keyboard. If the mode doesn't match the
              requested keyboard mode, the key will be skipped. -->
         <attr name="keyboardMode" />

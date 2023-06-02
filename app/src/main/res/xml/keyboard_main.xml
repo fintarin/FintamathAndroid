@@ -127,12 +127,12 @@
         <Key
             app:keyOutputText="^(2)"
             app:keyIcon="@drawable/ic_key_pow2"
-            app:keyTopLabel="⬚³"
+            app:keyTopIcon="@drawable/ic_key_pow_top"
             app:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
             app:keyOutputText="sqrt()"
             app:keyIcon="@drawable/ic_key_root2"
-            app:keyTopLabel="∛"
+            app:keyTopIcon="@drawable/ic_key_root_top"
             app:popupKeyboard="@xml/popup_keyboard_main_root" />
         <Key
             app:keyOutputText="1"

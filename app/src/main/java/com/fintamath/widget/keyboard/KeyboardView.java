@@ -723,6 +723,16 @@ public class KeyboardView extends View implements View.OnClickListener {
                         paint);
 
                 paint.setColor(mKeyTextColor);
+            } else if (key.topIcon != null) {
+                final int drawableX = (key.width - padding.left - padding.right
+                        - key.topIcon.getIntrinsicWidth()) * 4 / 5 + padding.left;
+                final int drawableY = (key.height - padding.top - padding.bottom
+                        - key.topIcon.getIntrinsicHeight()) / 10 + padding.top;
+                canvas.translate(drawableX, drawableY);
+                key.topIcon.setBounds(0, 0,
+                        key.topIcon.getIntrinsicWidth(), key.topIcon.getIntrinsicHeight());
+                key.topIcon.draw(canvas);
+                canvas.translate(-drawableX, -drawableY);
             }
 
             canvas.translate(-key.x - kbdPaddingLeft, -key.y - kbdPaddingTop);
