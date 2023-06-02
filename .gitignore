@@ -27,6 +27,7 @@ hs_err_pid*
 CMakeCache.*
 CMakeFiles/*
 [Tt]esting/*
+.cxx/*
 
 # Prerequisites
 *.d
