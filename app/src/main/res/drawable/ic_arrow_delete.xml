@@ -1,5 +1,5 @@
-<vector android:autoMirrored="true" android:height="@dimen/text_size_main"
+<vector android:autoMirrored="true" android:height="@dimen/text_size_keyboard"
     android:tint="@color/text_main" android:viewportHeight="24"
-    android:viewportWidth="24" android:width="@dimen/text_size_main" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:viewportWidth="24" android:width="@dimen/text_size_keyboard" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="@color/text_main" android:pathData="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
 </vector>

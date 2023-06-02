@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size_main">20sp</dimen>
     <dimen name="text_size_bar">22sp</dimen>
     <dimen name="text_size_math_text_view">22sp</dimen>
-    <dimen name="text_size_keyboard">@dimen/text_size_main</dimen>
-    <dimen name="text_size_keyboard_special">24sp</dimen>
+    <dimen name="text_size_keyboard">22sp</dimen>
+    <dimen name="text_size_keyboard_special">26sp</dimen>
     <dimen name="text_size_keyboard_top_label">12sp</dimen>
     <dimen name="text_size_alternative">18sp</dimen>
     <dimen name="text_size_solution_message">16sp</dimen>
