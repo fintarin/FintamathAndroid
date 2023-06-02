@@ -14,6 +14,10 @@
  * the License.
  */
 
+/*
+ * This file is a deeply modified version of the standard android.inputmethodservice.Keyboard.
+ */
+
 package com.fintamath.widget.keyboard;
 
 import android.content.Context;

@@ -14,6 +14,10 @@
  * the License.
  */
 
+/*
+ * This file is a deeply modified version of the standard android.inputmethodservice.KeyboardView.
+ */
+
 package com.fintamath.widget.keyboard;
 
 import static java.lang.Math.abs;
