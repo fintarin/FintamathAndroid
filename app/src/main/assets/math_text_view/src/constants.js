@@ -39,6 +39,7 @@ const mathHtmlMap = {
   '<->': String.fromCodePoint(0x2261),
   '->': String.fromCodePoint(0x21d2),
   '-': String.fromCodePoint(0x2212),
+  '°': String.fromCodePoint(0x00b0),
   E: String.fromCodePoint(0x1d626),
   Pi: String.fromCodePoint(0x03c0),
   I: String.fromCodePoint(0x1d456),
@@ -70,7 +71,7 @@ const binaryOperators = [
   ',',
 ];
 const unaryPrefixOperators = ['+', mathHtmlMap['-'], mathHtmlMap['~']];
-const unaryPostfixOperators = ['%', '!', '°', "'"];
+const unaryPostfixOperators = ['%', '!', mathHtmlMap['°']];
 
 // Define constants for text styling
 const textEmptyHintSelected = '\u2B1A';
