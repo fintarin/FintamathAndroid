@@ -49,6 +49,10 @@ android {
             universalApk false
         }
     }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
 }
 
 dependencies {
