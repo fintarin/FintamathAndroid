@@ -76,7 +76,7 @@
         <Key
             app:keyOutputText="_(1)"
             app:keyIcon="@drawable/ic_key_index1"
-            app:keyTopLabel="⬚₂"
+            app:keyTopIcon="@drawable/ic_key_index_top"
             app:popupKeyboard="@xml/popup_keyboard_functions_indexes" />
         <Key
             app:keyOutputText="ln()"
