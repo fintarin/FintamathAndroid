@@ -127,7 +127,7 @@
         <Key
             app:keyOutputText="^(2)"
             app:keyIcon="@drawable/ic_key_pow2"
-            app:keyTopLabel="⬚ⁿ"
+            app:keyTopLabel="⬚³"
             app:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
             app:keyOutputText="sqrt()"
