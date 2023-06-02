@@ -1,6 +1,6 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="@dimen/text_size_keyboard_fraction"
-    android:height="@dimen/text_size_keyboard_fraction"
+    android:width="@dimen/text_size_keyboard_special_big"
+    android:height="@dimen/text_size_keyboard_special_big"
     android:viewportWidth="220"
     android:viewportHeight="219.84">
   <path
