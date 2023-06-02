@@ -6,10 +6,10 @@
     <Row>
         <Key
             app:keyOutputText="_(1)"
-            app:keyLabel="□₁" />
+            app:keyIcon="@drawable/ic_key_index1" />
         <Key
             app:keyOutputText="_(2)"
-            app:keyLabel="□₂" />
+            app:keyIcon="@drawable/ic_key_index2" />
         <Key
             app:keyOutputText="_()"
             app:keyLabel="□ₙ" />
