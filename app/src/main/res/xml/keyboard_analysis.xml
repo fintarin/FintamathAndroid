@@ -74,7 +74,7 @@
             app:keyOutputText="derivative(,x)"
             app:keyIcon="@drawable/ic_key_derivative" />
         <Key
-            app:keyOutputText="integral(,)"
+            app:keyOutputText="integral(,x)"
             app:keyLabel="∫□dx" />
         <Key
             app:keyOutputText="min(,)"
