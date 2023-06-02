@@ -128,7 +128,7 @@
             app:keyLabel="π"/>
         <Key
             app:keyOutputText="abs()"
-            app:keyLabel="|□|" />
+            app:keyIcon="@drawable/ic_key_abs" />
         <Key
             app:keyOutputText="exp()"
             app:keyLabel="exp" />
