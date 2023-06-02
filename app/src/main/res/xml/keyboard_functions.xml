@@ -72,7 +72,7 @@
     <Row>
         <Key
             app:keyOutputText="f()"
-            app:keyLabel="f(□)" />
+            app:keyIcon="@drawable/ic_key_function" />
         <Key
             app:keyOutputText="_(1)"
             app:keyIcon="@drawable/ic_key_index1"

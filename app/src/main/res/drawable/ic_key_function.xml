@@ -1,0 +1,126 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/text_size_keyboard_special_big"
+    android:height="@dimen/text_size_keyboard_special_big"
+    android:viewportWidth="220"
+    android:viewportHeight="219.84">
+  <path
+      android:pathData="M95.58,73.87a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M106.63,73.96a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M117.75,73.92a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M128.88,73.92a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M139.89,73.89a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M150.94,73.89a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M162.03,73.92a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M173.15,73.92a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M173.15,84.74a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M173.11,96.14a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M173.08,107.61a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M173,117.93a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M173.11,129.43a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M173.15,140.82a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M173.04,151.22a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M162.06,151.18a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M150.94,151.18a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M139.89,151.18a3.1,3.09 0,1 0,6.19 0a3.1,3.09 0,1 0,-6.19 0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M128.8,151.18a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M117.79,151.18a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M106.74,151.18a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M95.62,151.18a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M95.69,140.82a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M95.65,129.43a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M95.62,117.96a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M95.62,107.61a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M95.58,96.14a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M95.62,84.71a3.09,3.1 90,1 1,6.19 -0a3.09,3.1 90,1 1,-6.19 -0z"
+      android:strokeWidth="0.198982"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="M76.91,172.99C50.13,140.13 50.18,84.96 77.03,51.33l0.99,-1.24 5.98,-0.01c4.72,-0.01 5.95,0.05 5.81,0.28 -0.1,0.16 -0.85,1.26 -1.67,2.44 -24.23,34.74 -24.43,83.65 -0.49,118.34 1.08,1.57 2.05,2.99 2.16,3.16 0.15,0.23 -1.05,0.3 -5.69,0.3l-5.88,0zM186.02,173.95c25.98,-38.07 26.53,-85.12 1.42,-121.14 -0.82,-1.18 -1.57,-2.28 -1.67,-2.44 -0.14,-0.23 1.09,-0.3 5.81,-0.3l5.98,0 2.19,2.92c25.59,34.03 25.29,87.28 -0.68,119.53l-1.68,2.08l-5.91,0 -5.91,0z"
+      android:strokeWidth="0.24"
+      android:fillColor="@color/text_keyboard"/>
+  <path
+      android:pathData="m13.57,86.62 l-13.57,-0.13 0.01,-5.88 13.26,-4.25c0,0 0.42,-0.66 0.42,-4.64 0,-17.65 6.73,-26.29 21.62,-27.76 6.86,-0.68 17.77,1.14 17.77,2.96 0,1.69 -2.69,9.35 -3.23,9.2C32.78,51.21 26.68,55.25 26.25,71.79l-0.13,5.1h19.52v9.61L26.18,86.5L26.18,153.99L13.69,153.99Z"
+      android:strokeWidth="0.240175"
+      android:fillColor="@color/text_keyboard"/>
+</vector>
