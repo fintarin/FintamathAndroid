@@ -79,3 +79,6 @@ local.properties
 
 # Release files
 app/release/*
+
+# Gradle wrapper
+!gradle-wrapper.jar
