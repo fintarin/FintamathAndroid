@@ -74,14 +74,14 @@
             app:keyOutputText="derivative(,)"
             app:keyLabel="□'"/>
         <Key
+            app:keyOutputText="integral(,)"
+            app:keyLabel="∫□dx" />
+        <Key
             app:keyOutputText="min(,)"
             app:keyLabel="min" />
         <Key
             app:keyOutputText="max(,)"
             app:keyLabel="max" />
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
         <Key
             app:keyLabel=" "
             app:isPreviewEnabled="false" />
