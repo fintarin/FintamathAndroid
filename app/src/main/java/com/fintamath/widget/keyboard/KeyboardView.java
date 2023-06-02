@@ -38,7 +38,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -993,8 +992,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         mDirtyRect.union(key.x + getPaddingLeft(), key.y + getPaddingTop(),
                 key.x + key.width + getPaddingLeft(), key.y + key.height + getPaddingTop());
         onBufferDraw();
-        invalidate(key.x + getPaddingLeft(), key.y + getPaddingTop(),
-                key.x + key.width + getPaddingLeft(), key.y + key.height + getPaddingTop());
+        invalidate();
     }
 
     private boolean openPopupIfRequired(MotionEvent me) {
@@ -1033,7 +1031,7 @@ public class KeyboardView extends View implements View.OnClickListener {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
             mMiniKeyboardContainer = inflater.inflate(mPopupLayout, null);
-            mMiniKeyboard = (KeyboardView) mMiniKeyboardContainer.findViewById(
+            mMiniKeyboard = mMiniKeyboardContainer.findViewById(
                     R.id.keyboardView);
             mMiniKeyboard.mIsMiniKeyboard = true;
             mMiniKeyboard.mMiniKeyboardLocationFlags = popupKey.popupKeyboardLocationFlags;
