@@ -1,5 +1,8 @@
 package com.fintamath.calculator
 
+import androidx.annotation.Keep
+
+@Keep
 internal class Calculator(
     private val calculationCallback: (result: List<String>) -> Unit
 ) {

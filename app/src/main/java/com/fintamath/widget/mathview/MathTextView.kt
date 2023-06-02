@@ -14,12 +14,13 @@ import android.webkit.JavascriptInterface
 import android.webkit.ValueCallback
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.annotation.Keep
 import com.fintamath.R
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.math.abs
 
-
+@Keep
 class MathTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
