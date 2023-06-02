@@ -131,7 +131,9 @@
             app:popupKeyboard="@xml/popup_keyboard_main_power" />
         <Key
             app:keyOutputText="sqrt()"
-            app:keyIcon="@drawable/ic_key_root2" />
+            app:keyIcon="@drawable/ic_key_root2"
+            app:keyTopLabel="∛"
+            app:popupKeyboard="@xml/popup_keyboard_main_root" />
         <Key
             app:keyOutputText="1"
             app:keyLabel="1"
