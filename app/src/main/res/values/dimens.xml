@@ -5,7 +5,7 @@
     <dimen name="text_size_keyboard">22sp</dimen>
     <dimen name="text_size_keyboard_special">26sp</dimen>
     <dimen name="text_size_keyboard_special_big">34sp</dimen>
-    <dimen name="text_size_keyboard_top_label">12sp</dimen>
+    <dimen name="text_size_keyboard_top_label">14sp</dimen>
     <dimen name="text_size_alternative">18sp</dimen>
     <dimen name="text_size_solution_message">16sp</dimen>
     <dimen name="text_size_empty_history_message">18sp</dimen>
