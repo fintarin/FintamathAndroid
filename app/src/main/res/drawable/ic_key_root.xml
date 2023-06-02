@@ -6,229 +6,229 @@
   <path
       android:pathData="M119.68,69.87a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M131.6,69.97a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M143.6,69.93a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M155.6,69.93a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M167.48,69.89a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M179.4,69.89a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M191.36,69.93a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M203.35,69.93a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M203.35,81.6a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M203.32,93.89a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M203.28,106.26a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M203.2,117.39a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M203.32,129.8a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M203.35,142.1a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M203.24,153.31a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M191.4,153.27a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M179.4,153.27a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M167.48,153.27a3.34,3.33 0,1 0,6.68 0a3.34,3.33 0,1 0,-6.68 0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M155.52,153.27a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M143.64,153.27a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M131.72,153.27a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M119.72,153.27a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M119.8,142.1a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M119.76,129.8a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M119.72,117.43a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M119.72,106.26a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M119.68,93.89a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M119.72,81.56a3.33,3.34 90,1 1,6.68 -0a3.33,3.34 90,1 1,-6.68 -0z"
       android:strokeWidth="0.214647"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M0,16.88a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M8.82,16.96a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M17.71,16.93a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M26.59,16.93a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M35.38,16.9a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M44.21,16.9a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M53.06,16.93a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M61.94,16.93a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M61.94,25.57a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M61.91,34.67a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M61.89,43.83a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M61.83,52.07a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M61.91,61.25a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M61.94,70.35a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M61.86,78.65a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M53.09,78.62a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M44.21,78.62a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M35.38,78.62a2.47,2.47 0,1 0,4.94 0a2.47,2.47 0,1 0,-4.94 0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M26.53,78.62a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M17.73,78.62a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M8.91,78.62a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M0.03,78.62a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M0.09,70.35a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M0.06,61.25a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M0.03,52.1a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M0.03,43.83a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M0,34.67a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M0.03,25.54a2.47,2.47 90,1 1,4.94 -0a2.47,2.47 90,1 1,-4.94 -0z"
       android:strokeWidth="0.158903"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
   <path
       android:pathData="M101.75,13.75L218.84,13.75L218.84,23.17L109.97,23.17l-43.58,150.09 -8.88,0 -22.74,-71.55 -14.99,-0.08 -0.01,-9.88 22.33,-0.02 19.97,61.23z"
       android:strokeWidth="0.268452"
-      android:fillColor="@color/text_main"/>
+      android:fillColor="@color/text_keyboard"/>
 </vector>
