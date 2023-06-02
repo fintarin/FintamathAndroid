@@ -71,8 +71,8 @@
 
     <Row>
         <Key
-            app:keyOutputText="derivative(,)"
-            app:keyLabel="□'"/>
+            app:keyOutputText="derivative(,x)"
+            app:keyIcon="@drawable/ic_key_derivative" />
         <Key
             app:keyOutputText="integral(,)"
             app:keyLabel="∫□dx" />
