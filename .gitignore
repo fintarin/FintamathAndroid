@@ -23,11 +23,11 @@
 hs_err_pid*
 
 # Build files
-[Bb]uild/*
+[Bb]uild
 CMakeCache.*
-CMakeFiles/*
-[Tt]esting/*
-.cxx/*
+CMakeFiles
+[Tt]esting
+.cxx
 
 # Prerequisites
 *.d
@@ -63,13 +63,13 @@ CMakeFiles/*
 *.app
 
 # Cache
-.cache/*
+.cache
 
 # Visual Studio Code config
-.vscode/*
+.vscode
 
 # IDEA config
-.idea/*
+.idea
 
 # Gradle
 .gradle
@@ -78,7 +78,7 @@ CMakeFiles/*
 local.properties
 
 # Release files
-app/release/*
+app/release
 
 # Gradle wrapper
 !gradle-wrapper.jar
