@@ -51,9 +51,9 @@ class HistoryFragment : Fragment() {
     }
 
     private fun callOnItemsCountChange() {
-        val count = HistoryStorage.getList().size
+        val count = HistoryStorage.getHistoryList().size
 
-        if (HistoryStorage.getList().size == 0 && emptyHistoryTextView.visibility != VISIBLE) {
+        if (HistoryStorage.getHistoryList().size == 0 && emptyHistoryTextView.visibility != VISIBLE) {
             historyListView.visibility = GONE
             emptyHistoryTextView.visibility = VISIBLE
         } else if (count > 0 && emptyHistoryTextView.visibility != GONE) {

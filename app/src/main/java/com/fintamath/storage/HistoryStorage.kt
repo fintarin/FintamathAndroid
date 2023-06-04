@@ -50,7 +50,7 @@ object HistoryStorage {
         }
     }
 
-    fun getList(): MutableList<HistoryItemData> {
+    fun getHistoryList(): MutableList<HistoryItemData> {
         return historyList
     }
 

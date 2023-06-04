@@ -32,7 +32,7 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         }
     }
 
-    override fun getItemCount() = HistoryStorage.getList().size
+    override fun getItemCount() = HistoryStorage.getHistoryList().size
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): HistoryItemViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.history_item, viewGroup, false)
@@ -53,7 +53,7 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
     }
 
     override fun onViewAttachedToWindow(viewHolder: HistoryItemViewHolder) {
-        val historyList = HistoryStorage.getList()
+        val historyList = HistoryStorage.getHistoryList()
         viewHolder.mathTextView.text = historyList[viewHolder.absoluteAdapterPosition].mathTextData.text
         viewHolder.bookmarkButton.isChecked = historyList[viewHolder.absoluteAdapterPosition].isBookmarked
         viewHolder.dateTextView.text = formatDataTime(historyList[viewHolder.absoluteAdapterPosition].dateTimeString)
