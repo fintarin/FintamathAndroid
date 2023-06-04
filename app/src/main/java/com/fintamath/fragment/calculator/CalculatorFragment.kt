@@ -19,7 +19,8 @@ import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
 import com.fintamath.widget.mathview.MathSolutionView
 import com.fintamath.widget.mathview.MathTextView
-import java.util.*
+import java.util.Timer
+import java.util.TimerTask
 import kotlin.concurrent.schedule
 
 

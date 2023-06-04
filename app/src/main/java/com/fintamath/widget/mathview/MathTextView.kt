@@ -16,7 +16,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.Keep
 import com.fintamath.R
-import java.util.*
+import java.util.Timer
 import kotlin.concurrent.schedule
 import kotlin.math.abs
 
