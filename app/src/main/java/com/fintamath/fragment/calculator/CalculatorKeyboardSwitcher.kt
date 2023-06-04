@@ -16,7 +16,7 @@ internal class CalculatorKeyboardSwitcher(
     }
 
     fun switchKeyboard(keyboardType: CalculatorKeyboardType) {
-        if (currentKeyboardType === keyboardType) {
+        if (currentKeyboardType == keyboardType) {
             return
         }
 
