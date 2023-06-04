@@ -1,6 +1,5 @@
 package com.fintamath.widget.mathview
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -153,7 +152,6 @@ class MathTextView @JvmOverloads constructor(
         return super.requestFocus(direction, previouslyFocusedRect)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_MOVE -> {

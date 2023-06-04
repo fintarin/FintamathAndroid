@@ -22,7 +22,6 @@ package com.fintamath.widget.keyboard;
 
 import static java.lang.Math.abs;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -1117,7 +1116,6 @@ public class KeyboardView extends View implements View.OnClickListener {
         return true;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent me) {
         if (!mIsMiniKeyboard) {

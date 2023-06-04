@@ -1,6 +1,5 @@
 package com.fintamath.fragment.history
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -39,7 +38,6 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         return HistoryItemViewHolder(view)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(viewHolder: HistoryItemViewHolder, position: Int) {
         viewHolder.removeButton.setOnClickListener {
             callOnRemoveButtonClicked(viewHolder)

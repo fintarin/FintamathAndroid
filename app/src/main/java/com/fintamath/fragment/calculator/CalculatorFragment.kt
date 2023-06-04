@@ -1,6 +1,5 @@
 package com.fintamath.fragment.calculator
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -35,7 +34,6 @@ class CalculatorFragment : Fragment() {
     private val saveToHistoryDelay: Long = 2000
     private var saveToHistoryTask: TimerTask? = null
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -58,7 +56,6 @@ class CalculatorFragment : Fragment() {
         return fragmentView!!
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun initMathTexts(fragmentView: View) {
         inTextLayout = fragmentView.findViewById(R.id.inMathTextLayout)
         inTextLayout.setOnTouchListener { _, event -> touchInText(event) }

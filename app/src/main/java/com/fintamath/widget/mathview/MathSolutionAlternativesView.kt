@@ -1,6 +1,5 @@
 package com.fintamath.widget.mathview
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.widget.LinearLayout
@@ -8,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import com.fintamath.R
 
-@SuppressLint("ViewConstructor")
 internal class MathSolutionAlternativesView constructor(
     context: Context,
     attrs: TypedArray
@@ -59,7 +57,6 @@ internal class MathSolutionAlternativesView constructor(
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun setOnTouchListener(listener: OnTouchListener) {
         onTouchListener = listener
 
@@ -70,7 +67,6 @@ internal class MathSolutionAlternativesView constructor(
         super.setOnTouchListener(onTouchListener)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun addTextView() {
         val textView = inflate.inflate(mathTextViewLayout, null) as MathTextView
         textView.setOnTouchListener(onTouchListener)
