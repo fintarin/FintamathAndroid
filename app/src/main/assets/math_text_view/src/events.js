@@ -1,5 +1,5 @@
 /**
- * Currently selected elem.
+ * Currently selected element.
  *
  * @type {HTMLSpanElement?}
  */
@@ -59,22 +59,24 @@ function callOnPaste(event) {
 }
 
 /**
- * Calls various functions to handle a change in mathTextView.
+ * Handle a text change in mathTextView.
  */
-function callOnChange() {
-  reformatElement(mathTextView);
-  insertEmptyTextsAndBorders(mathTextView);
+function callOnTextChange() {
+  insertBordersRec(mathTextView);
+  redrawSvg(mathTextView);
   callOnSelectedElementChanged();
 
-  if (undoStack.length > 0 && undoStack[undoStack.length - 1][0] === mathTextView.innerHTML) {
+  let mathText = toMathText(mathTextView.innerHTML, mathTextView.isContentEditable);
+
+  if (undoStack.length > 0 && undoStack[undoStack.length - 1][0] === mathText) {
     undoStack.pop();
     return;
   }
 
-  let mathText = toMathText(mathTextView.innerHTML, mathTextView.isContentEditable);
   let isMathTextComplete = isComplete(mathTextView) ? 'true' : 'false';
 
-  if (mathText.length > 1 && mathText.charAt(mathText.length - 1) === '=' && mathText.split('=').length - 1 === 1) {
+  // Math texts with a single and last character '=' are complete.
+  if (mathText.length > 1 && mathText.endsWith('=') && mathText.split('=').length - 1 === 1) {
     mathText = mathText.substring(0, mathText.length - 1);
     isMathTextComplete = 'true';
   }
@@ -112,7 +114,7 @@ function callOnSelectedElementChanged() {
       return;
     }
 
-    if (elem.className === undefined) {
+    if (getClassName(elem) === undefinedClass) {
       elem = elem.parentElement;
     }
 
@@ -120,19 +122,19 @@ function callOnSelectedElementChanged() {
       return;
     }
 
-    if (elem.className === mathTextViewClass) {
+    if (getClassName(elem) === mathTextViewClass) {
       return;
     }
 
-    let prevSibling = elem.previousSibling;
+    let prevSibling = elem.previousElementSibling;
 
-    if (prevSibling !== null && prevSibling.className === unaryPostfixOperatorClass) {
+    if (prevSibling !== null && getClassName(prevSibling) === unaryPostfixOperatorClass) {
       return;
     }
 
     selectedElem = elem;
-    selectedElem.setAttribute('empty-hint', textEmptyHintSelected);
-    selectedElem.style.textDecoration = 'underline dashed 0.05em';
+    selectedElem.setAttribute(emptyHintAttr, textEmptyHintSelected);
+    selectedElem.style.textDecoration = textDecorationAttr;
 
     if (selectedElem.innerHTML !== '') {
       selectedElem.style.textDecorationColor = getColorWithOpacity(mathTextView.style.color, textHintOpacity);
@@ -151,12 +153,12 @@ function callOnSelectedElementChanged() {
       return;
     }
 
-    if (elem.className === mathTextViewClass) {
+    if (getClassName(elem) === mathTextViewClass) {
       return;
     }
 
-    elem.setAttribute('empty-hint', '');
-    elem.style.textDecoration = 'none';
+    elem.setAttribute(emptyHintAttr, '');
+    elem.style.textDecoration = textDecorationNoneAttr;
 
     selectedElem = null;
   }

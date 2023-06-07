@@ -12,102 +12,116 @@ body {
 
 span,
 div {
-  font-family: mathFont;
+  font-family: mathFont, sans-serif;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: middle; /* TODO: remove */
   outline: none;
   white-space: nowrap;
   text-underline-offset: 0.1em;
-}
-
-span:empty:before,
-div:empty:before {
-  opacity: 0.5;
   line-height: 0;
 }
 
-.math_text_view {
+.math-text-view {
   display: block;
   position: absolute;
   overflow: hidden;
   min-width: calc(100% - 30px);
+  line-height: 1;
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.math_text_view:empty:before {
+.math-text-view:empty::before {
   content: attr(hint);
+  opacity: 0.5;
 }
 
-.text:empty:before {
+.text {
+  line-height: 1.1;
+  margin-top: 2px;
+  padding-top: 0.5px;
+  padding-bottom: 0.5px;
+}
+
+.text:empty::before {
   content: attr(empty-hint);
   padding-left: 0.01px;
   padding-right: 0.01px;
+  opacity: 0.5;
 }
 
-.text_hint {
-  padding: 1px;
+.text-hint {
+  line-height: 1.1;
+  margin-top: 2px;
+  padding-top: 0.5px;
+  padding-bottom: 0.5px;
 }
 
-.text_hint:empty:before {
+.text-hint:empty::before {
   content: '\2B1A';
+  opacity: 0.5;
 }
 
 .border {
   float: left;
 }
 
-.binary_operator {
-  margin-left: 4px;
-  margin-right: 4px;
+.binary-operator {
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-right: 2px;
   opacity: 0.75;
 }
 
-.unary_prefix_operator {
+.unary-prefix-operator {
+  margin-top: 2px;
   opacity: 0.75;
 }
 
-.unary_postfix_operator {
+.unary-postfix-operator {
+  margin-top: 2px;
   opacity: 0.75;
 }
 
 .sup {
-  margin-bottom: 3ex;
-  font-size: 70%;
+  font-size: 60%;
+  margin-bottom: 3ex; /* TODO: remove */
+  margin-right: 2px;
 }
 
 .sub {
-  margin-top: 3ex;
-  font-size: 70%;
+  font-size: 60%;
+  margin-top: 3ex; /* TODO: remove */
+  margin-right: 2px;
 }
 
 .fraction {
-  text-align: center;
-  margin-left: 4px;
-  margin-right: 4px;
+  text-align: center; /* TODO: remove */
+  margin-left: 7px;
+  margin-right: 7px;
 }
 
-.fraction_line {
-  display: block;
+.fraction-line {
   border-top: 0.08em solid;
+  display: block;
+  margin-top: 1.5px;
+  margin-bottom: 1.5px;
+  margin-left: -3px;
+  margin-right: -3px;
   opacity: 0.75;
 }
 
-.function:before {
-  content: attr(function_name);
-  margin-right: -1px;
+.function-name {
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-right: -2px;
 }
 
-.brackets {
-  border-left: 0.1em solid;
-  border-right: 0.1em solid;
-  border-radius: 0.4em;
-  margin-left: 3px;
-  margin-right: 3px;
-  padding-left: 4px;
-  padding-right: 4px;
+.function-name::before {
+  content: attr(before-content);
+  opacity: 0.75;
 }
 
 .abs {
@@ -119,29 +133,37 @@ div:empty:before {
   padding-right: 4px;
 }
 
-.root {
+.sqrt {
   position: relative;
+  margin-right: 4px;
+}
+
+.sqrt-content {
   border-top: 0.08em solid;
   border-left: 0.08em solid;
-  transform-origin: bottom left;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-right: 4px;
-  margin-left: 15px;
+  padding-top: 1.5px;
+  padding-bottom: 1.5px;
   padding-left: 4px;
   padding-right: 4px;
 }
 
-.root:before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  height: 40%;
-  width: 0.2em;
-  left: -0.28em;
-  border-top: 0.08em solid;
-  border-right: 0.08em solid;
-  transform: skew(30deg);
-  transform-origin: bottom right;
-  opacity: 0.75;
+.sqrt-prefix {
+  width: 0.6em;
+  height: 0.6em;
+  vertical-align: bottom;
+}
+
+.open-bracket,
+.close-bracket {
+  width: 0.5em;
+  height: 1em;
+  vertical-align: middle;
+}
+
+.open-bracket {
+  margin-left: 2px;
+}
+
+.close-bracket {
+  margin-right: 2px;
 }

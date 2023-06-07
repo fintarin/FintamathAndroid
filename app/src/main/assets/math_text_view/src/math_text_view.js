@@ -1,5 +1,5 @@
 /**
- * Main math text view.
+ * Main math text view, which is displayed in the math_text_view component.
  *
  * @type {HTMLSpanElement}
  */
@@ -22,36 +22,37 @@ let redoStack = [];
 //---------------------------------------------------------------------------------------------------------//
 
 /**
- * Converts MathText to HTML and sets it as innerHTML of mathTextView.
+ * Converts math text to HTML and sets it as innerHTML of mathTextView.
  *
  * @param {string} mathText - The math text to convert to HTML.
  */
 function setText(mathText) {
   addUndoState();
   mathTextView.innerHTML = toHtml(mathText, mathTextView.isContentEditable);
-  callOnChange();
+  callOnTextChange();
 }
 
 /**
- * Sets the hint (:before element) of the mathTextView from the given.
+ * Sets the hint (:before element) of mathTextView from the given.
  *
  * @param {string} hintText - The hint text to set.
  */
 function setHint(hintText) {
-  mathTextView.setAttribute('hint', hintText);
+  mathTextView.setAttribute(mathTextViewHintAttr, hintText);
 }
 
 /**
- * Sets the text color of the mathTextView from the given.
+ * Sets the text color of mathTextView from the given.
  *
  * @param {string} color - The color to set.
  */
 function setColor(color) {
   mathTextView.style.color = color;
+  redrawSvg(mathTextView);
 }
 
 /**
- * Sets the contentEditable property of the mathTextView from the given.
+ * Sets the contentEditable property of mathTextView from the given.
  *
  * @param {string} contentEditable - The value to set the contentEditable property to.
  */
@@ -71,163 +72,92 @@ function insertAtCursor(mathText) {
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
 
-  if (!range.collapsed) {
-    deleteAtCursor();
-  }
-
-  let parentElem = range.startContainer;
-
-  /** @type {HTMLSpanElement?} */
-  let childPrevElem = null;
-
-  /** @type {HTMLSpanElement?} */
-  let childNextElem = null;
-
-  while (
-    parentElem.className !== mathTextViewClass &&
-    parentElem.className !== textHintClass &&
-    !supContainerClasses.includes(parentElem.className) &&
-    !containerClasses.includes(parentElem.className) &&
-    !subContainerClasses.includes(parentElem.className) &&
-    !indexContainerClasses.includes(parentElem.className)
-  ) {
-    childPrevElem = parentElem;
-    parentElem = parentElem.parentElement;
-  }
-
-  if (parentElem !== null && parentElem.innerHTML === '' && parentElem.className === textHintClass) {
-    const prevSibling = parentElem.previousElementSibling;
-
-    childPrevElem = parentElem;
-    parentElem = parentElem.parentElement;
-    parentElem.removeChild(childPrevElem);
-
-    childPrevElem = prevSibling;
-  }
-
-  const startOffset = range.startOffset;
-
-  if (
-    childPrevElem !== null &&
-    childPrevElem.innerText !== '' &&
-    startOffset !== getUnicodeTextLength(childPrevElem.innerText)
-  ) {
-    if (startOffset === 0) {
-      childNextElem = childPrevElem;
-      childPrevElem = childPrevElem.previousElementSibling;
-    } else if (childPrevElem.className === textClass || childPrevElem.className === textHintClass) {
-      const oldElem = childPrevElem;
-
-      childPrevElem = createElement(textClass);
-      childPrevElem.innerText = oldElem.innerText.substring(0, startOffset);
-
-      childNextElem = createElement(textClass);
-      childNextElem.innerText = oldElem.innerText.substring(startOffset);
-
-      parentElem.insertBefore(childPrevElem, oldElem);
-      parentElem.insertBefore(childNextElem, oldElem);
-      parentElem.removeChild(oldElem);
-    } else {
-      childNextElem = findNextElementByPreviousElement(parentElem, childPrevElem);
-    }
-  } else {
-    childNextElem = findNextElementByPreviousElement(parentElem, childPrevElem);
-  }
-
-  if (childPrevElem !== null && childPrevElem.innerHTML === '' && childPrevElem.className === textClass) {
-    const prevSibling = childPrevElem.previousElementSibling;
-    parentElem.removeChild(childPrevElem);
-    childPrevElem = prevSibling;
-  }
-  if (childNextElem !== null && childNextElem.innerHTML === '' && childNextElem.className === textClass) {
-    const nextSibling = childNextElem.nextSibling;
-    parentElem.removeChild(childNextElem);
-    childNextElem = nextSibling;
-  }
+  let selNode = range.startContainer;
+  let selParentElem = selNode.parentElement;
 
   const insElem = createElement();
   insElem.innerHTML = toHtml(mathText, mathTextView.isContentEditable);
-  reformatElement(insElem);
 
-  if (
-    childPrevElem !== null &&
-    childPrevElem.className !== textBorderClass &&
-    childPrevElem.className !== binaryOperatorClass &&
-    childPrevElem.className !== unaryPrefixOperatorClass &&
-    insElem.firstChild !== null &&
-    insElem.firstChild.innerHTML === '' &&
-    (insElem.firstChild.className === textClass || insElem.firstChild.className === textHintClass)
-  ) {
-    insElem.removeChild(insElem.firstChild);
-  }
+  let insFirstChildElem = insElem.firstElementChild;
+  let insLastChildElem = insElem.lastElementChild;
 
-  if (
-    childNextElem !== null &&
-    childNextElem.className !== textBorderClass &&
-    childNextElem.className !== binaryOperatorClass &&
-    childNextElem.className !== unaryPostfixOperatorClass &&
-    insElem.lastChild !== null &&
-    insElem.lastChild.innerHTML === '' &&
-    (insElem.lastChild.className === textClass || insElem.lastChild.className === textHintClass)
-  ) {
-    insElem.removeChild(insElem.lastChild);
-  }
+  if (selNode.nodeType === Node.TEXT_NODE) {
+    const selOffset = range.startOffset;
+    const oldTextElem = selParentElem;
+    selParentElem = oldTextElem.parentElement;
 
-  if (
-    (operatorClasses.includes(insElem.lastChild.className) ||
-      indexContainerClasses.includes(insElem.lastChild.className)) &&
-    (childNextElem === null ||
-      childNextElem.className === textBorderClass ||
-      supContainerClasses.includes(childNextElem.className) ||
-      containerClasses.includes(childNextElem.className))
-  ) {
-    insElem.appendChild(createElement(textClass));
-  }
+    if (selOffset === 0) {
+      insertChildren(selParentElem, insElem.children, oldTextElem);
+    } else if (selOffset === oldTextElem.innerText.length) {
+      insertChildren(selParentElem, insElem.children, oldTextElem.nextElementSibling);
+    } else {
+      selParentElem = oldTextElem.parentElement;
 
-  while (insElem.firstChild) {
-    parentElem.insertBefore(insElem.firstChild, childNextElem);
-  }
+      const leftTextElem = createElement(textClass);
+      leftTextElem.innerText = oldTextElem.innerText.substring(0, selOffset);
+      selParentElem.insertBefore(leftTextElem, oldTextElem);
 
-  /** @type {number} */
-  const childPrevElemIndex =
-    childPrevElem !== null ? Array.prototype.indexOf.call(parentElem.children, childPrevElem) : -1;
+      const rightTextElem = createElement(textClass);
+      rightTextElem.innerText = oldTextElem.innerText.substring(selOffset);
+      selParentElem.insertBefore(rightTextElem, oldTextElem);
 
-  /** @type {number} */
-  const childNextElemIndex =
-    childNextElem !== null
-      ? Array.prototype.indexOf.call(parentElem.children, childNextElem)
-      : parentElem.children.length;
-
-  const firstTextHintElem = getFirstTextHintElement(parentElem, childPrevElemIndex + 1, childNextElemIndex - 1);
-
-  if (firstTextHintElem !== null) {
-    setCursorToElementEnd(firstTextHintElem);
-  } else if (childNextElem !== null && parentElem.children.length > 0) {
-    setCursorToElementEnd(childNextElem.previousElementSibling);
+      selParentElem.removeChild(oldTextElem);
+      insertChildren(selParentElem, insElem.children, rightTextElem);
+    }
+  } else if (getClassName(selNode) === mathTextViewClass) {
+    insertChildren(selNode, insElem.children, null);
   } else {
-    setCursorToElementEnd(parentElem);
+    insertChildren(selParentElem, insElem.children, selNode.nextSibling);
   }
 
-  callOnChange();
+  ({ firstElem: insFirstChildElem, lastElem: insLastChildElem } = concatElementsOutside(
+    insFirstChildElem,
+    insLastChildElem
+  ));
+
+  setCursorBetweenElements(insFirstChildElem, insLastChildElem);
+
+  {
+    let insPrevFirstChildElem = insFirstChildElem.previousElementSibling;
+    let insNextLastChildElem = insLastChildElem.nextElementSibling;
+
+    if (insPrevFirstChildElem !== null) {
+      concatTextElements(insPrevFirstChildElem, insPrevFirstChildElem.nextElementSibling);
+    }
+    if (insNextLastChildElem !== null) {
+      concatTextElements(insNextLastChildElem.previousElementSibling, insNextLastChildElem);
+    }
+  }
+
+  callOnTextChange();
 
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Returns the next sibling element of the given element, or the first child element of its parent element, or null if not found.
+   * Sets the cursor between the first and last element of the inserted children.
    *
-   * @param {HTMLSpanElement} parentElem - The parent element to search for the next sibling element.
-   * @param {HTMLSpanElement?} childPrevElem - The previous sibling element to start the search from.
-   * @returns {HTMLSpanElement?} The next sibling element, or the first child element of the parent element, or null if not found.
+   * @param {HTMLSpanElement} firstElem - The first element of inserted children.
+   * @param {HTMLSpanElement} lastElem - The last element of inserted children.
    */
-  function findNextElementByPreviousElement(parentElem, childPrevElem) {
-    let childNextElem =
-      childPrevElem !== null && childPrevElem !== parentElem.lastChild ? childPrevElem.nextSibling : null;
+  function setCursorBetweenElements(firstElem, lastElem) {
+    const parentElem = firstElem.parentElement;
+    const firstIndex = Array.prototype.indexOf.call(parentElem.children, firstElem);
+    const lastIndex = Array.prototype.indexOf.call(parentElem.children, lastElem);
 
-    if (parentElem.childElementCount > 0 && childPrevElem === null && childNextElem === null) {
-      childNextElem = parentElem.firstChild;
+    const firstTextHintElem = getFirstTextHintElement(parentElem, firstIndex, lastIndex);
+
+    if (firstTextHintElem !== null) {
+      setCursorToElementEnd(firstTextHintElem);
+    } else if (
+      lastElem.nextElementSibling !== null &&
+      (!(lastElem instanceof HTMLSpanElement) ||
+        operatorClasses.includes(getClassName(lastElem)) ||
+        indexContainerClasses.includes(getClassName(lastElem)))
+    ) {
+      setCursorToElementBegin(lastElem.nextElementSibling);
+    } else {
+      setCursorToElementEnd(lastElem);
     }
-
-    return childNextElem;
   }
 }
 
@@ -236,185 +166,121 @@ function insertAtCursor(mathText) {
  * If the deletion is impossible, moves the cursor to the left.
  */
 function deleteAtCursor() {
+  if (mathTextView.innerHTML === '') {
+    return;
+  }
+
+  addUndoState();
+
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
 
+  let elem = range.startContainer;
+  if (elem.nodeType === Node.TEXT_NODE) {
+    elem = elem.parentElement;
+  }
+
+  let prevElem = elem.previousSibling;
+
+  if (getClassName(prevElem) === borderClass) {
+    prevElem = prevElem.previousElementSibling;
+  }
+
   if (!range.collapsed) {
-    addUndoState();
-    range.deleteContents();
+    // TODO: implement deletion of selection
     range.collapse(true);
   } else if (range.startOffset !== 0) {
-    addUndoState();
-
-    let elem = range.startContainer;
-
-    if (elem.className === undefined) {
-      elem = elem.parentElement;
-    }
-
     if ([...elem.innerText].length === 1) {
-      deleteChild(elem.parentElement, elem);
+      deleteChild(elem);
     } else {
       document.execCommand('delete', false, null);
     }
+  } else if (prevElem !== null && areElementChildrenEmpty(prevElem)) {
+    deleteChild(prevElem);
   } else {
-    let parentElement = range.startContainer;
-
-    while (parentElement.className === undefined) {
-      parentElement = parentElement.parentElement;
+    elem = elem.parentElement;
+    if (childContainerClasses.includes(getClassName(elem))) {
+      elem = elem.parentElement;
     }
 
-    const prevSibling = parentElement.previousElementSibling;
-
-    if (prevSibling !== null && operatorClasses.includes(prevSibling.className)) {
-      addUndoState();
-
-      deleteChild(prevSibling.parentElement, prevSibling);
-
-      const parentParentElem = parentElement.parentElement;
-
-      if (parentParentElem !== null && parentElement.innerHTML === '') {
-        deleteChild(parentParentElem, parentElement);
-      }
+    if (areElementChildrenEmpty(elem)) {
+      deleteChild(elem);
     } else {
-      if (parentElement.className === mathTextViewClass) {
-        return;
-      }
-
-      let containerElem = parentElement;
-
-      while (
-        !supContainerClasses.includes(containerElem.className) &&
-        !containerClasses.includes(containerElem.className) &&
-        areElementChildrenEmpty(containerElem)
-      ) {
-        if (indexContainerClasses.includes(containerElem.className)) {
-          break;
-        }
-
-        containerElem = parentElement;
-        parentElement = parentElement.parentElement;
-      }
-
-      if (!areElementChildrenEmpty(containerElem)) {
-        moveCursorLeft();
-        return;
-      }
-
-      addUndoState();
-
-      if (containerElem.className === bracketsClass && parentElement.className === functionClass) {
-        containerElem = parentElement;
-        parentElement = parentElement.parentElement;
-      }
-
-      deleteChild(parentElement, containerElem);
+      moveCursorLeft();
     }
   }
 
-  callOnChange();
+  callOnTextChange();
 
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Deletes a child element from a parent element.
-   * Updates the cursor position.
-   * Adds a text hint in the place of the child element. if necessary.
+   * Deletes the given element from its parent element.
    *
-   * @param {HTMLSpanElement} parentElem - The parent element from which to delete a child.
-   * @param {HTMLSpanElement} childElem - The child element to delete.
+   * @param {HTMLSpanElement} elem - The element to delete.
    */
-  function deleteChild(parentElem, childElem) {
-    let prevSibling = childElem.previousElementSibling;
+  function deleteChild(elem) {
+    let parentElem = elem.parentElement;
+    let prevElem = elem.previousElementSibling;
 
-    parentElem.removeChild(childElem);
+    let isPreviousElemLastAndEmpty = prevElem === parentElem.firstChild && isEmptyElement(prevElem);
 
-    if (areElementChildrenEmpty(parentElem)) {
+    parentElem.removeChild(elem);
+
+    if (getClassName(parentElem) === mathTextViewClass && areElementChildrenEmpty(parentElem)) {
       parentElem.innerHTML = '';
+      return;
+    }
 
-      if (
-        supContainerClasses.includes(parentElem.className) ||
-        containerClasses.includes(parentElem.className) ||
-        subContainerClasses.includes(parentElem.className) ||
-        indexContainerClasses.includes(parentElem.className)
-      ) {
-        let emptyTextHintElem = createElement(textHintClass);
-        parentElem.appendChild(emptyTextHintElem);
-        setCursorToElementEnd(emptyTextHintElem);
-      } else {
-        setCursorToElementEnd(parentElem);
+    if (getClassName(prevElem) === functionNameClass) {
+      let newPrevElem = prevElem.previousElementSibling;
+      parentElem.removeChild(prevElem);
+      prevElem = newPrevElem;
+    }
+
+    if (getClassName(elem) === openBracketClass && getClassName(prevElem?.nextElementSibling) === textHintClass) {
+      prevElem = prevElem.nextElementSibling;
+
+      if (getClassName(prevElem?.nextElementSibling) === closeBracketClass) {
+        parentElem.removeChild(prevElem.nextElementSibling);
       }
-    } else if (prevSibling !== null) {
-      if (textClasses.includes(prevSibling.className) || operatorClasses.includes(prevSibling.className)) {
-        let prevElem = prevSibling;
-        let nextElem = prevElem.nextElementSibling;
+    }
 
-        if (
-          nextElem !== null &&
-          (operatorClasses.includes(nextElem.className) || indexContainerClasses.includes(nextElem.className))
-        ) {
-          if (indexContainerClasses.includes(nextElem.className)) {
-            parentElem.insertBefore(createElement(textHintClass), prevElem.nextSibling);
-            prevElem = prevElem.nextSibling;
-          } else {
-            switch (nextElem.className) {
-              case unaryPostfixOperatorClass:
-              case binaryOperatorClass: {
-                if (unaryPrefixOperators.includes(nextElem.innerText)) {
-                  nextElem.className = unaryPrefixOperatorClass;
-                  parentElem.insertBefore(createElement(textClass), nextElem);
-                } else {
-                  parentElem.insertBefore(createElement(textHintClass), nextElem);
-                }
+    if (prevElem === null) {
+      prevElem = parentElem.firstElementChild;
+    }
 
-                prevElem = prevElem.nextSibling;
+    {
+      let nextElem;
+      ({ firstElem: prevElem, lastElem: nextElem } = concatElementsOutside(prevElem, prevElem));
+    }
 
-                break;
-              }
-              case unaryPrefixOperatorClass: {
-                parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
-                prevElem = prevElem.nextSibling;
-                break;
-              }
-            }
-          }
-        } else {
-          switch (prevElem.className) {
-            case unaryPrefixOperatorClass:
-            case binaryOperatorClass: {
-              parentElem.insertBefore(createElement(textHintClass), prevElem.nextSibling);
-              prevElem = prevElem.nextSibling;
-              break;
-            }
-            case unaryPostfixOperatorClass: {
-              parentElem.insertBefore(createElement(textClass), prevElem.nextSibling);
-              prevElem = prevElem.nextSibling;
-              break;
-            }
-          }
-        }
-
+    if (containerClasses.includes(getClassName(parentElem)) && parentElem.childElementCount === 0) {
+      parentElem.appendChild(createElement(textHintClass));
+      setCursorToTextElement(parentElem.firstElementChild);
+    } else if (prevElem !== null && !isPreviousElemLastAndEmpty) {
+      if (textClasses.includes(getClassName(prevElem)) || containerClasses.includes(getClassName(prevElem))) {
         setCursorToElementEnd(prevElem);
       } else {
-        let elem = createElement(textClass);
-        parentElem.insertBefore(elem, prevSibling.nextSibling);
-        setCursorToElementEnd(elem);
+        setCursorToElementBegin(prevElem);
       }
     } else {
-      setCursorToElementBegin(parentElem.firstChild);
+      setCursorToElementBegin(parentElem);
     }
+
+    concatTextElements(prevElem, prevElem?.nextElementSibling);
   }
 }
 
 /**
- * Clears the contents of the math text view by setting its text to an empty string.
+ * Clears the contents of mathTextView.
  */
 function clear() {
   setText('');
 }
 
 /**
- * Undo the last change to the math text view by restoring a previous state from the undo stack.
+ * Undo the last change to mathTextView by restoring a previous state from the undo stack.
  * If the undo stack is empty, does nothing.
  */
 function undo() {
@@ -424,7 +290,7 @@ function undo() {
 
   const selection = window.getSelection();
   const oldRange = selection.getRangeAt(0);
-  const oldElemPath = getElemPath(mathTextView, oldRange.startContainer);
+  const oldElemPath = getElementPath(mathTextView, oldRange.startContainer);
   const oldOffset = oldRange.startOffset;
 
   redoStack.push([toMathText(mathTextView.innerHTML), oldElemPath, oldOffset]);
@@ -434,13 +300,13 @@ function undo() {
   const elemPath = state[1];
   const offset = state[2];
 
-  mathTextView.innerHTML = toHtml(mathText);
-  callOnChange();
+  mathTextView.innerHTML = toHtml(mathText, mathText.isContentEditable);
+  callOnTextChange();
   restoreRange(mathTextView, elemPath, offset);
 }
 
 /**
- * Redo the last change to the math text view by restoring a previous state from the redo stack.
+ * Redo the last change to mathTextView by restoring a previous state from the redo stack.
  * If the redo stack is empty, does nothing.
  */
 function redo() {
@@ -450,7 +316,7 @@ function redo() {
 
   const selection = window.getSelection();
   const oldRange = selection.getRangeAt(0);
-  const oldElemPath = getElemPath(mathTextView, oldRange.startContainer);
+  const oldElemPath = getElementPath(mathTextView, oldRange.startContainer);
   const oldOffset = oldRange.startOffset;
 
   undoStack.push([toMathText(mathTextView.innerHTML), oldElemPath, oldOffset]);
@@ -460,8 +326,8 @@ function redo() {
   const elemPath = state[1];
   const offset = state[2];
 
-  mathTextView.innerHTML = toHtml(mathText);
-  callOnChange();
+  mathTextView.innerHTML = toHtml(mathText, mathTextView.isContentEditable);
+  callOnTextChange();
   restoreRange(mathTextView, elemPath, offset);
 }
 
@@ -475,7 +341,7 @@ function addUndoState() {
 
   const selection = window.getSelection();
   const oldRange = selection.getRangeAt(0);
-  const oldElemPath = getElemPath(mathTextView, oldRange.startContainer);
+  const oldElemPath = getElementPath(mathTextView, oldRange.startContainer);
   const oldOffset = oldRange.startOffset;
 
   undoStack.push([toMathText(mathTextView.innerHTML), oldElemPath, oldOffset]);
@@ -490,9 +356,13 @@ function moveCursorLeft() {
 
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
-  const elem = range.startContainer;
+  let elem = range.startContainer;
 
-  if (elem.className !== undefined && elem.className !== textClass && elem.className !== textHintClass) {
+  if (elem.nodeType === Node.TEXT_NODE) {
+    elem = elem.parentElement;
+  }
+
+  if (!textClasses.includes(getClassName(elem))) {
     moveCursorLeft();
   }
 
@@ -504,31 +374,27 @@ function moveCursorLeft() {
   function moveCursorLeftImpl() {
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
+
     let elem = range.startContainer;
     let offset = range.startOffset;
 
-    if (offset > 0) {
-      setCursorToTextElement(elem, offset - 1);
+    if (elem.textContent !== null && offset > 0) {
+      let delta = [...elem.textContent.substring(0, offset)].pop().length;
+      setCursorToTextElement(elem, offset - delta);
       return;
     }
 
     while (elem.previousElementSibling === null) {
       const parentElem = elem.parentElement;
 
-      if (parentElem.className === mathTextViewClass) {
+      if (getClassName(parentElem) === mathTextViewClass) {
         return;
       }
 
       elem = parentElem;
     }
 
-    const prevSibling = elem.previousElementSibling;
-
-    if (prevSibling.isContentEditable) {
-      setCursorToElementEnd(prevSibling);
-    } else {
-      setCursorToElementEnd(prevSibling.previousElementSibling);
-    }
+    setCursorToElementEnd(elem.previousElementSibling);
   }
 }
 
@@ -540,9 +406,13 @@ function moveCursorRight() {
 
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
-  const elem = range.startContainer;
+  let elem = range.startContainer;
 
-  if (elem.className !== undefined && elem.className !== textClass && elem.className !== textHintClass) {
+  if (elem.nodeType === Node.TEXT_NODE) {
+    elem = elem.parentElement;
+  }
+
+  if (!textClasses.includes(getClassName(elem))) {
     moveCursorRight();
   }
 
@@ -558,27 +428,27 @@ function moveCursorRight() {
     let offset = range.startOffset;
 
     if (elem.textContent !== null && offset < elem.textContent.length) {
-      setCursorToTextElement(elem, offset + 1);
+      let delta = [...elem.textContent.substring(offset)][0].length;
+      setCursorToTextElement(elem, offset + delta);
       return;
     }
 
-    while (elem.nextSibling === null) {
+    while (elem.nextElementSibling === null) {
       const parentElem = elem.parentElement;
 
-      if (parentElem.className === mathTextViewClass) {
+      if (getClassName(parentElem) === mathTextViewClass) {
         return;
       }
 
       elem = parentElem;
     }
 
-    const nextSibling = elem.nextSibling;
-    setCursorToElementBegin(nextSibling);
+    setCursorToElementBegin(elem.nextElementSibling);
   }
 }
 
 /**
- * Sets the focus to mathTextView
+ * Sets the focus to mathTextView.
  */
 function requestFocus() {
   mathTextView.focus();
