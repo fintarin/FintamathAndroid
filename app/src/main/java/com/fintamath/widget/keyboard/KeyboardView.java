@@ -720,8 +720,8 @@ public class KeyboardView extends View implements View.OnClickListener {
                 canvas.drawText(topLabel,
                         (float) (key.width - padding.left - padding.right) * 4 / 5
                                 + padding.left,
-                        (float) (key.height - padding.top - padding.bottom) / 5
-                                + (paint.getTextSize() - paint.descent()) / 5 + padding.top,
+                        (float) (padding.top - padding.bottom) +
+                                (paint.getTextSize() - paint.descent()) * 2 + padding.top,
                         paint);
 
                 paint.setColor(mKeyTextColor);
