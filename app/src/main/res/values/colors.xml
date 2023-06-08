@@ -7,6 +7,9 @@
     <color name="background_bar_button">@color/background_bar</color>
     <color name="background_bar_button_pressed">#666666</color>
 
+    <color name="background_menu">#333333</color>
+    <color name="background_menu_stroke">#33333326</color>
+
     <color name="background_history">@color/background_number_key</color>
     <color name="background_history_item_button">@color/background_history</color>
     <color name="background_history_item_button_pressed">@color/background_keyboard_key_pressed</color>

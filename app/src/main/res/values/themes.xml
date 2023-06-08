@@ -1,12 +1,14 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="Theme.Fintamath" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/background_bar</item>
         <item name="colorOnPrimary">@color/text_main</item>
-        <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/background_bar</item>
         <item name="android:navigationBarColor">@color/background_keyboard</item>
-        <!-- Customize your theme here. -->
+        <item name="popupMenuStyle">@style/Theme.Fintamath.PopupMenu</item>
+    </style>
+
+    <style name="Theme.Fintamath.PopupMenu" parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="android:popupBackground">@drawable/menu_background</item>
+        <item name="android:textAlignment">center</item>
     </style>
 </resources>
