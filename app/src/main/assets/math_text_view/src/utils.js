@@ -327,7 +327,7 @@ function toHtml(mathText, isEditable = false) {
    * @returns {HTMLSpanElement?} New child element.
    */
   function insertSpace(elem) {
-    if (elem.lastElementChild?.innerHTML !== '') {
+    if (elem.lastElementChild !== null && elem.lastElementChild.innerHTML !== '') {
       const spaceElem = createElement(textClass);
       return elem.appendChild(spaceElem);
     }
@@ -728,8 +728,8 @@ function concatElementsOutside(firstElem, lastElem) {
     lastElem = parentElem.lastElementChild;
   }
 
-  let prevFirstElem = firstElem?.previousElementSibling;
-  let nextLastElem = lastElem?.nextElementSibling;
+  let prevFirstElem = firstElem !== null ? firstElem.previousElementSibling : null;
+  let nextLastElem = lastElem !== null ? lastElem.nextElementSibling : null;
 
   if (operatorClasses.includes(getClassName(firstElem))) {
     firstElem.className = parseOperator(prevFirstElem, firstElem.innerText);
@@ -742,11 +742,11 @@ function concatElementsOutside(firstElem, lastElem) {
   insertHints(parentElem, getPreviousIndex(firstElem), getNextIndex(lastElem));
   insertEmptyTexts(parentElem, getPreviousIndex(firstElem), getNextIndex(lastElem));
 
-  if (firstElem?.previousElementSibling !== prevFirstElem) {
+  if (firstElem !== null && firstElem.previousElementSibling !== prevFirstElem) {
     firstElem = firstElem.previousElementSibling;
   }
 
-  if (lastElem?.nextElementSibling !== nextLastElem) {
+  if (lastElem !== null && lastElem.nextElementSibling !== nextLastElem) {
     lastElem = lastElem.nextElementSibling;
   }
 
@@ -818,7 +818,7 @@ function concatTextElements(leftElem, rightElem) {
   const range = selection.getRangeAt(0);
 
   let selNode = range.startContainer;
-  if (selNode?.nodeType === Node.TEXT_NODE) {
+  if (selNode !== null && selNode.nodeType === Node.TEXT_NODE) {
     selNode = selNode.parentElement;
   }
 
@@ -845,12 +845,16 @@ function concatTextElements(leftElem, rightElem) {
  * @param {number} end - The end index to check.
  */
 function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
+  if (start < 0 || start >= elem.childElementCount) {
+    return;
+  }
+
   for (let i = start; i <= end; i++) {
     const childElem = elem.children[i];
 
     const className = getClassName(childElem);
-    const prevElemClassName = getClassName(childElem?.previousElementSibling);
-    const nextElemClassName = getClassName(childElem?.nextElementSibling);
+    const prevElemClassName = childElem !== null ? getClassName(childElem.previousElementSibling) : undefinedClass;
+    const nextElemClassName = childElem !== null ? getClassName(childElem.nextElementSibling) : undefinedClass;
 
     if (
       (className === binaryOperatorClass ||
@@ -872,7 +876,7 @@ function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
         nextElemClassName === unaryPostfixOperatorClass ||
         nextElemClassName === closeBracketClass)
     ) {
-      elem.insertBefore(createElement(textHintClass), childElem?.nextElementSibling);
+      elem.insertBefore(createElement(textHintClass), childElem !== null ? childElem.nextElementSibling : null);
       end++;
       i++;
     }
@@ -887,12 +891,16 @@ function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
  * @param {number} end - The end index to check.
  */
 function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
+  if (start < 0 || start >= elem.childElementCount) {
+    return;
+  }
+
   for (let i = start; i <= end; i++) {
     const childElem = elem.children[i];
 
     const className = getClassName(childElem);
-    const prevElemClassName = getClassName(childElem?.previousElementSibling);
-    const nextElemClassName = getClassName(childElem?.nextElementSibling);
+    const prevElemClassName = childElem !== null ? getClassName(childElem.previousElementSibling) : undefinedClass;
+    const nextElemClassName = childElem !== null ? getClassName(childElem.nextElementSibling) : undefinedClass;
 
     if (!parentContainerClasses.includes(getClassName(elem))) {
       if (
@@ -915,7 +923,7 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
         !textClasses.includes(nextElemClassName) &&
         nextElemClassName !== borderClass
       ) {
-        elem.insertBefore(createElement(textClass), childElem?.nextElementSibling);
+        elem.insertBefore(createElement(textClass), childElem !== null ? childElem.nextElementSibling : null);
         end++;
         i++;
       }
@@ -1315,7 +1323,11 @@ function getClassName(elem) {
  * @param {string} className The class name to set.
  */
 function setClassName(elem, className) {
-  elem?.setAttribute('class', className);
+  if (elem === null) {
+    return;
+  }
+
+  elem.setAttribute('class', className);
 }
 
 /**

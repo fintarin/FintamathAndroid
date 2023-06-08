@@ -240,11 +240,13 @@ function deleteAtCursor() {
       prevElem = newPrevElem;
     }
 
-    if (getClassName(elem) === openBracketClass && getClassName(prevElem?.nextElementSibling) === textHintClass) {
-      prevElem = prevElem.nextElementSibling;
+    if (prevElem !== null) {
+      if (getClassName(elem) === openBracketClass && getClassName(prevElem.nextElementSibling) === textHintClass) {
+        prevElem = prevElem.nextElementSibling;
 
-      if (getClassName(prevElem?.nextElementSibling) === closeBracketClass) {
-        parentElem.removeChild(prevElem.nextElementSibling);
+        if (getClassName(prevElem.nextElementSibling) === closeBracketClass) {
+          parentElem.removeChild(prevElem.nextElementSibling);
+        }
       }
     }
 
@@ -274,7 +276,9 @@ function deleteAtCursor() {
       setCursorToElementBegin(prevElem);
     }
 
-    concatTextElements(prevElem, prevElem?.nextElementSibling);
+    if (prevElem !== null) {
+      concatTextElements(prevElem, prevElem.nextElementSibling);
+    }
   }
 }
 
