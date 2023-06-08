@@ -144,7 +144,7 @@ function insertAtCursor(mathText) {
     const firstIndex = Array.prototype.indexOf.call(parentElem.children, firstElem);
     const lastIndex = Array.prototype.indexOf.call(parentElem.children, lastElem);
 
-    const firstTextHintElem = getFirstTextHintElement(parentElem, firstIndex, lastIndex);
+    const firstTextHintElem = findFirstTextHintElement(parentElem, firstIndex, lastIndex);
 
     if (firstTextHintElem !== null) {
       setCursorToElementEnd(firstTextHintElem);

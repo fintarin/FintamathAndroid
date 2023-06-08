@@ -1004,7 +1004,7 @@ function parseOperator(prevElem, operName) {
  * @param {number} endIndex - The index of the last child element to check.
  * @returns {HTMLSpanElement?} The first text hint elem found, or null if none were found.
  */
-function getFirstTextHintElement(rootElem, startIndex, endIndex) {
+function findFirstTextHintElement(rootElem, startIndex, endIndex) {
   if (startIndex < 0) {
     startIndex = 0;
   }
@@ -1019,8 +1019,12 @@ function getFirstTextHintElement(rootElem, startIndex, endIndex) {
       return childElem;
     }
 
-    if (childElem instanceof HTMLElement && childElem.children.length > 0) {
-      return getFirstTextHintElement(childElem, 0, childElem.childElementCount - 1);
+    if (childElem instanceof HTMLElement) {
+      let resElem = findFirstTextHintElement(childElem, 0, childElem.childElementCount - 1);
+
+      if (resElem !== null) {
+        return resElem;
+      }
     }
   }
 
