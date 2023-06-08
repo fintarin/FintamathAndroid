@@ -255,7 +255,7 @@ function deleteAtCursor() {
     let newPrevElem = prevElem;
     ({ firstElem: newPrevElem, lastElem: nextElem } = concatElementsOutside(prevElem, prevElem));
 
-    if (getClassName(elem) !== textClass) {
+    if (prevElem.parentElement !== parentElem || getClassName(elem) !== textClass) {
       prevElem = newPrevElem;
     }
 
