@@ -4,7 +4,7 @@
 
 ---
 
-FintamathAndroid is the frontend of the [Fintamath](https://github.com/fintarin/Fintamath) library. This is a computer algebra system that supports pretty input and output of mathematical text and solving mathematical problems with the help of the above mentioned library.
+FintamathAndroid is the frontend of [Fintamath](https://github.com/fintarin/Fintamath) library. This is a computer algebra system that supports beautiful input/output of mathematical text and solves many kinds of mathematical problems.
 
 <p align="center">
   <img src="./docs/images/example.png" alt="drawing" width="250"/>
