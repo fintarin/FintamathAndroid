@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="text_size_main">18sp</dimen>
+    <dimen name="text_size_main_small">16sp</dimen>
     <dimen name="text_size_bar">22sp</dimen>
     <dimen name="text_size_math_text_view">22sp</dimen>
     <dimen name="text_size_keyboard">22sp</dimen>
@@ -11,7 +13,7 @@
     <dimen name="text_size_keyboard_top_special_big">16sp</dimen>
     <dimen name="text_size_alternative">18sp</dimen>
     <dimen name="text_size_solution_message">16sp</dimen>
-    <dimen name="text_size_empty_history_message">18sp</dimen>
+    <dimen name="text_size_message_version">14sp</dimen>
 
     <dimen name="diameter_bar_key">48dp</dimen>
     <dimen name="diameter_history_item_button">36dp</dimen>

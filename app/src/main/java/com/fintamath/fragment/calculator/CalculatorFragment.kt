@@ -28,6 +28,7 @@ class CalculatorFragment : Fragment() {
     private lateinit var inTextLayout: ViewGroup
     private lateinit var inTextView: MathTextView
     private lateinit var solutionView: MathSolutionView
+    private lateinit var optionsMenu: PopupMenu
     private lateinit var calculatorProcessor: CalculatorProcessor
     private var fragmentView: View? = null
 
@@ -44,7 +45,7 @@ class CalculatorFragment : Fragment() {
             initMathTexts(fragmentView!!)
             initProcessors()
             initKeyboards(fragmentView!!)
-            initButtons(fragmentView!!)
+            initBarButtons(fragmentView!!)
         }
 
         if (inTextView.text != MathTextStorage.mathTextData.text) {
@@ -54,6 +55,12 @@ class CalculatorFragment : Fragment() {
         inTextView.requestFocus()
 
         return fragmentView!!
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        runSaveToHistoryTask()
     }
 
     private fun initMathTexts(fragmentView: View) {
@@ -74,17 +81,6 @@ class CalculatorFragment : Fragment() {
             { outTexts(it) },
             { startLoading() }
         )
-    }
-
-    private fun initButtons(fragmentView: View) {
-        val optionsButton: ImageButton = fragmentView.findViewById(R.id.optionsButton)
-        optionsButton.setOnClickListener { showOptionsMenu(it) }
-
-        val cameraButton: ImageButton = fragmentView.findViewById(R.id.cameraButton)
-        cameraButton.setOnClickListener { showCameraFragment(it) }
-
-        val historyButton: ImageButton = fragmentView.findViewById(R.id.historyButton)
-        historyButton.setOnClickListener { showHistoryFragment(it) }
     }
 
     private fun initKeyboards(fragmentView: View) {
@@ -130,10 +126,35 @@ class CalculatorFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    private fun initBarButtons(fragmentView: View) {
+        val optionsButton: ImageButton = fragmentView.findViewById(R.id.optionsButton)
+        optionsButton.setOnClickListener { showOptionsMenu(fragmentView) }
 
-        runSaveToHistoryTask()
+        val cameraButton: ImageButton = fragmentView.findViewById(R.id.cameraButton)
+        cameraButton.setOnClickListener { showCameraFragment(fragmentView) }
+
+        val historyButton: ImageButton = fragmentView.findViewById(R.id.historyButton)
+        historyButton.setOnClickListener { showHistoryFragment(fragmentView) }
+
+        optionsMenu = PopupMenu(requireContext(), optionsButton)
+        optionsMenu.menuInflater.inflate(R.menu.options_menu, optionsMenu.menu)
+        optionsMenu.setOnMenuItemClickListener {
+            var result = true;
+
+            when (it.itemId) {
+                R.id.settingsButton -> {
+                    showSettingsFragment(fragmentView)
+                }
+                R.id.aboutButton -> {
+                    showAboutFragment(fragmentView)
+                }
+                else -> {
+                    result = false;
+                }
+            }
+
+            return@setOnMenuItemClickListener result
+        }
     }
 
     private fun callOnInTextChange(text: String) {
@@ -189,10 +210,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun showOptionsMenu(view: View) {
-        val popup = PopupMenu(requireContext(), view)
-        val inflater = popup.menuInflater
-        inflater.inflate(R.menu.options_menu, popup.menu)
-        popup.show()
+        optionsMenu.show()
     }
 
     private fun showHistoryFragment(view: View) {
@@ -203,6 +221,18 @@ class CalculatorFragment : Fragment() {
 
     private fun showCameraFragment(view: View) {
         // TODO: implement
+    }
+
+    private fun showAboutFragment(view: View) {
+        runSaveToHistoryTask()
+        inTextView.clearFocus()
+        view.findNavController().navigate(R.id.action_calculatorFragment_to_aboutFragment)
+    }
+
+    private fun showSettingsFragment(view: View) {
+        runSaveToHistoryTask()
+        inTextView.clearFocus()
+        view.findNavController().navigate(R.id.action_calculatorFragment_to_settingsFragment)
     }
 
     private fun runSaveToHistoryTask() {

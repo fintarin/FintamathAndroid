@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_main"
+    tools:context=".fragment.about.AboutFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bar_background">
+
+        <ImageButton
+            android:id="@+id/aboutBackButton"
+            android:layout_width="@dimen/diameter_bar_key"
+            android:layout_height="@dimen/diameter_bar_key"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:background="@drawable/bar_key_background"
+            android:contentDescription="@string/back"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="@string/about"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/text_size_bar"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:contentDescription="@string/logo"
+            android:padding="15dp"
+            android:src="@drawable/ic_logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:gravity="center"
+            android:text="@string/page_link"
+            android:textSize="@dimen/text_size_main_small"
+            android:textColor="@color/text_main"
+            android:textColorLink="@color/text_main"
+            android:textColorHighlight="@color/background_main"
+            android:shadowColor="@color/text_hint"
+            android:autoLink="web"
+            android:linksClickable="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:gravity="center"
+            android:text="@string/contact_us"
+            android:textSize="@dimen/text_size_main_small"
+            android:textColor="@color/text_hint"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:paddingBottom="15dp"
+            android:gravity="center"
+            android:text="@string/contact_link"
+            android:textSize="@dimen/text_size_main_small"
+            android:textColor="@color/text_main"
+            android:textColorLink="@color/text_main"
+            android:textColorHighlight="@color/background_main"
+            android:shadowColor="@color/text_hint"
+            android:autoLink="email"
+            android:linksClickable="true"/>
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:gravity="center"
+        android:text="@string/version_message"
+        android:textSize="@dimen/text_size_message_version"
+        android:textColor="@color/text_hint" />
+
+</LinearLayout>

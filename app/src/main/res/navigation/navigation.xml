@@ -15,6 +15,14 @@
             android:id="@+id/action_calculatorFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
 
+        <action
+            android:id="@+id/action_calculatorFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+
+        <action
+            android:id="@+id/action_calculatorFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+
     </fragment>
 
     <fragment
@@ -22,5 +30,17 @@
         android:name="com.fintamath.fragment.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.fintamath.fragment.about.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.fintamath.fragment.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 
 </navigation>
