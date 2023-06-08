@@ -222,8 +222,10 @@ function deleteAtCursor() {
   function deleteChild(elem) {
     let parentElem = elem.parentElement;
     let prevElem = elem.previousElementSibling;
+    let nextElem = elem.nextElementSibling;
 
-    let isPreviousElemLastAndEmpty = prevElem === parentElem.firstChild && isEmptyElement(prevElem);
+    let isFirstElem = prevElem === null || (prevElem === parentElem.firstChild && isEmptyElement(prevElem));
+    let isLastElem = nextElem === null || (nextElem === parentElem.lastChild && isEmptyElement(nextElem));
 
     parentElem.removeChild(elem);
 
@@ -250,22 +252,19 @@ function deleteAtCursor() {
       prevElem = parentElem.firstElementChild;
     }
 
-    {
-      let nextElem;
-      ({ firstElem: prevElem, lastElem: nextElem } = concatElementsOutside(prevElem, prevElem));
-    }
+    ({ firstElem: prevElem, lastElem: nextElem } = concatElementsOutside(prevElem, prevElem));
 
     if (containerClasses.includes(getClassName(parentElem)) && parentElem.childElementCount === 0) {
       parentElem.appendChild(createElement(textHintClass));
       setCursorToTextElement(parentElem.firstElementChild);
-    } else if (prevElem !== null && !isPreviousElemLastAndEmpty) {
-      if (textClasses.includes(getClassName(prevElem)) || containerClasses.includes(getClassName(prevElem))) {
-        setCursorToElementEnd(prevElem);
-      } else {
-        setCursorToElementBegin(prevElem);
-      }
-    } else {
+    } else if (isFirstElem) {
       setCursorToElementBegin(parentElem);
+    } else if (isLastElem) {
+      setCursorToElementEnd(parentElem);
+    } else if (textClasses.includes(getClassName(prevElem)) || containerClasses.includes(getClassName(prevElem))) {
+      setCursorToElementEnd(prevElem);
+    } else {
+      setCursorToElementBegin(prevElem);
     }
 
     concatTextElements(prevElem, prevElem?.nextElementSibling);
