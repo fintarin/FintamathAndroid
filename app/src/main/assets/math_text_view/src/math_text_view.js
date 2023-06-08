@@ -252,7 +252,12 @@ function deleteAtCursor() {
       prevElem = parentElem.firstElementChild;
     }
 
-    ({ firstElem: prevElem, lastElem: nextElem } = concatElementsOutside(prevElem, prevElem));
+    let newPrevElem = prevElem;
+    ({ firstElem: newPrevElem, lastElem: nextElem } = concatElementsOutside(prevElem, prevElem));
+
+    if (getClassName(elem) !== textClass) {
+      prevElem = newPrevElem;
+    }
 
     if (containerClasses.includes(getClassName(parentElem)) && parentElem.childElementCount === 0) {
       parentElem.appendChild(createElement(textHintClass));
@@ -261,8 +266,10 @@ function deleteAtCursor() {
       setCursorToElementBegin(parentElem);
     } else if (isLastElem) {
       setCursorToElementEnd(parentElem);
-    } else if (textClasses.includes(getClassName(prevElem)) || containerClasses.includes(getClassName(prevElem))) {
+    } else if (textClasses.includes(getClassName(prevElem))) {
       setCursorToElementEnd(prevElem);
+    } else if (containerClasses.includes(getClassName(prevElem))) {
+      setCursorToElementBegin(prevElem.nextElementSibling);
     } else {
       setCursorToElementBegin(prevElem);
     }
