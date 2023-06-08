@@ -13,7 +13,7 @@ using namespace fintamath;
 
 static const char *loggerTag = "com.fintamath.lib";
 
-constexpr int32_t maxResultLength = 10000;
+constexpr int32_t maxResultLength = 5000;
 constexpr int32_t maxSolutionLength = 1000000;
 
 static pid_t calcPid = -1;
