@@ -299,9 +299,10 @@ function undo() {
   }
 
   const selection = window.getSelection();
-  const oldRange = selection.getRangeAt(0);
-  const oldElemPath = getElementPath(mathTextView, oldRange.startContainer);
-  const oldOffset = oldRange.startOffset;
+  const range = selection.getRangeAt(0);
+
+  const oldElemPath = getElementPath(mathTextView, range.startContainer);
+  const oldOffset = range.startOffset;
 
   redoStack.push([toMathText(mathTextView.innerHTML), oldElemPath, oldOffset]);
 
@@ -325,9 +326,10 @@ function redo() {
   }
 
   const selection = window.getSelection();
-  const oldRange = selection.getRangeAt(0);
-  const oldElemPath = getElementPath(mathTextView, oldRange.startContainer);
-  const oldOffset = oldRange.startOffset;
+  const range = selection.getRangeAt(0);
+
+  const oldElemPath = getElementPath(mathTextView, range.startContainer);
+  const oldOffset = range.startOffset;
 
   undoStack.push([toMathText(mathTextView.innerHTML), oldElemPath, oldOffset]);
 
@@ -350,9 +352,10 @@ function addUndoState() {
   }
 
   const selection = window.getSelection();
-  const oldRange = selection.getRangeAt(0);
-  const oldElemPath = getElementPath(mathTextView, oldRange.startContainer);
-  const oldOffset = oldRange.startOffset;
+  const range = selection.getRangeAt(0);
+
+  const oldElemPath = getElementPath(mathTextView, range.startContainer);
+  const oldOffset = range.startOffset;
 
   undoStack.push([toMathText(mathTextView.innerHTML), oldElemPath, oldOffset]);
   redoStack = [];
