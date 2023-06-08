@@ -117,3 +117,6 @@ const svgElementsMap = {
   [closeBracketClass]: createNewSvg(closeBracketClass, closeBracketSvgPath, bracketSvgViewBox),
   [sqrtPrefixClass]: createNewSvg(sqrtPrefixClass, sqrtPrefixSvgPath, sqrtPrefixViewBox),
 };
+
+// Define numeric coefficients
+const bracketsScale = 0.2;

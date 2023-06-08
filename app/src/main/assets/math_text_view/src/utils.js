@@ -574,18 +574,27 @@ function redrawSvg(elem) {
   for (let i = 0; i < elem.childElementCount; i++) {
     const childElem = elem.children[i];
 
-    if (childElem instanceof SVGSVGElement) {
-      setSvgColor(childElem);
+    let childElemHeight = childElem.clientHeight;
+
+    if (indexContainerClasses.includes(getClassName(childElem))) {
+      let top = Math.min(
+        childElem.getBoundingClientRect().top,
+        childElem.previousElementSibling.getBoundingClientRect().top
+      );
+
+      let bottom = Math.max(
+        childElem.getBoundingClientRect().bottom,
+        childElem.previousElementSibling.getBoundingClientRect().bottom
+      );
+
+      childElemHeight = bottom - top;
+      childElemHeight += childElemHeight * bracketsScale;
     }
 
-    if (maxHeightStack[maxHeightStack.length - 1] < childElem.clientHeight) {
-      maxHeightStack[maxHeightStack.length - 1] = childElem.clientHeight;
-
-      for (let i = maxHeightStack.length - 1; i > 0; i--) {
-        if (maxHeightStack[i - 1] < maxHeightStack[i]) {
-          maxHeightStack[i - 1] = maxHeightStack[i];
-        }
-      }
+    if (childElem instanceof SVGSVGElement) {
+      setSvgColor(childElem);
+    } else {
+      updateHeightStack(maxHeightStack, childElemHeight);
     }
 
     switch (getClassName(childElem)) {
@@ -595,10 +604,14 @@ function redrawSvg(elem) {
         break;
       }
       case closeBracketClass: {
-        setSvgHeight(childElem, maxHeightStack[maxHeightStack.length - 1]);
+        let height = maxHeightStack[maxHeightStack.length - 1];
+        setSvgHeight(childElem, height);
 
         if (openBracketElemsStack.length > 0) {
-          setSvgHeight(openBracketElemsStack.pop(), maxHeightStack.pop());
+          popHeightStack(maxHeightStack);
+          setSvgHeight(openBracketElemsStack.pop(), height);
+        } else {
+          updateHeightStack(maxHeightStack, height + getMinSvgHeight() * bracketsScale);
         }
 
         break;
@@ -609,10 +622,32 @@ function redrawSvg(elem) {
   }
 
   while (openBracketElemsStack.length > 0) {
-    setSvgHeight(openBracketElemsStack.pop(), maxHeightStack.pop());
+    setSvgHeight(openBracketElemsStack.pop(), popHeightStack(maxHeightStack));
   }
 
   //---------------------------------------------------------------------------------------------------------//
+
+  function updateHeightStack(maxHeightStack, height) {
+    if (maxHeightStack[maxHeightStack.length - 1] < height) {
+      maxHeightStack[maxHeightStack.length - 1] = height;
+
+      for (let i = maxHeightStack.length - 1; i > 0; i--) {
+        if (maxHeightStack[i - 1] < maxHeightStack[i]) {
+          maxHeightStack[i - 1] = maxHeightStack[i];
+        }
+      }
+    }
+  }
+
+  function popHeightStack(maxHeightStack) {
+    let height = maxHeightStack.pop();
+
+    if (maxHeightStack[maxHeightStack.length - 1] === height) {
+      updateHeightStack(maxHeightStack, height + getMinSvgHeight() * bracketsScale);
+    }
+
+    return height;
+  }
 
   /**
    * Returns the minimal height of the SVG element.
@@ -630,8 +665,9 @@ function redrawSvg(elem) {
    * @param {number} height - The height to set.
    */
   function setSvgHeight(elem, height) {
-    const scale = height / elem.clientHeight;
+    const scale = height / getMinSvgHeight();
     elem.style.transform = 'scale(1,' + scale + ')';
+    elem.style.height = height + 'px';
   }
 
   /**

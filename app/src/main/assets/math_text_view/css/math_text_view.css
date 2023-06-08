@@ -115,7 +115,7 @@ div {
 
 .function-name {
   margin-top: 2px;
-  margin-left: 2px;
+  margin-left: 1px;
   margin-right: -2px;
 }
 
@@ -155,15 +155,15 @@ div {
 
 .open-bracket,
 .close-bracket {
-  width: 0.5em;
+  width: 0.4em;
   height: 1em;
   vertical-align: middle;
 }
 
 .open-bracket {
-  margin-left: 2px;
+  margin-left: 3px;
 }
 
 .close-bracket {
-  margin-right: 2px;
+  margin-right: 3px;
 }
