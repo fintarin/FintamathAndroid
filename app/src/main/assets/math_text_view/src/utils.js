@@ -178,8 +178,15 @@ function toHtml(mathText, isEditable = false) {
     } else {
       childElem = createElement();
 
-      if (elem.lastElementChild !== null) {
-        childElem.appendChild(elem.lastElementChild);
+      let lastElem = elem.lastElementChild;
+
+      if (lastElem !== null) {
+        if (getClassName(lastElem) !== undefinedClass) {
+          childElem.appendChild(lastElem);
+        } else {
+          insertChildren(childElem, lastElem.children, null);
+          elem.removeChild(lastElem);
+        }
       }
     }
 
