@@ -865,7 +865,8 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
           className === unaryPrefixOperatorClass ||
           className === functionNameClass) &&
         prevElemClassName !== functionNameClass &&
-        !textClasses.includes(prevElemClassName)
+        !textClasses.includes(prevElemClassName) &&
+        prevElemClassName !== borderClass
       ) {
         elem.insertBefore(createElement(textClass), childElem);
         end++;
@@ -875,7 +876,8 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
         (containerClasses.includes(className) ||
           bracketClasses.includes(className) ||
           className === unaryPostfixOperatorClass) &&
-        !textClasses.includes(nextElemClassName)
+        !textClasses.includes(nextElemClassName) &&
+        nextElemClassName !== borderClass
       ) {
         elem.insertBefore(createElement(textClass), childElem?.nextElementSibling);
         end++;
