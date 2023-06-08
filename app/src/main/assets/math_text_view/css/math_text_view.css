@@ -131,10 +131,11 @@ div {
   margin-right: 4px;
   padding-left: 4px;
   padding-right: 4px;
+  margin-top: calc(1em * 0.1);
+  margin-bottom: calc(1em * 0.1);
 }
 
 .sqrt {
-  position: relative;
   margin-right: 4px;
 }
 
