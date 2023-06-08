@@ -35,8 +35,6 @@ div {
 
 .math-text-view:empty::before {
   content: attr(hint);
-  position: absolute;
-  margin-top: calc(0.02em + 0.8px);
   opacity: 0.5;
 }
 
