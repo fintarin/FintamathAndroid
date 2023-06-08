@@ -110,3 +110,10 @@ const sqrtPrefixSvgPath = 'M66.567 81.535l-4.56.003L14.993 9.987.008 9.904 0 .01
 // Define constants for SVG view boxes.
 const bracketSvgViewBox = '0 0 57 166';
 const sqrtPrefixViewBox = '0 0 43 81';
+
+// Define a mapping of class names to SVG elements.
+const svgElementsMap = {
+  [openBracketClass]: createNewSvg(openBracketClass, openBracketSvgPath, bracketSvgViewBox),
+  [closeBracketClass]: createNewSvg(closeBracketClass, closeBracketSvgPath, bracketSvgViewBox),
+  [sqrtPrefixClass]: createNewSvg(sqrtPrefixClass, sqrtPrefixSvgPath, sqrtPrefixViewBox),
+};

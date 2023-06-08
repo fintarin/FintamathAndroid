@@ -212,7 +212,7 @@ function toHtml(mathText, isEditable = false) {
    */
   function insertBrackets(rootElem, childElem, mathText, start, end, funcName = '') {
     if (mathText[start] === closeBracket) {
-      childElem = rootElem.appendChild(createCloseBracketSvg());
+      childElem = rootElem.appendChild(createSvg(closeBracketClass));
       return { start, childElem };
     }
 
@@ -246,7 +246,7 @@ function toHtml(mathText, isEditable = false) {
         rootElem.appendChild(createFunctionNameElement(funcName));
       }
 
-      childElem = rootElem.appendChild(createOpenBracketSvg());
+      childElem = rootElem.appendChild(createSvg(openBracketClass));
     }
 
     return { start, childElem };
@@ -259,8 +259,8 @@ function toHtml(mathText, isEditable = false) {
      * @param {HTMLSpanElement} elem - The element to put in brackets.
      */
     function putInBrackets(elem) {
-      elem.insertBefore(createOpenBracketSvg(), elem.firstElementChild);
-      elem.appendChild(createCloseBracketSvg());
+      elem.insertBefore(createSvg(openBracketClass), elem.firstElementChild);
+      elem.appendChild(createSvg(closeBracketClass));
     }
 
     /**
@@ -280,7 +280,7 @@ function toHtml(mathText, isEditable = false) {
           sqrtContentElem.style.borderColor = getColorWithOpacity(mathTextView.style.color, linesOpacity);
 
           elem = createElement(sqrtClass);
-          elem.appendChild(createSqrtPrefixSvg());
+          elem.appendChild(createSvg(sqrtPrefixClass));
           elem.appendChild(sqrtContentElem);
 
           break;
@@ -317,33 +317,6 @@ function toHtml(mathText, isEditable = false) {
       const funcNameElem = createElement(functionNameClass);
       funcNameElem.setAttribute(beforeContentAttr, funcName);
       return funcNameElem;
-    }
-
-    /**
-     * Creates a new open bracket SVG icon.
-     *
-     * @returns {HTMLSpanElement} Open bracket SVG icon.
-     */
-    function createOpenBracketSvg() {
-      return createSvg(openBracketClass, openBracketSvgPath, bracketSvgViewBox);
-    }
-
-    /**
-     * Creates a new close bracket SVG icon.
-     *
-     * @returns {HTMLSpanElement} Close bracket SVG icon.
-     */
-    function createCloseBracketSvg() {
-      return createSvg(closeBracketClass, closeBracketSvgPath, bracketSvgViewBox);
-    }
-
-    /**
-     * Creates a new sqrt SVG icon.
-     *
-     * @returns {HTMLSpanElement} Sqrt SVG icon.
-     */
-    function createSqrtPrefixSvg() {
-      return createSvg(sqrtPrefixClass, sqrtPrefixSvgPath, sqrtPrefixViewBox);
     }
   }
 
@@ -1317,14 +1290,14 @@ function createElement(className) {
 }
 
 /**
- * Creates a new HTML SVG element with the specified class name, path and view box.
+ * Creates an SVG element with the specified class name, path and view box.
  *
  * @param {string} className - The class name to use for new element.
  * @param {string} path - The SVG path to draw.
  * @param {string} viewBox - The SVG view box.
  * @returns {SVGSVGElement} Newly created SVG element.
  */
-function createSvg(className, path, viewBox) {
+function createNewSvg(className, path, viewBox) {
   const pathElem = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   pathElem.setAttribute('d', path);
 
@@ -1334,6 +1307,16 @@ function createSvg(className, path, viewBox) {
   svgElem.appendChild(pathElem);
 
   return svgElem;
+}
+
+/**
+ * Creates a cached SVG element.
+ *
+ * @param {string} className - The class name to use for new element.
+ * @returns {SVGSVGElement} Created SVG element.
+ */
+function createSvg(className) {
+  return svgElementsMap[[className]].cloneNode(true);
 }
 
 function getColorWithOpacity(color, opacity) {
