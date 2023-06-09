@@ -13,6 +13,8 @@ import java.time.format.FormatStyle
 
 internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemViewHolder>() {
 
+    var recyclerView: RecyclerView? = null
+
     var onItemsCountChange: ((Int) -> Unit)? = null
     var onCalculate: ((String) -> Unit)? = null
 
@@ -28,7 +30,17 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         HistoryStorage.onItemInserted = {
             notifyItemInserted(it)
             onItemsCountChange?.invoke(itemCount)
+
+            if (HistoryStorage.getHistoryList()[it].isBookmarked) {
+                recyclerView?.smoothScrollToPosition(it)
+            }
         }
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+
+        this.recyclerView = recyclerView
     }
 
     override fun getItemCount() = HistoryStorage.getHistoryList().size
