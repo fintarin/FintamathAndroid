@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fintamath.R
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
-import com.fintamath.storage.MathTextStorage
+import com.fintamath.storage.CalculatorInputStorage
 
 class HistoryFragment : Fragment() {
 
@@ -63,7 +63,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun callOnCalculate(text: String) {
-        MathTextStorage.mathTextData = MathTextData(text)
+        CalculatorInputStorage.mathTextData = MathTextData(text)
         executeBack()
     }
 }

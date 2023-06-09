@@ -1,5 +1,5 @@
 package com.fintamath.storage
 
-object MathTextStorage {
+object CalculatorInputStorage {
     var mathTextData: MathTextData = MathTextData("")
 }

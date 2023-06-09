@@ -13,7 +13,7 @@ import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
-import com.fintamath.storage.MathTextStorage
+import com.fintamath.storage.CalculatorInputStorage
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
 import com.fintamath.widget.mathview.MathSolutionView
@@ -48,8 +48,8 @@ class CalculatorFragment : Fragment() {
             initBarButtons(fragmentView!!)
         }
 
-        if (inTextView.text != MathTextStorage.mathTextData.text) {
-            inTextView.text = MathTextStorage.mathTextData.text
+        if (inTextView.text != CalculatorInputStorage.mathTextData.text) {
+            inTextView.text = CalculatorInputStorage.mathTextData.text
         }
 
         inTextView.requestFocus()
@@ -68,7 +68,7 @@ class CalculatorFragment : Fragment() {
         inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
         inTextView = fragmentView.findViewById(R.id.inText)
-        inTextView.text = MathTextStorage.mathTextData.text
+        inTextView.text = CalculatorInputStorage.mathTextData.text
         inTextView.setOnTextChangedListener { callOnInTextChange(it) }
         inTextView.setOnFocusChangeListener { _, state -> callOnInTextFocusChange(state) }
 
@@ -158,7 +158,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun callOnInTextChange(text: String) {
-        MathTextStorage.mathTextData = MathTextData(text)
+        CalculatorInputStorage.mathTextData = MathTextData(text)
         cancelSaveToHistoryTask()
 
         if (inTextView.text.isEmpty()) {
