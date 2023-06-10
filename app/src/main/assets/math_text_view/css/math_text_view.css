@@ -134,15 +134,32 @@ svg {
   float: left;
 }
 
-.abs {
-  border-left: 0.08em solid;
-  border-right: 0.08em solid;
-  margin-left: 4px;
-  margin-right: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-top: 0.01em;
-  padding-bottom: 0.01em;
+.open-bracket,
+.close-bracket {
+  width: 0.4em;
+  height: 1em;
+}
+
+.open-bracket {
+  margin-left: 3px;
+}
+
+.close-bracket {
+  margin-right: 3px;
+}
+
+.abs-prefix,
+.abs-postfix {
+  width: 0.4em;
+  height: 1em;
+}
+
+.abs-prefix {
+  margin-left: 3px;
+}
+
+.abs-postfix {
+  margin-right: 3px;
 }
 
 .sqrt {

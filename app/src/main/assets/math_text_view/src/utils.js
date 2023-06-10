@@ -293,8 +293,9 @@ function toHtml(mathText, isEditable = false) {
           break;
         }
         case absFunction: {
-          setClassName(elem, absClass);
-          elem.style.borderColor = getColorWithOpacity(mathTextView.style.color, linesOpacity);
+          elem.insertBefore(createSvg(prefixAbsClass), elem.firstChild);
+          elem.appendChild(createSvg(postfixAbsClass));
+          isSpecialFunc = false;
           break;
         }
         default: {
@@ -479,14 +480,15 @@ function toMathText(html, isEditable = false) {
       case openBracketClass: {
         return openBracket;
       }
-      case closeBracketClass: {
+      case closeBracketClass:
+      case postfixAbsClass: {
         return closeBracket;
+      }
+      case prefixAbsClass: {
+        return absFunction + openBracket;
       }
       case functionNameClass: {
         return elem.getAttribute(beforeContentAttr);
-      }
-      case absClass: {
-        return absFunction + openBracket + toMathTextChildren(elem) + closeBracket;
       }
       case sqrtClass: {
         return sqrtFunction + openBracket + toMathTextChildren(elem) + closeBracket;
@@ -581,35 +583,27 @@ function redrawSvg(elem) {
   for (let i = 0; i < elem.childElementCount; i++) {
     const childElem = elem.children[i];
 
-    let childElemHeight = childElem.clientHeight;
-
-    if (indexContainerClasses.includes(getClassName(childElem))) {
-      let top = Math.min(
-        childElem.getBoundingClientRect().top,
-        childElem.previousElementSibling.getBoundingClientRect().top
-      );
-
-      let bottom = Math.max(
-        childElem.getBoundingClientRect().bottom,
-        childElem.previousElementSibling.getBoundingClientRect().bottom
-      );
-
-      childElemHeight = bottom - top + getDeltaBracketsHeight();
-    }
-
     if (childElem instanceof SVGSVGElement) {
       setSvgColor(childElem);
-    } else {
-      updateHeightStack(maxHeightStack, childElemHeight);
+
+      if (bracketClasses.includes(getClassName(childElem))) {
+        setSvgHeight(childElem, getMinBracketsHeight());
+      }
     }
 
+    redrawSvg(childElem);
+
+    let childElemHeight = childElem.clientHeight;
+
     switch (getClassName(childElem)) {
-      case openBracketClass: {
+      case openBracketClass:
+      case prefixAbsClass: {
         openBracketElemsStack.push(childElem);
         maxHeightStack.push(getMinBracketsHeight());
         break;
       }
-      case closeBracketClass: {
+      case closeBracketClass:
+      case postfixAbsClass: {
         let height = maxHeightStack[maxHeightStack.length - 1];
         setSvgHeight(childElem, height);
 
@@ -624,7 +618,21 @@ function redrawSvg(elem) {
       }
     }
 
-    redrawSvg(childElem);
+    if (indexContainerClasses.includes(getClassName(childElem))) {
+      let top = Math.min(
+        childElem.getBoundingClientRect().top,
+        childElem.previousElementSibling.getBoundingClientRect().top
+      );
+
+      let bottom = Math.max(
+        childElem.getBoundingClientRect().bottom,
+        childElem.previousElementSibling.getBoundingClientRect().bottom
+      );
+
+      childElemHeight = bottom - top;
+    }
+
+    updateHeightStack(maxHeightStack, childElemHeight);
   }
 
   while (openBracketElemsStack.length > 0) {
@@ -891,18 +899,23 @@ function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
       (prevElemClassName === undefinedClass ||
         prevElemClassName === binaryOperatorClass ||
         prevElemClassName === unaryPrefixOperatorClass ||
-        prevElemClassName === openBracketClass)
+        prevElemClassName === openBracketClass ||
+        prevElemClassName === prefixAbsClass)
     ) {
       elem.insertBefore(createElement(textHintClass), childElem);
       end++;
     }
 
     if (
-      (className === binaryOperatorClass || className === unaryPrefixOperatorClass || className === openBracketClass) &&
+      (className === binaryOperatorClass ||
+        className === unaryPrefixOperatorClass ||
+        className === openBracketClass ||
+        className === prefixAbsClass) &&
       (nextElemClassName === undefinedClass ||
         nextElemClassName === binaryOperatorClass ||
         nextElemClassName === unaryPostfixOperatorClass ||
-        nextElemClassName === closeBracketClass)
+        nextElemClassName === closeBracketClass ||
+        nextElemClassName === postfixAbsClass)
     ) {
       elem.insertBefore(createElement(textHintClass), childElem !== null ? childElem.nextElementSibling : null);
       end++;
@@ -968,10 +981,13 @@ function insertBordersRec(elem) {
   for (let i = 0; i < elem.childElementCount; i++) {
     const childElem = elem.children[i];
 
-    if (getClassName(childElem) === openBracketClass && isNotEmptyTextElement(childElem.nextElementSibling)) {
+    if (
+      (getClassName(childElem) === openBracketClass || getClassName(childElem) === prefixAbsClass) &&
+      isNotEmptyTextElement(childElem.nextElementSibling)
+    ) {
       elem.insertBefore(createElement(borderClass), childElem.nextElementSibling);
     } else if (
-      getClassName(childElem) === closeBracketClass &&
+      (getClassName(childElem) === closeBracketClass || getClassName(childElem) === postfixAbsClass) &&
       isNotEmptyTextElement(childElem.previousElementSibling)
     ) {
       elem.insertBefore(createElement(borderClass), childElem);
@@ -1009,7 +1025,9 @@ function parseOperator(prevElem, operName) {
     if (
       getClassName(prevElem) === undefinedClass ||
       getClassName(prevElem) === binaryOperatorClass ||
-      getClassName(prevElem) === unaryPrefixOperatorClass
+      getClassName(prevElem) === unaryPrefixOperatorClass ||
+      getClassName(prevElem) === openBracketClass ||
+      getClassName(prevElem) === prefixAbsClass
     ) {
       return unaryPrefixOperatorClass;
     } else {

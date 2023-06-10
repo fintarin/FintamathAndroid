@@ -220,12 +220,31 @@ function deleteAtCursor() {
    * @param {HTMLSpanElement} elem - The element to delete.
    */
   function deleteChild(elem) {
+    if (getClassName(elem) === postfixAbsClass) {
+      moveCursorLeft();
+      return;
+    }
+
     let parentElem = elem.parentElement;
     let prevElem = elem.previousElementSibling;
     let nextElem = elem.nextElementSibling;
 
     let isFirstElem = prevElem === null || (prevElem === parentElem.firstChild && isEmptyElement(prevElem));
     let isLastElem = nextElem === null || (nextElem === parentElem.lastChild && isEmptyElement(nextElem));
+
+    if (getClassName(elem) === prefixAbsClass) {
+      if (
+        nextElem !== null &&
+        getClassName(nextElem) === textHintClass &&
+        getClassName(nextElem.nextElementSibling) === postfixAbsClass
+      ) {
+        prevElem = elem.nextElementSibling;
+        parentElem.removeChild(nextElem.nextElementSibling);
+      } else {
+        moveCursorLeft();
+        return;
+      }
+    }
 
     parentElem.removeChild(elem);
 
@@ -240,13 +259,15 @@ function deleteAtCursor() {
       prevElem = newPrevElem;
     }
 
-    if (prevElem !== null) {
-      if (getClassName(elem) === openBracketClass && getClassName(prevElem.nextElementSibling) === textHintClass) {
-        prevElem = prevElem.nextElementSibling;
+    if (
+      prevElem !== null &&
+      getClassName(elem) === openBracketClass &&
+      getClassName(prevElem.nextElementSibling) === textHintClass
+    ) {
+      prevElem = prevElem.nextElementSibling;
 
-        if (getClassName(prevElem.nextElementSibling) === closeBracketClass) {
-          parentElem.removeChild(prevElem.nextElementSibling);
-        }
+      if (getClassName(prevElem.nextElementSibling) === closeBracketClass) {
+        parentElem.removeChild(prevElem.nextElementSibling);
       }
     }
 
