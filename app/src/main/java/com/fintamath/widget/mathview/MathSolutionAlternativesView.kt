@@ -17,7 +17,6 @@ internal class MathSolutionAlternativesView constructor(
 
     private var onTouchListener: OnTouchListener? = null
 
-    private val inflate: LayoutInflater
     private val textViews = mutableListOf<MathTextView>()
     private val delimiters = mutableListOf<View>()
 
@@ -28,8 +27,6 @@ internal class MathSolutionAlternativesView constructor(
             attrs.getResourceId(R.styleable.MathSolutionView_alternativeMathTextViewLayout, 0)
         delimiterLayout =
             attrs.getResourceId(R.styleable.MathSolutionView_alternativeDelimiterLayout, 0)
-
-        inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         addTextView()
     }
@@ -68,14 +65,14 @@ internal class MathSolutionAlternativesView constructor(
     }
 
     private fun addTextView() {
-        val textView = inflate.inflate(mathTextViewLayout, null) as MathTextView
+        val textView = inflate(context, mathTextViewLayout, null) as MathTextView
         textView.setOnTouchListener(onTouchListener)
         textViews.add(textView)
         addView(textView)
     }
 
     private fun addDelimiter() {
-        val delimiter = inflate.inflate(delimiterLayout, null)
+        val delimiter = inflate(context, delimiterLayout, null)
         delimiter.visibility = GONE
         delimiter.setOnTouchListener(onTouchListener)
         delimiters.add(delimiter)

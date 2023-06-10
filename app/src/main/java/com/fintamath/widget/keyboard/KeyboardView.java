@@ -260,10 +260,6 @@ public class KeyboardView extends View implements View.OnClickListener {
         TypedArray a = context.obtainStyledAttributes(
                 attrs, R.styleable.KeyboardView, defStyleAttr, defStyleRes);
 
-        LayoutInflater inflate =
-                (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         int previewLayout = 0;
 
         mKeyBackground = a.getDrawable(R.styleable.KeyboardView_keyboardKeyBackground);
@@ -280,7 +276,7 @@ public class KeyboardView extends View implements View.OnClickListener {
 
         mPreviewPopup = new PopupWindow(context);
         if (previewLayout != 0) {
-            mPreviewText = (TextView) inflate.inflate(previewLayout, null);
+            mPreviewText = (TextView) inflate(getContext(), previewLayout, null);
             mPreviewTextSizeLarge = (int) mPreviewText.getTextSize();
 
             FrameLayout previewTextContainer = new FrameLayout(getContext());

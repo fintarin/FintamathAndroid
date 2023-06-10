@@ -44,21 +44,19 @@ class MathSolutionView @JvmOverloads constructor(
 
         a.recycle()
 
-        val inflate = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-        loadingView = inflate.inflate(loadingViewLayout, null)
+        loadingView = inflate(context, loadingViewLayout, null)
         loadingView.visibility = GONE
         addView(loadingView)
 
-        invalidInputView = inflate.inflate(invalidInputViewLayout, null)
+        invalidInputView = inflate(context, invalidInputViewLayout, null)
         invalidInputView.visibility = GONE
         addView(invalidInputView)
 
-        incompleteInputView = inflate.inflate(incompleteInputViewLayout, null)
+        incompleteInputView = inflate(context, incompleteInputViewLayout, null)
         incompleteInputView.visibility = GONE
         addView(incompleteInputView)
 
-        characterLimitExceededView = inflate.inflate(characterLimitExceededViewLayout, null)
+        characterLimitExceededView = inflate(context, characterLimitExceededViewLayout, null)
         characterLimitExceededView.visibility = GONE
         addView(characterLimitExceededView)
     }
