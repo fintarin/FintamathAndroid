@@ -765,14 +765,24 @@ function concatElementsOutside(firstElem, lastElem) {
   }
 
   let prevFirstElem = firstElem !== null ? firstElem.previousElementSibling : null;
+  let nextFirstElem = firstElem !== null ? firstElem.nextElementSibling : null;
+  let prevLastElem = lastElem !== null ? lastElem.previousElementSibling : null;
   let nextLastElem = lastElem !== null ? lastElem.nextElementSibling : null;
 
   if (operatorClasses.includes(getClassName(firstElem))) {
-    firstElem.className = parseOperator(prevFirstElem, firstElem.innerText);
+    setClassName(firstElem, parseOperator(prevFirstElem, firstElem.innerText));
+  }
+
+  if (operatorClasses.includes(getClassName(nextFirstElem))) {
+    setClassName(nextFirstElem, parseOperator(firstElem, nextFirstElem.innerText));
+  }
+
+  if (operatorClasses.includes(getClassName(lastElem))) {
+    setClassName(lastElem, parseOperator(prevLastElem, lastElem.innerText));
   }
 
   if (operatorClasses.includes(getClassName(nextLastElem))) {
-    nextLastElem.className = parseOperator(lastElem, nextLastElem.innerText);
+    setClassName(nextLastElem, parseOperator(lastElem, nextLastElem.innerText));
   }
 
   insertHints(parentElem, getPreviousIndex(firstElem), getNextIndex(lastElem));
