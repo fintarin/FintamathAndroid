@@ -11,13 +11,14 @@ body {
 }
 
 span,
-div {
+div,
+svg {
   font-family: mathFont, sans-serif;
   display: inline-block;
   vertical-align: middle; /* TODO: remove */
   outline: none;
   white-space: nowrap;
-  text-underline-offset: 0.1em;
+  text-underline-offset: 0.2em;
   line-height: 0;
 }
 
@@ -39,7 +40,7 @@ div {
 }
 
 .text {
-  line-height: 1.1;
+  line-height: 1;
   margin-top: 2px;
   padding-top: 0.5px;
   padding-bottom: 0.5px;
@@ -53,7 +54,7 @@ div {
 }
 
 .text-hint {
-  line-height: 1.1;
+  line-height: 1;
   margin-top: 2px;
   padding-top: 0.5px;
   padding-bottom: 0.5px;
@@ -103,6 +104,14 @@ div {
   margin-right: 7px;
 }
 
+.numerator {
+  display: block;
+}
+
+.denominator {
+  display: block;
+}
+
 .fraction-line {
   border-top: 0.08em solid;
   display: block;
@@ -122,6 +131,7 @@ div {
 .function-name::before {
   content: attr(before-content);
   opacity: 0.75;
+  float: left;
 }
 
 .abs {
@@ -131,8 +141,8 @@ div {
   margin-right: 4px;
   padding-left: 4px;
   padding-right: 4px;
-  margin-top: calc(1em * 0.1);
-  margin-bottom: calc(1em * 0.1);
+  padding-top: 0.01em;
+  padding-bottom: 0.01em;
 }
 
 .sqrt {
@@ -158,7 +168,6 @@ div {
 .close-bracket {
   width: 0.4em;
   height: 1em;
-  vertical-align: middle;
 }
 
 .open-bracket {

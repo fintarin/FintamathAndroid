@@ -576,7 +576,7 @@ function redrawSvg(elem) {
   }
 
   const openBracketElemsStack = [];
-  const maxHeightStack = [getMinSvgHeight()];
+  const maxHeightStack = [getMinBracketsHeight()];
 
   for (let i = 0; i < elem.childElementCount; i++) {
     const childElem = elem.children[i];
@@ -594,8 +594,7 @@ function redrawSvg(elem) {
         childElem.previousElementSibling.getBoundingClientRect().bottom
       );
 
-      childElemHeight = bottom - top;
-      childElemHeight += childElemHeight * bracketsScale;
+      childElemHeight = bottom - top + getDeltaBracketsHeight();
     }
 
     if (childElem instanceof SVGSVGElement) {
@@ -607,7 +606,7 @@ function redrawSvg(elem) {
     switch (getClassName(childElem)) {
       case openBracketClass: {
         openBracketElemsStack.push(childElem);
-        maxHeightStack.push(getMinSvgHeight());
+        maxHeightStack.push(getMinBracketsHeight());
         break;
       }
       case closeBracketClass: {
@@ -618,7 +617,7 @@ function redrawSvg(elem) {
           popHeightStack(maxHeightStack);
           setSvgHeight(openBracketElemsStack.pop(), height);
         } else {
-          updateHeightStack(maxHeightStack, height + getMinSvgHeight() * bracketsScale);
+          updateHeightStack(maxHeightStack, height + getDeltaBracketsHeight());
         }
 
         break;
@@ -634,6 +633,12 @@ function redrawSvg(elem) {
 
   //---------------------------------------------------------------------------------------------------------//
 
+  /**
+   * Updates the height stack with the given height.
+   *
+   * @param {number[]} maxHeightStack - The height stack to update.
+   * @param {number} height - The given height.
+   */
   function updateHeightStack(maxHeightStack, height) {
     if (maxHeightStack[maxHeightStack.length - 1] < height) {
       maxHeightStack[maxHeightStack.length - 1] = height;
@@ -646,23 +651,39 @@ function redrawSvg(elem) {
     }
   }
 
+  /**
+   * Pop the height stack and updates it.
+   *
+   * @param {number[]} maxHeightStack - The height stack to pop.
+   * @returns {number} The popped height.
+   */
   function popHeightStack(maxHeightStack) {
     let height = maxHeightStack.pop();
+    let prevHeight = height + height * bracketsScale;
 
-    if (maxHeightStack[maxHeightStack.length - 1] === height) {
-      updateHeightStack(maxHeightStack, height + getMinSvgHeight() * bracketsScale);
+    if (maxHeightStack[maxHeightStack.length - 1] < prevHeight) {
+      updateHeightStack(maxHeightStack, prevHeight);
     }
 
     return height;
   }
 
   /**
-   * Returns the minimal height of the SVG element.
+   * Returns the minimal height of SVG brackets.
    *
    * @param {number} height - The minimal height.
    */
-  function getMinSvgHeight() {
-    return mathTextView.firstChild.clientHeight;
+  function getMinBracketsHeight() {
+    return mathTextView.firstChild.clientHeight + getDeltaBracketsHeight();
+  }
+
+  /**
+   * Returns the delta height of SVG brackets.
+   *
+   * @param {number} height - The delta height.
+   */
+  function getDeltaBracketsHeight() {
+    return mathTextView.firstChild.clientHeight * bracketsScale;
   }
 
   /**
@@ -672,7 +693,7 @@ function redrawSvg(elem) {
    * @param {number} height - The height to set.
    */
   function setSvgHeight(elem, height) {
-    const scale = height / getMinSvgHeight();
+    const scale = height / mathTextView.firstChild.clientHeight;
     elem.style.transform = 'scale(1,' + scale + ')';
     elem.style.height = height + 'px';
   }
