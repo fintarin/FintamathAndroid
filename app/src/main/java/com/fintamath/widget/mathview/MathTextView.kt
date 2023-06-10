@@ -144,7 +144,7 @@ class MathTextView @JvmOverloads constructor(
 
     override fun requestFocus(direction: Int, previouslyFocusedRect: Rect?): Boolean {
         if (!isLoaded) {
-            callOnLoaded {
+            onLoaded {
                 requestFocus(direction, previouslyFocusedRect)
             }
         }
@@ -169,13 +169,13 @@ class MathTextView @JvmOverloads constructor(
     }
 
     override fun evaluateJavascript(script: String, resultCallback: ValueCallback<String>?) {
-        callOnLoaded {
+        onLoaded {
             super.evaluateJavascript(script, resultCallback)
         }
     }
 
     @JavascriptInterface
-    fun callOnTextChanged(newText: String, isCompleteStr: String) {
+    fun onTextChange(newText: String, isCompleteStr: String) {
         textCached = newText
         isComplete = isCompleteStr == "true"
 
@@ -184,7 +184,7 @@ class MathTextView @JvmOverloads constructor(
         }
     }
 
-    private fun callOnLoaded(callback: () -> Unit) {
+    private fun onLoaded(callback: () -> Unit) {
         if (isLoaded) {
             callback.invoke()
         } else {

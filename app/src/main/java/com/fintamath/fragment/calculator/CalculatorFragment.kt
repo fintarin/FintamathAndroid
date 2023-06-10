@@ -69,8 +69,8 @@ class CalculatorFragment : Fragment() {
 
         inTextView = fragmentView.findViewById(R.id.inText)
         inTextView.text = CalculatorInputStorage.mathTextData.text
-        inTextView.setOnTextChangedListener { callOnInTextChange(it) }
-        inTextView.setOnFocusChangeListener { _, state -> callOnInTextFocusChange(state) }
+        inTextView.setOnTextChangedListener { onInTextChange(it) }
+        inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
 
         solutionView = fragmentView.findViewById(R.id.solution)
     }
@@ -157,7 +157,7 @@ class CalculatorFragment : Fragment() {
         }
     }
 
-    private fun callOnInTextChange(text: String) {
+    private fun onInTextChange(text: String) {
         CalculatorInputStorage.mathTextData = MathTextData(text)
         cancelSaveToHistoryTask()
 
@@ -182,7 +182,7 @@ class CalculatorFragment : Fragment() {
 
             saveToHistoryTask = Timer().schedule(saveToHistoryDelay) {
                 requireActivity().runOnUiThread {
-                    callOnSaveToHistory()
+                    onSaveToHistory()
                 }
             }
         }
@@ -192,7 +192,7 @@ class CalculatorFragment : Fragment() {
         solutionView.showLoading()
     }
 
-    private fun callOnInTextFocusChange(state: Boolean) {
+    private fun onInTextFocusChange(state: Boolean) {
         if (!state) {
             inTextView.requestFocus()
         }
@@ -204,7 +204,7 @@ class CalculatorFragment : Fragment() {
         ))
     }
 
-    private fun callOnSaveToHistory() {
+    private fun onSaveToHistory() {
         HistoryStorage.saveItem(inTextView.text)
         cancelSaveToHistoryTask()
     }

@@ -32,8 +32,8 @@ class HistoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
 
             val historyAdapter = HistoryRecyclerViewAdapter()
-            historyAdapter.onCalculate = { callOnCalculate(it) }
-            historyAdapter.onItemsCountChange = { callOnItemsCountChange() }
+            historyAdapter.onCalculate = { onCalculate(it) }
+            historyAdapter.onItemsCountChange = { onItemsCountChange() }
 
             adapter = historyAdapter
         }
@@ -50,7 +50,7 @@ class HistoryFragment : Fragment() {
         activity?.onBackPressedDispatcher?.onBackPressed()
     }
 
-    private fun callOnItemsCountChange() {
+    private fun onItemsCountChange() {
         val count = HistoryStorage.getHistoryList().size
 
         if (HistoryStorage.getHistoryList().size == 0 && emptyHistoryTextView.visibility != VISIBLE) {
@@ -62,7 +62,7 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun callOnCalculate(text: String) {
+    private fun onCalculate(text: String) {
         CalculatorInputStorage.mathTextData = MathTextData(text)
         executeBack()
     }

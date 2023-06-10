@@ -29,7 +29,7 @@ let redoStack = [];
 function setText(mathText) {
   addUndoState();
   mathTextView.innerHTML = toHtml(mathText, mathTextView.isContentEditable);
-  callOnTextChange();
+  onTextChange();
 }
 
 /**
@@ -129,7 +129,7 @@ function insertAtCursor(mathText) {
     }
   }
 
-  callOnTextChange();
+  onTextChange();
 
   //---------------------------------------------------------------------------------------------------------//
 
@@ -210,7 +210,7 @@ function deleteAtCursor() {
     }
   }
 
-  callOnTextChange();
+  onTextChange();
 
   //---------------------------------------------------------------------------------------------------------//
 
@@ -333,7 +333,7 @@ function undo() {
   const offset = state[2];
 
   mathTextView.innerHTML = toHtml(mathText, mathText.isContentEditable);
-  callOnTextChange();
+  onTextChange();
   restoreRange(mathTextView, elemPath, offset);
 }
 
@@ -360,7 +360,7 @@ function redo() {
   const offset = state[2];
 
   mathTextView.innerHTML = toHtml(mathText, mathTextView.isContentEditable);
-  callOnTextChange();
+  onTextChange();
   restoreRange(mathTextView, elemPath, offset);
 }
 

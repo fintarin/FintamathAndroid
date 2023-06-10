@@ -52,10 +52,10 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
 
     override fun onBindViewHolder(viewHolder: HistoryItemViewHolder, position: Int) {
         viewHolder.removeButton.setOnClickListener {
-            callOnRemoveButtonClicked(viewHolder)
+            onRemoveButtonClicked(viewHolder)
         }
         viewHolder.bookmarkButton.setOnCheckedChangeListener { _, isChecked ->
-            callOnBookmarkButtonCheckedChangeListener(viewHolder, isChecked)
+            onBookmarkButtonCheckedChangeListener(viewHolder, isChecked)
         }
         viewHolder.calculateButton.setOnClickListener {
             onCalculate?.invoke(viewHolder.mathTextView.text)
@@ -69,13 +69,13 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         viewHolder.dateTextView.text = formatDataTime(historyList[viewHolder.absoluteAdapterPosition].dateTimeString)
     }
 
-    private fun callOnBookmarkButtonCheckedChangeListener(viewHolder: HistoryItemViewHolder, isChecked: Boolean) {
+    private fun onBookmarkButtonCheckedChangeListener(viewHolder: HistoryItemViewHolder, isChecked: Boolean) {
         viewHolder.removeButton.visibility = if (isChecked) GONE else VISIBLE
         val index = viewHolder.absoluteAdapterPosition
         HistoryStorage.bookmarkItem(index, isChecked)
     }
 
-    private fun callOnRemoveButtonClicked(viewHolder: HistoryItemViewHolder) {
+    private fun onRemoveButtonClicked(viewHolder: HistoryItemViewHolder) {
         val index = viewHolder.absoluteAdapterPosition
         HistoryStorage.removeItem(index)
     }

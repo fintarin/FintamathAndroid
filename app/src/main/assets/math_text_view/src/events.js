@@ -7,12 +7,12 @@ let selectedElem = null;
 
 //---------------------------------------------------------------------------------------------------------//
 
-mathTextView.oncut = callOnCut;
-mathTextView.oncopy = callOnCopy;
-mathTextView.onpaste = callOnPaste;
+mathTextView.oncut = onCut;
+mathTextView.oncopy = onCopy;
+mathTextView.onpaste = onPaste;
 
 setInterval(function () {
-  callOnSelectedElementChanged();
+  onSelectedElementChanged();
 }, 10);
 
 //---------------------------------------------------------------------------------------------------------//
@@ -23,8 +23,8 @@ setInterval(function () {
  *
  * @param {Event} event - The cut event.
  */
-function callOnCut(event) {
-  callOnCopy(event);
+function onCut(event) {
+  onCopy(event);
   deleteAtCursor();
   event.preventDefault();
 }
@@ -34,7 +34,7 @@ function callOnCut(event) {
  *
  * @param {Event} event - The copy event.
  */
-function callOnCopy(event) {
+function onCopy(event) {
   const selection = window.getSelection();
   const range = selection.getRangeAt(0);
   const clonedSelection = range.cloneContents();
@@ -52,7 +52,7 @@ function callOnCopy(event) {
  *
  * @param {Event} event - The paste event.
  * */
-function callOnPaste(event) {
+function onPaste(event) {
   const text = event.clipboardData.getData('text/plain');
   insertAtCursor(text);
   event.preventDefault();
@@ -61,10 +61,10 @@ function callOnPaste(event) {
 /**
  * Handle a text change in mathTextView.
  */
-function callOnTextChange() {
+function onTextChange() {
   insertBordersRec(mathTextView);
   redrawSvg(mathTextView);
-  callOnSelectedElementChanged();
+  onSelectedElementChanged();
 
   let mathText = toMathText(mathTextView.innerHTML, mathTextView.isContentEditable);
 
@@ -81,13 +81,13 @@ function callOnTextChange() {
     isMathTextComplete = 'true';
   }
 
-  Android.callOnTextChanged(mathText, isMathTextComplete);
+  Android.onTextChange(mathText, isMathTextComplete);
 }
 
 /**
  * Deselects the previously selected element and selects the element where the cursor is currently placed.
  */
-function callOnSelectedElementChanged() {
+function onSelectedElementChanged() {
   deselectElement(selectedElem);
 
   const selection = window.getSelection();
