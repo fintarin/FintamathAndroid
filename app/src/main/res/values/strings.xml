@@ -23,6 +23,11 @@
     <string name="calculate">Calculate</string>
     <string name="logo">Logo</string>
 
+    <string name="cut">Cut</string>
+    <string name="copy">Copy</string>
+    <string name="paste">Paste</string>
+    <string name="delete">Delete</string>
+
     <string name="page_link">https://github.com/fintarin/FintamathAndroid</string>
     <string name="contact_link">support@fintamath.com</string>
 

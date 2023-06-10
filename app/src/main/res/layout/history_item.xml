@@ -20,7 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:textSize="@dimen/text_size_math_text_view"
-            app:textColor="@color/text_main" />
+            app:textColor="@color/text_main"
+            app:quickActionPopupLayout="@layout/popup_math_text_view_quick_action" />
 
         <View
             android:layout_width="match_parent"

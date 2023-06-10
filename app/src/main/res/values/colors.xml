@@ -10,25 +10,26 @@
     <color name="background_menu">#333333</color>
     <color name="background_menu_stroke">#33333326</color>
 
+    <color name="background_quick_action_popup">@color/background_menu</color>
+    <color name="background_quick_action_popup_stroke">@color/background_menu_stroke</color>
+    <color name="quick_action_button">@color/background_quick_action_popup</color>
+    <color name="quick_action_button_pressed">@color/background_bar_button_pressed</color>
+
+    <color name="background_keyboard">#2f2f2f</color>
+    <color name="background_keyboard_key">#292929</color>
+    <color name="background_keyboard_key_pressed">@color/background_bar_button_pressed</color>
+    <color name="background_keyboard_key_stroke">@color/background_keyboard</color>
+    <color name="background_number_key">#373737</color>
+    <color name="background_switch_keyboard_key">#242424</color>
+    <color name="background_switch_keyboard_key_enabled">#373737</color>
+    <color name="background_popup_keyboard">#333333</color>
+    <color name="background_popup_keyboard_key">@color/background_popup_keyboard</color>
+
     <color name="background_history">@color/background_number_key</color>
     <color name="background_history_item_button">@color/background_history</color>
     <color name="background_history_item_button_pressed">@color/background_keyboard_key_pressed</color>
 
-    <color name="background_keyboard">#2f2f2f</color>
-    <color name="background_keyboard_key">#292929</color>
-    <color name="background_keyboard_key_pressed">#666666</color>
-    <color name="background_keyboard_key_stroke">@color/background_keyboard</color>
-
-    <color name="background_popup_keyboard">#333333</color>
-    <color name="background_popup_keyboard_key">@color/background_popup_keyboard</color>
-
-    <color name="background_number_key">#373737</color>
-
-    <color name="background_switch_keyboard_key">#242424</color>
-    <color name="background_switch_keyboard_key_enabled">#373737</color>
-
     <color name="text_main">#EEEEEE</color>
-    <color name="text_checked">@color/launcher_icon_background</color>
     <color name="text_keyboard">@color/text_main</color>
     <color name="text_keyboard_top_label">#a2a2a2</color>
     <color name="text_hint">#757575</color>

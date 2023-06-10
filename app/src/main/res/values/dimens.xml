@@ -14,6 +14,7 @@
     <dimen name="text_size_alternative">18sp</dimen>
     <dimen name="text_size_solution_message">16sp</dimen>
     <dimen name="text_size_message_version">14sp</dimen>
+    <dimen name="text_size_quick_bar">14sp</dimen>
 
     <dimen name="diameter_bar_key">48dp</dimen>
     <dimen name="diameter_history_item_button">36dp</dimen>
@@ -41,4 +42,5 @@
 
     <dimen name="radius_loading_dots">2.5dp</dimen>
 
+    <dimen name="radius_quick_action_popup">256dp</dimen>
 </resources>

@@ -94,7 +94,8 @@
                     app:isEditable="true"
                     app:hint="@string/math_edit_text_hint"
                     app:textSize="@dimen/text_size_math_text_view"
-                    app:textColor="@color/text_main" />
+                    app:textColor="@color/text_main"
+                    app:quickActionPopupLayout="@layout/popup_math_text_view_quick_action" />
 
             </FrameLayout>
 

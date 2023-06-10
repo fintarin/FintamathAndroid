@@ -7,56 +7,11 @@ let selectedElem = null;
 
 //---------------------------------------------------------------------------------------------------------//
 
-mathTextView.oncut = onCut;
-mathTextView.oncopy = onCopy;
-mathTextView.onpaste = onPaste;
-
 setInterval(function () {
   onSelectedElementChanged();
 }, 10);
 
 //---------------------------------------------------------------------------------------------------------//
-
-/**
- * Converts selected HTML to math text and copies it to the clipboard.
- * Then deletes the selected text at the cursor.
- *
- * @param {Event} event - The cut event.
- */
-function onCut(event) {
-  onCopy(event);
-  deleteAtCursor();
-  event.preventDefault();
-}
-
-/**
- * Converts selected HTML to math text and copies it to the clipboard.
- *
- * @param {Event} event - The copy event.
- */
-function onCopy(event) {
-  const selection = window.getSelection();
-  const range = selection.getRangeAt(0);
-  const clonedSelection = range.cloneContents();
-
-  const elem = createElement();
-  elem.appendChild(clonedSelection);
-
-  const text = toMathText(elem.innerHTML, mathTextView.isContentEditable);
-  event.clipboardData.setData('text/plain', text);
-  event.preventDefault();
-}
-
-/**
- * Converts math text from the clipboard to HTML and inserts it at the cursor.
- *
- * @param {Event} event - The paste event.
- * */
-function onPaste(event) {
-  const text = event.clipboardData.getData('text/plain');
-  insertAtCursor(text);
-  event.preventDefault();
-}
 
 /**
  * Handle a text change in mathTextView.

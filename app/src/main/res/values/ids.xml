@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="keyboardView" type="id" />
-    <item name="keyboardViewPreviewText" type="id" />
+
+    <item name="cut" type="id" />
+    <item name="copy" type="id" />
+    <item name="paste" type="id" />
+    <item name="delete" type="id" />
 </resources>
