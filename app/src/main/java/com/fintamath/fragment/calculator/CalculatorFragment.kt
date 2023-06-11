@@ -199,8 +199,25 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun touchInText(event: MotionEvent): Boolean {
-        return inTextView.dispatchTouchEvent(MotionEvent.obtain(
-            event.downTime, event.eventTime, event.action, event.x, 0f, event.metaState
+        val inTextLayoutLocation = IntArray(2)
+        inTextLayout.getLocationOnScreen(inTextLayoutLocation)
+
+        val inTextViewLocation = IntArray(2)
+        inTextView.getLocationOnScreen(inTextViewLocation)
+
+        val heightDelta = (inTextViewLocation[1] - inTextLayoutLocation[1]).toFloat() / 4
+
+        var y = event.y + inTextLayoutLocation[1]
+        if (y < inTextViewLocation[1]) {
+            y = heightDelta
+        } else if (y >= inTextViewLocation[1] + inTextView.height) {
+            y = inTextView.height - heightDelta
+        } else {
+            y -= inTextViewLocation[1]
+        }
+
+        return inTextView.onTouchEvent(MotionEvent.obtain(
+            event.downTime, event.eventTime, event.action, event.x, y, event.metaState
         ))
     }
 
