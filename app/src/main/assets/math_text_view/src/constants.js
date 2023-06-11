@@ -107,12 +107,12 @@ const openBracketSvgPath =
   'M43.256 0H57.14S14.95 25.902 15.086 83.25c.135 57.348 42.054 83.25 42.054 83.25H43.244S.366 138.573.002 83.25C-.362 27.927 43.256 0 43.256 0z';
 const closeBracketSvgPath =
   'M13.883 0H0s42.19 25.902 42.054 83.25C41.92 140.598 0 166.5 0 166.5h13.896s42.877-27.927 43.241-83.25C57.502 27.927 13.883 0 13.883 0z';
-const absBorderSvgPath = 'M0 0 H14.740591 V166.27386 H0Z';
+const absBorderSvgPath = 'm19.816564 0 h15 v166.5 h-15z';
 const sqrtPrefixSvgPath = 'M66.567 81.535l-4.56.003L14.993 9.987.008 9.904 0 .019 22.329 0l44.238 66.087z';
 
 // Define constants for SVG view boxes.
 const bracketSvgViewBox = '0 0 57 166';
-const absBorderSvgViewBox = '0 0 14 166';
+const absBorderSvgViewBox = '0 0 55 166';
 const sqrtPrefixViewBox = '0 0 43 81';
 
 // Define a mapping of class names to SVG elements.
