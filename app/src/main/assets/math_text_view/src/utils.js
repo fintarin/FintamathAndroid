@@ -6,6 +6,8 @@
  * @returns {string} The HTML representation of the math text.
  */
 function toHtml(mathText, isEditable = false) {
+  mathText = mathText.replace(/\s/, ' ');
+
   for (let key in mathHtmlMap) {
     mathText = mathText.replace(makeRegexFromString(key), mathHtmlMap[key]);
   }
