@@ -7,8 +7,8 @@
     <color name="background_bar_button">@color/background_bar</color>
     <color name="background_bar_button_pressed">#666666</color>
 
-    <color name="background_menu">#333333</color>
-    <color name="background_menu_stroke">#33333326</color>
+    <color name="background_menu">#323232</color>
+    <color name="background_menu_stroke">#26323232</color>
 
     <color name="background_quick_action_popup">@color/background_menu</color>
     <color name="background_quick_action_popup_stroke">@color/background_menu_stroke</color>
@@ -19,10 +19,10 @@
     <color name="background_keyboard_key">#292929</color>
     <color name="background_keyboard_key_pressed">@color/background_bar_button_pressed</color>
     <color name="background_keyboard_key_stroke">@color/background_keyboard</color>
-    <color name="background_number_key">#373737</color>
+    <color name="background_number_key">#3A3A3A</color>
     <color name="background_switch_keyboard_key">#242424</color>
     <color name="background_switch_keyboard_key_enabled">#373737</color>
-    <color name="background_popup_keyboard">#333333</color>
+    <color name="background_popup_keyboard">@color/background_menu</color>
     <color name="background_popup_keyboard_key">@color/background_popup_keyboard</color>
 
     <color name="background_history">@color/background_number_key</color>
