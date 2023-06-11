@@ -1283,17 +1283,25 @@ function getElementPath(rootElem, elem) {
 }
 
 /**
- * Checks if the element does not contain empty text hint elements.
+ * Checks if the math text of the element is valid.
  *
  * @param {HTMLSpanElement} elem - The element to check.
- * @returns {boolean} Whether the element does not contain empty text hint elements.
+ * @returns {boolean} Whether the element is complete.
  */
 function isComplete(elem) {
+  let openBracketsCount = 0;
+
   for (let i = 0; i < elem.childElementCount; i++) {
     const childElem = elem.children[i];
 
-    if (getClassName(childElem) === textHintClass && childElem.innerHTML === '') {
+    if (getClassName(childElem) === textHintClass || openBracketsCount < 0) {
       return false;
+    }
+
+    if (getClassName(childElem) === openBracketClass) {
+      openBracketsCount++;
+    } else if (getClassName(childElem) === closeBracketClass) {
+      openBracketsCount--;
     }
 
     if (!isComplete(childElem)) {
@@ -1301,7 +1309,7 @@ function isComplete(elem) {
     }
   }
 
-  return true;
+  return openBracketsCount === 0;
 }
 
 /**
