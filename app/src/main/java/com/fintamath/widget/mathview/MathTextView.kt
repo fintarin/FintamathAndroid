@@ -254,9 +254,10 @@ class MathTextView @JvmOverloads constructor(
     private fun onLongPress(event: MotionEvent) {
         performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
 
-        cutActionButton.visibility = if (isEditable) VISIBLE else GONE
+        cutActionButton.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
+        copyActionButton.visibility = if (text.isNotEmpty()) VISIBLE else GONE
         pasteActionButton.visibility = if (isEditable) VISIBLE else GONE
-        deleteActionButton.visibility = if (isEditable) VISIBLE else GONE
+        deleteActionButton.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
 
         val location = IntArray(2)
         getLocationOnScreen(location)
