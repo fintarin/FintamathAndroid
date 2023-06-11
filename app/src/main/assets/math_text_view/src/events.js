@@ -81,12 +81,6 @@ function onSelectedElementChanged() {
       return;
     }
 
-    let prevSibling = elem.previousElementSibling;
-
-    if (prevSibling !== null && getClassName(prevSibling) === unaryPostfixOperatorClass) {
-      return;
-    }
-
     selectedElem = elem;
     selectedElem.setAttribute(emptyHintAttr, textEmptyHintSelected);
     selectedElem.style.textDecoration = textDecorationAttr;

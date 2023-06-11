@@ -95,7 +95,7 @@ function toHtml(mathText, isEditable = false) {
         symbols = ch;
       }
 
-      if (i > start && mathText[i - 1] === space) {
+      if (i > start && mathText[i - 1] === space && getClassName(childElem) === textClass) {
         childElem = insertSpace(rootElem);
       } else if (childElem === null) {
         childElem = rootElem.appendChild(createElement(textClass));
@@ -112,6 +112,12 @@ function toHtml(mathText, isEditable = false) {
         }
 
         childElem = parentElem.appendChild(newChildElem);
+      }
+
+      if (childElem.innerHTML === '' && getClassName(childElem.previousElementSibling) === textClass) {
+        let parentElem = childElem.parentElement;
+        parentElem.removeChild(childElem);
+        childElem = parentElem.lastElementChild;
       }
 
       childElem.innerHTML += symbols;
