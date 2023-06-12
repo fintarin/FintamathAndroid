@@ -10,9 +10,6 @@
 
 
 
-
-
-
     <LinearLayout
         android:id="@+id/rec_layout"
         android:orientation="vertical"
@@ -22,45 +19,23 @@
         android:background="@android:color/transparent">
 
 
-
         <LinearLayout
             android:id="@+id/bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@android:color/transparent">
+            android:layout_height="wrap_content" >
 
             <ImageButton
                 android:id="@+id/recBackButton"
-                android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/history"
+                android:layout_width="@dimen/diameter_camera_button"
+                android:layout_height="@dimen/diameter_camera_button"
                 android:padding="15dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:scaleX="2"
-                android:scaleY="2"
-                android:src="@drawable/ic_arrow_back" />
+                android:scaleType="centerCrop"
+                android:background="@drawable/camera_button_background"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="@string/back"/>
 
-
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ImageButton
-                android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/history"
-                android:padding="15dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:scaleX="1.2"
-                android:scaleY="1.2"
-                android:src="@drawable/ic_help" />
         </LinearLayout>
 
         <LinearLayout
