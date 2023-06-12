@@ -22,6 +22,9 @@ import java.nio.ByteBuffer
 import java.io.FileInputStream
 import java.nio.channels.FileChannel
 import java.nio.ByteOrder
+import com.fintamath.calculator.CalculatorProcessor
+import java.util.*
+import kotlin.concurrent.schedule
 
 class RecognitionFragment : Fragment() {
     private lateinit var viewBinding: FragmentRecognitionBinding
@@ -75,7 +78,7 @@ class RecognitionFragment : Fragment() {
 
 
 
-    fun predictImage(bitmap: Bitmap): List<Pair<Mat, Rect>> {
+    fun predictImage(bitmap: Bitmap): List<Mat> {
         val image = Mat()
         Utils.bitmapToMat(bitmap, image)
         val gray = Mat()
@@ -89,7 +92,7 @@ class RecognitionFragment : Fragment() {
         val hierarchy = Mat()
         Imgproc.findContours(edged, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE)
         contours.sortBy { Imgproc.boundingRect(it).x }
-        val chars = mutableListOf<Pair<Mat, Rect>>()
+        val chars = mutableListOf<Mat>()
 
         for (c in contours) {
             val rect = Imgproc.boundingRect(c)
@@ -127,7 +130,7 @@ class RecognitionFragment : Fragment() {
                 Imgproc.resize(padded, padded, Size(45.0, 45.0))
                 //padded.convertTo(padded, CvType.CV_32F)
 
-                chars.add(Pair(padded, rect))
+                chars.add(padded)
             }
         }
 
@@ -141,7 +144,7 @@ class RecognitionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
+        initializeInterpreter()
         OpenCVLoader.initDebug()
 
         viewBinding = FragmentRecognitionBinding.inflate(layoutInflater)
@@ -152,51 +155,43 @@ class RecognitionFragment : Fragment() {
         viewBinding.recLayout.setBackgroundDrawable(BitmapDrawable(full_image))
         viewBinding.cutImage.setBackgroundDrawable(BitmapDrawable(cut_image))
 
-        val numbers = predictImage(cut_image)
-        Log.d("FRAGMENTS", numbers.size.toString())
-        val recognized = numbers[0].first
-        val number = Bitmap.createBitmap(recognized.rows(), recognized.cols(), Bitmap.Config.ARGB_8888)
-        Utils.matToBitmap(recognized, number)
-        //val imageProcessor = ImageProcessor.Builder().build()
-        //val tensorImage = imageProcessor.process(TensorImage.fromBitmap(number))
-
-        initializeInterpreter()
-        val byteBuffer = convertBitmapToByteBuffer(number)
-        val output = Array(1) { FloatArray(OUTPUT_CLASSES_COUNT) }
-        interpreter?.run(byteBuffer, output)
-        val result = output[0]
-        val maxIndex = result.indices.maxByOrNull { result[it] } ?: -1
-        val resultString =
-            "Prediction Result: %d\nConfidence: %2f"
-                .format(maxIndex, result[maxIndex])
-        Log.d("RESULT",resultString )
-
-//        TfLiteVision.initialize(context)
-//        val optionsBuilder = ImageClassifier.ImageClassifierOptions.builder()
-//        val baseOptionsBuilder = BaseOptions.builder()
-//        optionsBuilder.setBaseOptions(baseOptionsBuilder.build())
-//        val imageClassifier =
-//            ImageClassifier.createFromFileAndOptions(context, modelName, optionsBuilder.build())
+        val chars = predictImage(cut_image)
+        var result: String = ""
+        for (char in chars) {
+            val number = Bitmap.createBitmap(char.rows(), char.cols(), Bitmap.Config.ARGB_8888)
+            Utils.matToBitmap(char, number)
 
 
+            val byteBuffer = convertBitmapToByteBuffer(number)
+            val output = Array(1) { FloatArray(OUTPUT_CLASSES_COUNT) }
+            interpreter?.run(byteBuffer, output)
+            val prob = output[0]
+            val maxIndex = prob.indices.maxByOrNull { prob[it] } ?: -1
+            result += recognizable[maxIndex]
+        }
+
+        CalculatorProcessor (
+            { requireActivity().runOnUiThread { it.invoke() } },
+            { outTexts(it) },
+            { startLoading() }).calculate(result)
 
 
-
-
-
-        //viewBinding.cutImage.setBackgroundDrawable(BitmapDrawable(number))
-        //Log.d("SIZE", results.toString())
-
+        viewBinding.recText.text = result
 
 
         return viewBinding.root
-
+    }
+    private fun startLoading() {
     }
 
+    private fun outTexts(texts: List<String>) {
+        viewBinding.recRez.text = texts[0]
+    }
     companion object {
         private const val FLOAT_TYPE_SIZE = 4
         private const val PIXEL_SIZE = 1
 
         private const val OUTPUT_CLASSES_COUNT = 47
+        private val recognizable = listOf<String>("(", ")", "+", "-", "<", "=", ">", "≤", "≥", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "pi", "q", "r", "s", "slash", "t", "u", "v", "w", "x", "y", "z")
     }
 }
