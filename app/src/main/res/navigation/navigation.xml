@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.fintamath.camera.CameraFragment"
+        android:name="com.fintamath.fragment.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera">
 
