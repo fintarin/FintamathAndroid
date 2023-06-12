@@ -135,6 +135,13 @@ android {
         }
     }
 
+// --- FINTAMATH CHANGE START ---
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+// --- FINTAMATH CHANGE END ---
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['native/libs']
