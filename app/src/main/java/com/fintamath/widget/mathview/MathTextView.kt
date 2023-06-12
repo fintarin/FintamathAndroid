@@ -88,11 +88,11 @@ class MathTextView @JvmOverloads constructor(
 
     private val uiHandler: Handler = Handler(Looper.getMainLooper())
 
-    private val quickActionPopup: PopupWindow
-    private val cutActionButton: Button
-    private val copyActionButton: Button
-    private val pasteActionButton: Button
-    private val deleteActionButton: Button
+    private var quickActionPopup: PopupWindow? = null
+    private var cutActionButton: Button? = null
+    private var copyActionButton: Button? = null
+    private var pasteActionButton: Button? = null
+    private var deleteActionButton: Button? = null
 
     private val mathTextViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, url: String?) {
@@ -144,23 +144,25 @@ class MathTextView @JvmOverloads constructor(
 
         a.recycle()
 
-        quickActionPopup = PopupWindow(context)
-        quickActionPopup.isFocusable = true
-        quickActionPopup.contentView = inflate(context, quickActionPopupLayout, null)
-        quickActionPopup.animationStyle = android.R.style.Animation_Dialog
-        quickActionPopup.setBackgroundDrawable(null)
+        if (quickActionPopupLayout != 0) {
+            quickActionPopup = PopupWindow(context)
+            quickActionPopup!!.isFocusable = true
+            quickActionPopup!!.contentView = inflate(context, quickActionPopupLayout, null)
+            quickActionPopup!!.animationStyle = android.R.style.Animation_Dialog
+            quickActionPopup!!.setBackgroundDrawable(null)
 
-        cutActionButton = quickActionPopup.contentView.findViewById(R.id.cut)
-        cutActionButton.setOnClickListener { onCutAction() }
+            cutActionButton = quickActionPopup!!.contentView.findViewById(R.id.cut)
+            cutActionButton!!.setOnClickListener { onCutAction() }
 
-        copyActionButton = quickActionPopup.contentView.findViewById(R.id.copy)
-        copyActionButton.setOnClickListener { onCopyAction() }
+            copyActionButton = quickActionPopup!!.contentView.findViewById(R.id.copy)
+            copyActionButton!!.setOnClickListener { onCopyAction() }
 
-        pasteActionButton = quickActionPopup.contentView.findViewById(R.id.paste)
-        pasteActionButton.setOnClickListener { onPasteAction() }
+            pasteActionButton = quickActionPopup!!.contentView.findViewById(R.id.paste)
+            pasteActionButton!!.setOnClickListener { onPasteAction() }
 
-        deleteActionButton = quickActionPopup.contentView.findViewById(R.id.delete)
-        deleteActionButton.setOnClickListener { onDeleteAction() }
+            deleteActionButton = quickActionPopup!!.contentView.findViewById(R.id.delete)
+            deleteActionButton!!.setOnClickListener { onDeleteAction() }
+        }
 
         setOnLongClickListener { return@setOnLongClickListener true }
     }
@@ -203,20 +205,20 @@ class MathTextView @JvmOverloads constructor(
         val clip = ClipData.newPlainText("math-text", text)
         clipboard.setPrimaryClip(clip)
 
-        quickActionPopup.dismiss()
+        quickActionPopup!!.dismiss()
     }
 
     private fun onPasteAction() {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         insertAtCursor(clipboard.primaryClip?.getItemAt(0)?.text.toString())
 
-        quickActionPopup.dismiss()
+        quickActionPopup!!.dismiss()
     }
 
     private fun onDeleteAction() {
         clear()
 
-        quickActionPopup.dismiss()
+        quickActionPopup!!.dismiss()
     }
 
     fun setOnTextChangedListener(listener: (text: String) -> Unit) {
@@ -257,18 +259,22 @@ class MathTextView @JvmOverloads constructor(
     private fun onLongPress(event: MotionEvent) {
         performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
 
-        cutActionButton.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
-        copyActionButton.visibility = if (text.isNotEmpty()) VISIBLE else GONE
-        pasteActionButton.visibility = if (isEditable) VISIBLE else GONE
-        deleteActionButton.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
+        if (quickActionPopup == null) {
+            return
+        }
+
+        cutActionButton!!.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
+        copyActionButton!!.visibility = if (text.isNotEmpty()) VISIBLE else GONE
+        pasteActionButton!!.visibility = if (isEditable) VISIBLE else GONE
+        deleteActionButton!!.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
 
         val location = IntArray(2)
         getLocationOnScreen(location)
 
-        quickActionPopup.contentView.measure(0, 0)
-        quickActionPopup.showAtLocation(this, Gravity.NO_GRAVITY,
-            event.x.toInt() - quickActionPopup.contentView.measuredWidth / 2,
-            event.y.toInt() + location[1] - quickActionPopup.contentView.measuredHeight * 3/2)
+        quickActionPopup!!.contentView.measure(0, 0)
+        quickActionPopup!!.showAtLocation(this, Gravity.NO_GRAVITY,
+            event.x.toInt() - quickActionPopup!!.contentView.measuredWidth / 2,
+            event.y.toInt() + location[1] - quickActionPopup!!.contentView.measuredHeight * 3/2)
 
         dispatchTouchEvent(MotionEvent.obtain(
             SystemClock.uptimeMillis(),
