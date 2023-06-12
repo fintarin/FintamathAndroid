@@ -85,6 +85,7 @@
             android:background="@android:color/transparent">
 
             <RelativeLayout
+                android:id="@+id/focus_expr"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_margin="40dp"

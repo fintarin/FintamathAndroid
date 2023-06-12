@@ -4,9 +4,31 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fintamath.storage.HistoryStorage
 import java.io.File
+import java.util.*
+import java.util.concurrent.ExecutorService
+import android.graphics.Bitmap
 
- 
+
 class MainActivity : AppCompatActivity() {
+    // TODO! remove from MainActivity, move to new Storage class
+    private lateinit var full_image: Bitmap
+    private lateinit var cut_image: Bitmap
+
+    // TODO! remove from MainActivity, move to new Storage class
+    fun set_full_image(data: Bitmap) {
+        full_image = data
+    }
+    fun get_full_image() : Bitmap {
+        return full_image
+    }
+    fun set_cut_image(data: Bitmap) {
+        cut_image = data
+    }
+    fun get_cut_image() : Bitmap {
+        return cut_image
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
