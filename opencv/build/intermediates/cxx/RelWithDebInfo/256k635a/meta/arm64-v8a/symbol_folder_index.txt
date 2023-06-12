@@ -1,0 +1,1 @@
+/home/cati0n/FintamathAndroid/opencv/build/intermediates/cxx/RelWithDebInfo/256k635a/obj/arm64-v8a
