@@ -251,6 +251,7 @@ class MathTextView @JvmOverloads constructor(
         return super.onTouchEvent(event)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun onLongPress(event: MotionEvent) {
         performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
 
@@ -267,8 +268,17 @@ class MathTextView @JvmOverloads constructor(
             event.x.toInt() - quickActionPopup.contentView.measuredWidth / 2,
             event.y.toInt() + location[1] - quickActionPopup.contentView.measuredHeight * 3/2)
 
+        dispatchTouchEvent(MotionEvent.obtain(
+            SystemClock.uptimeMillis(),
+            SystemClock.uptimeMillis(),
+            MotionEvent.ACTION_UP,
+            event.x,
+            event.y,
+            0
+        ))
+
         GlobalScope.launch {
-            delay(50)
+            delay(100)
 
             dispatchTouchEvent(MotionEvent.obtain(
                 SystemClock.uptimeMillis(),
