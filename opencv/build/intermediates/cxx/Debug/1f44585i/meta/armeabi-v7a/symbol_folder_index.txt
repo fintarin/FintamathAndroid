@@ -1,1 +1,0 @@
-/home/cati0n/FintamathAndroid/opencv/build/intermediates/cxx/Debug/1f44585i/obj/armeabi-v7a
