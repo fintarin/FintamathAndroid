@@ -24,15 +24,16 @@ import android.util.Log
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
 import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.camera.core.ExperimentalGetImage;
 
 import androidx.navigation.findNavController
 import com.fintamath.R
 import android.util.Size
-import androidx.core.view.WindowCompat.setDecorFitsSystemWindows
+import android.view.WindowManager
 import androidx.core.view.WindowCompat
-import android.os.Build
-
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 
 class CameraFragment : Fragment() {
@@ -40,66 +41,45 @@ class CameraFragment : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var imageCapture: ImageCapture
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //OpenCVLoader.initDebug()
-    }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         viewBinding = FragmentCameraBinding.inflate(layoutInflater)
 
         viewBinding.cameraBackButton.setOnClickListener { viewBinding.root.findNavController().navigate(R.id.action_cameraFragment_to_calculatorFragment) }
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
+
         hideSystemUI()
+
         return viewBinding.root
     }
 
-    private fun hideSystemUI() {
-          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-              val window = requireActivity().window
-              window.setDecorFitsSystemWindows(false)
-              WindowCompat.setDecorFitsSystemWindows(window, false)
-          }
-        else {
-            val decorView: View = viewBinding.root
-            val uiOptions = decorView.systemUiVisibility
-            var newUiOptions = uiOptions
-            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_LOW_PROFILE
-            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_FULLSCREEN
-            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE
-            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            decorView.systemUiVisibility = newUiOptions
-          }
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-
+        cameraExecutor.shutdown()
+        restoreSystemUI()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (allPermissionsGranted()) {
+
+        if (areAllPermissionsGranted()) {
             startCamera()
         } else {
             requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
-
-
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
         IntArray) {
         Log.d(TAG, requestCode.toString())
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
+            if (areAllPermissionsGranted()) {
                 startCamera()
             } else {
                 Toast.makeText(context,
@@ -185,15 +165,8 @@ class CameraFragment : Fragment() {
         )
     }
 
-
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            requireContext(), it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
+    private fun areAllPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
     companion object {
@@ -207,6 +180,20 @@ class CameraFragment : Fragment() {
 
     private fun executeBack() {
         activity?.onBackPressedDispatcher?.onBackPressed()
+    }
+
+    private fun hideSystemUI() {
+        val window = requireActivity().window
+        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+    }
+
+    private fun restoreSystemUI() {
+        val window = requireActivity().window
+        window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT
     }
 }
 
