@@ -7,14 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.fintamath.databinding.FragmentCameraBinding
+import com.fintamath.MainActivity
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.pm.PackageManager
-import android.os.Build
-import android.provider.MediaStore
+import android.graphics.Bitmap
 import androidx.camera.core.ImageCapture
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -23,22 +21,26 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.core.Preview
 import androidx.camera.core.CameraSelector
 import android.util.Log
-import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
-import androidx.core.content.PermissionChecker
-import java.nio.ByteBuffer
-import java.text.SimpleDateFormat
-import java.util.Locale
+import android.graphics.BitmapFactory
+import androidx.camera.core.ExperimentalGetImage;
 
-
+import androidx.navigation.findNavController
+import com.fintamath.R
+import android.util.Size
 
 
 
 class CameraFragment : Fragment() {
     private lateinit var viewBinding: FragmentCameraBinding
     private lateinit var cameraExecutor: ExecutorService
-    private var imageCapture: ImageCapture? = null
+    private lateinit var imageCapture: ImageCapture
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //OpenCVLoader.initDebug()
+    }
 
 
     override fun onCreateView(
@@ -48,10 +50,22 @@ class CameraFragment : Fragment() {
 
         viewBinding = FragmentCameraBinding.inflate(layoutInflater)
 
-        viewBinding.cameraBackButton.setOnClickListener { executeBack() }
+        viewBinding.cameraBackButton.setOnClickListener { viewBinding.root.findNavController().navigate(R.id.action_cameraFragment_to_calculatorFragment) }
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
-
+        hideSystemUI()
         return viewBinding.root
+    }
+
+    private fun hideSystemUI() {
+        val decorView: View = viewBinding.root
+        val uiOptions = decorView.systemUiVisibility
+        var newUiOptions = uiOptions
+        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_LOW_PROFILE
+        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_FULLSCREEN
+        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE
+        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        decorView.systemUiVisibility = newUiOptions
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,7 +73,7 @@ class CameraFragment : Fragment() {
         if (allPermissionsGranted()) {
             startCamera()
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            requestPermissions(REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
 
@@ -71,6 +85,7 @@ class CameraFragment : Fragment() {
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults:
         IntArray) {
+        Log.d(TAG, requestCode.toString())
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 startCamera()
@@ -100,8 +115,9 @@ class CameraFragment : Fragment() {
                 }
 
             imageCapture = ImageCapture.Builder()
+                .setTargetRotation(viewBinding.viewFinder.display.rotation)
+                .setTargetResolution(Size(720,1440))
                 .build()
-
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -121,42 +137,37 @@ class CameraFragment : Fragment() {
     }
 
     private fun takePhoto() {
-        // Get a stable reference of the modifiable image capture use case
-        val imageCapture = imageCapture ?: return
-
-        // Create time stamped name and MediaStore entry.
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-            .format(System.currentTimeMillis())
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Fintamath")
-            }
-        }
-
-        // Create output options object which contains file + metadata
-        val outputOptions = ImageCapture.OutputFileOptions
-            .Builder(requireActivity().contentResolver,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues)
-            .build()
 
         // Set up image capture listener, which is triggered after photo has
         // been taken
         imageCapture.takePicture(
-            outputOptions,
             ContextCompat.getMainExecutor(requireContext()),
-            object : ImageCapture.OnImageSavedCallback {
+            object : ImageCapture.OnImageCapturedCallback() {
                 override fun onError(exc: ImageCaptureException) {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults){
-                    val msg = "Photo capture succeeded: ${output.savedUri}"
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
+                @ExperimentalGetImage
+                override fun onCaptureSuccess(imageProxy: ImageProxy){
+                    val image = imageProxy.image
+                    //val bitmap = Bitmap.createBitmap(image)
+                    val buffer = image!!.planes[0].buffer
+                    buffer.rewind()
+                    val bytes = ByteArray(buffer.capacity())
+                    buffer.get(bytes)
+                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                    val location = IntArray(2)
+                    viewBinding.focusExpr.getLocationOnScreen(location)
+                    (activity as MainActivity).set_full_image(bitmap)
+                    Log.d(TAG, image.width.toString()+" " +image.height.toString())
+                    Log.d(TAG, bitmap.width.toString()+" " +bitmap.height.toString())
+                    Log.d(TAG, viewBinding.mainLayout.width.toString()+" " +viewBinding.mainLayout.height.toString())
+                    val cut = Bitmap.createBitmap(bitmap, location[0], location[1], viewBinding.focusExpr.getWidth(), viewBinding.focusExpr.getHeight())
+                    (activity as MainActivity).set_cut_image(cut)
+                    imageProxy.close()
+                    viewBinding.root.findNavController().navigate(R.id.action_cameraFragment_to_recFragment)
+
+
                 }
             }
         )
@@ -175,20 +186,15 @@ class CameraFragment : Fragment() {
 
     companion object {
         private const val TAG = "Fintamath"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS =
             mutableListOf (
                 Manifest.permission.CAMERA,
-            ).apply {
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                }
-            }.toTypedArray()
+            ).toTypedArray()
     }
 
     private fun executeBack() {
-        activity?.onBackPressed()
+        activity?.onBackPressedDispatcher?.onBackPressed()
     }
 }
 

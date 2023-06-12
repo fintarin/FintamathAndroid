@@ -237,7 +237,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun showCameraFragment(view: View) {
-        // TODO: implement
+        view.findNavController().navigate(R.id.action_calculatorFragment_to_cameraFragment)
     }
 
     private fun showAboutFragment(view: View) {
