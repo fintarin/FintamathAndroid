@@ -79,8 +79,6 @@ dependencies {
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
-    //implementation project(':thirdparty:opencv')
     implementation "com.quickbirdstudios:opencv:4.5.3.0"
-
     implementation 'org.tensorflow:tensorflow-lite:2.5.0'
 }
