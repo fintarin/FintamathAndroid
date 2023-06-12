@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.fintamath.MainActivity
 import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.storage.HistoryStorage
@@ -50,6 +51,9 @@ class CalculatorFragment : Fragment() {
 
         if (inTextView.text != CalculatorInputStorage.mathTextData.text) {
             inTextView.text = CalculatorInputStorage.mathTextData.text
+        }
+        if ((activity as MainActivity).get_rec() != "") {
+            inTextView.text = (activity as MainActivity).get_rec()
         }
 
         inTextView.requestFocus()

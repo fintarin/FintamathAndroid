@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.camera.CameraFragment"
+    tools:context=".fragment.camera.RecognitionFragment"
     android:background="@android:color/transparent" >
     <!-- android:background="@drawable/bar_background" -->
+
+
 
 
 
@@ -18,6 +20,8 @@
         android:layout_height="match_parent"
         android:gravity="top"
         android:background="@android:color/transparent">
+
+
 
         <LinearLayout
             android:id="@+id/bar_layout"
@@ -68,26 +72,21 @@
             android:background="@android:color/transparent">
         </LinearLayout>
 
+
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="570dp"
-            android:layout_margin="20dp"
+            android:layout_height="370dp"
+            android:layout_marginTop="230dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/rounded_cornes">
 
-            <RelativeLayout
-                android:id="@+id/cut_image"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginHorizontal="30dp"
-                android:background="@android:color/transparent">
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginTop="200dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/image_corners"
                 android:orientation="horizontal">
@@ -98,12 +97,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     app:isEditable="false"
-                    app:text="sin(-(Pi)/(2))-cos((3Pi)/(2))"
                     app:textSize="@dimen/text_size_math_text_view"
                     app:textColor="@color/text_main" />
 
 
                 <ImageButton
+                    android:id="@+id/recButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -122,8 +121,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/history"
-                android:layout_marginLeft="105dp"
-                android:layout_marginTop="320dp"
+                android:layout_marginLeft="110dp"
+                android:layout_marginTop="160dp"
                 android:scaleX="2"
                 android:scaleY="1.5"
                 android:src="@drawable/ic_rec_down" />
@@ -131,7 +130,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_marginTop="380dp"
+                android:layout_marginTop="210dp"
                 android:layout_marginHorizontal="20dp"
                 android:background="@drawable/image_corners"
                 android:orientation="horizontal">
@@ -151,6 +150,82 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@android:color/transparent"
+        android:paddingTop="120dp">
+    <RelativeLayout
+        android:id="@+id/Expression"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Top horizzontal lines -->
+        <View
+            android:layout_width="80dp"
+            android:layout_height="3dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/text_main" />
+
+        <View
+            android:layout_width="80dp"
+            android:layout_height="3dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@color/text_main" />
+
+        <!-- Top vertical lines -->
+        <View
+            android:layout_width="3dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/text_main" />
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@color/text_main" />
+
+        <!-- Bottom horizzontal lines -->
+        <View
+            android:layout_width="80dp"
+            android:layout_height="3dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/text_main" />
+
+        <View
+            android:layout_width="80dp"
+            android:layout_height="3dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/text_main" />
+
+        <!-- Bottom vertical lines -->
+        <View
+            android:layout_width="3dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/text_main" />
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/text_main" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 
 

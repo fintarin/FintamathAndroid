@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.camera.CameraFragment" >
+    tools:context=".camera.CameraFragment" >
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
@@ -17,7 +17,7 @@
         android:id="@+id/calculatorBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="50dp" >
+        android:paddingTop="20dp" >
 
         <ImageButton
             android:id="@+id/cameraBackButton"
@@ -68,13 +68,18 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/focusExpr"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_margin="40dp"
-        android:paddingTop="120dp"
-        android:background="@android:color/transparent">
 
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@android:color/transparent"
+        android:paddingTop="120dp">
+        <RelativeLayout
+            android:id="@+id/focusExpr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <!-- Top horizzontal lines -->
         <View
             android:layout_width="80dp"
@@ -134,6 +139,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:background="@color/text_main" />
+        </RelativeLayout>
     </RelativeLayout>
 
 
@@ -157,7 +163,7 @@
         android:id="@+id/shoot_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="70dp"
+        android:paddingBottom="50dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
         android:background="@android:color/transparent">
@@ -168,6 +174,7 @@
             android:layout_weight="1" />
 
         <ImageButton
+            android:id="@+id/ImageFromGallery"
             android:layout_width="@dimen/diameter_camera_button"
             android:layout_height="@dimen/diameter_camera_button"
             android:padding="15dp"
@@ -201,6 +208,7 @@
             android:layout_weight="1" />
 
         <ImageButton
+            android:id="@+id/flashLightButton"
             android:layout_width="@dimen/diameter_camera_button"
             android:layout_height="@dimen/diameter_camera_button"
             android:padding="15dp"

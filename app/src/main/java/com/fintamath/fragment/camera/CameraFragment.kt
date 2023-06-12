@@ -1,42 +1,53 @@
-package com.fintamath.fragment.camera
+package com.fintamath.camera
 
+import android.Manifest
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
+import android.util.Log
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.fintamath.databinding.FragmentCameraBinding
-import com.fintamath.MainActivity
-
-import android.Manifest
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import androidx.camera.core.ImageCapture
+import android.view.WindowManager
+import android.widget.Toast
+import androidx.camera.core.*
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import com.fintamath.MainActivity
+import com.fintamath.R
+import com.fintamath.databinding.FragmentCameraBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import android.widget.Toast
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.core.Preview
-import androidx.camera.core.CameraSelector
-import android.util.Log
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
-import android.graphics.BitmapFactory
-import androidx.camera.core.ExperimentalGetImage;
-
-import androidx.navigation.findNavController
-import com.fintamath.R
-import android.util.Size
-import android.view.WindowManager
+import android.widget.SeekBar
+import androidx.camera.core.CameraControl
 
 
 class CameraFragment : Fragment() {
     private lateinit var viewBinding: FragmentCameraBinding
     private lateinit var cameraExecutor: ExecutorService
+    private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var imageCapture: ImageCapture
+    private lateinit var cameraId: String
+    private lateinit var camera: Camera
+    private var isTurnFlashLight: Boolean = false
+    private lateinit var zoomBar: SeekBar
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //OpenCVLoader.initDebug()
+    }
+
+
+ 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,9 +55,27 @@ class CameraFragment : Fragment() {
         viewBinding = FragmentCameraBinding.inflate(layoutInflater)
 
         viewBinding.cameraBackButton.setOnClickListener { viewBinding.root.findNavController().navigate(R.id.action_cameraFragment_to_calculatorFragment) }
+        viewBinding.cameraHistoryButton.setOnClickListener { viewBinding.root.findNavController().navigate(R.id.action_cameraFragment_to_history) }
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
 
+        zoomBar = viewBinding.seekBar
+
+        zoomBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                camera.cameraControl.setLinearZoom(progress / 100.toFloat())
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+        })
+
         hideSystemUI()
+
+
+        viewBinding.flashLightButton.setOnClickListener { turnLight() }
+        viewBinding.ImageFromGallery.setOnClickListener { takeFromGallery() }
+
 
         return viewBinding.root
     }
@@ -93,7 +122,7 @@ class CameraFragment : Fragment() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
 
         cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            cameraProvider = cameraProviderFuture.get()
 
             // Preview
             val preview = Preview.Builder()
@@ -114,7 +143,7 @@ class CameraFragment : Fragment() {
                 cameraProvider.unbindAll()
 
                 // Bind use cases to camera
-                cameraProvider.bindToLifecycle(
+                camera = cameraProvider.bindToLifecycle(
                     this, cameraSelector, preview, imageCapture)
 
             } catch(exc: Exception) {
@@ -149,7 +178,6 @@ class CameraFragment : Fragment() {
                     (activity as MainActivity).set_full_image(bitmap)
                     Log.d(TAG, image.width.toString()+" " +image.height.toString())
                     Log.d(TAG, bitmap.width.toString()+" " +bitmap.height.toString())
-                    Log.d(TAG, viewBinding.focusExpr.width.toString()+" " +viewBinding.focusExpr.height.toString())
                     val cut = Bitmap.createBitmap(bitmap, location[0], location[1], viewBinding.focusExpr.getWidth(), viewBinding.focusExpr.getHeight())
                     (activity as MainActivity).set_cut_image(cut)
                     imageProxy.close()
@@ -160,6 +188,32 @@ class CameraFragment : Fragment() {
             }
         )
     }
+    private fun takeFromGallery(){
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, 10)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val image_uri: Uri
+        if (requestCode == 10 && resultCode == RESULT_OK && data != null) {
+            image_uri = data.data!!
+            val location = IntArray(2)
+            viewBinding.focusExpr.getLocationOnScreen(location)
+            val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), image_uri)
+            (activity as MainActivity).set_full_image(bitmap)
+            val cut = Bitmap.createBitmap(bitmap, location[0]+20, location[1]+20, viewBinding.focusExpr.getWidth()-40,viewBinding.focusExpr.getHeight()-40)
+            (activity as MainActivity).set_cut_image(cut)
+            viewBinding.root.findNavController().navigate(R.id.action_cameraFragment_to_recFragment)
+        }
+    }
+
+    private fun turnLight(){
+        camera.cameraControl.enableTorch(! isTurnFlashLight)
+        isTurnFlashLight = ! isTurnFlashLight
+    }
+
 
     private fun areAllPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
@@ -192,6 +246,5 @@ class CameraFragment : Fragment() {
         window.attributes.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_DEFAULT
     }
 }
-
 
 
