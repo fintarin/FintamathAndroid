@@ -33,6 +33,7 @@ class RecognitionFragment : Fragment() {
     private var inputImageWidth: Int = 0 // will be inferred from TF Lite model.
     private var inputImageHeight: Int = 0 // will be inferred from TF Lite model.
     private var modelInputSize: Int = 0 // will be inferred from TF Lite model.
+    private lateinit var result: String
 
     private fun initializeInterpreter() {
         val assetManager = requireContext().assets
@@ -92,6 +93,70 @@ class RecognitionFragment : Fragment() {
         val hierarchy = Mat()
         Imgproc.findContours(edged, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE)
         contours.sortBy { Imgproc.boundingRect(it).x }
+        var i = 0
+        while (i<contours.size-1) {
+            Log.d("NUMBER", i.toString())
+            val grub_contours = contours
+            var cnt1 = Imgproc.boundingRect(grub_contours[i])
+            val x1 = cnt1.x
+            val y1 = cnt1.y
+            val w1 = cnt1.width
+            val h1 = cnt1.height
+            Log.d("NUMBERG", grub_contours.size.toString())
+            for (j in 0..grub_contours.size-1){
+                if (i==j){
+                    continue
+                }
+                var cnt2 = Imgproc.boundingRect(grub_contours[j])
+                val x2 = cnt2.x
+                val y2 = cnt2.y
+                val w2 = cnt2.width
+                val h2 = cnt2.height
+
+                if ((x1+w1>x2) and (x2>x1) and (y1+h1>y2) and (y1<y2)){
+                    if (w1*h1>w2*h2){
+                        contours.remove(grub_contours[j])
+                    }
+                    else{
+                        contours.remove(grub_contours[i])
+                    }
+                    break
+                }
+                if ((x2+w2>x1) and (x1>x2) and (y2+h2>y1) and (y2<y1)){
+                    if (w1*h1>w2*h2){
+                        contours.remove(grub_contours[j])
+                    }
+                    else{
+                        contours.remove(grub_contours[i])
+                    }
+                    break
+                }
+                if ((x1+w1>x2) and (x2>x1) and (y2+h2>y1) and (y2<y1)){
+                    if (w1*h1>w2*h2){
+                        contours.remove(grub_contours[j])
+                    }
+                    else{
+                        contours.remove(grub_contours[i])
+                    }
+                    break
+                }
+                if ((x2+w2>x1) and (x1>x2) and (y1+h1>y2) and (y1<y2)){
+                    if (w1*h1>w2*h2){
+                        contours.remove(grub_contours[j])
+                    }
+                    else{
+                        contours.remove(grub_contours[i])
+                    }
+                    break
+                }
+
+                if (j == grub_contours.size-1){
+                    i+=1
+                    break
+                }
+            }
+        }
+
         val chars = mutableListOf<Mat>()
 
         for (c in contours) {
@@ -102,7 +167,7 @@ class RecognitionFragment : Fragment() {
             val h = rect.height
             Log.d("SIZE", w.toString()+" "+h.toString())
             //if (w >= 20 && w <= 150 && h >= 20 && h <= 120) {
-            if (w >= 30 && h >= 30) {
+            if (w >= 40 && h >= 0) {
 
                 val roi = gray.submat(rect)
                 val thresh = Mat()
@@ -149,14 +214,16 @@ class RecognitionFragment : Fragment() {
 
         viewBinding = FragmentRecognitionBinding.inflate(layoutInflater)
         viewBinding.recBackButton.setOnClickListener { viewBinding.root.findNavController().navigate(R.id.action_recFragment_to_cameraFragment) }
+        viewBinding.recButton.setOnClickListener { text_to_calculator() }
+
 
         val full_image: Bitmap = (activity as MainActivity).get_full_image()
         val cut_image: Bitmap = (activity as MainActivity).get_cut_image()
         viewBinding.recLayout.setBackgroundDrawable(BitmapDrawable(full_image))
-        viewBinding.cutImage.setBackgroundDrawable(BitmapDrawable(cut_image))
+        viewBinding.Expression.setBackgroundDrawable(BitmapDrawable(cut_image))
 
         val chars = predictImage(cut_image)
-        var result: String = ""
+        result = ""
         for (char in chars) {
             val number = Bitmap.createBitmap(char.rows(), char.cols(), Bitmap.Config.ARGB_8888)
             Utils.matToBitmap(char, number)
@@ -167,7 +234,24 @@ class RecognitionFragment : Fragment() {
             interpreter?.run(byteBuffer, output)
             val prob = output[0]
             val maxIndex = prob.indices.maxByOrNull { prob[it] } ?: -1
-            result += recognizable[maxIndex]
+            if (recognizable[maxIndex] == "pi") {
+                result+="Pi"
+            }
+            else{
+                if (recognizable[maxIndex] == "slash") {
+                    result+="/"
+                }
+                else{
+                    result += recognizable[maxIndex]
+                }
+            }
+
+            if ((result[result.length-1] == '-') and (result.length>2)){
+                if (result[result.length-2] == '-') {
+                    result = result.substring(0..result.length - 3)
+                    result += "="
+                }
+            }
         }
 
         CalculatorProcessor (
@@ -186,6 +270,11 @@ class RecognitionFragment : Fragment() {
 
     private fun outTexts(texts: List<String>) {
         viewBinding.recRez.text = texts[0]
+    }
+
+    private fun text_to_calculator(){
+        (activity as MainActivity).set_rec(result)
+        viewBinding.root.findNavController().navigate(R.id.action_recFragment_to_calculator)
     }
     companion object {
         private const val FLOAT_TYPE_SIZE = 4

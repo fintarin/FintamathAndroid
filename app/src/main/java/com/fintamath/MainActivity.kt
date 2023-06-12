@@ -12,6 +12,14 @@ class MainActivity : AppCompatActivity() {
     // TODO! remove from MainActivity, move to new Storage class
     private lateinit var full_image: Bitmap
     private lateinit var cut_image: Bitmap
+    private var rec: String = ""
+
+    fun set_rec(data: String) {
+        rec = data
+    }
+    fun get_rec() : String {
+        return rec
+    }
 
     // TODO! remove from MainActivity, move to new Storage class
     fun set_full_image(data: Bitmap) {

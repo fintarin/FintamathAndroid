@@ -37,13 +37,17 @@
 
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.fintamath.fragment.camera.CameraFragment"
+        android:name="com.fintamath.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera">
 
         <action
             android:id="@+id/action_cameraFragment_to_recFragment"
             app:destination="@id/recognitionFragment" />
+
+        <action
+            android:id="@+id/action_cameraFragment_to_history"
+            app:destination="@id/historyFragment" />
 
         <action
             android:id="@+id/action_cameraFragment_to_calculatorFragment"
