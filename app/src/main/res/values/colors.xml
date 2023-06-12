@@ -6,6 +6,7 @@
     <color name="background_bar_stroke">#99262626</color>
     <color name="background_bar_button">@color/background_bar</color>
     <color name="background_bar_button_pressed">#666666</color>
+    <color name="background_camera_button_pressed">#99CECECE</color>
 
     <color name="background_menu">#323232</color>
     <color name="background_menu_stroke">#26323232</color>

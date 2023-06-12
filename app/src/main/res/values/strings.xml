@@ -22,6 +22,10 @@
     <string name="trash">Trash</string>
     <string name="calculate">Calculate</string>
     <string name="logo">Logo</string>
+    <string name="help">Help</string>
+    <string name="gallery">Gallery</string>
+    <string name="shot">Shot</string>
+    <string name="light">Flashlight</string>
 
     <string name="cut">Cut</string>
     <string name="copy">Copy</string>

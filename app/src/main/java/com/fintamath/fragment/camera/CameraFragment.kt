@@ -149,7 +149,7 @@ class CameraFragment : Fragment() {
                     (activity as MainActivity).set_full_image(bitmap)
                     Log.d(TAG, image.width.toString()+" " +image.height.toString())
                     Log.d(TAG, bitmap.width.toString()+" " +bitmap.height.toString())
-                    Log.d(TAG, viewBinding.mainLayout.width.toString()+" " +viewBinding.mainLayout.height.toString())
+                    Log.d(TAG, viewBinding.focusExpr.width.toString()+" " +viewBinding.focusExpr.height.toString())
                     val cut = Bitmap.createBitmap(bitmap, location[0], location[1], viewBinding.focusExpr.getWidth(), viewBinding.focusExpr.getHeight())
                     (activity as MainActivity).set_cut_image(cut)
                     imageProxy.close()

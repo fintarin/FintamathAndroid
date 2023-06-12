@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="camera.CameraFragment"
+    tools:context=".fragment.camera.CameraFragment"
     android:background="@android:color/transparent" >
     <!-- android:background="@drawable/bar_background" -->
 
@@ -56,7 +56,7 @@
                 android:paddingEnd="10dp"
                 android:scaleX="1.2"
                 android:scaleY="1.2"
-                android:src="@drawable/ic_faq" />
+                android:src="@drawable/ic_help" />
         </LinearLayout>
 
         <LinearLayout
