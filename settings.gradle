@@ -14,7 +14,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "fintamath"
 include ':app'
-include ':thirdparty:opencv'
+//include ':thirdparty:opencv'
 
 gradle.ext.useLocalLibrary = false
 gradle.ext.useRemoteLibrary = false

@@ -65,7 +65,6 @@ class RecognitionFragment : Fragment() {
             val r = (pixelValue shr 16 and 0xFF)
             val g = (pixelValue shr 8 and 0xFF)
             val b = (pixelValue and 0xFF)
-            //Log.d("PIXEL", r.toString()+ " " + g.toString()+ " " + b.toString())
             val normalizedPixelValue = (r + g + b) / 3.0f / 255.0f
             byteBuffer.putFloat(normalizedPixelValue)
         }
@@ -195,8 +194,6 @@ class RecognitionFragment : Fragment() {
     }
 
     companion object {
-        private const val TAG = "DigitClassifier"
-
         private const val FLOAT_TYPE_SIZE = 4
         private const val PIXEL_SIZE = 1
 
