@@ -1,7 +1,6 @@
 package com.fintamath.fragment.camera
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,10 +22,9 @@ import java.io.FileInputStream
 import java.nio.channels.FileChannel
 import java.nio.ByteOrder
 import com.fintamath.calculator.CalculatorProcessor
-import java.util.*
-import kotlin.concurrent.schedule
+import com.fintamath.widget.fragment.BorderlessFragment
 
-class RecognitionFragment : Fragment() {
+class RecognitionFragment : BorderlessFragment() {
     private lateinit var viewBinding: FragmentRecognitionBinding
     private var interpreter: Interpreter? = null
 
@@ -207,13 +205,13 @@ class RecognitionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        viewBinding = FragmentRecognitionBinding.inflate(layoutInflater, container, false)
 
         initializeInterpreter()
         OpenCVLoader.initDebug()
 
-        viewBinding = FragmentRecognitionBinding.inflate(layoutInflater)
-        viewBinding.recBackButton.setOnClickListener { viewBinding.root.findNavController().navigate(R.id.action_recFragment_to_cameraFragment) }
+        viewBinding.recBackButton.setOnClickListener { executeBack() }
         viewBinding.recButton.setOnClickListener { text_to_calculator() }
 
 
@@ -274,8 +272,13 @@ class RecognitionFragment : Fragment() {
 
     private fun text_to_calculator(){
         (activity as MainActivity).set_rec(result)
-        viewBinding.root.findNavController().navigate(R.id.action_recFragment_to_calculator)
+        executeBack()
     }
+
+    private fun executeBack() {
+        activity?.onBackPressedDispatcher?.onBackPressed()
+    }
+
     companion object {
         private const val FLOAT_TYPE_SIZE = 4
         private const val PIXEL_SIZE = 1
