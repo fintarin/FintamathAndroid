@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fintamath.storage.HistoryStorage
 import java.io.File
 import java.util.*
-import java.util.concurrent.ExecutorService
 import android.graphics.Bitmap
 
 

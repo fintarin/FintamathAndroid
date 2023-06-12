@@ -1,4 +1,4 @@
-package com.fintamath.camera
+package com.fintamath.fragment.camera
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,16 +24,12 @@ import android.util.Log
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
 import android.graphics.BitmapFactory
-import android.os.Build
 import androidx.camera.core.ExperimentalGetImage;
 
 import androidx.navigation.findNavController
 import com.fintamath.R
 import android.util.Size
 import android.view.WindowManager
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 
 
 class CameraFragment : Fragment() {
