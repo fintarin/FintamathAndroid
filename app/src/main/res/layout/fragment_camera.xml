@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".camera.CameraFragment" >
+    tools:context=".fragment.camera.CameraFragment" >
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
@@ -17,7 +17,7 @@
         android:id="@+id/calculatorBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp" >
+        android:paddingTop="45dp" >
 
         <ImageButton
             android:id="@+id/cameraBackButton"
@@ -47,23 +47,6 @@
             android:background="@drawable/camera_button_background"
             android:src="@drawable/ic_history"
             android:contentDescription="@string/history"/>
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/cameraHelpButton"
-            android:layout_width="@dimen/diameter_camera_button"
-            android:layout_height="@dimen/diameter_camera_button"
-            android:padding="15dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/camera_button_background"
-            android:src="@drawable/ic_help"
-            android:contentDescription="@string/help" />
 
     </LinearLayout>
 
