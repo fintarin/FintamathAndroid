@@ -22,6 +22,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.PopupWindow
 import androidx.annotation.Keep
+import androidx.constraintlayout.motion.widget.MotionScene.Transition
 import com.fintamath.R
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -146,6 +147,7 @@ class MathTextView @JvmOverloads constructor(
         quickActionPopup = PopupWindow(context)
         quickActionPopup.isFocusable = true
         quickActionPopup.contentView = inflate(context, quickActionPopupLayout, null)
+        quickActionPopup.animationStyle = android.R.style.Animation_Dialog
         quickActionPopup.setBackgroundDrawable(null)
 
         cutActionButton = quickActionPopup.contentView.findViewById(R.id.cut)
