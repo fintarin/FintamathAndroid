@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="camera.CameraFragment"
-    android:background="@drawable/a1" >
+    android:background="@android:color/transparent" >
     <!-- android:background="@drawable/bar_background" -->
 
 
