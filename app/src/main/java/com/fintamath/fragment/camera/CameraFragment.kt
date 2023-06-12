@@ -29,6 +29,9 @@ import androidx.camera.core.ExperimentalGetImage;
 import androidx.navigation.findNavController
 import com.fintamath.R
 import android.util.Size
+import androidx.core.view.WindowCompat.setDecorFitsSystemWindows
+import androidx.core.view.WindowCompat
+import android.os.Build
 
 
 
@@ -57,15 +60,24 @@ class CameraFragment : Fragment() {
     }
 
     private fun hideSystemUI() {
-        val decorView: View = viewBinding.root
-        val uiOptions = decorView.systemUiVisibility
-        var newUiOptions = uiOptions
-        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_LOW_PROFILE
-        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_FULLSCREEN
-        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE
-        newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        decorView.systemUiVisibility = newUiOptions
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+              val window = requireActivity().window
+              window.setDecorFitsSystemWindows(false)
+              WindowCompat.setDecorFitsSystemWindows(window, false)
+          }
+        else {
+            val decorView: View = viewBinding.root
+            val uiOptions = decorView.systemUiVisibility
+            var newUiOptions = uiOptions
+            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_LOW_PROFILE
+            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_FULLSCREEN
+            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE
+            newUiOptions = newUiOptions or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            decorView.systemUiVisibility = newUiOptions
+          }
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
