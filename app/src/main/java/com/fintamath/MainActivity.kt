@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fintamath.storage.HistoryStorage
 import java.io.File
-import java.util.*
 import android.graphics.Bitmap
 
 
