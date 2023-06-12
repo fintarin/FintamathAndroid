@@ -1,0 +1,37 @@
+{
+  "buildFiles": [
+    "/home/cati0n/FintamathAndroid/opencv/libcxx_helper/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/cati0n/Android/Sdk/cmake/3.18.1/bin/ninja",
+      "-C",
+      "/home/cati0n/FintamathAndroid/opencv/.cxx/Debug/1f44585i/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/cati0n/Android/Sdk/cmake/3.18.1/bin/ninja",
+    "-C",
+    "/home/cati0n/FintamathAndroid/opencv/.cxx/Debug/1f44585i/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "opencv_jni_shared::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "opencv_jni_shared",
+      "output": "/home/cati0n/FintamathAndroid/opencv/.cxx/Debug/1f44585i/armeabi-v7a/libopencv_jni_shared.a"
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/home/cati0n/Android/Sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/linux-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/home/cati0n/Android/Sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

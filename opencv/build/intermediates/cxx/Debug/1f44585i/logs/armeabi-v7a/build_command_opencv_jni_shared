@@ -1,0 +1,4 @@
+/home/cati0n/Android/Sdk/cmake/3.18.1/bin/ninja \
+  -C \
+  /home/cati0n/FintamathAndroid/opencv/.cxx/Debug/1f44585i/armeabi-v7a \
+  opencv_jni_shared

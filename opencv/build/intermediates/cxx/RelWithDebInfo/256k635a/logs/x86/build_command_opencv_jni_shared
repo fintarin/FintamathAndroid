@@ -1,0 +1,4 @@
+/home/cati0n/Android/Sdk/cmake/3.18.1/bin/ninja \
+  -C \
+  /home/cati0n/FintamathAndroid/opencv/.cxx/RelWithDebInfo/256k635a/x86 \
+  opencv_jni_shared
