@@ -77,6 +77,10 @@ CMakeFiles
 # Config
 local.properties
 
+# Build files
+build
+.cxx
+
 # Release files
 app/release
 

@@ -1,3 +1,0 @@
-/home/cati0n/FintamathAndroid/opencv/.cxx/RelWithDebInfo/256k635a/x86/CMakeFiles/rebuild_cache.dir
-/home/cati0n/FintamathAndroid/opencv/.cxx/RelWithDebInfo/256k635a/x86/CMakeFiles/edit_cache.dir
-/home/cati0n/FintamathAndroid/opencv/.cxx/RelWithDebInfo/256k635a/x86/CMakeFiles/opencv_jni_shared.dir

@@ -1,3 +1,0 @@
-/home/cati0n/FintamathAndroid/opencv/.cxx/Debug/1f44585i/armeabi-v7a/CMakeFiles/rebuild_cache.dir
-/home/cati0n/FintamathAndroid/opencv/.cxx/Debug/1f44585i/armeabi-v7a/CMakeFiles/edit_cache.dir
-/home/cati0n/FintamathAndroid/opencv/.cxx/Debug/1f44585i/armeabi-v7a/CMakeFiles/opencv_jni_shared.dir
