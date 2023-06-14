@@ -1,6 +1,7 @@
 package com.fintamath.fragment.camera
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,6 +11,8 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.DisplayMetrics
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +22,7 @@ import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
@@ -106,11 +110,13 @@ class CameraFragment : BorderlessFragment() {
         }
     }
 
+    @SuppressLint("RestrictedApi")
     private fun startCamera()  {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
         cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
+            cameraProvider.unbindAll()
 
             val preview = Preview.Builder()
                 .build()
@@ -120,11 +126,11 @@ class CameraFragment : BorderlessFragment() {
 
             imageCapture = ImageCapture.Builder()
                 .setTargetRotation(viewBinding.viewFinder.display.rotation)
+                .setTargetResolution(getDisplaySize())
+                .setCaptureMode(CAPTURE_MODE_MAXIMIZE_QUALITY)
                 .build()
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-            cameraProvider.unbindAll()
 
             camera = cameraProvider.bindToLifecycle(
                 this, cameraSelector, preview, imageCapture)
@@ -153,7 +159,8 @@ class CameraFragment : BorderlessFragment() {
                     buffer.get(bytes)
 
                     var bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    bitmap = rotateImage(bitmap, imageProxy.imageInfo.rotationDegrees)
+                    bitmap = rotateBitmap(bitmap, imageProxy.imageInfo.rotationDegrees)
+                    bitmap = scaleBitmapToDisplaySize(bitmap)
 
                     (activity as MainActivity).set_full_image(bitmap) // TODO! move it to storage
 
@@ -207,20 +214,37 @@ class CameraFragment : BorderlessFragment() {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun rotateImage(img: Bitmap, degree: Int): Bitmap? {
+    private fun rotateBitmap(bitmap: Bitmap, degree: Int): Bitmap? {
         if (degree == 0) {
-            return img
+            return bitmap
         }
 
         val matrix = Matrix()
         matrix.postRotate(degree.toFloat())
 
-        val rotatedImg =
-            Bitmap.createBitmap(img, 0, 0, img.width, img.height, matrix, true)
+        val rotatedBitmap =
+            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 
-        img.recycle()
+        bitmap.recycle()
 
-        return rotatedImg
+        return rotatedBitmap
+    }
+
+    private fun scaleBitmapToDisplaySize(bitmap: Bitmap): Bitmap? {
+        val displaySize = getDisplaySize()
+
+        val scaledBitmap =
+            Bitmap.createScaledBitmap(bitmap, displaySize.width, displaySize.height, true)
+
+        bitmap.recycle()
+
+        return scaledBitmap
+    }
+
+    private fun getDisplaySize(): Size {
+        val displayMetrics = DisplayMetrics()
+        requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return Size(displayMetrics.widthPixels, displayMetrics.heightPixels)
     }
 
     private fun executeBack() {
@@ -231,7 +255,6 @@ class CameraFragment : BorderlessFragment() {
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = mutableListOf (Manifest.permission.CAMERA).toTypedArray()
     }
-
 }
 
 
