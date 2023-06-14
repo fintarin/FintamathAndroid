@@ -69,25 +69,12 @@
 
                 <com.fintamath.widget.mathview.MathTextView
                     android:id="@+id/recText"
-                    android:layout_width="220dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     app:isEditable="false"
                     app:textSize="@dimen/text_size_math_text_view"
                     app:textColor="@color/text_main" />
-
-
-                <ImageButton
-                    android:id="@+id/recButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/history"
-                    android:scaleX="1.2"
-                    android:scaleY="1.2"
-                    android:src="@drawable/ic_edit" />
-
 
 
             </LinearLayout>
@@ -113,7 +100,7 @@
 
             <com.fintamath.widget.mathview.MathTextView
                 android:id="@+id/recRez"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:isEditable="false"
