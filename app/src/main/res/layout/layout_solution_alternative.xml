@@ -7,5 +7,5 @@
     android:layout_gravity="center"
     app:textSize="@dimen/text_size_math_text_view"
     app:textColor="@color/text_main"
-    app:quickActionPopupLayout="@layout/popup_math_text_view_quick_action" >
+    app:quickActionPopupLayout="@layout/layout_popup_quick_action" >
 </com.fintamath.widget.mathview.MathTextView>

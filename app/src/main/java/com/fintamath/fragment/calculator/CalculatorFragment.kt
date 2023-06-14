@@ -127,7 +127,7 @@ class CalculatorFragment : Fragment() {
         viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
 
         optionsMenu = PopupMenu(requireContext(), viewBinding.optionsButton)
-        optionsMenu.menuInflater.inflate(R.menu.options_menu, optionsMenu.menu)
+        optionsMenu.menuInflater.inflate(R.menu.menu_options, optionsMenu.menu)
         optionsMenu.setOnMenuItemClickListener {
             var result = true;
 

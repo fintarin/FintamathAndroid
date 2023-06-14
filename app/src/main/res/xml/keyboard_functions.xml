@@ -7,36 +7,36 @@
         <Key
             app:codes="5997"
             app:keyLabel="ac"
-            app:keyBackground="@drawable/control_key_background"
+            app:keyBackground="@drawable/bg_control_key"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6033"
             app:keyIcon="@drawable/ic_undo"
-            app:keyBackground="@drawable/control_key_background"
+            app:keyBackground="@drawable/bg_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6034"
             app:keyIcon="@drawable/ic_redo"
-            app:keyBackground="@drawable/control_key_background"
+            app:keyBackground="@drawable/bg_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="5998"
             app:keyIcon="@drawable/ic_arrow_left"
-            app:keyBackground="@drawable/control_key_background"
+            app:keyBackground="@drawable/bg_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="5999"
             app:keyIcon="@drawable/ic_arrow_right"
-            app:keyBackground="@drawable/control_key_background"
+            app:keyBackground="@drawable/bg_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="5996"
             app:keyLabel="⌫"
-            app:keyBackground="@drawable/control_key_background"
+            app:keyBackground="@drawable/bg_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
     </Row>
@@ -45,27 +45,27 @@
         <Key
             app:codes="6035"
             app:keyLabel="+/−"
-            app:keyBackground="@drawable/switch_key_background"
+            app:keyBackground="@drawable/bg_switch_key"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6000"
             app:keyLabel="abc"
-            app:keyBackground="@drawable/switch_key_background"
+            app:keyBackground="@drawable/bg_switch_key"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6001"
             app:keyLabel="f(x)"
-            app:keyBackground="@drawable/switch_enabled_key_background"
+            app:keyBackground="@drawable/bg_switch_enabled_key"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6037"
             app:keyLabel="∫xdx"
-            app:keyBackground="@drawable/switch_key_background"
+            app:keyBackground="@drawable/bg_switch_key"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6038"
             app:keyLabel="T/F"
-            app:keyBackground="@drawable/switch_key_background"
+            app:keyBackground="@drawable/bg_switch_key"
             app:isPreviewEnabled="false" />
     </Row>
 

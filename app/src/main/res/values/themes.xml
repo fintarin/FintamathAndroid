@@ -9,6 +9,6 @@
     </style>
 
     <style name="Theme.Fintamath.PopupMenu" parent="@style/ThemeOverlay.AppCompat.Dark">
-        <item name="android:popupBackground">@drawable/menu_background</item>
+        <item name="android:popupBackground">@drawable/bg_menu</item>
     </style>
 </resources>

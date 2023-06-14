@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@drawable/bar_background">
+        android:background="@drawable/bg_bar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:background="@drawable/bar_key_background"
+            android:background="@drawable/bg_bar_button"
             android:src="@drawable/ic_camera"
             android:contentDescription="@string/camera"/>
 
@@ -47,7 +47,7 @@
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:background="@drawable/bar_key_background"
+            android:background="@drawable/bg_bar_button"
             android:src="@drawable/ic_history"
             android:contentDescription="@string/history"/>
 
@@ -58,7 +58,7 @@
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:background="@drawable/bar_key_background"
+            android:background="@drawable/bg_bar_button"
             android:src="@drawable/ic_overflow_holo"
             android:contentDescription="@string/options" />
 
@@ -95,14 +95,14 @@
                     app:hint="@string/math_edit_text_hint"
                     app:textSize="@dimen/text_size_math_text_view"
                     app:textColor="@color/text_main"
-                    app:quickActionPopupLayout="@layout/popup_math_text_view_quick_action" />
+                    app:quickActionPopupLayout="@layout/layout_popup_quick_action" />
 
             </FrameLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/delimiter_width"
-                android:background="@drawable/dashed_line_background"/>
+                android:background="@drawable/bg_dashed_line"/>
 
             <com.fintamath.widget.mathview.MathSolutionView
                 android:id="@+id/solutionView"
@@ -110,12 +110,12 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:paddingBottom="20dp"
-                app:loadingViewLayout="@layout/solution_loading"
-                app:invalidInputViewLayout="@layout/solution_invalid_input"
-                app:incompleteInputViewLayout="@layout/solution_incomplete_input"
-                app:characterLimitExceededViewLayout="@layout/solution_character_limit_exceeded"
-                app:alternativeMathTextViewLayout="@layout/solution_alternative_math_text_view"
-                app:alternativeDelimiterLayout="@layout/solution_alternative_delimiter" />
+                app:loadingViewLayout="@layout/layout_solution_loading"
+                app:invalidInputViewLayout="@layout/layout_solution_invalid_input"
+                app:incompleteInputViewLayout="@layout/layout_solution_incomplete_input"
+                app:characterLimitExceededViewLayout="@layout/layout_solution_character_limit_exceeded"
+                app:alternativeMathTextViewLayout="@layout/layout_solution_alternative"
+                app:alternativeDelimiterLayout="@layout/layout_solution_alternative_text" />
 
         </LinearLayout>
 
@@ -132,14 +132,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            android:background="@drawable/keyboard_background"
+            android:background="@drawable/bg_keyboard"
             app:keyboardKeyTextColor="@color/text_keyboard"
             app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
-            app:keyboardKeyBackground="@drawable/key_background"
-            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyBackground="@drawable/bg_key"
+            app:keyboardKeyPreviewLayout="@layout/layout_key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"
+            app:popupLayout="@layout/layout_popup_keyboard"
             app:keyboardFontFamily="@font/noto_sans_math_regular" />
 
         <com.fintamath.widget.keyboard.KeyboardView
@@ -147,14 +147,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:background="@drawable/keyboard_background"
+            android:background="@drawable/bg_keyboard"
             app:keyboardKeyTextColor="@color/text_keyboard"
             app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
-            app:keyboardKeyBackground="@drawable/key_background"
-            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyBackground="@drawable/bg_key"
+            app:keyboardKeyPreviewLayout="@layout/layout_key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"
+            app:popupLayout="@layout/layout_popup_keyboard"
             app:keyboardFontFamily="@font/noto_sans_math_regular"  />
 
         <com.fintamath.widget.keyboard.KeyboardView
@@ -162,14 +162,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:background="@drawable/keyboard_background"
+            android:background="@drawable/bg_keyboard"
             app:keyboardKeyTextColor="@color/text_keyboard"
             app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
-            app:keyboardKeyBackground="@drawable/key_background"
-            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyBackground="@drawable/bg_key"
+            app:keyboardKeyPreviewLayout="@layout/layout_key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"
+            app:popupLayout="@layout/layout_popup_keyboard"
             app:keyboardFontFamily="@font/noto_sans_math_regular"  />
 
         <com.fintamath.widget.keyboard.KeyboardView
@@ -177,14 +177,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:background="@drawable/keyboard_background"
+            android:background="@drawable/bg_keyboard"
             app:keyboardKeyTextColor="@color/text_keyboard"
             app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
-            app:keyboardKeyBackground="@drawable/key_background"
-            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyBackground="@drawable/bg_key"
+            app:keyboardKeyPreviewLayout="@layout/layout_key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"
+            app:popupLayout="@layout/layout_popup_keyboard"
             app:keyboardFontFamily="@font/noto_sans_math_regular"  />
 
         <com.fintamath.widget.keyboard.KeyboardView
@@ -192,14 +192,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:background="@drawable/keyboard_background"
+            android:background="@drawable/bg_keyboard"
             app:keyboardKeyTextColor="@color/text_keyboard"
             app:keyboardKeyTopLabelTextColor="@color/text_keyboard_top_label"
-            app:keyboardKeyBackground="@drawable/key_background"
-            app:keyboardKeyPreviewLayout="@layout/key_preview"
+            app:keyboardKeyBackground="@drawable/bg_key"
+            app:keyboardKeyPreviewLayout="@layout/layout_key_preview"
             app:keyboardKeyTextSize="@dimen/text_size_keyboard"
             app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
-            app:popupLayout="@layout/popup_keyboard"
+            app:popupLayout="@layout/layout_popup_keyboard"
             app:keyboardFontFamily="@font/noto_sans_math_regular" />
 
     </FrameLayout>

@@ -46,7 +46,7 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
     override fun getItemCount() = HistoryStorage.getHistoryList().size
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): HistoryItemViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.history_item, viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_history_item, viewGroup, false)
         return HistoryItemViewHolder(view)
     }
 
