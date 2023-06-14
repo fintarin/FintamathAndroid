@@ -5,19 +5,17 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
+import com.fintamath.databinding.FragmentCalculatorBinding
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.storage.CalculatorInputStorage
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
-import com.fintamath.widget.mathview.MathSolutionView
-import com.fintamath.widget.mathview.MathTextView
 import java.util.Timer
 import java.util.TimerTask
 import kotlin.concurrent.schedule
@@ -25,36 +23,37 @@ import kotlin.concurrent.schedule
 
 class CalculatorFragment : Fragment() {
 
-    private lateinit var inTextLayout: ViewGroup
-    private lateinit var inTextView: MathTextView
-    private lateinit var solutionView: MathSolutionView
+    private lateinit var viewBinding: FragmentCalculatorBinding
     private lateinit var optionsMenu: PopupMenu
     private lateinit var calculatorProcessor: CalculatorProcessor
-    private var fragmentView: View? = null
 
     private val saveToHistoryDelay: Long = 2000
     private var saveToHistoryTask: TimerTask? = null
 
+    private var isInitialized = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        if (fragmentView == null) {
-            fragmentView = inflater.inflate(R.layout.fragment_calculator, container, false)
+    ): View {
+        if (!isInitialized) {
+            viewBinding = FragmentCalculatorBinding.inflate(inflater, container, false)
 
-            initMathTexts(fragmentView!!)
+            initMathTexts()
             initProcessors()
-            initKeyboards(fragmentView!!)
-            initBarButtons(fragmentView!!)
+            initKeyboards()
+            initBarButtons()
+
+            isInitialized = true
         }
 
-        if (inTextView.text != CalculatorInputStorage.mathTextData.text) {
-            inTextView.text = CalculatorInputStorage.mathTextData.text
+        if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
+            viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         }
 
-        inTextView.requestFocus()
+        viewBinding.inTextView.requestFocus()
 
-        return fragmentView!!
+        return viewBinding.root
     }
 
     override fun onPause() {
@@ -63,16 +62,12 @@ class CalculatorFragment : Fragment() {
         runSaveToHistoryTask()
     }
 
-    private fun initMathTexts(fragmentView: View) {
-        inTextLayout = fragmentView.findViewById(R.id.inMathTextLayout)
-        inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
+    private fun initMathTexts() {
+        viewBinding.inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
-        inTextView = fragmentView.findViewById(R.id.inText)
-        inTextView.text = CalculatorInputStorage.mathTextData.text
-        inTextView.setOnTextChangedListener { onInTextChange(it) }
-        inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
-
-        solutionView = fragmentView.findViewById(R.id.solution)
+        viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
+        viewBinding.inTextView.setOnTextChangedListener { onInTextChange(it) }
+        viewBinding.inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
     }
 
     private fun initProcessors() {
@@ -83,31 +78,31 @@ class CalculatorFragment : Fragment() {
         )
     }
 
-    private fun initKeyboards(fragmentView: View) {
+    private fun initKeyboards() {
         val keyboards = hashMapOf<CalculatorKeyboardType, Pair<KeyboardView, Keyboard>>(
             CalculatorKeyboardType.MainKeyboard to
                     Pair(
-                        fragmentView.findViewById(R.id.mainKeyboardView),
+                        viewBinding.mainKeyboardView,
                         Keyboard(requireContext(), R.xml.keyboard_main)
                     ),
             CalculatorKeyboardType.LettersKeyboard to
                     Pair(
-                        fragmentView.findViewById(R.id.lettersKeyboardView),
+                        viewBinding.lettersKeyboardView,
                         Keyboard(requireContext(), R.xml.keyboard_letters)
                     ),
             CalculatorKeyboardType.FunctionsKeyboard to
                     Pair(
-                        fragmentView.findViewById(R.id.functionsKeyboardView),
+                        viewBinding.functionsKeyboardView,
                         Keyboard(requireContext(), R.xml.keyboard_functions)
                     ),
             CalculatorKeyboardType.AnalysisKeyboard to
                     Pair(
-                        fragmentView.findViewById(R.id.analysisKeyboardView),
+                        viewBinding.analysisKeyboardView,
                         Keyboard(requireContext(), R.xml.keyboard_analysis)
                     ),
             CalculatorKeyboardType.LogicKeyboard to
                     Pair(
-                        fragmentView.findViewById(R.id.logicKeyboardView),
+                        viewBinding.logicKeyboardView,
                         Keyboard(requireContext(), R.xml.keyboard_logic)
                     )
         )
@@ -117,7 +112,7 @@ class CalculatorFragment : Fragment() {
 
         val listeners = mutableMapOf<CalculatorKeyboardType, CalculatorKeyboardActionListener>()
         for (type in CalculatorKeyboardType.values()) {
-            listeners[type] = CalculatorKeyboardActionListener(keyboardSwitcher, inTextView)
+            listeners[type] = CalculatorKeyboardActionListener(keyboardSwitcher, viewBinding.inTextView)
         }
 
         keyboards.forEach { (key: CalculatorKeyboardType, value: Pair<KeyboardView, Keyboard>) ->
@@ -126,27 +121,22 @@ class CalculatorFragment : Fragment() {
         }
     }
 
-    private fun initBarButtons(fragmentView: View) {
-        val optionsButton: ImageButton = fragmentView.findViewById(R.id.optionsButton)
-        optionsButton.setOnClickListener { showOptionsMenu(fragmentView) }
+    private fun initBarButtons() {
+        viewBinding.optionsButton.setOnClickListener { showOptionsMenu() }
+        viewBinding.cameraButton.setOnClickListener { showCameraFragment() }
+        viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
 
-        val cameraButton: ImageButton = fragmentView.findViewById(R.id.cameraButton)
-        cameraButton.setOnClickListener { showCameraFragment(fragmentView) }
-
-        val historyButton: ImageButton = fragmentView.findViewById(R.id.historyButton)
-        historyButton.setOnClickListener { showHistoryFragment(fragmentView) }
-
-        optionsMenu = PopupMenu(requireContext(), optionsButton)
+        optionsMenu = PopupMenu(requireContext(), viewBinding.optionsButton)
         optionsMenu.menuInflater.inflate(R.menu.options_menu, optionsMenu.menu)
         optionsMenu.setOnMenuItemClickListener {
             var result = true;
 
             when (it.itemId) {
                 R.id.settingsButton -> {
-                    showSettingsFragment(fragmentView)
+                    showSettingsFragment()
                 }
                 R.id.aboutButton -> {
-                    showAboutFragment(fragmentView)
+                    showAboutFragment()
                 }
                 else -> {
                     result = false;
@@ -161,11 +151,11 @@ class CalculatorFragment : Fragment() {
         CalculatorInputStorage.mathTextData = MathTextData(text)
         cancelSaveToHistoryTask()
 
-        if (inTextView.text.isEmpty()) {
-            solutionView.hideCurrentView()
+        if (viewBinding.inTextView.text.isEmpty()) {
+            viewBinding.solutionView.hideCurrentView()
             calculatorProcessor.stopCurrentCalculations()
-        } else if (!inTextView.isComplete) {
-            solutionView.showIncompleteInput()
+        } else if (!viewBinding.inTextView.isComplete) {
+            viewBinding.solutionView.showIncompleteInput()
             calculatorProcessor.stopCurrentCalculations()
         } else {
             calculatorProcessor.calculate(text)
@@ -174,11 +164,11 @@ class CalculatorFragment : Fragment() {
 
     private fun outTexts(texts: List<String>) {
         if (texts.first() == getString(R.string.invalid_input)) {
-            solutionView.showInvalidInput()
+            viewBinding.solutionView.showInvalidInput()
         } else if (texts.first() == getString(R.string.character_limit_exceeded)) {
-            solutionView.showCharacterLimitExceeded()
+            viewBinding.solutionView.showCharacterLimitExceeded()
         } else {
-            solutionView.showSolution(texts)
+            viewBinding.solutionView.showSolution(texts)
 
             saveToHistoryTask = Timer().schedule(saveToHistoryDelay) {
                 requireActivity().runOnUiThread {
@@ -189,67 +179,68 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun startLoading() {
-        solutionView.showLoading()
+        viewBinding.solutionView.showLoading()
     }
 
     private fun onInTextFocusChange(state: Boolean) {
         if (!state) {
-            inTextView.requestFocus()
+            viewBinding.inTextView.requestFocus()
         }
     }
 
     private fun touchInText(event: MotionEvent): Boolean {
         val inTextLayoutLocation = IntArray(2)
-        inTextLayout.getLocationOnScreen(inTextLayoutLocation)
+        viewBinding.inTextLayout.getLocationOnScreen(inTextLayoutLocation)
 
         val inTextViewLocation = IntArray(2)
-        inTextView.getLocationOnScreen(inTextViewLocation)
+        viewBinding.inTextView.getLocationOnScreen(inTextViewLocation)
 
         val heightDelta = (inTextViewLocation[1] - inTextLayoutLocation[1]).toFloat() / 4
 
-        var y = event.y + inTextLayoutLocation[1]
-        if (y < inTextViewLocation[1]) {
-            y = heightDelta
-        } else if (y >= inTextViewLocation[1] + inTextView.height) {
-            y = inTextView.height - heightDelta
+        var intTextY = event.y + inTextLayoutLocation[1]
+
+        if (intTextY < inTextViewLocation[1]) {
+            intTextY = heightDelta
+        } else if (intTextY >= inTextViewLocation[1] + viewBinding.inTextView.height) {
+            intTextY = viewBinding.inTextView.height - heightDelta
         } else {
-            y -= inTextViewLocation[1]
+            intTextY -= inTextViewLocation[1]
         }
 
-        return inTextView.onTouchEvent(MotionEvent.obtain(
-            event.downTime, event.eventTime, event.action, event.x, y, event.metaState
+        return viewBinding.inTextView.onTouchEvent(MotionEvent.obtain(
+            event.downTime, event.eventTime, event.action, event.x, intTextY, event.metaState
         ))
     }
 
     private fun onSaveToHistory() {
-        HistoryStorage.saveItem(inTextView.text)
+        HistoryStorage.saveItem(viewBinding.inTextView.text)
         cancelSaveToHistoryTask()
     }
 
-    private fun showOptionsMenu(view: View) {
+    private fun showOptionsMenu() {
         optionsMenu.show()
     }
 
-    private fun showHistoryFragment(view: View) {
+    private fun showHistoryFragment() {
         runSaveToHistoryTask()
-        inTextView.clearFocus()
-        view.findNavController().navigate(R.id.action_calculatorFragment_to_historyFragment)
+        viewBinding.inTextView.clearFocus()
+        viewBinding.root.findNavController().navigate(R.id.action_calculatorFragment_to_historyFragment)
     }
 
-    private fun showCameraFragment(view: View) {
+    private fun showCameraFragment() {
         // TODO: implement
     }
 
-    private fun showAboutFragment(view: View) {
+    private fun showAboutFragment() {
         runSaveToHistoryTask()
-        inTextView.clearFocus()
-        view.findNavController().navigate(R.id.action_calculatorFragment_to_aboutFragment)
+        viewBinding.inTextView.clearFocus()
+        viewBinding.root.findNavController().navigate(R.id.action_calculatorFragment_to_aboutFragment)
     }
 
-    private fun showSettingsFragment(view: View) {
+    private fun showSettingsFragment() {
         runSaveToHistoryTask()
-        inTextView.clearFocus()
-        view.findNavController().navigate(R.id.action_calculatorFragment_to_settingsFragment)
+        viewBinding.inTextView.clearFocus()
+        viewBinding.root.findNavController().navigate(R.id.action_calculatorFragment_to_settingsFragment)
     }
 
     private fun runSaveToHistoryTask() {

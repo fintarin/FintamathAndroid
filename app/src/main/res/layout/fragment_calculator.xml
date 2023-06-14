@@ -79,7 +79,7 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/inMathTextLayout"
+                android:id="@+id/in_text_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="100dp"
@@ -87,7 +87,7 @@
                 android:focusable="true">
 
                 <com.fintamath.widget.mathview.MathTextView
-                    android:id="@+id/inText"
+                    android:id="@+id/inTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -105,7 +105,7 @@
                 android:background="@drawable/dashed_line_background"/>
 
             <com.fintamath.widget.mathview.MathSolutionView
-                android:id="@+id/solution"
+                android:id="@+id/solutionView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"

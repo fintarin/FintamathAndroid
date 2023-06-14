@@ -4,22 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
-import com.fintamath.R
+import com.fintamath.databinding.FragmentAboutBinding
 
 class AboutFragment : Fragment() {
+
+    private lateinit var viewBinding: FragmentAboutBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val fragmentView = inflater.inflate(R.layout.fragment_about, container, false)
+    ): View {
+        viewBinding = FragmentAboutBinding.inflate(inflater, container, false)
 
-        val backButton: ImageButton = fragmentView.findViewById(R.id.aboutBackButton)
-        backButton.setOnClickListener { executeBack() }
+        viewBinding.aboutBackButton.setOnClickListener { executeBack() }
 
-        return fragmentView
+        return viewBinding.root
     }
 
     private fun executeBack() {

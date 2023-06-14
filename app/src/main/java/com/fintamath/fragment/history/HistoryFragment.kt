@@ -6,29 +6,24 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.fintamath.R
+import com.fintamath.databinding.FragmentHistoryBinding
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.storage.CalculatorInputStorage
 
 class HistoryFragment : Fragment() {
 
-    private lateinit var historyListView: RecyclerView
-    private lateinit var emptyHistoryTextView: TextView
+    private lateinit var viewBinding: FragmentHistoryBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val fragmentView = inflater.inflate(R.layout.fragment_history, container, false)
+    ): View {
+        viewBinding = FragmentHistoryBinding.inflate(inflater, container, false)
 
-        historyListView = fragmentView.findViewById(R.id.historyList)
-        with(historyListView) {
+        with(viewBinding.historyListView) {
             layoutManager = LinearLayoutManager(context)
 
             val historyAdapter = HistoryRecyclerViewAdapter()
@@ -38,12 +33,9 @@ class HistoryFragment : Fragment() {
             adapter = historyAdapter
         }
 
-        emptyHistoryTextView = fragmentView.findViewById(R.id.emptyHistoryTextView)
+        viewBinding.historyBackButton.setOnClickListener { executeBack() }
 
-        val historyBackButton: ImageButton = fragmentView.findViewById(R.id.historyBackButton)
-        historyBackButton.setOnClickListener { executeBack() }
-
-        return fragmentView
+        return viewBinding.root
     }
 
     private fun executeBack() {
@@ -53,12 +45,12 @@ class HistoryFragment : Fragment() {
     private fun onItemsCountChange() {
         val count = HistoryStorage.getHistoryList().size
 
-        if (HistoryStorage.getHistoryList().size == 0 && emptyHistoryTextView.visibility != VISIBLE) {
-            historyListView.visibility = GONE
-            emptyHistoryTextView.visibility = VISIBLE
-        } else if (count > 0 && emptyHistoryTextView.visibility != GONE) {
-            emptyHistoryTextView.visibility = GONE
-            historyListView.visibility = VISIBLE
+        if (HistoryStorage.getHistoryList().size == 0 && viewBinding.emptyHistoryTextView.visibility != VISIBLE) {
+            viewBinding.historyListView.visibility = GONE
+            viewBinding.emptyHistoryTextView.visibility = VISIBLE
+        } else if (count > 0 && viewBinding.emptyHistoryTextView.visibility != GONE) {
+            viewBinding.emptyHistoryTextView.visibility = GONE
+            viewBinding.historyListView.visibility = VISIBLE
         }
     }
 
