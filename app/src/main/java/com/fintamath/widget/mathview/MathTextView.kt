@@ -22,7 +22,6 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.PopupWindow
 import androidx.annotation.Keep
-import androidx.constraintlayout.motion.widget.MotionScene.Transition
 import com.fintamath.R
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -93,6 +92,8 @@ class MathTextView @JvmOverloads constructor(
     private var copyActionButton: Button? = null
     private var pasteActionButton: Button? = null
     private var deleteActionButton: Button? = null
+
+    private val moveCursorOnLongPressDelay: Long = 200
 
     private val mathTextViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, url: String?) {
@@ -286,7 +287,7 @@ class MathTextView @JvmOverloads constructor(
         ))
 
         GlobalScope.launch {
-            delay(100)
+            delay(moveCursorOnLongPressDelay)
 
             dispatchTouchEvent(MotionEvent.obtain(
                 SystemClock.uptimeMillis(),
