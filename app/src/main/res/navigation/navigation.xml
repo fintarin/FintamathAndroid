@@ -16,6 +16,10 @@
             app:destination="@id/historyFragment" />
 
         <action
+            android:id="@+id/action_calculatorFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+
+        <action
             android:id="@+id/action_calculatorFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
 
@@ -30,6 +34,12 @@
         android:name="com.fintamath.fragment.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.fintamath.fragment.camera.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 
     <fragment
         android:id="@+id/aboutFragment"

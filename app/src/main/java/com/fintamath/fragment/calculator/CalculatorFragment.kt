@@ -222,25 +222,25 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun showHistoryFragment() {
-        runSaveToHistoryTask()
-        viewBinding.inTextView.clearFocus()
-        viewBinding.root.findNavController().navigate(R.id.action_calculatorFragment_to_historyFragment)
+        showFragment(R.id.action_calculatorFragment_to_historyFragment)
     }
 
     private fun showCameraFragment() {
-        // TODO: implement
+        showFragment(R.id.action_calculatorFragment_to_cameraFragment)
     }
 
     private fun showAboutFragment() {
-        runSaveToHistoryTask()
-        viewBinding.inTextView.clearFocus()
-        viewBinding.root.findNavController().navigate(R.id.action_calculatorFragment_to_aboutFragment)
+        showFragment(R.id.action_calculatorFragment_to_aboutFragment)
     }
 
     private fun showSettingsFragment() {
+        showFragment(R.id.action_calculatorFragment_to_settingsFragment)
+    }
+
+    private fun showFragment(navigationId: Int) {
         runSaveToHistoryTask()
         viewBinding.inTextView.clearFocus()
-        viewBinding.root.findNavController().navigate(R.id.action_calculatorFragment_to_settingsFragment)
+        viewBinding.root.findNavController().navigate(navigationId)
     }
 
     private fun runSaveToHistoryTask() {
