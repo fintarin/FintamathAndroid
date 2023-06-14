@@ -16,7 +16,7 @@ object HistoryStorage {
     var onItemRemoved: ((Int) -> Unit)? = null
     var onItemInserted: ((Int) -> Unit)? = null
 
-    private const val maxItemsNum = 50
+    private const val maxItemsNum = 200
 
     private var historyList = arrayListOf<HistoryItemData>()
 
