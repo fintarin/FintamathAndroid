@@ -1,6 +1,7 @@
 package com.fintamath.fragment.history
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
@@ -16,7 +17,7 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
     var recyclerView: RecyclerView? = null
 
     var onItemsCountChange: ((Int) -> Unit)? = null
-    var onCalculate: ((String) -> Unit)? = null
+    var onItemClick: ((String) -> Unit)? = null
 
     init {
         HistoryStorage.onItemsLoaded = { start, end ->
@@ -57,8 +58,8 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         viewHolder.bookmarkButton.setOnCheckedChangeListener { _, isChecked ->
             onBookmarkButtonCheckedChangeListener(viewHolder, isChecked)
         }
-        viewHolder.calculateButton.setOnClickListener {
-            onCalculate?.invoke(viewHolder.mathTextView.text)
+        viewHolder.layout.setOnClickListener {
+            onItemClick?.invoke(viewHolder.mathTextView.text)
         }
     }
 
@@ -73,6 +74,10 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         viewHolder.removeButton.visibility = if (isChecked) GONE else VISIBLE
         val index = viewHolder.absoluteAdapterPosition
         HistoryStorage.bookmarkItem(index, isChecked)
+    }
+
+    private fun onMathTextClicked(viewHolder: HistoryItemViewHolder, event: MotionEvent): Boolean {
+        return viewHolder.layout.onTouchEvent(event)
     }
 
     private fun onRemoveButtonClicked(viewHolder: HistoryItemViewHolder) {

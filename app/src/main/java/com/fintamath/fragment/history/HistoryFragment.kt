@@ -27,7 +27,7 @@ class HistoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
 
             val historyAdapter = HistoryRecyclerViewAdapter()
-            historyAdapter.onCalculate = { onCalculate(it) }
+            historyAdapter.onItemClick = { onItemClick(it) }
             historyAdapter.onItemsCountChange = { onItemsCountChange() }
 
             adapter = historyAdapter
@@ -54,7 +54,7 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    private fun onCalculate(text: String) {
+    private fun onItemClick(text: String) {
         CalculatorInputStorage.mathTextData = MathTextData(text)
         executeBack()
     }
