@@ -42,5 +42,5 @@
 
     <dimen name="radius_loading_dots">2.5dp</dimen>
 
-    <dimen name="radius_quick_action_popup">256dp</dimen>
+    <dimen name="radius_quick_action_popup">8dp</dimen>
 </resources>
