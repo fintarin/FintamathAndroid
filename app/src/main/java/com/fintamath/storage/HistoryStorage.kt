@@ -50,12 +50,12 @@ object HistoryStorage {
         }
     }
 
-    fun getHistoryList(): MutableList<HistoryItemData> {
+    fun getItems(): List<HistoryItemData> {
         return historyList
     }
 
     fun saveItem(text: String) {
-        if (historyList.isNotEmpty() && historyList.first().mathTextData.text == text) {
+        if (historyList.isNotEmpty() && !isUnique(text)) {
             return
         }
 
@@ -131,5 +131,11 @@ object HistoryStorage {
 
     private fun countNonBookmarkedItems(): Int {
         return historyList.count { !it.isBookmarked }
+    }
+
+    private fun isUnique(text: String): Boolean {
+        return historyList.all {
+            it.mathTextData.text != text
+        }
     }
 }

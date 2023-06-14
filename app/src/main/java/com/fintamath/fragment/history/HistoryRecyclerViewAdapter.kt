@@ -32,7 +32,7 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
             notifyItemInserted(it)
             onItemsCountChange?.invoke(itemCount)
 
-            if (HistoryStorage.getHistoryList()[it].isBookmarked) {
+            if (HistoryStorage.getItems()[it].isBookmarked) {
                 recyclerView?.smoothScrollToPosition(it)
             }
         }
@@ -44,7 +44,7 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         this.recyclerView = recyclerView
     }
 
-    override fun getItemCount() = HistoryStorage.getHistoryList().size
+    override fun getItemCount() = HistoryStorage.getItems().size
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): HistoryItemViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.layout_history_item, viewGroup, false)
@@ -64,7 +64,7 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
     }
 
     override fun onViewAttachedToWindow(viewHolder: HistoryItemViewHolder) {
-        val historyList = HistoryStorage.getHistoryList()
+        val historyList = HistoryStorage.getItems()
         viewHolder.mathTextView.text = historyList[viewHolder.absoluteAdapterPosition].mathTextData.text
         viewHolder.bookmarkButton.isChecked = historyList[viewHolder.absoluteAdapterPosition].isBookmarked
         viewHolder.dateTextView.text = formatDataTime(historyList[viewHolder.absoluteAdapterPosition].dateTimeString)
