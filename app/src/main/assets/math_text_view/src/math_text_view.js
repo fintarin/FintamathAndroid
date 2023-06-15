@@ -229,8 +229,11 @@ function deleteAtCursor() {
     let prevElem = elem.previousElementSibling;
     let nextElem = elem.nextElementSibling;
 
-    let isFirstElem = prevElem === null || (prevElem === parentElem.firstChild && isEmptyElement(prevElem));
-    let isLastElem = nextElem === null || (nextElem === parentElem.lastChild && isEmptyElement(nextElem));
+    if (getClassName(prevElem) === functionNameClass) {
+      let newPrevElem = prevElem.previousElementSibling;
+      parentElem.removeChild(prevElem);
+      prevElem = newPrevElem;
+    }
 
     if (getClassName(elem) === prefixAbsClass) {
       if (
@@ -246,17 +249,14 @@ function deleteAtCursor() {
       }
     }
 
+    let isFirstElem = prevElem === null || (prevElem === parentElem.firstChild && isEmptyElement(prevElem));
+    let isLastElem = nextElem === null || (nextElem === parentElem.lastChild && isEmptyElement(nextElem));
+
     parentElem.removeChild(elem);
 
     if (getClassName(parentElem) === mathTextViewClass && areElementChildrenEmpty(parentElem)) {
       parentElem.innerHTML = '';
       return;
-    }
-
-    if (getClassName(prevElem) === functionNameClass) {
-      let newPrevElem = prevElem.previousElementSibling;
-      parentElem.removeChild(prevElem);
-      prevElem = newPrevElem;
     }
 
     if (
@@ -283,17 +283,23 @@ function deleteAtCursor() {
     }
 
     if (containerClasses.includes(getClassName(parentElem)) && parentElem.childElementCount === 0) {
+      console.log('a');
       parentElem.appendChild(createElement(textHintClass));
       setCursorToTextElement(parentElem.firstElementChild);
     } else if (isFirstElem) {
+      console.log('b');
       setCursorToElementBegin(parentElem);
     } else if (isLastElem) {
+      console.log('c');
       setCursorToElementEnd(parentElem);
     } else if (textClasses.includes(getClassName(prevElem))) {
+      console.log('d');
       setCursorToElementEnd(prevElem);
     } else if (containerClasses.includes(getClassName(prevElem))) {
+      console.log('e');
       setCursorToElementBegin(prevElem.nextElementSibling);
     } else {
+      console.log('f');
       setCursorToElementBegin(prevElem);
     }
 
