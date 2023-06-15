@@ -76,10 +76,6 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         HistoryStorage.bookmarkItem(index, isChecked)
     }
 
-    private fun onMathTextClicked(viewHolder: HistoryItemViewHolder, event: MotionEvent): Boolean {
-        return viewHolder.layout.onTouchEvent(event)
-    }
-
     private fun onRemoveButtonClicked(viewHolder: HistoryItemViewHolder) {
         val index = viewHolder.absoluteAdapterPosition
         HistoryStorage.removeItem(index)
