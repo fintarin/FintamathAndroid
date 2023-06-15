@@ -55,8 +55,15 @@ object HistoryStorage {
     }
 
     fun saveItem(text: String) {
-        if (historyList.isNotEmpty() && !isUnique(text)) {
-            return
+        val oldItemIndex = historyList.indexOfFirst { it.mathTextData.text == text }
+
+        if (oldItemIndex != -1) {
+            if (historyList[oldItemIndex].isBookmarked) {
+                return
+            }
+
+            historyList.removeAt(oldItemIndex)
+            onItemRemoved?.invoke(oldItemIndex)
         }
 
         if (countNonBookmarkedItems() >= maxItemsNum) {
@@ -131,11 +138,5 @@ object HistoryStorage {
 
     private fun countNonBookmarkedItems(): Int {
         return historyList.count { !it.isBookmarked }
-    }
-
-    private fun isUnique(text: String): Boolean {
-        return historyList.all {
-            it.mathTextData.text != text
-        }
     }
 }
