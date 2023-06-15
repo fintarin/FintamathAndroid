@@ -32,7 +32,7 @@
 
     <dimen name="width_cursor">1dp</dimen>
 
-    <dimen name="keyboard_key_height">8.5%</dimen>
+    <dimen name="keyboard_key_height">70sp</dimen>
     <dimen name="keyboard_key_width">100%</dimen>
     <dimen name="keyboard_main_key_width">16.67%</dimen>
     <dimen name="keyboard_letters_key_width">12.5%</dimen>
