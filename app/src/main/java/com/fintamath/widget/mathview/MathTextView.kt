@@ -211,7 +211,8 @@ class MathTextView @JvmOverloads constructor(
 
     private fun onPasteAction() {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        insertAtCursor(clipboard.primaryClip?.getItemAt(0)?.text.toString())
+        val pasteText = clipboard.primaryClip?.getItemAt(0)?.text.toString()
+        insertAtCursor(pasteText.replace("[\n\r]".toRegex(), " "))
 
         quickActionPopup!!.dismiss()
     }
