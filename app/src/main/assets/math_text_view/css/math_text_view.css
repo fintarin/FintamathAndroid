@@ -87,13 +87,13 @@ svg {
 }
 
 .sup {
-  font-size: 60%;
+  font-size: 75%;
   margin-bottom: 3ex; /* TODO: remove */
   margin-right: 2px;
 }
 
 .sub {
-  font-size: 60%;
+  font-size: 75%;
   margin-top: 3ex; /* TODO: remove */
   margin-right: 2px;
 }
