@@ -7,11 +7,17 @@ let selectedElem = null;
 
 //---------------------------------------------------------------------------------------------------------//
 
+window.oncontextmenu = onContextMenu;
+
 setInterval(function () {
   onSelectedElementChanged();
 }, 10);
 
 //---------------------------------------------------------------------------------------------------------//
+
+function onContextMenu(event) {
+  event.preventDefault();
+}
 
 /**
  * Handle a text change in mathTextView.
