@@ -38,6 +38,18 @@ const childContainerClasses = [numeratorClass, denominatorClass, sqrtContentClas
 const indexContainerClasses = [supClass, subClass];
 const containerClasses = parentContainerClasses + childContainerClasses + indexContainerClasses;
 
+// Define constants for special symbols and strings.
+const openBracket = '(';
+const closeBracket = ')';
+const absBorder = '|';
+const divOperator = '/';
+const supOperator = '^';
+const subOperator = '_';
+const degree = String.fromCodePoint(0x00b0);
+const absFunction = 'abs';
+const sqrtFunction = 'sqrt';
+const space = ' ';
+
 // Define a mapping of mathematical strings to their corresponding HTML strings.
 const mathHtmlMap = {
   '*': String.fromCodePoint(0x00d7),
@@ -52,7 +64,6 @@ const mathHtmlMap = {
   '<->': String.fromCodePoint(0x2261),
   '->': String.fromCodePoint(0x21d2),
   '-': String.fromCodePoint(0x2212),
-  '°': String.fromCodePoint(0x00b0),
   E: String.fromCodePoint(0x1d626),
   Pi: String.fromCodePoint(0x03c0),
   I: String.fromCodePoint(0x1d456),
@@ -84,18 +95,7 @@ const binaryOperators = [
   ',',
 ];
 const unaryPrefixOperators = ['+', mathHtmlMap['-'], mathHtmlMap['~']];
-const unaryPostfixOperators = ['%', '!', mathHtmlMap['°']];
-
-// Define constants for special symbols and strings.
-const openBracket = '(';
-const closeBracket = ')';
-const absBorder = '|';
-const divOperator = '/';
-const supOperator = '^';
-const subOperator = '_';
-const absFunction = 'abs';
-const sqrtFunction = 'sqrt';
-const space = ' ';
+const unaryPostfixOperators = ['%', '!', degree];
 
 // Define constants for text styling.
 const textEmptyHintSelected = '\u2B1A'; // TODO: use svg image instead
