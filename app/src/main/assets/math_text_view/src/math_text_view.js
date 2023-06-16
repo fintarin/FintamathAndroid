@@ -220,11 +220,6 @@ function deleteAtCursor() {
    * @param {HTMLSpanElement} elem - The element to delete.
    */
   function deleteChild(elem) {
-    if (getClassName(elem) === postfixAbsClass) {
-      moveCursorLeft();
-      return;
-    }
-
     let parentElem = elem.parentElement;
     let prevElem = elem.previousElementSibling;
     let nextElem = elem.nextElementSibling;
@@ -235,18 +230,9 @@ function deleteAtCursor() {
       prevElem = newPrevElem;
     }
 
-    if (getClassName(elem) === prefixAbsClass) {
-      if (
-        nextElem !== null &&
-        getClassName(nextElem) === textHintClass &&
-        getClassName(nextElem.nextElementSibling) === postfixAbsClass
-      ) {
-        prevElem = elem.nextElementSibling;
-        parentElem.removeChild(nextElem.nextElementSibling);
-      } else {
-        moveCursorLeft();
-        return;
-      }
+    if (!deleteMatchingBracket(elem, parentElem, prevElem, nextElem)) {
+      moveCursorLeft();
+      return;
     }
 
     let isFirstElem = prevElem === null || (prevElem === parentElem.firstChild && isEmptyElement(prevElem));
@@ -259,20 +245,12 @@ function deleteAtCursor() {
       return;
     }
 
-    if (
-      prevElem !== null &&
-      getClassName(elem) === openBracketClass &&
-      getClassName(prevElem.nextElementSibling) === textHintClass
-    ) {
-      prevElem = prevElem.nextElementSibling;
-
-      if (getClassName(prevElem.nextElementSibling) === closeBracketClass) {
-        parentElem.removeChild(prevElem.nextElementSibling);
-      }
-    }
-
     if (prevElem === null) {
       prevElem = parentElem.firstElementChild;
+    }
+
+    if (getClassName(prevElem.nextElementSibling) === textHintClass) {
+      prevElem = prevElem.nextElementSibling;
     }
 
     let newPrevElem = prevElem;
@@ -283,28 +261,69 @@ function deleteAtCursor() {
     }
 
     if (containerClasses.includes(getClassName(parentElem)) && parentElem.childElementCount === 0) {
-      console.log('a');
       parentElem.appendChild(createElement(textHintClass));
       setCursorToTextElement(parentElem.firstElementChild);
     } else if (isFirstElem) {
-      console.log('b');
       setCursorToElementBegin(parentElem);
     } else if (isLastElem) {
-      console.log('c');
       setCursorToElementEnd(parentElem);
     } else if (textClasses.includes(getClassName(prevElem))) {
-      console.log('d');
       setCursorToElementEnd(prevElem);
     } else if (containerClasses.includes(getClassName(prevElem))) {
-      console.log('e');
       setCursorToElementBegin(prevElem.nextElementSibling);
     } else {
-      console.log('f');
       setCursorToElementBegin(prevElem);
     }
 
     if (prevElem !== null) {
       concatTextElements(prevElem, prevElem.nextElementSibling);
+    }
+
+    /**
+     * Deletes the matching brackets element of the given element.
+     * E.g. removes the close bracket in '( )'.
+     *
+     * @param {HTMLSpanElement} elem - The element that is deleted.
+     * @param {HTMLSpanElement} parentElem - The parent element.
+     * @param {HTMLSpanElement} prevElem - The previous element.
+     * @param {HTMLSpanElement} nextElem - The next element.
+     * @returns {boolean} Truth if we still have to delete the given element later, false otherwise.
+     */
+    function deleteMatchingBracket(elem, parentElem, prevElem, nextElem) {
+      // TODO: refactor this
+
+      if (getClassName(elem) === prefixAbsClass) {
+        if (
+          nextElem !== null &&
+          getClassName(nextElem) === textHintClass &&
+          getClassName(nextElem.nextElementSibling) === postfixAbsClass
+        ) {
+          parentElem.removeChild(nextElem.nextElementSibling);
+        } else {
+          return false;
+        }
+      } else if (getClassName(elem) === postfixAbsClass) {
+        console.log(prevElem.outerHTML);
+        if (
+          prevElem !== null &&
+          getClassName(prevElem) === textHintClass &&
+          getClassName(prevElem.previousElementSibling) === prefixAbsClass
+        ) {
+          parentElem.removeChild(prevElem.previousElementSibling);
+        } else {
+          return false;
+        }
+      } else if (getClassName(elem) === openBracketClass) {
+        if (
+          nextElem !== null &&
+          getClassName(nextElem) === textHintClass &&
+          getClassName(nextElem.nextElementSibling) === closeBracketClass
+        ) {
+          parentElem.removeChild(nextElem.nextElementSibling);
+        }
+      }
+
+      return true;
     }
   }
 }
