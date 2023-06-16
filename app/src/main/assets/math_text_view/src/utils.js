@@ -1139,6 +1139,11 @@ function setCursorToTextElement(elem, offset) {
    */
   function setCursorToNonEmptyElement(elem) {
     const selection = window.getSelection();
+
+    if (selection.rangeCount === 0) {
+      selection.addRange(new Range());
+    }
+
     const range = selection.getRangeAt(0);
 
     while (elem.nodeType !== Node.TEXT_NODE) {

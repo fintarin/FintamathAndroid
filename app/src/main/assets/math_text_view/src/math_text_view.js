@@ -29,6 +29,7 @@ let redoStack = [];
 function setText(mathText) {
   addUndoState();
   mathTextView.innerHTML = toHtml(mathText, mathTextView.isContentEditable);
+  setCursorToElementEnd(mathTextView);
   onTextChange();
 }
 
