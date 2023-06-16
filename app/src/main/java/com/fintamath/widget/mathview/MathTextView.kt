@@ -146,26 +146,30 @@ class MathTextView @JvmOverloads constructor(
         a.recycle()
 
         if (quickActionPopupLayout != 0) {
-            quickActionPopup = PopupWindow(context)
-            quickActionPopup!!.isFocusable = true
-            quickActionPopup!!.contentView = inflate(context, quickActionPopupLayout, null)
-            quickActionPopup!!.animationStyle = android.R.style.Animation_Dialog
-            quickActionPopup!!.setBackgroundDrawable(null)
-
-            cutActionButton = quickActionPopup!!.contentView.findViewById(R.id.cut)
-            cutActionButton!!.setOnClickListener { onCutAction() }
-
-            copyActionButton = quickActionPopup!!.contentView.findViewById(R.id.copy)
-            copyActionButton!!.setOnClickListener { onCopyAction() }
-
-            pasteActionButton = quickActionPopup!!.contentView.findViewById(R.id.paste)
-            pasteActionButton!!.setOnClickListener { onPasteAction() }
-
-            deleteActionButton = quickActionPopup!!.contentView.findViewById(R.id.delete)
-            deleteActionButton!!.setOnClickListener { onDeleteAction() }
+            initQuickActionPopup(context)
         }
 
         setOnLongClickListener { return@setOnLongClickListener true }
+    }
+
+    private fun initQuickActionPopup(context: Context) {
+        quickActionPopup = PopupWindow(context)
+        quickActionPopup!!.isFocusable = true
+        quickActionPopup!!.contentView = inflate(context, quickActionPopupLayout, null)
+        quickActionPopup!!.animationStyle = android.R.style.Animation_Dialog
+        quickActionPopup!!.setBackgroundDrawable(null)
+
+        cutActionButton = quickActionPopup!!.contentView.findViewById(R.id.cut)
+        cutActionButton!!.setOnClickListener { onCutAction() }
+
+        copyActionButton = quickActionPopup!!.contentView.findViewById(R.id.copy)
+        copyActionButton!!.setOnClickListener { onCopyAction() }
+
+        pasteActionButton = quickActionPopup!!.contentView.findViewById(R.id.paste)
+        pasteActionButton!!.setOnClickListener { onPasteAction() }
+
+        deleteActionButton = quickActionPopup!!.contentView.findViewById(R.id.delete)
+        deleteActionButton!!.setOnClickListener { onDeleteAction() }
     }
 
     fun insertAtCursor(text: String) {
