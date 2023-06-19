@@ -7,7 +7,7 @@
     <dimen name="text_size_keyboard">22sp</dimen>
     <dimen name="text_size_keyboard_special">26sp</dimen>
     <dimen name="text_size_keyboard_special_big">34sp</dimen>
-    <dimen name="text_size_keyboard_special_huge">52sp</dimen>
+    <dimen name="text_size_keyboard_special_huge">54sp</dimen>
     <dimen name="text_size_keyboard_top_label">14sp</dimen>
     <dimen name="text_size_keyboard_top_special">14sp</dimen>
     <dimen name="text_size_keyboard_top_special_big">16sp</dimen>

@@ -72,16 +72,16 @@
     <Row>
         <Key
             app:keyOutputText="derivative(,x)"
-            app:keyIcon="@drawable/ic_key_derivative" />
+            app:keyIcon="@drawable/ic_key_derivativex" />
         <Key
             app:keyOutputText="integral(,x)"
-            app:keyIcon="@drawable/ic_key_integral" />
+            app:keyIcon="@drawable/ic_key_integralx" />
         <Key
             app:keyOutputText="min(,)"
             app:keyLabel="min" />
         <Key
-            app:keyOutputText="max(,)"
-            app:keyLabel="max" />
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
         <Key
             app:keyLabel=" "
             app:isPreviewEnabled="false" />
@@ -89,14 +89,14 @@
 
     <Row>
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
+            app:keyOutputText="derivative(,)"
+            app:keyIcon="@drawable/ic_key_derivative" />
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
+            app:keyOutputText="integral(,)"
+            app:keyIcon="@drawable/ic_key_integral" />
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
+            app:keyOutputText="max(,)"
+            app:keyLabel="max" />
         <Key
             app:keyLabel=" "
             app:isPreviewEnabled="false" />
