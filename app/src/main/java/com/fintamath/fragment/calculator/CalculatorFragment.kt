@@ -152,11 +152,11 @@ class CalculatorFragment : Fragment() {
         cancelSaveToHistoryTask()
 
         if (viewBinding.inTextView.text.isEmpty()) {
+            calculatorProcessor.stopCurrentCalculations()
             viewBinding.solutionView.hideCurrentView()
-            calculatorProcessor.stopCurrentCalculations()
         } else if (!viewBinding.inTextView.isComplete) {
-            viewBinding.solutionView.showIncompleteInput()
             calculatorProcessor.stopCurrentCalculations()
+            viewBinding.solutionView.showIncompleteInput()
         } else {
             calculatorProcessor.calculate(text)
         }
