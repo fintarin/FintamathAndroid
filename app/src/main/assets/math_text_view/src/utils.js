@@ -156,6 +156,11 @@ function toHtml(mathText, isEditable = false) {
    */
   function insertIndex(elem, indexClass) {
     const indexElem = createElement(indexClass);
+
+    if (indexContainerClasses.includes(getClassName(elem))) {
+      elem = elem.parentElement;
+    }
+
     return elem.appendChild(indexElem);
   }
 
