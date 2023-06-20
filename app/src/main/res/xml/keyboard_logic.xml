@@ -71,24 +71,6 @@
 
     <Row>
         <Key
-            app:keyOutputText="True"
-            app:keyLabel="T" />
-        <Key
-            app:keyOutputText="False"
-            app:keyLabel="F"/>
-        <Key
-            app:keyOutputText="a"
-            app:keyLabel="a" />
-        <Key
-            app:keyOutputText="b"
-            app:keyLabel="b"/>
-        <Key
-            app:keyOutputText="c"
-            app:keyLabel="c" />
-    </Row>
-
-    <Row>
-        <Key
             app:keyOutputText="()"
             app:keyIcon="@drawable/ic_key_brackets"
             app:keyTopLabel="(  )"
@@ -141,6 +123,24 @@
         <Key
             app:keyLabel=" "
             app:isPreviewEnabled="false" />
+    </Row>
+
+    <Row>
+        <Key
+            app:keyOutputText="True"
+            app:keyLabel="T" />
+        <Key
+            app:keyOutputText="False"
+            app:keyLabel="F"/>
+        <Key
+            app:keyOutputText="a"
+            app:keyLabel="a" />
+        <Key
+            app:keyOutputText="b"
+            app:keyLabel="b"/>
+        <Key
+            app:keyOutputText="c"
+            app:keyLabel="c" />
     </Row>
 
 </Keyboard>
