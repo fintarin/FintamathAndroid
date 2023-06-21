@@ -25,9 +25,8 @@
     <color name="background_popup_keyboard">@color/background_menu</color>
     <color name="background_popup_keyboard_key">@color/background_popup_keyboard</color>
 
-    <color name="background_history_item">@color/background_number_key</color>
-    <color name="background_history_item_pressed">@color/background_keyboard_key_pressed</color>
-    <color name="background_history_item_button">@color/background_history_item</color>
+    <color name="background_history">@color/background_number_key</color>
+    <color name="background_history_item_button">@color/background_history</color>
     <color name="background_history_item_button_pressed">@color/background_keyboard_key_pressed</color>
 
     <color name="text_main">#EEEEEE</color>

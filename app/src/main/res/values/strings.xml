@@ -21,6 +21,7 @@
     <string name="version_message">Version 0.1 alpha</string>
     <string name="bookmark">Bookmark</string>
     <string name="trash">Trash</string>
+    <string name="calculate">Calculate</string>
     <string name="logo">Logo</string>
 
     <string name="cut">Cut</string>
