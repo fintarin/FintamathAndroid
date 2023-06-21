@@ -18,7 +18,7 @@
     <string name="empty_settings_message">No settings yet…</string>
     <string name="coming_soon_message">Coming soon…</string>
     <string name="contact_us">Contact us:</string>
-    <string name="version_message">Version 0.1 alpha</string>
+    <string name="version_message">Version 0.1.1 alpha</string>
     <string name="bookmark">Bookmark</string>
     <string name="trash">Trash</string>
     <string name="calculate">Calculate</string>
