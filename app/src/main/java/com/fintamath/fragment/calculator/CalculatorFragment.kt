@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.fintamath.MainActivity
 import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.databinding.FragmentCalculatorBinding
@@ -49,6 +50,10 @@ class CalculatorFragment : Fragment() {
 
         if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
             viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
+        }
+        if ((activity as MainActivity).getRecognitionText() != "") {
+            viewBinding.inTextView.text = (activity as MainActivity).getRecognitionText()
+            (activity as MainActivity).setRecognitionText("")
         }
 
         viewBinding.inTextView.requestFocus()
