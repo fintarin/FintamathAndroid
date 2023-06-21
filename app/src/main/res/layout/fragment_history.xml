@@ -17,8 +17,8 @@
 
         <ImageButton
             android:id="@+id/historyBackButton"
-            android:layout_width="@dimen/diameter_bar_key"
-            android:layout_height="@dimen/diameter_bar_key"
+            android:layout_width="@dimen/diameter_bar_button"
+            android:layout_height="@dimen/diameter_bar_button"
             android:layout_centerVertical="true"
             android:padding="15dp"
             android:background="@drawable/bg_bar_button"
