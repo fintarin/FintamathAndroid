@@ -21,8 +21,8 @@
 
         <ImageButton
             android:id="@+id/cameraBackButton"
-            android:layout_width="@dimen/diameter_bar_button"
-            android:layout_height="@dimen/diameter_bar_button"
+            android:layout_width="@dimen/diameter_camera_button"
+            android:layout_height="@dimen/diameter_camera_button"
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
@@ -38,8 +38,8 @@
 
         <ImageButton
             android:id="@+id/cameraHistoryButton"
-            android:layout_width="@dimen/diameter_bar_button"
-            android:layout_height="@dimen/diameter_bar_button"
+            android:layout_width="@dimen/diameter_camera_button"
+            android:layout_height="@dimen/diameter_camera_button"
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
@@ -160,8 +160,8 @@
 
         <ImageButton
             android:id="@+id/ImageFromGallery"
-            android:layout_width="@dimen/diameter_bar_button"
-            android:layout_height="@dimen/diameter_bar_button"
+            android:layout_width="@dimen/diameter_camera_button"
+            android:layout_height="@dimen/diameter_camera_button"
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
@@ -194,8 +194,8 @@
 
         <ImageButton
             android:id="@+id/flashLightButton"
-            android:layout_width="@dimen/diameter_bar_button"
-            android:layout_height="@dimen/diameter_bar_button"
+            android:layout_width="@dimen/diameter_camera_button"
+            android:layout_height="@dimen/diameter_camera_button"
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"

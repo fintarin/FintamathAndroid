@@ -18,6 +18,7 @@
 
     <dimen name="diameter_bar_button">48dp</dimen>
     <dimen name="diameter_history_item_button">44dp</dimen>
+    <dimen name="diameter_camera_button">54dp</dimen>
     <dimen name="diameter_camera_capture_button">112dp</dimen>
     <dimen name="diameter_warning">24dp</dimen>
 
@@ -27,6 +28,7 @@
     <dimen name="radius_keyboard_switch_key">16dp</dimen>
     <dimen name="radius_history_button">16dp</dimen>
     <dimen name="radius_menu_background">16dp</dimen>
+    <dimen name="radius_recognition_background">16dp</dimen>
 
     <dimen name="width_keyboard_key_stroke">2dp</dimen>
     <dimen name="width_keyboard_switch_key_stroke">3dp</dimen>

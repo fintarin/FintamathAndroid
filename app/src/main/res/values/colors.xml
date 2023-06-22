@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background_main">#2b2b2b</color>
+    <color name="background_main_stroke">#992b2b2b</color>
 
     <color name="background_bar">#262626</color>
     <color name="background_bar_stroke">#99262626</color>
@@ -26,9 +27,14 @@
     <color name="background_popup_keyboard">@color/background_menu</color>
     <color name="background_popup_keyboard_key">@color/background_popup_keyboard</color>
 
-    <color name="background_history">@color/background_number_key</color>
+    <color name="background_history">#3A3A3A</color>
     <color name="background_history_item_button">@color/background_history</color>
     <color name="background_history_item_button_pressed">@color/background_keyboard_key_pressed</color>
+
+    <color name="background_recognition">@color/background_main</color>
+    <color name="background_recognition_stroke">@color/background_main_stroke</color>
+    <color name="background_recognition_item">#3A3A3A</color>
+    <color name="background_recognition_item_stroke">#993A3A3A</color>
 
     <color name="text_main">#EEEEEE</color>
     <color name="text_keyboard">@color/text_main</color>
