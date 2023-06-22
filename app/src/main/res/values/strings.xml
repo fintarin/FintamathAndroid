@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Fintamath</string>
+    <string name="version_message">Version 0.1.2 alpha</string>
+
     <string name="alternative_form">Alternative Form</string>
     <string name="math_edit_text_hint">Type a math problem…</string>
     <string name="back">Back</string>
@@ -19,7 +21,6 @@
     <string name="empty_settings_message">No settings yet…</string>
     <string name="coming_soon_message">Coming soon…</string>
     <string name="contact_us">Contact us:</string>
-    <string name="version_message">Version 0.1.1 alpha</string>
     <string name="bookmark">Bookmark</string>
     <string name="trash">Trash</string>
     <string name="calculate">Calculate</string>
