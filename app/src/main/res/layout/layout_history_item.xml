@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:padding="5dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
     android:background="@color/background_main"
     android:orientation="vertical">
 
@@ -15,13 +16,21 @@
         android:background="@drawable/bg_history_item"
         android:orientation="vertical">
 
-        <com.fintamath.widget.mathview.MathTextView
-            android:id="@+id/historyMathTextView"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:textSize="@dimen/text_size_math_text_view"
-            app:textColor="@color/text_main"
-            app:quickActionPopupLayout="@layout/layout_popup_quick_action" />
+            android:minHeight="52dp">
+
+            <com.fintamath.widget.mathview.MathTextView
+                android:id="@+id/historyMathTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:textSize="@dimen/text_size_math_text_view"
+                app:textColor="@color/text_main"
+                app:quickActionPopupLayout="@layout/layout_popup_quick_action" />
+
+        </FrameLayout>
 
         <View
             android:layout_width="match_parent"
@@ -31,14 +40,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp">
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/dateTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:textColor="@color/text_main"
                 android:textSize="@dimen/text_size_solution_message"/>
 
@@ -51,6 +61,9 @@
                 android:id="@+id/historyDeleteButton"
                 android:layout_width="@dimen/diameter_history_item_button"
                 android:layout_height="@dimen/diameter_history_item_button"
+                android:padding="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:background="@drawable/bg_history_item_button"
                 android:src="@drawable/ic_trash"
                 android:contentDescription="@string/trash" />
@@ -59,6 +72,9 @@
                 android:id="@+id/historyBookmarkButton"
                 android:layout_width="@dimen/diameter_history_item_button"
                 android:layout_height="@dimen/diameter_history_item_button"
+                android:padding="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:background="@drawable/bg_history_item_bookmark"
                 android:textOff=""
                 android:textOn=""
@@ -68,6 +84,9 @@
                 android:id="@+id/historyCalculateButton"
                 android:layout_width="@dimen/diameter_history_item_button"
                 android:layout_height="@dimen/diameter_history_item_button"
+                android:padding="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:background="@drawable/bg_history_item_button"
                 android:src="@drawable/ic_calculate"
                 android:contentDescription="@string/calculate" />
