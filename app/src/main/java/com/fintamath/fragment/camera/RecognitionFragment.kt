@@ -12,7 +12,6 @@ import org.opencv.android.Utils
 import org.opencv.core.*
 import org.opencv.android.OpenCVLoader
 import org.opencv.imgproc.Imgproc
-import android.util.Log
 import org.tensorflow.lite.Interpreter
 import android.content.res.AssetManager
 import androidx.navigation.findNavController
@@ -95,14 +94,12 @@ class RecognitionFragment : BorderlessFragment() {
         contours.sortBy { Imgproc.boundingRect(it).x }
         var i = 0
         while (i<contours.size-1) {
-            Log.d("NUMBER", i.toString())
             val grub_contours = contours
             var cnt1 = Imgproc.boundingRect(grub_contours[i])
             val x1 = cnt1.x
             val y1 = cnt1.y
             val w1 = cnt1.width
             val h1 = cnt1.height
-            Log.d("NUMBERG", grub_contours.size.toString())
             for (j in 0..grub_contours.size-1){
                 if (i==j){
                     continue
@@ -165,37 +162,39 @@ class RecognitionFragment : BorderlessFragment() {
             val y = rect.y
             val w = rect.width
             val h = rect.height
-            Log.d("SIZE", w.toString()+" "+h.toString())
-            //if (w >= 20 && w <= 150 && h >= 20 && h <= 120) {
-            if (w >= 40 && h >= 0) {
 
-                val roi = gray.submat(rect)
-                val thresh = Mat()
-                Imgproc.threshold(roi, thresh, 0.0, 255.0, Imgproc.THRESH_BINARY_INV or Imgproc.THRESH_OTSU)
-                val tH = thresh.height()
-                val tW = thresh.width()
-                val resized = if (tW > tH) {
+            try {
+                //if (w >= 20 && w <= 150 && h >= 20 && h <= 120) {
+                if (w >= 40 && h >= 0) {
+
+                    val roi = gray.submat(rect)
+                    val thresh = Mat()
+                    Imgproc.threshold(roi, thresh, 0.0, 255.0, Imgproc.THRESH_BINARY_INV or Imgproc.THRESH_OTSU)
+                    val tH = thresh.height()
+                    val tW = thresh.width()
+
                     val resizedWidth = 45
                     val resizedHeight = (tH * (resizedWidth.toDouble() / tW.toDouble())).toInt()
+
                     val resized = Mat()
-                    Imgproc.resize(thresh, resized, Size(resizedWidth.toDouble(), resizedHeight.toDouble()))
-                    resized
-                } else {
-                    val resizedHeight = 45
-                    val resizedWidth = (tW * (resizedHeight.toDouble() / tH.toDouble())).toInt()
-                    val resized = Mat()
-                    Imgproc.resize(thresh, resized, Size(resizedWidth.toDouble(), resizedHeight.toDouble()))
-                    resized
+                    Imgproc.resize(
+                        thresh,
+                        resized,
+                        Size(resizedWidth.toDouble(), resizedHeight.toDouble())
+                    )
+
+                    val padded = Mat()
+                    val dX = maxOf(0, 45 - tW) / 2
+                    val dY = maxOf(0, 45 - tH) / 2
+
+                    Core.copyMakeBorder(resized, padded, dY , dY, dX, dX, Core.BORDER_CONSTANT, Scalar(0.0, 0.0, 0.0))
+                    Imgproc.resize(padded, padded, Size(45.0, 45.0))
+                    //padded.convertTo(padded, CvType.CV_32F)
+
+                    chars.add(padded)
                 }
-                val padded = Mat()
-                val dX = maxOf(0, 45 - tW) / 2
-                val dY = maxOf(0, 45 - tH) / 2
-
-                Core.copyMakeBorder(resized, padded, dY , dY, dX, dX, Core.BORDER_CONSTANT, Scalar(0.0, 0.0, 0.0))
-                Imgproc.resize(padded, padded, Size(45.0, 45.0))
-                //padded.convertTo(padded, CvType.CV_32F)
-
-                chars.add(padded)
+            } catch (exc: CvException) {
+                exc.printStackTrace()
             }
         }
 
