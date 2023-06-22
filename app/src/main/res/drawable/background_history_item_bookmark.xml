@@ -6,21 +6,21 @@
         android:state_selected="false"
         android:state_pressed="false"
         android:state_checked="false"
-        android:drawable="@drawable/bg_history_item_bookmark_normal" />
+        android:drawable="@drawable/background_history_item_bookmark_normal" />
 
     <item
         android:state_checked="false"
         android:state_pressed="true"
-        android:drawable="@drawable/bg_history_item_bookmark_pressed" />
+        android:drawable="@drawable/background_history_item_bookmark_pressed" />
 
     <item
         android:state_checked="true"
         android:state_pressed="false"
-        android:drawable="@drawable/bg_history_item_bookmark_checked" />
+        android:drawable="@drawable/background_history_item_bookmark_checked" />
 
     <item
         android:state_checked="true"
         android:state_pressed="true"
-        android:drawable="@drawable/bg_history_item_bookmark_checked_pressed" />
+        android:drawable="@drawable/background_history_item_bookmark_checked_pressed" />
 
 </selector>

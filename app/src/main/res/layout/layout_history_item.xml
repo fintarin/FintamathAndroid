@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_history_item"
+        android:background="@drawable/background_history_item"
         android:orientation="vertical">
 
         <FrameLayout
@@ -35,7 +35,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/delimiter_width"
-            android:background="@drawable/bg_dashed_line"/>
+            android:background="@drawable/background_dashed_line"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 android:padding="15dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:background="@drawable/bg_history_item_button"
+                android:background="@drawable/background_history_item_button"
                 android:src="@drawable/ic_trash"
                 android:contentDescription="@string/trash" />
 
@@ -75,7 +75,7 @@
                 android:padding="15dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:background="@drawable/bg_history_item_bookmark"
+                android:background="@drawable/background_history_item_bookmark"
                 android:textOff=""
                 android:textOn=""
                 android:contentDescription="@string/bookmark" />
@@ -87,7 +87,7 @@
                 android:padding="15dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:background="@drawable/bg_history_item_button"
+                android:background="@drawable/background_history_item_button"
                 android:src="@drawable/ic_calculate"
                 android:contentDescription="@string/calculate" />
 

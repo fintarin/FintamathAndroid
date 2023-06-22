@@ -5,9 +5,9 @@
     android:id="@id/keyboardView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_popup_keyboard"
+    android:background="@drawable/background_popup_keyboard"
     app:keyboardKeyTextColor="@color/text_keyboard"
-    app:keyboardKeyBackground="@drawable/bg_popup_key"
+    app:keyboardKeyBackground="@drawable/background_popup_key"
     app:keyboardKeyTextSize="@dimen/text_size_keyboard"
     app:keyboardKeyTopLabelTextSize="@dimen/text_size_keyboard_top_label"
     app:keyboardFontFamily="@font/noto_sans_math_regular"  >

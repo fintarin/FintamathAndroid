@@ -27,7 +27,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/camera_button_background"
+            android:background="@drawable/background_camera_button"
             android:src="@drawable/ic_arrow_back"
             android:contentDescription="@string/back"/>
 
@@ -44,7 +44,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/camera_button_background"
+            android:background="@drawable/background_camera_button"
             android:src="@drawable/ic_history"
             android:contentDescription="@string/history"/>
 
@@ -166,7 +166,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/camera_button_background"
+            android:background="@drawable/background_camera_button"
             android:src="@drawable/ic_gallery"
             android:contentDescription="@string/gallery"/>
 
@@ -183,7 +183,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/camera_button_background"
+            android:background="@drawable/background_camera_button"
             android:src="@drawable/ic_shot"
             android:contentDescription="@string/shot"/>
 
@@ -200,7 +200,7 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/camera_button_background"
+            android:background="@drawable/background_camera_button"
             android:src="@drawable/ic_light"
             android:contentDescription="@string/light"/>
 

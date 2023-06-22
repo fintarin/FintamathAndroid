@@ -29,7 +29,7 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:scaleType="centerCrop"
-                android:background="@drawable/camera_button_background"
+                android:background="@drawable/background_camera_button"
                 android:src="@drawable/ic_arrow_back"
                 android:contentDescription="@string/back"/>
 
@@ -41,14 +41,14 @@
             android:layout_marginTop="230dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/bg_rounded_corners">
+            android:background="@drawable/background_rounded_corners">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginHorizontal="20dp"
-                android:background="@drawable/bg_image_corners"
+                android:background="@drawable/background_image_corners"
                 android:orientation="horizontal">
 
                 <com.fintamath.widget.mathview.MathTextView
@@ -83,7 +83,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="210dp"
                 android:layout_marginHorizontal="20dp"
-                android:background="@drawable/bg_image_corners"
+                android:background="@drawable/background_image_corners"
                 android:orientation="horizontal">
 
             <com.fintamath.widget.mathview.MathTextView

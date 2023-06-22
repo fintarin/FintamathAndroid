@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@drawable/bg_bar">
+        android:background="@drawable/background_bar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:background="@drawable/bg_bar_button"
+            android:background="@drawable/background_bar_button"
             android:src="@drawable/ic_camera"
             android:contentDescription="@string/camera"/>
 
@@ -47,7 +47,7 @@
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:background="@drawable/bg_bar_button"
+            android:background="@drawable/background_bar_button"
             android:src="@drawable/ic_history"
             android:contentDescription="@string/history"/>
 
@@ -58,7 +58,7 @@
             android:padding="15dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:background="@drawable/bg_bar_button"
+            android:background="@drawable/background_bar_button"
             android:src="@drawable/ic_overflow_holo"
             android:contentDescription="@string/options" />
 
@@ -102,7 +102,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/delimiter_width"
-                android:background="@drawable/bg_dashed_line"/>
+                android:background="@drawable/background_dashed_line"/>
 
             <com.fintamath.widget.mathview.MathSolutionView
                 android:id="@+id/solutionView"
