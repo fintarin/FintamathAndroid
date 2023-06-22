@@ -40,6 +40,7 @@ class CameraFragment : BorderlessFragment() {
 
     companion object {
         private const val CAMERA_REQUEST_CODE = 1
+        private const val GALLERY_REQUEST_CODE = 2
         private val CAMERA_PERMISSIONS = mutableListOf(Manifest.permission.CAMERA).toTypedArray()
     }
 
@@ -161,7 +162,7 @@ class CameraFragment : BorderlessFragment() {
                     buffer.get(bytes)
 
                     var screenImg = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    screenImg = rotateBitmap(screenImg, imageProxy.imageInfo.rotationDegrees)
+                    screenImg = rotateImage(screenImg, imageProxy.imageInfo.rotationDegrees)
                     screenImg = scaleImageToDisplaySize(screenImg)
 
                     (activity as MainActivity).setScreenImage(screenImg) // TODO! move it to storage
@@ -189,24 +190,32 @@ class CameraFragment : BorderlessFragment() {
 
     private fun takeFromGallery(){
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleryIntent, 10)
+        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 10 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             val imgUri: Uri = data.data!!
 
             val location = IntArray(2)
             viewBinding.recognitionSquare.getLocationOnScreen(location)
 
-            val screenImg: Bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imgUri)
+            var screenImg: Bitmap = MediaStore.Images.Media.getBitmap(
+                requireActivity().contentResolver, imgUri)
+            screenImg = scaleImageToDisplaySize(screenImg)
+
             (activity as MainActivity).setScreenImage(screenImg) // TODO! move it to storage
 
-            val recognitionImg = Bitmap.createBitmap(screenImg, location[0] + 20, location[1] + 20,
-                viewBinding.recognitionSquare.getWidth()-40,viewBinding.recognitionSquare.getHeight()-40)
+            val recognitionImg = Bitmap.createBitmap(screenImg, location[0], location[1],
+                viewBinding.recognitionSquare.width,viewBinding.recognitionSquare.height
+            )
+
             (activity as MainActivity).setRecognitionImage(recognitionImg)
+
+            viewBinding.root.findNavController().navigate(
+                R.id.action_cameraFragment_to_recognitionFragment)
         }
     }
 
@@ -219,7 +228,7 @@ class CameraFragment : BorderlessFragment() {
         ContextCompat.checkSelfPermission(requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun rotateBitmap(img: Bitmap, degree: Int): Bitmap? {
+    private fun rotateImage(img: Bitmap, degree: Int): Bitmap {
         if (degree == 0) {
             return img
         }
@@ -235,7 +244,7 @@ class CameraFragment : BorderlessFragment() {
         return rotatedImg
     }
 
-    private fun scaleImageToDisplaySize(img: Bitmap): Bitmap? {
+    private fun scaleImageToDisplaySize(img: Bitmap): Bitmap {
         val displaySize = getDisplaySize()
 
         val scaledImg =
