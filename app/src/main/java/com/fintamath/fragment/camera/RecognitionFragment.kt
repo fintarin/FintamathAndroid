@@ -25,8 +25,7 @@ import com.fintamath.storage.CalculatorInputStorage
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.widget.fragment.BorderlessFragment
-import java.util.Timer
-import kotlin.concurrent.schedule
+import java.lang.Exception
 
 class RecognitionFragment : BorderlessFragment() {
     private lateinit var viewBinding: FragmentRecognitionBinding
@@ -204,8 +203,6 @@ class RecognitionFragment : BorderlessFragment() {
         return chars
     }
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -223,36 +220,40 @@ class RecognitionFragment : BorderlessFragment() {
         val recognitionImg: Bitmap = (activity as MainActivity).getRecognitionImage()
         viewBinding.recognitionLayout.setBackgroundDrawable(BitmapDrawable(screenImg))
 
-        val chars = predictImage(recognitionImg)
         result = ""
-        for (char in chars) {
-            val number = Bitmap.createBitmap(char.rows(), char.cols(), Bitmap.Config.ARGB_8888)
-            Utils.matToBitmap(char, number)
+
+        try {
+            val chars = predictImage(recognitionImg)
+
+            for (char in chars) {
+                val number = Bitmap.createBitmap(char.rows(), char.cols(), Bitmap.Config.ARGB_8888)
+                Utils.matToBitmap(char, number)
 
 
-            val byteBuffer = convertBitmapToByteBuffer(number)
-            val output = Array(1) { FloatArray(OUTPUT_CLASSES_COUNT) }
-            interpreter?.run(byteBuffer, output)
-            val prob = output[0]
-            val maxIndex = prob.indices.maxByOrNull { prob[it] } ?: -1
-            if (recognizable[maxIndex] == "pi") {
-                result+="Pi"
-            }
-            else{
-                if (recognizable[maxIndex] == "slash") {
-                    result+="/"
+                val byteBuffer = convertBitmapToByteBuffer(number)
+                val output = Array(1) { FloatArray(OUTPUT_CLASSES_COUNT) }
+                interpreter?.run(byteBuffer, output)
+                val prob = output[0]
+                val maxIndex = prob.indices.maxByOrNull { prob[it] } ?: -1
+                if (recognizable[maxIndex] == "pi") {
+                    result += "Pi"
+                } else {
+                    if (recognizable[maxIndex] == "slash") {
+                        result += "/"
+                    } else {
+                        result += recognizable[maxIndex]
+                    }
                 }
-                else{
-                    result += recognizable[maxIndex]
-                }
-            }
 
-            if ((result[result.length-1] == '-') and (result.length>2)){
-                if (result[result.length-2] == '-') {
-                    result = result.substring(0..result.length - 3)
-                    result += "="
+                if ((result[result.length - 1] == '-') and (result.length > 2)) {
+                    if (result[result.length - 2] == '-') {
+                        result = result.substring(0..result.length - 3)
+                        result += "="
+                    }
                 }
             }
+        } catch (exc: Exception) {
+            exc.printStackTrace()
         }
 
         viewBinding.recognitionInTextView.text = result
@@ -273,10 +274,7 @@ class RecognitionFragment : BorderlessFragment() {
             viewBinding.recognitionSolutionView.showInvalidInput()
         } else {
             viewBinding.recognitionSolutionView.showSolution(texts)
-
-            requireActivity().runOnUiThread {
-                HistoryStorage.saveItem(viewBinding.recognitionInTextView.text)
-            }
+            HistoryStorage.saveItem(viewBinding.recognitionInTextView.text)
         }
     }
 
