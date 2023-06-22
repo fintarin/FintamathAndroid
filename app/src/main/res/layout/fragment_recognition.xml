@@ -45,7 +45,7 @@
             android:orientation="horizontal">
 
             <com.fintamath.widget.mathview.MathTextView
-                android:id="@+id/recognitionInText"
+                android:id="@+id/recognitionInTextView"
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -83,14 +83,16 @@
             android:background="@drawable/background_recognition_item"
             android:orientation="horizontal">
 
-            <com.fintamath.widget.mathview.MathTextView
-                android:id="@+id/recRez"
+            <com.fintamath.widget.mathview.MathSolutionView
+                android:id="@+id/recognitionSolutionView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:isEditable="false"
-                app:textSize="@dimen/text_size_math_text_view"
-                app:textColor="@color/text_main" />
+                app:loadingViewLayout="@layout/layout_solution_loading"
+                app:invalidInputViewLayout="@layout/layout_solution_invalid_input"
+                app:incompleteInputViewLayout="@layout/layout_solution_incomplete_input"
+                app:characterLimitExceededViewLayout="@layout/layout_solution_character_limit_exceeded"
+                app:alternativeMathTextViewLayout="@layout/layout_solution_alternative"
+                app:alternativeDelimiterLayout="@layout/layout_solution_alternative_text" />
 
         </LinearLayout>
 

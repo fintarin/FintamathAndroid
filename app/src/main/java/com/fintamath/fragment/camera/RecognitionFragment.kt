@@ -22,8 +22,11 @@ import java.nio.channels.FileChannel
 import java.nio.ByteOrder
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.storage.CalculatorInputStorage
+import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.widget.fragment.BorderlessFragment
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 class RecognitionFragment : BorderlessFragment() {
     private lateinit var viewBinding: FragmentRecognitionBinding
@@ -252,14 +255,13 @@ class RecognitionFragment : BorderlessFragment() {
             }
         }
 
-        CalculatorProcessor (
+        viewBinding.recognitionInTextView.text = result
+
+        CalculatorProcessor(
             { requireActivity().runOnUiThread { it.invoke() } },
             { outTexts(it) },
-            { startLoading() }).calculate(result)
-
-
-        viewBinding.recognitionInText.text = result
-
+            { startLoading() }
+        ) .calculate(result)
 
         return viewBinding.root
     }
@@ -267,7 +269,15 @@ class RecognitionFragment : BorderlessFragment() {
     }
 
     private fun outTexts(texts: List<String>) {
-        viewBinding.recRez.text = texts[0]
+        if (texts.first() == getString(R.string.invalid_input)) {
+            viewBinding.recognitionSolutionView.showInvalidInput()
+        } else {
+            viewBinding.recognitionSolutionView.showSolution(texts)
+
+            requireActivity().runOnUiThread {
+                HistoryStorage.saveItem(viewBinding.recognitionInTextView.text)
+            }
+        }
     }
 
     private fun showCalculatorFragment() {
