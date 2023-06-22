@@ -51,10 +51,6 @@ class CalculatorFragment : Fragment() {
         if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
             viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         }
-        if ((activity as MainActivity).getRecognitionText() != "") {
-            viewBinding.inTextView.text = (activity as MainActivity).getRecognitionText()
-            (activity as MainActivity).setRecognitionText("")
-        }
 
         viewBinding.inTextView.requestFocus()
 

@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
     // TODO! remove from MainActivity, move to new Storage class
     private lateinit var screenImg: Bitmap
     private lateinit var recognitionImage: Bitmap
-    private var recognitionData: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,15 +35,6 @@ class MainActivity : AppCompatActivity() {
         val historyFile = File(applicationContext.filesDir.path + R.string.history_filename)
         historyFile.createNewFile()
         HistoryStorage.saveToFile(historyFile)
-    }
-
-    // TODO! remove from MainActivity, move to new Storage class
-    fun setRecognitionText(data: String) {
-        recognitionData = data
-    }
-
-    fun getRecognitionText() : String {
-        return recognitionData
     }
 
     // TODO! remove from MainActivity, move to new Storage class

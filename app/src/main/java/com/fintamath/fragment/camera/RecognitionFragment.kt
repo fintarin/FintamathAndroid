@@ -22,6 +22,8 @@ import java.io.FileInputStream
 import java.nio.channels.FileChannel
 import java.nio.ByteOrder
 import com.fintamath.calculator.CalculatorProcessor
+import com.fintamath.storage.CalculatorInputStorage
+import com.fintamath.storage.MathTextData
 import com.fintamath.widget.fragment.BorderlessFragment
 
 class RecognitionFragment : BorderlessFragment() {
@@ -269,8 +271,9 @@ class RecognitionFragment : BorderlessFragment() {
         viewBinding.recRez.text = texts[0]
     }
 
-    private fun showCalculatorFragment(){
-        (activity as MainActivity).setRecognitionText(result)
+    private fun showCalculatorFragment() {
+        CalculatorInputStorage.mathTextData = MathTextData(result)
+
         viewBinding.root.findNavController()
             .navigate(R.id.action_recognitionFragment_to_calculatorFragment)
     }
