@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Fintamath</string>
-    <string name="version_message">Version 0.1.2 alpha</string>
+    <string name="version_message">Version 0.1.3 alpha</string>
 
     <string name="alternative_form">Alternative Form</string>
     <string name="math_edit_text_hint">Type a math problem…</string>

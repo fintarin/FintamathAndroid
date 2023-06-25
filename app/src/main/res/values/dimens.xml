@@ -4,13 +4,13 @@
     <dimen name="text_size_main_small">16sp</dimen>
     <dimen name="text_size_bar">22sp</dimen>
     <dimen name="text_size_math_text_view">22sp</dimen>
-    <dimen name="text_size_keyboard">22sp</dimen>
-    <dimen name="text_size_keyboard_special">26sp</dimen>
-    <dimen name="text_size_keyboard_special_big">34sp</dimen>
-    <dimen name="text_size_keyboard_special_huge">54sp</dimen>
-    <dimen name="text_size_keyboard_top_label">14sp</dimen>
-    <dimen name="text_size_keyboard_top_special">14sp</dimen>
-    <dimen name="text_size_keyboard_top_special_big">16sp</dimen>
+    <dimen name="text_size_keyboard">22dp</dimen>
+    <dimen name="text_size_keyboard_special">26dp</dimen>
+    <dimen name="text_size_keyboard_special_big">34dp</dimen>
+    <dimen name="text_size_keyboard_special_huge">54dp</dimen>
+    <dimen name="text_size_keyboard_top_label">14dp</dimen>
+    <dimen name="text_size_keyboard_top_special">14dp</dimen>
+    <dimen name="text_size_keyboard_top_special_big">16dp</dimen>
     <dimen name="text_size_alternative">18sp</dimen>
     <dimen name="text_size_solution_message">16sp</dimen>
     <dimen name="text_size_message_version">14sp</dimen>
@@ -35,7 +35,7 @@
 
     <dimen name="width_cursor">1dp</dimen>
 
-    <dimen name="keyboard_key_height">70sp</dimen>
+    <dimen name="keyboard_key_height">70dp</dimen>
     <dimen name="keyboard_key_width">100%</dimen>
     <dimen name="keyboard_main_key_width">16.67%</dimen>
     <dimen name="keyboard_letters_key_width">12.5%</dimen>
