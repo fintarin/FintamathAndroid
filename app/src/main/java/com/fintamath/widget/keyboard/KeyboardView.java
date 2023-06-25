@@ -1355,7 +1355,7 @@ public class KeyboardView extends View implements View.OnClickListener {
     }
 
     private boolean repeatKey() {
-        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+        performHapticFeedback(HapticFeedbackConstants.TEXT_HANDLE_MOVE);
 
         Key key = mKeys[mRepeatKeyIndex];
         detectAndSendKey(mCurrentKey, key.x, key.y, mLastTapTime);
