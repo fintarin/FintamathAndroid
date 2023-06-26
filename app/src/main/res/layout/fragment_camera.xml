@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bar">
+        android:background="@drawable/background_bar">
 
         <ImageButton
             android:id="@+id/cameraBackButton"
@@ -19,7 +19,7 @@
             android:layout_height="@dimen/diameter_bar_button"
             android:layout_centerVertical="true"
             android:padding="15dp"
-            android:background="@drawable/bg_bar_button"
+            android:background="@drawable/background_bar_button"
             android:contentDescription="@string/back"
             android:src="@drawable/ic_arrow_back" />
 
