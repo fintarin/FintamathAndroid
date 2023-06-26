@@ -39,29 +39,7 @@
         android:id="@+id/cameraFragment"
         android:name="com.fintamath.fragment.camera.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera">
-
-        <action
-            android:id="@+id/action_cameraFragment_to_recognitionFragment"
-            app:destination="@id/recognitionFragment" />
-
-        <action
-            android:id="@+id/action_cameraFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/recognitionFragment"
-        android:name="com.fintamath.fragment.camera.RecognitionFragment"
-        android:label="recognition_fragment"
-        tools:layout="@layout/fragment_recognition">
-
-        <action
-            android:id="@+id/action_recognitionFragment_to_calculatorFragment"
-            app:destination="@id/calculatorFragment" />
-
-    </fragment>
+        tools:layout="@layout/fragment_camera" />
 
     <fragment
         android:id="@+id/aboutFragment"

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.fintamath.MainActivity
 import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.databinding.FragmentCalculatorBinding
