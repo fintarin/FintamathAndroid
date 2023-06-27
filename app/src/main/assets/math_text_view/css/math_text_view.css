@@ -69,21 +69,16 @@ svg {
   float: left;
 }
 
-.binary-operator {
-  margin-top: 2px;
-  margin-left: 2px;
-  margin-right: 2px;
-  opacity: 0.75;
-}
-
-.unary-prefix-operator {
-  margin-top: 2px;
-  opacity: 0.75;
-}
-
+.binary-operator,
+.unary-prefix-operator,
 .unary-postfix-operator {
   margin-top: 2px;
   opacity: 0.75;
+}
+
+.binary-operator {
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 .sup {
@@ -112,7 +107,8 @@ svg {
   display: block;
 }
 
-.fraction-line {
+.denominator::before {
+  content: '';
   border-top: 0.08em solid;
   display: block;
   margin-top: 0.15em;
@@ -131,7 +127,6 @@ svg {
 .function-name::before {
   content: attr(before-content);
   opacity: 0.75;
-  float: left;
 }
 
 .open-bracket,

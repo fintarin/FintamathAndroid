@@ -18,7 +18,6 @@ const sqrtClass = 'sqrt';
 const sqrtContentClass = 'sqrt-content';
 const sqrtPrefixClass = 'sqrt-prefix';
 const fractionClass = 'fraction';
-const fractionLineClass = 'fraction-line';
 const numeratorClass = 'numerator';
 const denominatorClass = 'denominator';
 

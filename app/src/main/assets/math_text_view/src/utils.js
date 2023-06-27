@@ -210,10 +210,6 @@ function toHtml(mathText, isEditable = false) {
 
     fracElem.appendChild(childElem);
 
-    childElem = createElement(fractionLineClass);
-    childElem.contentEditable = 'false';
-    fracElem.appendChild(childElem);
-
     childElem = createElement(denominatorClass);
     fracElem.appendChild(childElem);
 
