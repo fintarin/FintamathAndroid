@@ -1,5 +1,6 @@
 package com.fintamath.fragment.calculator
 
+import android.animation.Animator
 import android.view.View
 import android.widget.ImageButton
 import com.fintamath.widget.keyboard.Keyboard
@@ -34,10 +35,12 @@ internal class CalculatorKeyboardSwitcher(
     }
 
     fun showCurrentKeyboard() {
+        currentKeyboard.visibility = View.VISIBLE
         currentKeyboard.animate()
             .setDuration(animationDuration)
             .alpha(1.0f)
             .translationY(0.0f)
+            .setListener(null)
 
         showKeyboardButton.animate()
             .setDuration(animationDuration)
@@ -50,6 +53,17 @@ internal class CalculatorKeyboardSwitcher(
             .setDuration(animationDuration)
             .alpha(0.0f)
             .translationY(currentKeyboard.height.toFloat())
+            .setListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator) = Unit
+
+                override fun onAnimationEnd(animation: Animator) {
+                    currentKeyboard.visibility = View.GONE
+                }
+
+                override fun onAnimationCancel(animation: Animator)  = Unit
+
+                override fun onAnimationRepeat(animation: Animator)  = Unit
+            })
 
         showKeyboardButton.animate()
             .setDuration(animationDuration)
