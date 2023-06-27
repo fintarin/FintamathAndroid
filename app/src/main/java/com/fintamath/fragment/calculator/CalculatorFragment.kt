@@ -79,6 +79,7 @@ class CalculatorFragment : Fragment() {
 
         viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         viewBinding.inTextView.setOnTextChangedListener { onInTextChange(it) }
+        viewBinding.inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
     }
 
     private fun initProcessors() {
@@ -90,7 +91,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun initKeyboards() {
-        val keyboards = hashMapOf<CalculatorKeyboardType, Pair<KeyboardView, Keyboard>>(
+        val keyboards = hashMapOf(
             CalculatorKeyboardType.MainKeyboard to
                     Pair(
                         viewBinding.mainKeyboardView.root,
@@ -189,6 +190,12 @@ class CalculatorFragment : Fragment() {
             viewBinding.outSolutionView.showIncompleteInput()
         } else {
             calculatorProcessor.calculate(text)
+        }
+    }
+
+    private fun onInTextFocusChange(state: Boolean) {
+        if (state) {
+            keyboardSwitcher.showCurrentKeyboard()
         }
     }
 
