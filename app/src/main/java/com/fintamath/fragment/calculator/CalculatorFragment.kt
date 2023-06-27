@@ -61,7 +61,16 @@ class CalculatorFragment : Fragment() {
     override fun onPause() {
         super.onPause()
 
+        calculatorProcessor.stopCurrentCalculations()
         runSaveToHistoryTask()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (viewBinding.outSolutionView.isShowingLoading()) {
+            calculatorProcessor.calculate(viewBinding.inTextView.text)
+        }
     }
 
     private fun initMathTexts() {

@@ -91,6 +91,10 @@ class MathSolutionView @JvmOverloads constructor(
         currentView = null
     }
 
+    fun isShowingLoading(): Boolean {
+        return currentView == loadingView
+    }
+
     private fun showView(view: View) {
         if (currentView != null && view != currentView) {
             currentView!!.visibility = GONE

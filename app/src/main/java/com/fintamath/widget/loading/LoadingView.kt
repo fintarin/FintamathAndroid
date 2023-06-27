@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
 
@@ -25,7 +26,7 @@ class LoadingView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     private var animator: Array<ObjectAnimator?>? = null
 
-    private var onLayoutReach = false
+    private var isAnimated = false
 
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.LoadingView)
@@ -45,25 +46,9 @@ class LoadingView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         super.onLayout(changed, l, t, r, b)
 
-        if (!onLayoutReach) {
-            onLayoutReach = true
+        if (!isAnimated) {
+            isAnimated = true
             animateView()
-        }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-
-        for (i in 0 until dotsCount) {
-            animator?.apply {
-                this[i]?.apply {
-                    if (isRunning) {
-                        removeAllListeners()
-                        end()
-                        cancel()
-                    }
-                }
-            }
         }
     }
 
