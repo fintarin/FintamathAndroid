@@ -127,6 +127,7 @@ svg {
 .function-name::before {
   content: attr(before-content);
   opacity: 0.75;
+  float: left;
 }
 
 .open-bracket,
