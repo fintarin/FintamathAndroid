@@ -2,7 +2,6 @@ package com.fintamath.widget.mathview
 
 import android.content.Context
 import kotlin.jvm.JvmOverloads
-import android.view.LayoutInflater
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
@@ -99,5 +98,11 @@ class MathSolutionView @JvmOverloads constructor(
 
         currentView = view
         currentView!!.visibility = VISIBLE
+    }
+
+    override fun setOnClickListener(listener: OnClickListener?) {
+        super.setOnClickListener(listener)
+
+        alternativesView.setOnClickListener(listener)
     }
 }

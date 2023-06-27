@@ -16,6 +16,7 @@ internal class MathSolutionAlternativesView constructor(
     private val delimiterLayout: Int
 
     private var onTouchListener: OnTouchListener? = null
+    private var onClickListener: OnClickListener? = null
 
     private val textViews = mutableListOf<MathTextView>()
     private val delimiters = mutableListOf<View>()
@@ -55,18 +56,27 @@ internal class MathSolutionAlternativesView constructor(
     }
 
     override fun setOnTouchListener(listener: OnTouchListener) {
+        super.setOnTouchListener(listener)
         onTouchListener = listener
 
         for (text in textViews) {
             text.setOnTouchListener(onTouchListener)
         }
+    }
 
-        super.setOnTouchListener(onTouchListener)
+    override fun setOnClickListener(listener: OnClickListener?) {
+        super.setOnClickListener(listener)
+        onClickListener = listener
+
+        for (text in textViews) {
+            text.setOnClickListener(onClickListener)
+        }
     }
 
     private fun addTextView() {
         val textView = inflate(context, mathTextViewLayout, null) as MathTextView
         textView.setOnTouchListener(onTouchListener)
+        textView.setOnClickListener(onClickListener)
         textViews.add(textView)
         addView(textView)
     }

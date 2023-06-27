@@ -26,6 +26,7 @@ class CalculatorFragment : Fragment() {
     private lateinit var viewBinding: FragmentCalculatorBinding
     private lateinit var optionsMenu: PopupMenu
     private lateinit var calculatorProcessor: CalculatorProcessor
+    private lateinit var keyboardSwitcher: CalculatorKeyboardSwitcher
 
     private val saveToHistoryDelay: Long = 2000
     private var saveToHistoryTask: TimerTask? = null
@@ -42,6 +43,7 @@ class CalculatorFragment : Fragment() {
             initMathTexts()
             initProcessors()
             initKeyboards()
+            initKeyboardActions()
             initBarButtons()
 
             isInitialized = true
@@ -108,7 +110,7 @@ class CalculatorFragment : Fragment() {
         )
 
         val currentKeyboardType = CalculatorKeyboardType.values().first()
-        val keyboardSwitcher = CalculatorKeyboardSwitcher(keyboards, currentKeyboardType)
+        keyboardSwitcher = CalculatorKeyboardSwitcher(keyboards, currentKeyboardType, viewBinding.showKeyboardButton)
 
         val listeners = mutableMapOf<CalculatorKeyboardType, CalculatorKeyboardActionListener>()
         for (type in CalculatorKeyboardType.values()) {
@@ -119,6 +121,13 @@ class CalculatorFragment : Fragment() {
             value.first.keyboard = value.second
             value.first.setOnKeyboardActionListener(listeners[key])
         }
+    }
+
+    private fun initKeyboardActions() {
+        viewBinding.inTextView.setOnClickListener { keyboardSwitcher.showCurrentKeyboard() }
+        viewBinding.showKeyboardButton.setOnClickListener { keyboardSwitcher.showCurrentKeyboard() }
+        viewBinding.outSolutionView.setOnClickListener { keyboardSwitcher.hideCurrentKeyboard() }
+        viewBinding.inOutLayout.setOnClickListener { keyboardSwitcher.hideCurrentKeyboard() }
     }
 
     private fun initBarButtons() {
@@ -153,10 +162,10 @@ class CalculatorFragment : Fragment() {
 
         if (viewBinding.inTextView.text.isEmpty()) {
             calculatorProcessor.stopCurrentCalculations()
-            viewBinding.solutionView.hideCurrentView()
+            viewBinding.outSolutionView.hideCurrentView()
         } else if (!viewBinding.inTextView.isComplete) {
             calculatorProcessor.stopCurrentCalculations()
-            viewBinding.solutionView.showIncompleteInput()
+            viewBinding.outSolutionView.showIncompleteInput()
         } else {
             calculatorProcessor.calculate(text)
         }
@@ -164,11 +173,11 @@ class CalculatorFragment : Fragment() {
 
     private fun outTexts(texts: List<String>) {
         if (texts.first() == getString(R.string.invalid_input)) {
-            viewBinding.solutionView.showInvalidInput()
+            viewBinding.outSolutionView.showInvalidInput()
         } else if (texts.first() == getString(R.string.character_limit_exceeded)) {
-            viewBinding.solutionView.showCharacterLimitExceeded()
+            viewBinding.outSolutionView.showCharacterLimitExceeded()
         } else {
-            viewBinding.solutionView.showSolution(texts)
+            viewBinding.outSolutionView.showSolution(texts)
 
             saveToHistoryTask = Timer().schedule(saveToHistoryDelay) {
                 requireActivity().runOnUiThread {
@@ -179,7 +188,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun startLoading() {
-        viewBinding.solutionView.showLoading()
+        viewBinding.outSolutionView.showLoading()
     }
 
     private fun onInTextFocusChange(state: Boolean) {

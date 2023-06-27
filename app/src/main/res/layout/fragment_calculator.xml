@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/calculatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_main"
@@ -64,62 +63,69 @@
 
     </LinearLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/mathTextLayout"
+    <FrameLayout
+        android:id="@+id/inOutLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="100dp"
         android:layout_above="@id/keyboardLayout"
         android:layout_below="@id/calculatorBarLayout"
-        android:background="@color/background_main">
+        android:background="@color/background_main"
+        android:focusable="true"
+        android:clickable="true">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <FrameLayout
-                android:id="@+id/in_text_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="100dp"
-                android:clickable="true"
-                android:focusable="true">
+                android:orientation="vertical">
 
-                <com.fintamath.widget.mathview.MathTextView
-                    android:id="@+id/inTextView"
+                <FrameLayout
+                    android:id="@+id/in_text_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:isEditable="true"
-                    app:hint="@string/math_edit_text_hint"
-                    app:textSize="@dimen/text_size_math_text_view"
-                    app:textColor="@color/text_main"
-                    app:quickActionPopupLayout="@layout/layout_popup_quick_action" />
+                    android:minHeight="100dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            </FrameLayout>
+                    <com.fintamath.widget.mathview.MathTextView
+                        android:id="@+id/inTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:isEditable="true"
+                        app:hint="@string/math_edit_text_hint"
+                        app:textSize="@dimen/text_size_math_text_view"
+                        app:textColor="@color/text_main"
+                        app:quickActionPopupLayout="@layout/layout_popup_quick_action" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/delimiter_width"
-                android:background="@drawable/background_dashed_line"/>
+                </FrameLayout>
 
-            <com.fintamath.widget.mathview.MathSolutionView
-                android:id="@+id/solutionView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:paddingBottom="20dp"
-                app:loadingViewLayout="@layout/layout_solution_loading"
-                app:invalidInputViewLayout="@layout/layout_solution_invalid_input"
-                app:incompleteInputViewLayout="@layout/layout_solution_incomplete_input"
-                app:characterLimitExceededViewLayout="@layout/layout_solution_character_limit_exceeded"
-                app:alternativeMathTextViewLayout="@layout/layout_solution_alternative"
-                app:alternativeDelimiterLayout="@layout/layout_solution_alternative_text" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/delimiter_width"
+                    android:background="@drawable/background_dashed_line"/>
 
-        </LinearLayout>
+                <com.fintamath.widget.mathview.MathSolutionView
+                    android:id="@+id/outSolutionView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="20dp"
+                    app:loadingViewLayout="@layout/layout_solution_loading"
+                    app:invalidInputViewLayout="@layout/layout_solution_invalid_input"
+                    app:incompleteInputViewLayout="@layout/layout_solution_incomplete_input"
+                    app:characterLimitExceededViewLayout="@layout/layout_solution_character_limit_exceeded"
+                    app:alternativeMathTextViewLayout="@layout/layout_solution_alternative"
+                    app:alternativeDelimiterLayout="@layout/layout_solution_alternative_text" />
 
-    </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/keyboardLayout"
@@ -153,5 +159,17 @@
             android:visibility="gone" />
 
     </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/showKeyboardButton"
+        android:layout_width="@dimen/diameter_open_keyboard_button"
+        android:layout_height="@dimen/diameter_open_keyboard_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="15dp"
+        android:translationY="@dimen/diameter_open_keyboard_button"
+        android:background="@drawable/background_open_keyboard_button"
+        android:contentDescription="@string/back"
+        android:src="@drawable/ic_open_keyboard" />
 
 </RelativeLayout>

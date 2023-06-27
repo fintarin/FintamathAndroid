@@ -78,9 +78,11 @@ class MathTextView @JvmOverloads constructor(
 
     private var prevX = 0f
     private var prevY = 0f
+    private var isClicking = false
     private var wasLastScrollHorizontal = false
 
     private var onTextChangedListener: ((text: String) -> Unit)? = null
+    private var onClickListener: OnClickListener? = null
 
     private var isLoaded = false
     private var onLoadedCallbacks: MutableList<(() -> Unit)> = mutableListOf()
@@ -243,11 +245,29 @@ class MathTextView @JvmOverloads constructor(
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                isClicking = true
+            }
+            MotionEvent.ACTION_UP -> {
+                if (isClicking && onClickListener != null) {
+                    onClickListener!!.onClick(this)
+                }
+
+                isClicking = false
+            }
             MotionEvent.ACTION_MOVE -> {
                 if (abs(event.x - prevX) > abs(event.y - prevY)) {
                     wasLastScrollHorizontal = true
                     requestDisallowInterceptTouchEvent(true)
                 }
+
+                val delta = 0.01;
+                if (abs(event.x - prevX) > delta || abs(event.y - prevY) > delta) {
+                    isClicking = false
+                }
+            }
+            else -> {
+                isClicking = false
             }
         }
 
@@ -263,6 +283,8 @@ class MathTextView @JvmOverloads constructor(
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun onLongPress(event: MotionEvent) {
+        isClicking = false
+
         performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
 
         if (quickActionPopup == null) {
@@ -311,6 +333,10 @@ class MathTextView @JvmOverloads constructor(
                 0
             ))
         }
+    }
+
+    override fun setOnClickListener(listener: OnClickListener?) {
+        onClickListener = listener
     }
 
     override fun evaluateJavascript(script: String, resultCallback: ValueCallback<String>?) {
