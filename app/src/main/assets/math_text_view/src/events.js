@@ -9,14 +9,40 @@ let selectedElem = null;
 
 window.oncontextmenu = onContextMenu;
 
+mathTextView.onmousedown = onMouseDown;
+
 setInterval(function () {
   onSelectedElementChanged();
 }, 10);
 
 //---------------------------------------------------------------------------------------------------------//
 
+/**
+ * Disables default cotext menu.
+ *
+ * @param {MouseEvent} event - The context menu event.
+ */
 function onContextMenu(event) {
   event.preventDefault();
+}
+
+/**
+ * Disables double click.
+ *
+ * @param {MouseEvent} event - The mouse down event.
+ */
+function onMouseDown(event) {
+  if (event.detail > 1) {
+    event.preventDefault();
+
+    const selection = window.getSelection();
+    if (selection.rangeCount === 0) {
+      return;
+    }
+
+    selection.removeAllRanges();
+    selection.addRange(document.caretRangeFromPoint(event.x, event.y));
+  }
 }
 
 /**

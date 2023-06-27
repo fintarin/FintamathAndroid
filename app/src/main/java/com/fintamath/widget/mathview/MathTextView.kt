@@ -11,7 +11,6 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.util.AttributeSet
-import android.view.GestureDetector
 import android.view.Gravity
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
@@ -23,10 +22,6 @@ import android.widget.Button
 import android.widget.PopupWindow
 import androidx.annotation.Keep
 import com.fintamath.R
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.Timer
 import kotlin.concurrent.schedule
 import kotlin.math.abs
@@ -95,8 +90,6 @@ class MathTextView @JvmOverloads constructor(
     private var pasteActionButton: Button? = null
     private var deleteActionButton: Button? = null
 
-    private val moveCursorOnLongPressDelay: Long = 200
-
     private val mathTextViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
@@ -113,18 +106,6 @@ class MathTextView @JvmOverloads constructor(
             }
         }
     }
-
-    private val gestureDetector = GestureDetector(context, object :
-        GestureDetector.SimpleOnGestureListener() {
-
-        override fun onDoubleTap(event: MotionEvent): Boolean {
-            return true
-        }
-
-        override fun onLongPress(event: MotionEvent) {
-            this@MathTextView.onLongPress(event)
-        }
-    })
 
     init {
         visibility = INVISIBLE
@@ -151,7 +132,7 @@ class MathTextView @JvmOverloads constructor(
             initQuickActionPopup(context)
         }
 
-        setOnLongClickListener { return@setOnLongClickListener true }
+        setOnLongClickListener { onLongClick() }
     }
 
     private fun initQuickActionPopup(context: Context) {
@@ -274,21 +255,16 @@ class MathTextView @JvmOverloads constructor(
         prevX = event.x
         prevY = event.y
 
-        if (gestureDetector.onTouchEvent(event)) {
-            return true
-        }
-
         return super.onTouchEvent(event)
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun onLongPress(event: MotionEvent) {
+    private fun onLongClick(): Boolean {
         isClicking = false
 
         performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
 
         if (quickActionPopup == null) {
-            return
+            return true
         }
 
         cutActionButton!!.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
@@ -301,38 +277,35 @@ class MathTextView @JvmOverloads constructor(
 
         quickActionPopup!!.contentView.measure(0, 0)
         quickActionPopup!!.showAtLocation(this, Gravity.NO_GRAVITY,
-            event.x.toInt() - quickActionPopup!!.contentView.measuredWidth / 2,
-            event.y.toInt() + location[1] - quickActionPopup!!.contentView.measuredHeight * 3/2)
+            prevX.toInt() - quickActionPopup!!.contentView.measuredWidth / 2,
+            prevY.toInt() + location[1] - quickActionPopup!!.contentView.measuredHeight * 3/2)
 
         dispatchTouchEvent(MotionEvent.obtain(
             SystemClock.uptimeMillis(),
             SystemClock.uptimeMillis(),
             MotionEvent.ACTION_UP,
-            event.x,
-            event.y,
+            prevX,
+            prevY,
+            0
+        ))
+        dispatchTouchEvent(MotionEvent.obtain(
+            SystemClock.uptimeMillis(),
+            SystemClock.uptimeMillis(),
+            MotionEvent.ACTION_DOWN,
+            prevX,
+            prevY,
+            0
+        ))
+        dispatchTouchEvent(MotionEvent.obtain(
+            SystemClock.uptimeMillis(),
+            SystemClock.uptimeMillis(),
+            MotionEvent.ACTION_UP,
+            prevX,
+            prevY,
             0
         ))
 
-        GlobalScope.launch {
-            delay(moveCursorOnLongPressDelay)
-
-            dispatchTouchEvent(MotionEvent.obtain(
-                SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(),
-                MotionEvent.ACTION_DOWN,
-                event.x,
-                event.y,
-                0
-            ))
-            dispatchTouchEvent(MotionEvent.obtain(
-                SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(),
-                MotionEvent.ACTION_UP,
-                event.x,
-                event.y,
-                0
-            ))
-        }
+        return true
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {
