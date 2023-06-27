@@ -13,7 +13,7 @@ mathTextView.onmousedown = onMouseDown;
 
 setInterval(function () {
   onSelectedElementChanged();
-}, 10);
+}, 30);
 
 //---------------------------------------------------------------------------------------------------------//
 
@@ -76,6 +76,10 @@ function onTextChange() {
  */
 function onSelectedElementChanged() {
   deselectElement(selectedElem);
+
+  if (document.activeElement === document.body) {
+    return;
+  }
 
   const selection = window.getSelection();
   if (selection.rangeCount === 0) {

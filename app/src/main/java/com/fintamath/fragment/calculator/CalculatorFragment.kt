@@ -49,13 +49,22 @@ class CalculatorFragment : Fragment() {
             isInitialized = true
         }
 
+        return viewBinding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
             viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         }
 
-        viewBinding.inTextView.requestFocus()
+        if (viewBinding.outSolutionView.isShowingLoading()) {
+            calculatorProcessor.calculate(viewBinding.inTextView.text)
+        }
 
-        return viewBinding.root
+        viewBinding.inTextView.requestFocus()
+        keyboardSwitcher.showCurrentKeyboard()
     }
 
     override fun onPause() {
@@ -65,20 +74,11 @@ class CalculatorFragment : Fragment() {
         runSaveToHistoryTask()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        if (viewBinding.outSolutionView.isShowingLoading()) {
-            calculatorProcessor.calculate(viewBinding.inTextView.text)
-        }
-    }
-
     private fun initMathTexts() {
         viewBinding.inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
         viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         viewBinding.inTextView.setOnTextChangedListener { onInTextChange(it) }
-        viewBinding.inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
     }
 
     private fun initProcessors() {
@@ -133,10 +133,22 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun initKeyboardActions() {
-        viewBinding.inTextView.setOnClickListener { keyboardSwitcher.showCurrentKeyboard() }
-        viewBinding.showKeyboardButton.setOnClickListener { keyboardSwitcher.showCurrentKeyboard() }
-        viewBinding.outSolutionView.setOnClickListener { keyboardSwitcher.hideCurrentKeyboard() }
-        viewBinding.inOutLayout.setOnClickListener { keyboardSwitcher.hideCurrentKeyboard() }
+        viewBinding.inTextView.setOnClickListener {
+            keyboardSwitcher.showCurrentKeyboard()
+            viewBinding.inTextView.requestFocus()
+        }
+        viewBinding.showKeyboardButton.setOnClickListener {
+            keyboardSwitcher.showCurrentKeyboard()
+            viewBinding.inTextView.requestFocus()
+        }
+        viewBinding.outSolutionView.setOnClickListener {
+            keyboardSwitcher.hideCurrentKeyboard()
+            viewBinding.inTextView.clearFocus()
+        }
+        viewBinding.inOutLayout.setOnClickListener {
+            keyboardSwitcher.hideCurrentKeyboard()
+            viewBinding.inTextView.clearFocus()
+        }
     }
 
     private fun initBarButtons() {
@@ -198,12 +210,6 @@ class CalculatorFragment : Fragment() {
 
     private fun startLoading() {
         viewBinding.outSolutionView.showLoading()
-    }
-
-    private fun onInTextFocusChange(state: Boolean) {
-        if (!state) {
-            viewBinding.inTextView.requestFocus()
-        }
     }
 
     private fun touchInText(event: MotionEvent): Boolean {

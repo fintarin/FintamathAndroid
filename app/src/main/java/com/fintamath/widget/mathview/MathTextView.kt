@@ -220,8 +220,24 @@ class MathTextView @JvmOverloads constructor(
                 requestFocus(direction, previouslyFocusedRect)
             }
         }
+        else {
+            evaluateJavascript("requestFocus()") { }
+        }
 
         return super.requestFocus(direction, previouslyFocusedRect)
+    }
+
+    override fun clearFocus() {
+        if (!isLoaded) {
+            onLoaded {
+                clearFocus()
+            }
+        }
+        else {
+            super.clearFocus()
+
+            evaluateJavascript("clearFocus()") { }
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

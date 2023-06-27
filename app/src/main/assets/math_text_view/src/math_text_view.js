@@ -309,7 +309,6 @@ function deleteAtCursor() {
           return false;
         }
       } else if (getClassName(elem) === postfixAbsClass) {
-        console.log(prevElem.outerHTML);
         if (
           prevElem !== null &&
           getClassName(prevElem) === textHintClass &&
@@ -523,4 +522,11 @@ function moveCursorRight() {
  */
 function requestFocus() {
   mathTextView.focus();
+}
+
+/**
+ * Removes the focus from mathTextView.
+ */
+function clearFocus() {
+  mathTextView.blur();
 }
