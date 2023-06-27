@@ -226,7 +226,12 @@ class CalculatorFragment : Fragment() {
         }
 
         return viewBinding.inTextView.onTouchEvent(MotionEvent.obtain(
-            event.downTime, event.eventTime, event.action, event.x, intTextY, event.metaState
+            event.downTime,
+            event.eventTime,
+            event.action,
+            event.x,
+            intTextY,
+            event.metaState
         ))
     }
 
