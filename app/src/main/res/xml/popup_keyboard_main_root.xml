@@ -8,10 +8,10 @@
             app:keyOutputText="sqrt()"
             app:keyIcon="@drawable/ic_key_root2" />
         <Key
-            app:keyOutputText="^(1/3)"
+            app:keyOutputText="root(,3)"
             app:keyIcon="@drawable/ic_key_root3"/>
         <Key
-            app:keyOutputText="^(1/)"
+            app:keyOutputText="root(,)"
             app:keyIcon="@drawable/ic_key_root" />
     </Row>
 
