@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="@dimen/keyboard_logic_key_width"
+    app:keyHeight="@dimen/keyboard_key_height">
+
+    <Row>
+        <Key
+            app:keyOutputText="&lt;-&gt;"
+            app:keyLabel="≡" />
+        <Key
+            app:keyOutputText="!&lt;-&gt;"
+            app:keyLabel="≢" />
+    </Row>
+
+</Keyboard>

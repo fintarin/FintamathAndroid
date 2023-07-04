@@ -76,71 +76,85 @@
             app:keyTopLabel="(  )"
             app:popupKeyboard="@xml/popup_keyboard_logic_brackets" />
         <Key
+            app:keyOutputText="a"
+            app:keyLabel="a"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
+            app:keyOutputText="b"
+            app:keyLabel="b"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
+            app:keyOutputText="c"
+            app:keyLabel="c"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
             app:keyOutputText="~"
             app:keyLabel="¬" />
+    </Row>
+
+    <Row>
+        <Key
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
+        <Key
+            app:keyOutputText="d"
+            app:keyLabel="d"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
+            app:keyOutputText="e"
+            app:keyLabel="e"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
+            app:keyOutputText="f"
+            app:keyLabel="f"
+            app:keyBackground="@drawable/background_number_key" />
         <Key
             app:keyOutputText="&amp;"
             app:keyLabel="∧" />
+    </Row>
+
+    <Row>
+        <Key
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
+        <Key
+            app:keyOutputText="g"
+            app:keyLabel="g"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
+            app:keyOutputText="h"
+            app:keyLabel="h"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
+            app:keyOutputText="i"
+            app:keyLabel="i"
+            app:keyBackground="@drawable/background_number_key" />
         <Key
             app:keyOutputText="|"
             app:keyLabel="∨" />
+    </Row>
+
+    <Row>
+        <Key
+            app:keyLabel=" "
+            app:isPreviewEnabled="false" />
+        <Key
+            app:keyOutputText="True"
+            app:keyLabel="T"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
+            app:keyOutputText="False"
+            app:keyLabel="F"
+            app:keyBackground="@drawable/background_number_key" />
+        <Key
+            app:keyOutputText="&lt;-&gt;"
+            app:keyLabel="≡"
+            app:keyTopLabel="≢"
+            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboard="@xml/popup_keyboard_logic_equiv" />
         <Key
             app:keyOutputText="-&gt;"
             app:keyLabel="⇒" />
-    </Row>
-
-    <Row>
-        <Key
-            app:keyOutputText="&lt;-&gt;"
-            app:keyLabel="≡" />
-        <Key
-            app:keyOutputText="!&lt;-&gt;"
-            app:keyLabel="≢" />
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-    </Row>
-
-    <Row>
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-        <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-    </Row>
-
-    <Row>
-        <Key
-            app:keyOutputText="True"
-            app:keyLabel="T" />
-        <Key
-            app:keyOutputText="False"
-            app:keyLabel="F"/>
-        <Key
-            app:keyOutputText="a"
-            app:keyLabel="a" />
-        <Key
-            app:keyOutputText="b"
-            app:keyLabel="b"/>
-        <Key
-            app:keyOutputText="c"
-            app:keyLabel="c" />
     </Row>
 
 </Keyboard>
