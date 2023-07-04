@@ -71,8 +71,8 @@
 
     <Row>
         <Key
-            app:keyOutputText="f()"
-            app:keyIcon="@drawable/ic_key_function" />
+            app:keyOutputText="E"
+            app:keyLabel="𝘦"/>
         <Key
             app:keyOutputText="_(1)"
             app:keyIcon="@drawable/ic_key_index1"
@@ -100,8 +100,8 @@
 
     <Row>
         <Key
-            app:keyOutputText="E"
-            app:keyLabel="𝘦"/>
+            app:keyOutputText="Pi"
+            app:keyLabel="π"/>
         <Key
             app:keyOutputText="°"
             app:keyLabel="°"/>
@@ -124,8 +124,8 @@
 
     <Row>
         <Key
-            app:keyOutputText="Pi"
-            app:keyLabel="π"/>
+            app:keyOutputText="I"
+            app:keyLabel="𝑖"/>
         <Key
             app:keyOutputText="abs()"
             app:keyIcon="@drawable/ic_key_abs" />
@@ -148,8 +148,8 @@
 
     <Row>
         <Key
-            app:keyOutputText="I"
-            app:keyLabel="𝑖"/>
+            app:keyOutputText="Inf"
+            app:keyLabel="∞"/>
         <Key
             app:keyOutputText="!"
             app:keyLabel="!" />
