@@ -76,7 +76,7 @@
             app:keyTopLabel="(  )"
             app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
-            app:keyOutputText="()/()"
+            app:keyOutputText="/"
             app:keyIcon="@drawable/ic_key_fraction" />
         <Key
             app:keyOutputText="7"
@@ -125,7 +125,7 @@
 
     <Row>
         <Key
-            app:keyOutputText="^(2)"
+            app:keyOutputText="^2"
             app:keyIcon="@drawable/ic_key_pow2"
             app:keyTopIcon="@drawable/ic_key_pow_top"
             app:popupKeyboard="@xml/popup_keyboard_main_power" />

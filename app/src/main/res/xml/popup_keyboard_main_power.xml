@@ -5,13 +5,13 @@
 
     <Row>
         <Key
-            app:keyOutputText="^(2)"
+            app:keyOutputText="^2"
             app:keyIcon="@drawable/ic_key_pow2" />
         <Key
-            app:keyOutputText="^(3)"
+            app:keyOutputText="^3"
             app:keyIcon="@drawable/ic_key_pow3"/>
         <Key
-            app:keyOutputText="^()"
+            app:keyOutputText="^"
             app:keyIcon="@drawable/ic_key_pow" />
     </Row>
 
