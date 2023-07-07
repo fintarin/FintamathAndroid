@@ -40,15 +40,13 @@ internal class MathSolutionAlternativesView constructor(
 
         textViews[0].text = texts[0]
 
-        val distinctTexts = texts.distinct()
-
-        for (i in 1 until distinctTexts.size) {
-            textViews[i].text = distinctTexts[i]
+        for (i in 1 until texts.size) {
+            textViews[i].text = texts[i]
             textViews[i].visibility = VISIBLE
             delimiters[i - 1].visibility = VISIBLE
         }
 
-        for (i in distinctTexts.size until textViews.size) {
+        for (i in texts.size until textViews.size) {
             textViews[i].visibility = GONE
             textViews[i].clear()
             delimiters[i - 1].visibility = GONE

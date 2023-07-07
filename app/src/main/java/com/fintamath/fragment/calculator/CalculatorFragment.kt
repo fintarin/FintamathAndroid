@@ -201,7 +201,7 @@ class CalculatorFragment : Fragment() {
         } else if (texts.first() == getString(R.string.character_limit_exceeded)) {
             viewBinding.outSolutionView.showCharacterLimitExceeded()
         } else {
-            viewBinding.outSolutionView.showSolution(texts)
+            viewBinding.outSolutionView.showSolution(cutSolutionTexts(texts))
 
             saveToHistoryTask = Timer().schedule(saveToHistoryDelay) {
                 requireActivity().runOnUiThread {
@@ -284,5 +284,30 @@ class CalculatorFragment : Fragment() {
     private fun cancelSaveToHistoryTask() {
         saveToHistoryTask?.cancel()
         saveToHistoryTask = null
+    }
+
+    private fun cutSolutionTexts(texts: List<String>): List<String> {
+        val result = mutableListOf<String>()
+        val distinctTexts = texts.distinct()
+
+        for (i in distinctTexts.indices) {
+            if (removeSpacesAndBrackets(distinctTexts[i]) != removeSpacesAndBrackets(viewBinding.inTextView.text)) {
+                result.add(distinctTexts[i])
+            }
+        }
+
+        if (result.isEmpty()) {
+            result.add(distinctTexts.last())
+        }
+
+        return result
+    }
+
+    private fun removeSpacesAndBrackets(text: String): String {
+        var result = text
+        result = result.replace("(", "");
+        result = result.replace(")", "");
+        result = result.replace(" ", "");
+        return result
     }
 }
