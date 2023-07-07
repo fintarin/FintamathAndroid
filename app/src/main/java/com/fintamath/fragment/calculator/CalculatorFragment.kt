@@ -120,7 +120,7 @@ class CalculatorFragment : Fragment() {
         )
 
         val currentKeyboardType = CalculatorKeyboardType.values().first()
-        keyboardSwitcher = CalculatorKeyboardSwitcher(keyboards, currentKeyboardType, viewBinding.showKeyboardButton)
+        keyboardSwitcher = CalculatorKeyboardSwitcher(keyboards, currentKeyboardType)
 
         val listeners = mutableMapOf<CalculatorKeyboardType, CalculatorKeyboardActionListener>()
         for (type in CalculatorKeyboardType.values()) {
@@ -135,10 +135,6 @@ class CalculatorFragment : Fragment() {
 
     private fun initKeyboardActions() {
         viewBinding.inTextView.setOnClickListener {
-            keyboardSwitcher.showCurrentKeyboard()
-            viewBinding.inTextView.requestFocus()
-        }
-        viewBinding.showKeyboardButton.setOnClickListener {
             keyboardSwitcher.showCurrentKeyboard()
             viewBinding.inTextView.requestFocus()
         }

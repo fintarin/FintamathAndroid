@@ -160,16 +160,4 @@
 
     </FrameLayout>
 
-    <ImageButton
-        android:id="@+id/showKeyboardButton"
-        android:layout_width="@dimen/diameter_open_keyboard_button"
-        android:layout_height="@dimen/diameter_open_keyboard_button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:padding="15dp"
-        android:translationY="@dimen/diameter_open_keyboard_button"
-        android:background="@drawable/background_open_keyboard_button"
-        android:contentDescription="@string/back"
-        android:src="@drawable/ic_open_keyboard" />
-
 </RelativeLayout>

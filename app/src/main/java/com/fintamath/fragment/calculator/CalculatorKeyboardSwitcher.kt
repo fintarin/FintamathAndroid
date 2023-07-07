@@ -5,19 +5,20 @@ import android.view.View
 import android.widget.ImageButton
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
+import java.util.concurrent.atomic.AtomicBoolean
 
 
 internal class CalculatorKeyboardSwitcher(
     private val keyboards: Map<CalculatorKeyboardType, Pair<KeyboardView, Keyboard>>,
     private var currentKeyboardType: CalculatorKeyboardType,
-    private var showKeyboardButton: ImageButton
 ) {
 
     companion object {
-        private const val animationDuration: Long = 250
+        private const val animationDuration: Long = 300
     }
 
     private var currentKeyboard: KeyboardView
+    private var isHiding: AtomicBoolean = AtomicBoolean(false)
 
     init {
         currentKeyboard = keyboards[currentKeyboardType]!!.first
@@ -35,20 +36,20 @@ internal class CalculatorKeyboardSwitcher(
     }
 
     fun showCurrentKeyboard() {
+        isHiding.set(false)
+
         currentKeyboard.visibility = View.VISIBLE
+
         currentKeyboard.animate()
             .setDuration(animationDuration)
             .alpha(1.0f)
             .translationY(0.0f)
             .setListener(null)
-
-        showKeyboardButton.animate()
-            .setDuration(animationDuration)
-            .alpha(0.0f)
-            .translationY(showKeyboardButton.height.toFloat())
     }
 
     fun hideCurrentKeyboard() {
+        isHiding.set(true)
+
         currentKeyboard.animate()
             .setDuration(animationDuration)
             .alpha(0.0f)
@@ -57,17 +58,16 @@ internal class CalculatorKeyboardSwitcher(
                 override fun onAnimationStart(animation: Animator) = Unit
 
                 override fun onAnimationEnd(animation: Animator) {
-                    currentKeyboard.visibility = View.GONE
+                    if (isHiding.get()) {
+                        currentKeyboard.visibility = View.GONE
+
+                        isHiding.set(false)
+                    }
                 }
 
                 override fun onAnimationCancel(animation: Animator)  = Unit
 
                 override fun onAnimationRepeat(animation: Animator)  = Unit
             })
-
-        showKeyboardButton.animate()
-            .setDuration(animationDuration)
-            .alpha(1.0f)
-            .translationY(0.0f)
     }
 }
