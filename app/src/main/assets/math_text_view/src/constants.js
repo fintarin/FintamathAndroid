@@ -31,7 +31,9 @@ const textDecorationNoneAttr = 'none';
 // Define arrays of CSS class names to group related classes together.
 const textClasses = [textClass, textHintClass];
 const operatorClasses = [unaryPrefixOperatorClass, unaryPostfixOperatorClass, binaryOperatorClass];
-const bracketClasses = [openBracketClass, closeBracketClass, prefixAbsClass, postfixAbsClass];
+const bracketPrefixClasses = [openBracketClass, prefixAbsClass];
+const bracketPostfixClasses = [closeBracketClass, postfixAbsClass];
+const bracketClasses = bracketPrefixClasses + bracketPostfixClasses;
 const parentContainerClasses = [fractionClass, sqrtClass];
 const childContainerClasses = [numeratorClass, denominatorClass, sqrtContentClass];
 const indexContainerClasses = [supClass, subClass];

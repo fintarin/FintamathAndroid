@@ -465,12 +465,12 @@ function toMathText(html, isEditable = false) {
   let text = toMathTextRec(elem);
 
   for (let key in mathHtmlMap) {
-    text = text.replace(makeRegexFromString(mathHtmlMap[key]), key);
+    text = text.replace(makeRegexFromString(mathHtmlMap[key]), cutSpaces(key));
   }
 
   if (isEditable) {
     for (let key in mathEditableHtmlMap) {
-      text = text.replace(makeRegexFromString(mathEditableHtmlMap[key]), key);
+      text = text.replace(makeRegexFromString(mathEditableHtmlMap[key]), cutSpaces(key));
     }
   }
 
@@ -482,6 +482,7 @@ function toMathText(html, isEditable = false) {
    * Convert element's HTML to math text recursively.
    *
    * @param {HTMLSpanElement} elem - The HTML element to convert.
+   * @returns {string} The math text representation of the element.
    */
   function toMathTextRec(elem) {
     switch (getClassName(elem)) {
@@ -535,36 +536,35 @@ function toMathText(html, isEditable = false) {
    * Converts element's children to math text.
    *
    * @param {HTMLSpanElement} elem - The HTML element whose children should be converted.
+   * @returns {string} The math text representation of the element children.
    */
   function toMathTextChildren(elem) {
     let text = '';
 
+    let prevChildElem = null;
+
     for (let i = 0; i < elem.childElementCount; i++) {
       const childElem = elem.children[i];
-      const childText = toMathTextRec(childElem);
 
-      if (
-        text.length > 0 &&
-        text.endsWith(space) &&
-        (getClassName(childElem) === unaryPostfixOperatorClass ||
-          indexContainerClasses.includes(getClassName(childElem)))
-      ) {
-        text = text.substring(0, text.length - 1);
+      if (isEmptyElement(childElem)) {
+        continue;
       }
 
-      text += childText;
-
       if (
-        childText !== '' &&
-        getClassName(childElem) !== unaryPrefixOperatorClass &&
-        getClassName(childElem) !== functionNameClass
+        !bracketPostfixClasses.includes(getClassName(childElem)) &&
+        !childContainerClasses.includes(getClassName(childElem)) &&
+        !indexContainerClasses.includes(getClassName(childElem)) &&
+        getClassName(prevChildElem) !== undefinedClass &&
+        getClassName(prevChildElem) !== unaryPrefixOperatorClass &&
+        getClassName(prevChildElem) !== functionNameClass &&
+        !bracketPrefixClasses.includes(getClassName(prevChildElem))
       ) {
         text += space;
       }
-    }
 
-    if (text.length > 0 && text.endsWith(space)) {
-      return text.substring(0, text.length - 1);
+      text += toMathTextRec(childElem);
+
+      prevChildElem = childElem;
     }
 
     return text;
@@ -1492,4 +1492,22 @@ function makeRegexFromString(str) {
  */
 function getUnicodeTextLength(text) {
   return [...text].length;
+}
+
+/**
+ * Removes the first and the last spaces from the given string.
+ *
+ * @param {String} str - The string to remove spaces from.
+ * @returns {String} - The result.
+ */
+function cutSpaces(str) {
+  if (str.length > 1 && str[0] === space) {
+    str = str.substring(1);
+  }
+
+  if (str.length > 1 && str[str.length - 1] === space) {
+    str = str.substring(0, str.length - 1);
+  }
+
+  return str;
 }
