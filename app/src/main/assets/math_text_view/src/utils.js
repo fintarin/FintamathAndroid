@@ -291,12 +291,30 @@ function toHtml(mathText, isEditable = false) {
       switch (funcName) {
         case sqrtFunction: {
           let sqrtContentElem = elem;
-          setClassName(sqrtContentElem, sqrtContentClass);
+          setClassName(sqrtContentElem, rootContentClass);
           sqrtContentElem.style.borderColor = getColorWithOpacity(mathTextView.style.color, linesOpacity);
 
           elem = createElement(sqrtClass);
-          elem.appendChild(createSvg(sqrtPrefixClass));
+          elem.appendChild(createSvg(rootPrefixClass));
           elem.appendChild(sqrtContentElem);
+
+          break;
+        }
+        case rootFunction: {
+          let tokenElems = tokenizeByComma(elem);
+
+          let rootIndexElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
+          setClassName(rootIndexElem, rootIndexClass);
+          rootIndexElem.style.borderColor = getColorWithOpacity(mathTextView.style.color, linesOpacity);
+
+          let rootContentElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
+          setClassName(rootContentElem, rootContentClass);
+          rootContentElem.style.borderColor = getColorWithOpacity(mathTextView.style.color, linesOpacity);
+
+          elem = createElement(rootClass);
+          elem.appendChild(rootIndexElem);
+          elem.appendChild(createSvg(rootPrefixClass));
+          elem.appendChild(rootContentElem);
 
           break;
         }
@@ -333,6 +351,50 @@ function toHtml(mathText, isEditable = false) {
       const funcNameElem = createElement(functionNameClass);
       funcNameElem.setAttribute(beforeContentAttr, funcName);
       return funcNameElem;
+    }
+
+    /**
+     *
+     * @param {HTMLSpanElement} elem - The element to tokenize.
+     * @returns {HTMLSpanElement[]}
+     */
+    function tokenizeByComma(elem) {
+      let lastTokenElem = createElement();
+      const tokenElems = [lastTokenElem];
+
+      let bracketsCount = 0;
+
+      while (elem.childElementCount > 0) {
+        const childElem = elem.firstElementChild;
+
+        switch (getClassName(childElem)) {
+          case openBracketClass: {
+            bracketsCount++;
+            break;
+          }
+          case closeBracketClass: {
+            bracketsCount--;
+            break;
+          }
+        }
+
+        let isCommaFound = false;
+
+        if (childElem.innerHTML === comma) {
+          if (bracketsCount === 0) {
+            lastTokenElem = createElement();
+            tokenElems.push(lastTokenElem);
+            elem.removeChild(childElem);
+            isCommaFound = true;
+          }
+        }
+
+        if (!isCommaFound) {
+          lastTokenElem.appendChild(childElem);
+        }
+      }
+
+      return tokenElems;
     }
   }
 
@@ -501,6 +563,12 @@ function toMathText(html, isEditable = false) {
       }
       case sqrtClass: {
         return sqrtFunction + putInBrackets(toMathTextChildren(elem));
+      }
+      case rootClass: {
+        return (
+          rootFunction +
+          putInBrackets(toMathTextChildren(elem.children[2]) + comma + space + toMathTextChildren(elem.children[0]))
+        );
       }
       case fractionClass: {
         return (

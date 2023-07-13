@@ -162,7 +162,12 @@ svg {
   margin-right: 4px;
 }
 
-.sqrt-content {
+.root {
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+.root-content {
   border-top: 0.08em solid;
   border-left: 0.08em solid;
   padding-top: 1.5px;
@@ -171,9 +176,16 @@ svg {
   padding-right: 4px;
 }
 
-.sqrt-prefix {
+.root-prefix {
   width: 0.6em;
   height: 0.6em;
+  vertical-align: bottom;
+}
+
+.root-index {
+  font-size: 60%;
+  margin-bottom: 1.15em;
+  margin-right: -0.75em;
   vertical-align: bottom;
 }
 

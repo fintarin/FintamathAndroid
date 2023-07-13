@@ -15,8 +15,10 @@ const postfixAbsClass = 'abs-postfix';
 const supClass = 'sup';
 const subClass = 'sub';
 const sqrtClass = 'sqrt';
-const sqrtContentClass = 'sqrt-content';
-const sqrtPrefixClass = 'sqrt-prefix';
+const rootClass = 'root';
+const rootContentClass = 'root-content';
+const rootIndexClass = 'root-index';
+const rootPrefixClass = 'root-prefix';
 const fractionClass = 'fraction';
 const numeratorClass = 'numerator';
 const denominatorClass = 'denominator';
@@ -35,7 +37,7 @@ const bracketPrefixClasses = [openBracketClass, prefixAbsClass];
 const bracketPostfixClasses = [closeBracketClass, postfixAbsClass];
 const bracketClasses = bracketPrefixClasses + bracketPostfixClasses;
 const parentContainerClasses = [fractionClass, sqrtClass];
-const childContainerClasses = [numeratorClass, denominatorClass, sqrtContentClass];
+const childContainerClasses = [numeratorClass, denominatorClass, rootContentClass, rootIndexClass];
 const indexContainerClasses = [supClass, subClass];
 const containerClasses = parentContainerClasses + childContainerClasses + indexContainerClasses;
 
@@ -47,6 +49,8 @@ const supOperator = '^';
 const subOperator = '_';
 const absFunction = 'abs';
 const sqrtFunction = 'sqrt';
+const rootFunction = 'root';
+const comma = ',';
 const space = ' ';
 
 // Define a mapping of mathematical strings to their corresponding HTML strings.
@@ -92,7 +96,7 @@ const binaryOperators = [
   mathHtmlMap['->'],
   mathHtmlMap['<->'],
   mathHtmlMap['!<->'],
-  ',',
+  comma,
 ];
 const unaryPrefixOperators = ['+', mathHtmlMap['-'], mathHtmlMap['~']];
 const unaryPostfixOperators = ['%', '!'];
@@ -121,7 +125,7 @@ const svgElementsMap = {
   [closeBracketClass]: createNewSvg(closeBracketClass, closeBracketSvgPath, bracketSvgViewBox),
   [prefixAbsClass]: createNewSvg(prefixAbsClass, absBorderSvgPath, absBorderSvgViewBox),
   [postfixAbsClass]: createNewSvg(postfixAbsClass, absBorderSvgPath, absBorderSvgViewBox),
-  [sqrtPrefixClass]: createNewSvg(sqrtPrefixClass, sqrtPrefixSvgPath, sqrtPrefixViewBox),
+  [rootPrefixClass]: createNewSvg(rootPrefixClass, sqrtPrefixSvgPath, sqrtPrefixViewBox),
 };
 
 // Define numeric coefficients
