@@ -280,8 +280,6 @@ class MathTextView @JvmOverloads constructor(
     private fun onLongClick(): Boolean {
         isClicking = false
 
-        performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
-
         if (quickActionPopup == null) {
             return true
         }
