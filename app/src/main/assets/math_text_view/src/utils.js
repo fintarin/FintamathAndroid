@@ -318,6 +318,24 @@ function toHtml(mathText, isEditable = false) {
 
           break;
         }
+        case logFunction: {
+          let tokenElems = tokenizeByComma(elem);
+
+          let logIndexElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
+          setClassName(logIndexElem, logIndexClass);
+
+          let logContentElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
+          setClassName(logContentElem, logContentClass);
+
+          elem = createElement(logClass);
+          elem.appendChild(logIndexElem, elem.firstElementChild);
+          elem.appendChild(createSvg(openBracketClass));
+          elem.insertBefore(createFunctionNameElement(funcName), elem.firstElementChild);
+          elem.appendChild(createSvg(closeBracketClass));
+          elem.insertBefore(logContentElem, elem.lastElementChild);
+
+          break;
+        }
         case absFunction: {
           elem.insertBefore(createSvg(prefixAbsClass), elem.firstChild);
           elem.appendChild(createSvg(postfixAbsClass));
@@ -568,6 +586,12 @@ function toMathText(html, isEditable = false) {
         return (
           rootFunction +
           putInBrackets(toMathTextChildren(elem.children[2]) + comma + space + toMathTextChildren(elem.children[0]))
+        );
+      }
+      case logClass: {
+        return (
+          logFunction +
+          putInBrackets(toMathTextChildren(elem.children[1]) + comma + space + toMathTextChildren(elem.children[3]))
         );
       }
       case fractionClass: {
@@ -1439,7 +1463,16 @@ function areElementChildrenEmpty(elem) {
   }
 
   for (let i = 0; i < elem.childElementCount; i++) {
-    if (toMathText(elem.children[i].outerHTML) !== '') {
+    const childElem = elem.children[i];
+
+    if (
+      parentContainerClasses.includes(getClassName(elem)) &&
+      (childElem instanceof SVGElement || getClassName(childElem) === functionNameClass)
+    ) {
+      continue;
+    }
+
+    if (toMathText(childElem.outerHTML) !== '') {
       return false;
     }
   }

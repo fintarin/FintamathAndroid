@@ -19,6 +19,9 @@ const rootClass = 'root';
 const rootContentClass = 'root-content';
 const rootIndexClass = 'root-index';
 const rootPrefixClass = 'root-prefix';
+const logClass = 'log';
+const logContentClass = 'log-content';
+const logIndexClass = 'log-index';
 const fractionClass = 'fraction';
 const numeratorClass = 'numerator';
 const denominatorClass = 'denominator';
@@ -36,8 +39,15 @@ const operatorClasses = [unaryPrefixOperatorClass, unaryPostfixOperatorClass, bi
 const bracketPrefixClasses = [openBracketClass, prefixAbsClass];
 const bracketPostfixClasses = [closeBracketClass, postfixAbsClass];
 const bracketClasses = bracketPrefixClasses + bracketPostfixClasses;
-const parentContainerClasses = [fractionClass, sqrtClass];
-const childContainerClasses = [numeratorClass, denominatorClass, rootContentClass, rootIndexClass];
+const parentContainerClasses = [fractionClass, sqrtClass, logClass];
+const childContainerClasses = [
+  numeratorClass,
+  denominatorClass,
+  rootContentClass,
+  rootIndexClass,
+  logContentClass,
+  logIndexClass,
+];
 const indexContainerClasses = [supClass, subClass];
 const containerClasses = parentContainerClasses + childContainerClasses + indexContainerClasses;
 
@@ -50,6 +60,7 @@ const subOperator = '_';
 const absFunction = 'abs';
 const sqrtFunction = 'sqrt';
 const rootFunction = 'root';
+const logFunction = 'log';
 const comma = ',';
 const space = ' ';
 
