@@ -30,7 +30,7 @@
     <dimen name="radius_recognition_background">16dp</dimen>
 
     <dimen name="width_keyboard_key_stroke">2dp</dimen>
-    <dimen name="width_keyboard_switch_key_stroke">3dp</dimen>
+    <dimen name="width_keyboard_switch_key_stroke">5dp</dimen>
 
     <dimen name="width_cursor">1dp</dimen>
 
