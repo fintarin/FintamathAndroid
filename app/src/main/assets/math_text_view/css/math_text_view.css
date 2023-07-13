@@ -82,13 +82,13 @@ svg {
 }
 
 .sup {
-  font-size: 75%;
+  font-size: 70%;
   vertical-align: super; /* TODO: remove */
   margin-right: 2px;
 }
 
 .sub {
-  font-size: 75%;
+  font-size: 70%;
   vertical-align: sub; /* TODO: remove */
   margin-right: 2px;
 }
