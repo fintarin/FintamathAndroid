@@ -16,6 +16,10 @@ static const char *loggerTag = "com.fintamath.lib";
 constexpr int32_t maxResultLength = 5000;
 constexpr int32_t maxSolutionLength = 1000000;
 
+const char *charLimitExc = "Character limit exceeded";
+const char *undefinedExc = "Undefined";
+const char *invalidInputExc = "Invalid input";
+
 static pid_t calcPid = -1;
 
 static auto *solutionStrShared =
@@ -34,7 +38,7 @@ std::string calculate(const std::string &inStr) {
     std::string solutions = makeOutResult(solExpr.toString()) + makeOutResult(solPrecise10Expr.toString());
 
     if (solutions.empty() || solutions.size() > maxSolutionLength) {
-      return "Character limit exceeded";
+      return charLimitExc;
     }
 
     solutions.pop_back();
@@ -42,10 +46,10 @@ std::string calculate(const std::string &inStr) {
     return solutions;
   }
   catch (const UndefinedException &exc) {
-    return "Undefined";
+    return undefinedExc;
   }
   catch (const Exception &exc) {
-    return "Invalid input";
+    return invalidInputExc;
   }
 }
 
@@ -78,13 +82,21 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
 
     __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "Calculations started. pid = %d", pid);
 
-    waitpid(pid, nullptr, 0);
+    int status;
+    waitpid(pid, &status, 0);
 
     if (pid == calcPid) {
       jclass clazz = env->GetObjectClass(instance);
       jmethodID callbackId = env->GetMethodID(clazz, "onCalculated", "(Ljava/lang/String;)V");
 
-      env->CallVoidMethod(instance, callbackId, env->NewStringUTF(solutionStrShared));
+      if (WIFEXITED(status)) {
+        env->CallVoidMethod(instance, callbackId, env->NewStringUTF(solutionStrShared));
+      }
+      else {
+        // TODO: send bug report
+        env->CallVoidMethod(instance, callbackId, env->NewStringUTF(invalidInputExc));
+      }
+
       env->DeleteLocalRef(clazz);
 
       __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "Calculations ended. pid = %d", pid);
