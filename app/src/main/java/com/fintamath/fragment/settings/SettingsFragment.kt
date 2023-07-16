@@ -24,6 +24,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun executeBack() {
-        viewBinding.root.findNavController().currentBackStack.value.first()
+        viewBinding.root.findNavController().navigateUp()
     }
 }
