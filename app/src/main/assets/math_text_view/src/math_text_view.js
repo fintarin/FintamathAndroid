@@ -402,16 +402,14 @@ function addUndoState() {
     return;
   }
 
-  const oldElemPath = [];
-  const oldOffset = 0;
+  let oldElemPath = [];
+  let oldOffset = 0;
 
   const selection = window.getSelection();
-
   if (selection.rangeCount > 0) {
     const range = selection.getRangeAt(0);
-
-    const oldElemPath = getElementPath(mathTextView, range.startContainer);
-    const oldOffset = range.startOffset;
+    oldElemPath = getElementPath(mathTextView, range.startContainer);
+    oldOffset = range.startOffset;
   }
 
   undoStack.push([toMathText(mathTextView.innerHTML), oldElemPath, oldOffset]);
