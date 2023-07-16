@@ -36,14 +36,6 @@
         tools:layout="@layout/fragment_history">
 
         <action
-            android:id="@+id/action_historyFragment_to_calculatorFragment"
-            app:destination="@id/calculatorFragment" />
-
-        <action
-            android:id="@+id/action_historyFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment" />
-
-        <action
             android:id="@+id/action_historyFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
 
@@ -58,14 +50,6 @@
         android:name="com.fintamath.fragment.camera.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera">
-
-        <action
-            android:id="@+id/action_cameraFragment_to_calculatorFragment"
-            app:destination="@id/calculatorFragment" />
-
-        <action
-            android:id="@+id/action_cameraFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
 
         <action
             android:id="@+id/action_cameraFragment_to_aboutFragment"

@@ -65,11 +65,12 @@ class HistoryFragment : Fragment() {
     }
 
     private fun showCalculatorFragment() {
-        showFragment(R.id.action_historyFragment_to_calculatorFragment)
+        executeBack()
     }
 
     private fun showCameraFragment() {
-        showFragment(R.id.action_historyFragment_to_cameraFragment)
+        executeBack()
+        showFragment(R.id.action_calculatorFragment_to_cameraFragment)
     }
 
     private fun showAboutFragment() {
@@ -82,5 +83,9 @@ class HistoryFragment : Fragment() {
 
     private fun showFragment(navigationId: Int) {
         viewBinding.root.findNavController().navigate(navigationId)
+    }
+
+    private fun executeBack() {
+        viewBinding.root.findNavController().navigateUp()
     }
 }

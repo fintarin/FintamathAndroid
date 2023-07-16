@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.fintamath.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
@@ -23,6 +24,6 @@ class SettingsFragment : Fragment() {
     }
 
     private fun executeBack() {
-        activity?.onBackPressedDispatcher?.onBackPressed()
+        viewBinding.root.findNavController().currentBackStack.value.first()
     }
 }
