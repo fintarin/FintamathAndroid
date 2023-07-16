@@ -27,10 +27,12 @@
 
     <string name="invalid_input">Invalid input</string>
     <string name="character_limit_exceeded">Character limit exceeded</string>
+    <string name="failed_to_solve">Failed to solve</string>
 
     <string name="invalid_input_message">Sorry, we don\'t quite understand your math problem…</string>
     <string name="character_limit_exceeded_message">Sorry, solution character limit exceeded…</string>
     <string name="incomplete_input_message">Please, enter a complete math problem.</string>
+    <string name="failed_to_solve_message">Sorry, we can\'t solve this problem yet…</string>
 
     <string name="empty_history_message">No calculation history found.\nStart any calculation and the history will appear.</string>
     <string name="empty_settings_message">No settings yet…</string>

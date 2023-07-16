@@ -19,6 +19,7 @@ constexpr int32_t maxSolutionLength = 1000000;
 const char *charLimitExc = "Character limit exceeded";
 const char *undefinedExc = "Undefined";
 const char *invalidInputExc = "Invalid input";
+const char *failedToSolveExc = "Failed to solve";
 
 static pid_t calcPid = -1;
 
@@ -93,8 +94,7 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
         env->CallVoidMethod(instance, callbackId, env->NewStringUTF(solutionStrShared));
       }
       else {
-        // TODO: send bug report
-        env->CallVoidMethod(instance, callbackId, env->NewStringUTF(invalidInputExc));
+        env->CallVoidMethod(instance, callbackId, env->NewStringUTF(failedToSolveExc));
       }
 
       env->DeleteLocalRef(clazz);

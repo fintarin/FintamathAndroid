@@ -132,6 +132,7 @@
                     app:invalidInputViewLayout="@layout/layout_solution_invalid_input"
                     app:incompleteInputViewLayout="@layout/layout_solution_incomplete_input"
                     app:characterLimitExceededViewLayout="@layout/layout_solution_character_limit_exceeded"
+                    app:failedToSolveViewLayout="@layout/layout_solution_fail"
                     app:alternativeMathTextViewLayout="@layout/layout_solution_alternative"
                     app:alternativeDelimiterLayout="@layout/layout_solution_alternative_text" />
 

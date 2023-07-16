@@ -176,6 +176,9 @@ class CalculatorFragment : Fragment() {
             viewBinding.outSolutionView.showInvalidInput()
         } else if (texts.first() == getString(R.string.character_limit_exceeded)) {
             viewBinding.outSolutionView.showCharacterLimitExceeded()
+        } else if (texts.first() == getString(R.string.failed_to_solve)) {
+            // TODO: send a bug report here
+            viewBinding.outSolutionView.showFailedToSolve()
         } else {
             viewBinding.outSolutionView.showSolution(cutSolutionTexts(texts))
 

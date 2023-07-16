@@ -16,12 +16,14 @@ class MathSolutionView @JvmOverloads constructor(
     private val invalidInputViewLayout: Int
     private val incompleteInputViewLayout: Int
     private val characterLimitExceededViewLayout: Int
+    private val failedToSolveViewLayout: Int
 
     private val alternativesView: MathSolutionAlternativesView
     private val loadingView: View
     private val invalidInputView: View
     private val incompleteInputView: View
     private val characterLimitExceededView: View
+    private val failedToSolveView: View
 
     private var currentView: View? = null
 
@@ -36,6 +38,8 @@ class MathSolutionView @JvmOverloads constructor(
             a.getResourceId(R.styleable.MathSolutionView_incompleteInputViewLayout, 0)
         characterLimitExceededViewLayout =
             a.getResourceId(R.styleable.MathSolutionView_characterLimitExceededViewLayout, 0)
+        failedToSolveViewLayout =
+            a.getResourceId(R.styleable.MathSolutionView_failedToSolveViewLayout, 0)
 
         alternativesView = MathSolutionAlternativesView(context, a)
         alternativesView.visibility = GONE
@@ -58,6 +62,10 @@ class MathSolutionView @JvmOverloads constructor(
         characterLimitExceededView = inflate(context, characterLimitExceededViewLayout, null)
         characterLimitExceededView.visibility = GONE
         addView(characterLimitExceededView)
+
+        failedToSolveView = inflate(context, failedToSolveViewLayout, null)
+        failedToSolveView.visibility = GONE
+        addView(failedToSolveView)
     }
 
     fun showSolution(texts: List<String>) {
@@ -79,6 +87,10 @@ class MathSolutionView @JvmOverloads constructor(
 
     fun showCharacterLimitExceeded() {
         showView(characterLimitExceededView)
+    }
+
+    fun showFailedToSolve() {
+        showView(failedToSolveView)
     }
 
     fun hideCurrentView() {
