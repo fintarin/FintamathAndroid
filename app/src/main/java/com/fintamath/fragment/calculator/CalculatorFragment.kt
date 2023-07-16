@@ -29,13 +29,11 @@ class CalculatorFragment : Fragment() {
     private val saveToHistoryDelay: Long = 2000
     private var saveToHistoryTask: TimerTask? = null
 
-    private var isInitialized = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        if (!isInitialized) {
+        if (!this::viewBinding.isInitialized) {
             viewBinding = FragmentCalculatorBinding.inflate(inflater, container, false)
 
             initMathTexts()
@@ -43,8 +41,6 @@ class CalculatorFragment : Fragment() {
             initKeyboards()
             initKeyboardActions()
             initBarButtons()
-
-            isInitialized = true
         }
 
         return viewBinding.root
