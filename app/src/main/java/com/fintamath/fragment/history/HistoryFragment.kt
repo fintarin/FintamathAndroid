@@ -7,7 +7,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fintamath.R
 import com.fintamath.databinding.FragmentHistoryBinding
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
@@ -33,13 +35,16 @@ class HistoryFragment : Fragment() {
             adapter = historyAdapter
         }
 
-        viewBinding.historyBackButton.setOnClickListener { executeBack() }
+        initBarButtons()
 
         return viewBinding.root
     }
 
-    private fun executeBack() {
-        activity?.onBackPressedDispatcher?.onBackPressed()
+    private fun initBarButtons() {
+        viewBinding.calculatorButton.setOnClickListener { showCalculatorFragment() }
+        viewBinding.cameraButton.setOnClickListener { showCameraFragment() }
+        viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
+        viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
     }
 
     private fun onItemsCountChange() {
@@ -56,6 +61,26 @@ class HistoryFragment : Fragment() {
 
     private fun onCalculate(text: String) {
         CalculatorInputStorage.mathTextData = MathTextData(text)
-        executeBack()
+        showCalculatorFragment()
+    }
+
+    private fun showCalculatorFragment() {
+        showFragment(R.id.action_historyFragment_to_calculatorFragment)
+    }
+
+    private fun showCameraFragment() {
+        showFragment(R.id.action_historyFragment_to_cameraFragment)
+    }
+
+    private fun showAboutFragment() {
+        showFragment(R.id.action_historyFragment_to_aboutFragment)
+    }
+
+    private fun showSettingsFragment() {
+        showFragment(R.id.action_historyFragment_to_settingsFragment)
+    }
+
+    private fun showFragment(navigationId: Int) {
+        viewBinding.root.findNavController().navigate(navigationId)
     }
 }

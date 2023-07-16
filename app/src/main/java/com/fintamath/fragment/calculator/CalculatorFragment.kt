@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.fintamath.R
@@ -24,7 +23,6 @@ import kotlin.concurrent.schedule
 class CalculatorFragment : Fragment() {
 
     private lateinit var viewBinding: FragmentCalculatorBinding
-    private lateinit var optionsMenu: PopupMenu
     private lateinit var calculatorProcessor: CalculatorProcessor
     private lateinit var keyboardSwitcher: CalculatorKeyboardSwitcher
 
@@ -150,29 +148,10 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun initBarButtons() {
-        viewBinding.optionsButton.setOnClickListener { showOptionsMenu() }
         viewBinding.cameraButton.setOnClickListener { showCameraFragment() }
         viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
-
-        optionsMenu = PopupMenu(requireContext(), viewBinding.optionsButton)
-        optionsMenu.menuInflater.inflate(R.menu.menu_options, optionsMenu.menu)
-        optionsMenu.setOnMenuItemClickListener {
-            var result = true;
-
-            when (it.itemId) {
-                R.id.settingsButton -> {
-                    showSettingsFragment()
-                }
-                R.id.aboutButton -> {
-                    showAboutFragment()
-                }
-                else -> {
-                    result = false;
-                }
-            }
-
-            return@setOnMenuItemClickListener result
-        }
+        viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
+        viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
     }
 
     private fun onInTextChange(text: String) {
@@ -248,10 +227,6 @@ class CalculatorFragment : Fragment() {
     private fun onSaveToHistory() {
         HistoryStorage.saveItem(viewBinding.inTextView.text)
         cancelSaveToHistoryTask()
-    }
-
-    private fun showOptionsMenu() {
-        optionsMenu.show()
     }
 
     private fun showHistoryFragment() {

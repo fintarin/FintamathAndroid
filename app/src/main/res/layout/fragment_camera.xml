@@ -8,31 +8,73 @@
     android:background="@color/background_main"
     tools:context=".fragment.camera.CameraFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
         android:background="@drawable/background_bar">
 
         <ImageButton
-            android:id="@+id/cameraBackButton"
+            android:id="@+id/aboutButton"
             android:layout_width="@dimen/diameter_bar_button"
             android:layout_height="@dimen/diameter_bar_button"
-            android:layout_centerVertical="true"
-            android:padding="15dp"
             android:background="@drawable/background_bar_button"
-            android:contentDescription="@string/back"
-            android:src="@drawable/ic_arrow_back" />
+            android:src="@drawable/ic_logo_small"
+            android:contentDescription="@string/app_name" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Space
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:text="@string/camera"
-            android:textColor="@color/text_main"
-            android:textSize="@dimen/text_size_bar"
-            android:layout_centerHorizontal="true"/>
+            android:layout_weight="1" />
 
-    </RelativeLayout>
+        <ImageButton
+            android:id="@+id/cameraButton"
+            android:layout_width="@dimen/diameter_bar_button"
+            android:layout_height="@dimen/diameter_bar_button"
+            android:background="@drawable/background_bar_enabled_button"
+            android:src="@drawable/ic_camera"
+            android:contentDescription="@string/camera"/>
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/calculatorButton"
+            android:layout_width="@dimen/diameter_bar_button"
+            android:layout_height="@dimen/diameter_bar_button"
+            android:background="@drawable/background_bar_button"
+            android:src="@drawable/ic_calculator"
+            android:contentDescription="@string/calculator"/>
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/historyButton"
+            android:layout_width="@dimen/diameter_bar_button"
+            android:layout_height="@dimen/diameter_bar_button"
+            android:background="@drawable/background_bar_button"
+            android:src="@drawable/ic_history"
+            android:contentDescription="@string/history"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/settings_button"
+            android:layout_width="@dimen/diameter_bar_button"
+            android:layout_height="@dimen/diameter_bar_button"
+            android:background="@drawable/background_bar_button"
+            android:src="@drawable/ic_settings"
+            android:contentDescription="@string/options" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
