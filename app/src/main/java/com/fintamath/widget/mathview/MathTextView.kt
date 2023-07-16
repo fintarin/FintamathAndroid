@@ -37,31 +37,41 @@ class MathTextView @JvmOverloads constructor(
     var text: String
         get() = textCached
         set(value) {
-            evaluateJavascript("setText(\"$value\")") { }
+            if (value != text) {
+                evaluateJavascript("setText(\"$value\")") { }
+            }
         }
 
     var hint: String = ""
         set(value) {
-            field = value
-            evaluateJavascript("setHint(\"$field\")") { }
+            if (field != value) {
+                field = value
+                evaluateJavascript("setHint(\"$field\")") { }
+            }
         }
 
     var textColor: Int = 0xFF000000.toInt()
         set(value) {
-            field = value
-            evaluateJavascript("setColor(\"${toHexString(field)}\")") { }
+            if (field != value) {
+                field = value
+                evaluateJavascript("setColor(\"${toHexString(field)}\")") { }
+            }
         }
 
     var textSize: Int = 18
         set(value) {
-            field = value
-            settings.defaultFontSize = textSize
+            if (field != value) {
+                field = value
+                settings.defaultFontSize = textSize
+            }
         }
 
     var isEditable: Boolean = false
         set(value) {
-            field = value
-            evaluateJavascript("setContentEditable(\"$field\")") { }
+            if (field != value) {
+                field = value
+                evaluateJavascript("setContentEditable(\"$field\")") { }
+            }
         }
 
     var isComplete = true
@@ -82,8 +92,6 @@ class MathTextView @JvmOverloads constructor(
     private var isLoaded = false
     private var onLoadedCallbacks: MutableList<(() -> Unit)> = mutableListOf()
 
-    private val uiHandler: Handler = Handler(Looper.getMainLooper())
-
     private var quickActionPopup: PopupWindow? = null
     private var cutActionButton: Button? = null
     private var copyActionButton: Button? = null
@@ -94,15 +102,11 @@ class MathTextView @JvmOverloads constructor(
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
 
-            Timer().schedule(10) {
-                uiHandler.post {
-                    isLoaded = true
-                    visibility = VISIBLE
+            visibility = VISIBLE
+            isLoaded = true
 
-                    for (callback in onLoadedCallbacks) {
-                        callback.invoke()
-                    }
-                }
+            for (callback in onLoadedCallbacks) {
+                callback.invoke()
             }
         }
     }
