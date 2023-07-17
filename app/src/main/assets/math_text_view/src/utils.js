@@ -595,11 +595,21 @@ function toMathText(html, isEditable = false) {
         );
       }
       case fractionClass: {
-        return (
+        const fracText =
           putInBrackets(toMathTextChildren(elem.firstElementChild)) +
           divOperator +
-          putInBrackets(toMathTextChildren(elem.lastElementChild))
-        );
+          putInBrackets(toMathTextChildren(elem.lastElementChild));
+
+        if (
+          (getClassName(elem.previousElementSibling.previousElementSibling) !== undefinedClass &&
+            !bracketPrefixClasses.includes(getClassName(elem.previousElementSibling.previousElementSibling))) ||
+          (getClassName(elem.nextElementSibling.nextElementSibling) !== undefinedClass &&
+            !bracketPostfixClasses.includes(getClassName(elem.nextElementSibling.nextElementSibling)))
+        ) {
+          return putInBrackets(fracText);
+        }
+
+        return fracText;
       }
       case supClass: {
         return supOperator + putInBrackets(toMathTextChildren(elem));
