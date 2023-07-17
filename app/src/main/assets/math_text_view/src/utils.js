@@ -596,9 +596,9 @@ function toMathText(html, isEditable = false) {
       }
       case fractionClass: {
         const fracText =
-          putInBrackets(toMathTextChildren(elem.firstElementChild)) +
+          tryPutInBrackets(toMathTextChildren(elem.firstElementChild)) +
           divOperator +
-          putInBrackets(toMathTextChildren(elem.lastElementChild));
+          tryPutInBrackets(toMathTextChildren(elem.lastElementChild));
 
         if (
           (getClassName(elem.previousElementSibling.previousElementSibling) !== undefinedClass &&
@@ -612,10 +612,10 @@ function toMathText(html, isEditable = false) {
         return fracText;
       }
       case supClass: {
-        return supOperator + putInBrackets(toMathTextChildren(elem));
+        return supOperator + tryPutInBrackets(toMathTextChildren(elem));
       }
       case subClass: {
-        return subOperator + putInBrackets(toMathTextChildren(elem));
+        return subOperator + tryPutInBrackets(toMathTextChildren(elem));
       }
       case textClass: {
         return elem.innerText;
@@ -681,6 +681,20 @@ function toMathText(html, isEditable = false) {
    */
   function putInBrackets(text) {
     return openBracket + text + closeBracket;
+  }
+
+  /**
+   * Puts the text in brackets if its length > 1, otherwise does nothing.
+   *
+   * @param {String} text - The text to put in brackets.
+   * @returns {String} The result.
+   */
+  function tryPutInBrackets(text) {
+    if (text.length != 1) {
+      return putInBrackets(text);
+    }
+
+    return text;
   }
 }
 
