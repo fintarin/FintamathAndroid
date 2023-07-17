@@ -596,16 +596,16 @@ function toMathText(html, isEditable = false) {
       }
       case fractionClass: {
         return (
-          tryPutInBrackets(toMathTextChildren(elem.firstElementChild)) +
+          putInBrackets(toMathTextChildren(elem.firstElementChild)) +
           divOperator +
-          tryPutInBrackets(toMathTextChildren(elem.lastElementChild))
+          putInBrackets(toMathTextChildren(elem.lastElementChild))
         );
       }
       case supClass: {
-        return supOperator + tryPutInBrackets(toMathTextChildren(elem));
+        return supOperator + putInBrackets(toMathTextChildren(elem));
       }
       case subClass: {
-        return subOperator + tryPutInBrackets(toMathTextChildren(elem));
+        return subOperator + putInBrackets(toMathTextChildren(elem));
       }
       case textClass: {
         return elem.innerText;
@@ -646,6 +646,7 @@ function toMathText(html, isEditable = false) {
         !bracketPostfixClasses.includes(getClassName(childElem)) &&
         !childContainerClasses.includes(getClassName(childElem)) &&
         !indexContainerClasses.includes(getClassName(childElem)) &&
+        !unaryPostfixOperators.includes(childElem.innerHTML) &&
         getClassName(prevChildElem) !== undefinedClass &&
         getClassName(prevChildElem) !== unaryPrefixOperatorClass &&
         getClassName(prevChildElem) !== functionNameClass &&
@@ -670,20 +671,6 @@ function toMathText(html, isEditable = false) {
    */
   function putInBrackets(text) {
     return openBracket + text + closeBracket;
-  }
-
-  /**
-   * Puts the text in brackets if its length > 1, otherwise does nothing.
-   *
-   * @param {String} text - The text to put in brackets.
-   * @returns {String} The result.
-   */
-  function tryPutInBrackets(text) {
-    if (text.length != 1) {
-      return putInBrackets(text);
-    }
-
-    return text;
   }
 }
 
