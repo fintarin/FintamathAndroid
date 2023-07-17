@@ -679,7 +679,7 @@ function toMathText(html, isEditable = false) {
    * @returns {String} The result.
    */
   function tryPutInBrackets(text) {
-    if (text.length > 1) {
+    if (text.length != 1) {
       return putInBrackets(text);
     }
 
