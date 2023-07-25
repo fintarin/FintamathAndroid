@@ -218,7 +218,7 @@ public class KeyboardView extends View implements View.OnClickListener {
 
     private final Drawable mKeyBackground;
 
-    private static final int REPEAT_INTERVAL = 50; // ~20 keys per second
+    private static final int REPEAT_INTERVAL = 60;
     private static final int REPEAT_START_DELAY = 400;
     private static final int LONGPRESS_TIMEOUT = 150;
 
