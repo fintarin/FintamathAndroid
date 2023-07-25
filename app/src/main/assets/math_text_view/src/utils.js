@@ -538,7 +538,10 @@ function toHtml(mathText, isEditable = false) {
       return rootElem;
     }
 
-    if (containerClasses.includes(getClassName(childElem))) {
+    if (
+      containerClasses.includes(getClassName(childElem)) &&
+      !parentContainerClasses.includes(getClassName(childElem))
+    ) {
       return childElem;
     }
 
