@@ -6,7 +6,7 @@
  * @returns {string} The HTML representation of the math text.
  */
 function toHtml(mathText, isEditable = false) {
-  mathText = mathText.replace(/\s/, ' ');
+  mathText = mathText.replace(/\s/g, ' ');
 
   for (let key in mathHtmlMap) {
     mathText = mathText.replace(makeRegexFromString(key), mathHtmlMap[key]);
@@ -560,14 +560,16 @@ function toMathText(html, isEditable = false) {
   let text = toMathTextRec(elem);
 
   for (let key in mathHtmlMap) {
-    text = text.replace(makeRegexFromString(mathHtmlMap[key]), cutSpaces(key));
+    text = text.replace(makeRegexFromString(mathHtmlMap[key]), key);
   }
 
   if (isEditable) {
     for (let key in mathEditableHtmlMap) {
-      text = text.replace(makeRegexFromString(mathEditableHtmlMap[key]), cutSpaces(key));
+      text = text.replace(makeRegexFromString(mathEditableHtmlMap[key]), key);
     }
   }
+
+  text = text.replace(/\s+/g, ' ');
 
   return text;
 
