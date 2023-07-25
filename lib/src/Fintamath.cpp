@@ -13,7 +13,6 @@ using namespace fintamath;
 
 static const char *loggerTag = "com.fintamath.lib";
 
-constexpr int32_t maxResultLength = 5000;
 constexpr int32_t maxSolutionLength = 1000000;
 
 const char *charLimitExc = "Character limit exceeded";
@@ -27,7 +26,7 @@ static auto *solutionStrShared =
     (char *)mmap(nullptr, maxSolutionLength, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 
 std::string makeOutResult(const std::string &res) {
-  return res.length() < maxResultLength ? res + "\n" : "";
+  return res + "\n";
 }
 
 std::string calculate(const std::string &inStr) {
@@ -38,7 +37,7 @@ std::string calculate(const std::string &inStr) {
 
     std::string solutions = makeOutResult(solExpr.toString()) + makeOutResult(solPrecise10Expr.toString());
 
-    if (solutions.empty() || solutions.size() > maxSolutionLength) {
+    if (solutions.empty() || solutions.size() >= maxSolutionLength) {
       return charLimitExc;
     }
 

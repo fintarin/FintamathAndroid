@@ -31,6 +31,8 @@ class CalculatorFragment : Fragment() {
 
     private val requestFocusDelay: Long = 50
 
+    private val maxSolutionLength = 1000
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -188,11 +190,17 @@ class CalculatorFragment : Fragment() {
             // TODO: send a bug report here
             viewBinding.outSolutionView.showFailedToSolve()
         } else {
-            viewBinding.outSolutionView.showSolution(cutSolutionTexts(texts))
+            val cutSolutionTexts = cutSolutionTexts(texts)
 
-            saveToHistoryTask = Timer().schedule(saveToHistoryDelay) {
-                requireActivity().runOnUiThread {
-                    onSaveToHistory()
+            if (countTextsLength(cutSolutionTexts) > maxSolutionLength) {
+                viewBinding.outSolutionView.showCharacterLimitExceeded()
+            } else {
+                viewBinding.outSolutionView.showSolution(cutSolutionTexts)
+
+                saveToHistoryTask = Timer().schedule(saveToHistoryDelay) {
+                    requireActivity().runOnUiThread {
+                        onSaveToHistory()
+                    }
                 }
             }
         }
@@ -283,7 +291,19 @@ class CalculatorFragment : Fragment() {
             result.add(distinctTexts.last())
         }
 
+        if (result.size > 1) {
+            if (countTextsLength(distinctTexts) > maxSolutionLength) {
+                result.removeFirst()
+            }
+        }
+
         return result
+    }
+
+    private fun countTextsLength(distinctTexts: List<String>): Int {
+        var resultLength = 0
+        distinctTexts.forEach { resultLength += it.length }
+        return resultLength
     }
 
     private fun removeSpacesAndBrackets(text: String): String {
