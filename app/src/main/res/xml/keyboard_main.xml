@@ -77,7 +77,7 @@
             app:keyTopLabel="(  )"
             app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
         <Key
-            app:keyOutputText="/"
+            app:keyOutputText="frac(,)"
             app:keyIcon="@drawable/ic_key_fraction" />
         <Key
             app:keyOutputText="7"

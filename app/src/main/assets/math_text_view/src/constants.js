@@ -61,6 +61,7 @@ const absFunction = 'abs';
 const sqrtFunction = 'sqrt';
 const rootFunction = 'root';
 const logFunction = 'log';
+const fracFunction = 'frac';
 const comma = ',';
 const space = ' ';
 

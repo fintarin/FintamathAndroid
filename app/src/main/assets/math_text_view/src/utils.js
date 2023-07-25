@@ -336,6 +336,21 @@ function toHtml(mathText, isEditable = false) {
 
           break;
         }
+        case fracFunction: {
+          let tokenElems = tokenizeByComma(elem);
+
+          let numeratorElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
+          setClassName(numeratorElem, numeratorClass);
+
+          let denominatorElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
+          setClassName(denominatorElem, denominatorClass);
+
+          elem = createElement(fractionClass);
+          elem.appendChild(numeratorElem);
+          elem.appendChild(denominatorElem);
+
+          break;
+        }
         case absFunction: {
           elem.insertBefore(createSvg(prefixAbsClass), elem.firstChild);
           elem.appendChild(createSvg(postfixAbsClass));
@@ -595,21 +610,10 @@ function toMathText(html, isEditable = false) {
         );
       }
       case fractionClass: {
-        const fracText =
-          tryPutInBrackets(toMathTextChildren(elem.firstElementChild)) +
-          divOperator +
-          tryPutInBrackets(toMathTextChildren(elem.lastElementChild));
-
-        if (
-          (getClassName(elem.previousElementSibling.previousElementSibling) !== undefinedClass &&
-            !bracketPrefixClasses.includes(getClassName(elem.previousElementSibling.previousElementSibling))) ||
-          (getClassName(elem.nextElementSibling.nextElementSibling) !== undefinedClass &&
-            !bracketPostfixClasses.includes(getClassName(elem.nextElementSibling.nextElementSibling)))
-        ) {
-          return putInBrackets(fracText);
-        }
-
-        return fracText;
+        return (
+          fracFunction +
+          putInBrackets(toMathTextChildren(elem.children[0]) + comma + space + toMathTextChildren(elem.children[1]))
+        );
       }
       case supClass: {
         return supOperator + tryPutInBrackets(toMathTextChildren(elem));
