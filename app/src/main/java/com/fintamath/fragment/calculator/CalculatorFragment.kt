@@ -182,15 +182,21 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun outTexts(texts: List<String>) {
-        if (texts.first() == getString(R.string.invalid_input)) {
+        if (!viewBinding.inTextView.isUpToDate || viewBinding.inTextView.text != texts.first()) {
+            return
+        }
+
+        val solutionTexts = texts.subList(1, texts.size)
+
+        if (solutionTexts.first() == getString(R.string.invalid_input)) {
             viewBinding.outSolutionView.showInvalidInput()
-        } else if (texts.first() == getString(R.string.character_limit_exceeded)) {
+        } else if (solutionTexts.first() == getString(R.string.character_limit_exceeded)) {
             viewBinding.outSolutionView.showCharacterLimitExceeded()
-        } else if (texts.first() == getString(R.string.failed_to_solve)) {
+        } else if (solutionTexts.first() == getString(R.string.failed_to_solve)) {
             // TODO: send a bug report here
             viewBinding.outSolutionView.showFailedToSolve()
         } else {
-            val cutSolutionTexts = cutSolutionTexts(texts)
+            val cutSolutionTexts = cutSolutionTexts(solutionTexts)
 
             if (countTextsLength(cutSolutionTexts) > maxSolutionLength) {
                 viewBinding.outSolutionView.showCharacterLimitExceeded()

@@ -38,6 +38,7 @@ class MathTextView @JvmOverloads constructor(
         get() = textCached
         set(value) {
             if (value != text) {
+                isUpToDate = false
                 evaluateJavascript("setText(\"$value\")") { }
             }
         }
@@ -75,6 +76,9 @@ class MathTextView @JvmOverloads constructor(
         }
 
     var isComplete = true
+        private set
+
+    var isUpToDate = true
         private set
 
     private var textCached = ""
@@ -160,22 +164,27 @@ class MathTextView @JvmOverloads constructor(
     }
 
     fun insertAtCursor(text: String) {
+        isUpToDate = false
         evaluateJavascript("insertAtCursor(\"$text\")") { }
     }
 
     fun deleteAtCursor() {
+        isUpToDate = false
         evaluateJavascript("deleteAtCursor()") { }
     }
 
     fun clear() {
+        isUpToDate = false
         evaluateJavascript("clear()") { }
     }
 
     fun undo() {
+        isUpToDate = false
         evaluateJavascript("undo()") { }
     }
 
     fun redo() {
+        isUpToDate = false
         evaluateJavascript("redo()") { }
     }
 
@@ -343,6 +352,7 @@ class MathTextView @JvmOverloads constructor(
     fun onTextChange(newText: String, isCompleteStr: String) {
         textCached = newText
         isComplete = isCompleteStr == "true"
+        isUpToDate = true
 
         getActivity()?.runOnUiThread {
             onTextChangedListener?.invoke(newText)
