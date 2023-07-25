@@ -1,6 +1,7 @@
 package com.fintamath.calculator
 
 import java.util.Timer
+import java.util.TimerTask
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.schedule
 import kotlin.concurrent.thread
@@ -12,19 +13,20 @@ class CalculatorProcessor(
 ) {
 
     private val loadingDelay: Long = 100
+    private var loadingTask: TimerTask? = null
 
     private val calculator: Calculator = Calculator { onCalculated(it) }
-
     private var isCalculating = AtomicBoolean(false)
 
     fun calculate(str : String) {
         isCalculating.set(true)
+        loadingTask?.cancel()
 
         thread {
             calculator.calculate(str)
         }
 
-        Timer().schedule(loadingDelay) {
+        loadingTask = Timer().schedule(loadingDelay) {
             callbacksThread {
                 if (isCalculating.get()) {
                     loadingCallback.invoke()
