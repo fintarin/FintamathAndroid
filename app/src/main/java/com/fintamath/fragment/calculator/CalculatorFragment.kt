@@ -182,21 +182,15 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun outTexts(texts: List<String>) {
-        if (!viewBinding.inTextView.isUpToDate || viewBinding.inTextView.text != texts.first()) {
-            return
-        }
-
-        val solutionTexts = texts.subList(1, texts.size)
-
-        if (solutionTexts.first() == getString(R.string.invalid_input)) {
+        if (texts.first() == getString(R.string.invalid_input)) {
             viewBinding.outSolutionView.showInvalidInput()
-        } else if (solutionTexts.first() == getString(R.string.character_limit_exceeded)) {
+        } else if (texts.first() == getString(R.string.character_limit_exceeded)) {
             viewBinding.outSolutionView.showCharacterLimitExceeded()
-        } else if (solutionTexts.first() == getString(R.string.failed_to_solve)) {
+        } else if (texts.first() == getString(R.string.failed_to_solve)) {
             // TODO: send a bug report here
             viewBinding.outSolutionView.showFailedToSolve()
         } else {
-            val cutSolutionTexts = cutSolutionTexts(solutionTexts)
+            val cutSolutionTexts = cutSolutionTexts(texts)
 
             if (countTextsLength(cutSolutionTexts) > maxSolutionLength) {
                 viewBinding.outSolutionView.showCharacterLimitExceeded()
@@ -286,9 +280,10 @@ class CalculatorFragment : Fragment() {
     private fun cutSolutionTexts(texts: List<String>): List<String> {
         val result = mutableListOf<String>()
         val distinctTexts = texts.distinct()
+        val inputText = removeSpacesAndBrackets(texts.first())
 
         for (i in distinctTexts.indices) {
-            if (removeSpacesAndBrackets(distinctTexts[i]) != removeSpacesAndBrackets(viewBinding.inTextView.text)) {
+            if (removeSpacesAndBrackets(distinctTexts[i]) != inputText) {
                 result.add(distinctTexts[i])
             }
         }
