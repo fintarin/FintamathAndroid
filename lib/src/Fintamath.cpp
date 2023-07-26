@@ -102,6 +102,12 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
       __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "Calculations ended. pid = %d", pid);
     }
     else {
+      jclass clazz = env->GetObjectClass(instance);
+      jmethodID callbackId = env->GetMethodID(clazz, "onInterrupted", "()V");
+
+      env->CallVoidMethod(instance, callbackId);
+      env->DeleteLocalRef(clazz);
+
       __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "Calculations stopped. pid = %d", pid);
     }
   }

@@ -5,6 +5,7 @@ import java.util.TimerTask
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.schedule
 import kotlin.concurrent.thread
+import kotlin.math.abs
 
 class CalculatorProcessor(
     private val callbacksThread: (() -> Unit) -> Unit,
@@ -13,10 +14,12 @@ class CalculatorProcessor(
 ) {
 
     private val loadingDelay: Long = 100
+    private val loadingDelayOnInterrupted: Long = loadingDelay * 5
     private var loadingTask: TimerTask? = null
 
-    private val calculator: Calculator = Calculator { onCalculated(it) }
+    private val calculator: Calculator = Calculator({ onCalculated(it) }, { onInterrupted() })
     private var isCalculating = AtomicBoolean(false)
+    private var lastCalculationTime: Long = 0
 
     fun calculate(str : String) {
         isCalculating.set(true)
@@ -46,7 +49,16 @@ class CalculatorProcessor(
     private fun onCalculated(result: List<String>) {
         callbacksThread {
             isCalculating.set(false)
+            lastCalculationTime = System.currentTimeMillis()
             outTextsCallback.invoke(result)
+        }
+    }
+
+    private fun onInterrupted() {
+        callbacksThread {
+            if (isCalculating.get() && abs(lastCalculationTime - System.currentTimeMillis()) > loadingDelayOnInterrupted) {
+                loadingCallback.invoke()
+            }
         }
     }
 }

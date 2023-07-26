@@ -4,7 +4,8 @@ import androidx.annotation.Keep
 
 @Keep
 internal class Calculator(
-    private val calculationCallback: (result: List<String>) -> Unit
+    private val calculatedCallback: (result: List<String>) -> Unit,
+    private val interruptedCallback: () -> Unit,
 ) {
 
     external fun calculate(str: String)
@@ -12,7 +13,11 @@ internal class Calculator(
     external fun stopCurrentCalculations()
 
     private fun onCalculated(str: String) {
-        calculationCallback.invoke(listOf(*str.split("\n").toTypedArray()))
+        calculatedCallback.invoke(listOf(*str.split("\n").toTypedArray()))
+    }
+
+    private fun onInterrupted() {
+        interruptedCallback.invoke()
     }
 
     companion object {
