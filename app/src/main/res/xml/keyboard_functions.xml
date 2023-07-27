@@ -124,14 +124,9 @@
     </Row>
 
     <Row>
-        <!--        TODO: remove-->
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-        <!--        TODO: uncomment-->
-        <!--        <Key-->
-        <!--            app:keyOutputText="I"-->
-        <!--            app:keyLabel="𝑖"/>-->
+            app:keyOutputText="I"
+            app:keyLabel="𝑖"/>
         <Key
             app:keyOutputText="abs()"
             app:keyIcon="@drawable/ic_key_abs" />
@@ -153,14 +148,9 @@
     </Row>
 
     <Row>
-        <!--        TODO: remove-->
         <Key
-            app:keyLabel=" "
-            app:isPreviewEnabled="false" />
-        <!--        TODO: uncomment-->
-        <!--        <Key-->
-        <!--            app:keyOutputText="Inf"-->
-        <!--            app:keyLabel="∞"/>-->
+            app:keyOutputText="Inf"
+            app:keyLabel="∞"/>
         <Key
             app:keyOutputText="!"
             app:keyLabel="!" />

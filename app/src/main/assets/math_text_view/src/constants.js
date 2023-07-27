@@ -80,6 +80,7 @@ const mathHtmlMap = {
   '->': String.fromCodePoint(0x21d2),
   '-': String.fromCodePoint(0x2212),
   deg: String.fromCodePoint(0x00b0),
+  Inf: String.fromCodePoint(0x221e),
   E: String.fromCodePoint(0x1d626),
   Pi: String.fromCodePoint(0x03c0),
   I: String.fromCodePoint(0x1d456),
