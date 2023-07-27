@@ -104,7 +104,7 @@
             app:keyOutputText="Pi"
             app:keyLabel="π"/>
         <Key
-            app:keyOutputText="°"
+            app:keyOutputText="deg"
             app:keyLabel="°"/>
         <Key
             app:keyOutputText="log(,)"
