@@ -70,6 +70,11 @@ function toHtml(mathText, isEditable = false) {
         }
       }
 
+      if (specialSvgSymbols.includes(ch)) {
+        childElem = insertSpecialSymbol(rootElem, ch);
+        continue;
+      }
+
       if (unaryPrefixOperators.includes(ch) && indexContainerClasses.includes(getClassName(childElem))) {
         childElem = insertOperator(childElem, unaryPrefixOperatorClass, ch);
         continue;
@@ -130,6 +135,36 @@ function toHtml(mathText, isEditable = false) {
     insertEmptyTexts(rootElem);
 
     return rootElem;
+  }
+
+  /**
+   * Handles the insertion of special symbols like Inf, ComplexInf.
+   *
+   * @param {HTMLSpanElement} elem - The element to insert special symbol.
+   * @param {string} special - The symbol itself.
+   * @returns {HTMLSpanElement} New child element.
+   */
+  function insertSpecialSymbol(elem, special) {
+    let specialElem = null;
+
+    switch (special) {
+      case mathHtmlMap['Inf']: {
+        specialElem = createSvg(infClass);
+        break;
+      }
+      case mathHtmlMap['ComplexInf']: {
+        specialElem = createSvg(complexInfClass);
+        break;
+      }
+      default:
+        break;
+    }
+
+    if (specialElem == null) {
+      return elem;
+    }
+
+    return elem.appendChild(specialElem);
   }
 
   /**
@@ -629,6 +664,12 @@ function toMathText(html, isEditable = false) {
       case textClass: {
         return elem.innerText;
       }
+      case infClass: {
+        return mathHtmlMap.Inf;
+      }
+      case complexInfClass: {
+        return mathHtmlMap.ComplexInf;
+      }
       default: {
         if (operatorClasses.includes(getClassName(elem))) {
           return elem.innerText;
@@ -1097,6 +1138,7 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
       if (
         (containerClasses.includes(className) ||
           bracketClasses.includes(className) ||
+          specialSvgClasses.includes(className) ||
           className === unaryPrefixOperatorClass ||
           className === functionNameClass) &&
         prevElemClassName !== functionNameClass &&
@@ -1110,6 +1152,7 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
       if (
         (containerClasses.includes(className) ||
           bracketClasses.includes(className) ||
+          specialSvgClasses.includes(className) ||
           className === unaryPostfixOperatorClass) &&
         !textClasses.includes(nextElemClassName) &&
         nextElemClassName !== borderClass
@@ -1132,12 +1175,18 @@ function insertBordersRec(elem) {
     const childElem = elem.children[i];
 
     if (
-      (getClassName(childElem) === openBracketClass || getClassName(childElem) === prefixAbsClass) &&
+      (specialSvgClasses.includes(getClassName(childElem)) ||
+        getClassName(childElem) === openBracketClass ||
+        getClassName(childElem) === prefixAbsClass) &&
       isNotEmptyTextElement(childElem.nextElementSibling)
     ) {
       elem.insertBefore(createElement(borderClass), childElem.nextElementSibling);
-    } else if (
-      (getClassName(childElem) === closeBracketClass || getClassName(childElem) === postfixAbsClass) &&
+    }
+
+    if (
+      (specialSvgClasses.includes(getClassName(childElem)) ||
+        getClassName(childElem) === closeBracketClass ||
+        getClassName(childElem) === postfixAbsClass) &&
       isNotEmptyTextElement(childElem.previousElementSibling)
     ) {
       elem.insertBefore(createElement(borderClass), childElem);

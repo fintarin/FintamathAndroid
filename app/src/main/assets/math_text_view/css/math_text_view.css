@@ -213,3 +213,11 @@ svg {
 .close-bracket {
   margin-right: 3px;
 }
+
+.infinite,
+.complex-infinite {
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 2px;
+  margin-right: 2px;
+}
