@@ -71,7 +71,7 @@ function toHtml(mathText, isEditable = false) {
       }
 
       if (specialSvgSymbols.includes(ch)) {
-        childElem = insertSpecialSymbol(rootElem, ch);
+        childElem = insertSpecialSymbol(chooseElement(rootElem, childElem), ch);
         continue;
       }
 
