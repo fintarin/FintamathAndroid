@@ -16,7 +16,6 @@ static const char *loggerTag = "com.fintamath.lib";
 constexpr int32_t maxSolutionLength = 1000000;
 
 const char *charLimitExc = "Character limit exceeded";
-const char *undefinedExc = "Undefined";
 const char *invalidInputExc = "Invalid input";
 const char *failedToSolveExc = "Failed to solve";
 
@@ -46,10 +45,7 @@ std::string calculate(const std::string &inStr) {
 
     return solutions;
   }
-  catch (const UndefinedException &exc) {
-    return undefinedExc;
-  }
-  catch (const Exception &exc) {
+  catch (const InvalidInputException &exc) {
     return invalidInputExc;
   }
 }
