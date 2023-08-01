@@ -116,10 +116,11 @@ class MathTextView @JvmOverloads constructor(
         scrollBarSize = 0
         setBackgroundColor(Color.TRANSPARENT)
 
+        webViewClient = mathTextViewClient
         settings.javaScriptEnabled = true
         addJavascriptInterface(this, "Android")
+
         loadUrl(initHtml)
-        webViewClient = mathTextViewClient
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.MathTextView)
 
