@@ -278,18 +278,21 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun cutSolutionTexts(texts: List<String>): List<String> {
+        val inputText = formatSolution(texts.first())
         val result = mutableListOf<String>()
-        val distinctTexts = texts.distinct()
-        val inputText = removeSpacesAndBrackets(texts.first())
+
+        val distinctTexts = texts.distinctBy {
+            formatSolution(it)
+        }
 
         for (i in distinctTexts.indices) {
-            if (removeSpacesAndBrackets(distinctTexts[i]) != inputText) {
+            if (formatSolution(distinctTexts[i]) != inputText) {
                 result.add(distinctTexts[i])
             }
         }
 
         if (result.isEmpty()) {
-            result.add(distinctTexts.last())
+            result.add(distinctTexts.first())
         }
 
         if (result.size > 1) {
@@ -301,17 +304,18 @@ class CalculatorFragment : Fragment() {
         return result
     }
 
-    private fun countTextsLength(distinctTexts: List<String>): Int {
-        var resultLength = 0
-        distinctTexts.forEach { resultLength += it.length }
-        return resultLength
-    }
-
-    private fun removeSpacesAndBrackets(text: String): String {
+    private fun formatSolution(text: String): String {
         var result = text
+        result = result.replace("""\.0(\D|\b)""".toRegex(), "$1")
         result = result.replace("(", "");
         result = result.replace(")", "");
         result = result.replace(" ", "");
         return result
+    }
+
+    private fun countTextsLength(distinctTexts: List<String>): Int {
+        var resultLength = 0
+        distinctTexts.forEach { resultLength += it.length }
+        return resultLength
     }
 }
