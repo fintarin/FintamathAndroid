@@ -22,7 +22,7 @@ let redoStack = [];
 //---------------------------------------------------------------------------------------------------------//
 
 /**
- * Converts math text to HTML and sets it as innerHTML of mathTextView.
+ * Convert math text to HTML and sets it as innerHTML of mathTextView.
  *
  * @param {string} mathText - The math text to convert to HTML.
  */
@@ -39,7 +39,7 @@ function setText(mathText) {
 }
 
 /**
- * Sets the hint (:before element) of mathTextView from the given.
+ * Set the hint (:before element) of mathTextView from the given.
  *
  * @param {string} hintText - The hint text to set.
  */
@@ -48,7 +48,7 @@ function setHint(hintText) {
 }
 
 /**
- * Sets the text color of mathTextView from the given.
+ * Set the text color of mathTextView from the given.
  *
  * @param {string} color - The color to set.
  */
@@ -58,7 +58,7 @@ function setColor(color) {
 }
 
 /**
- * Sets the contentEditable property of mathTextView from the given.
+ * Set the contentEditable property of mathTextView from the given.
  *
  * @param {string} contentEditable - The value to set the contentEditable property to.
  */
@@ -68,7 +68,7 @@ function setContentEditable(contentEditable) {
 }
 
 /**
- * Converts MathText to HTML and inserts it at the current cursor position.
+ * Convert MathText to HTML and inserts it at the current cursor position.
  *
  * @param {string} mathText - The math text to convert to HTML and insert.
  */
@@ -140,7 +140,7 @@ function insertAtCursor(mathText) {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Sets the cursor between the first and last element of the inserted children.
+   * Set the cursor between the first and last element of the inserted children.
    *
    * @param {HTMLSpanElement} firstElem - The first element of inserted children.
    * @param {HTMLSpanElement} lastElem - The last element of inserted children.
@@ -168,8 +168,8 @@ function insertAtCursor(mathText) {
 }
 
 /**
- * Deletes a single character or an empty element at the current cursor position.
- * If the deletion is impossible, moves the cursor to the left.
+ * Delete a single character or an empty element at the current cursor position.
+ * If the deletion is impossible, move the cursor to the left.
  */
 function deleteAtCursor() {
   if (mathTextView.innerHTML === '') {
@@ -221,7 +221,7 @@ function deleteAtCursor() {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Deletes the given element from its parent element.
+   * Delete the given element from its parent element.
    *
    * @param {HTMLSpanElement} elem - The element to delete.
    */
@@ -286,8 +286,8 @@ function deleteAtCursor() {
     }
 
     /**
-     * Deletes the matching brackets element of the given element.
-     * E.g. removes the close bracket in '( )'.
+     * Delete the matching brackets element of the given element.
+     * E.g. remove the close bracket in '( )'.
      *
      * @param {HTMLSpanElement} elem - The element that is deleted.
      * @param {HTMLSpanElement} parentElem - The parent element.
@@ -334,7 +334,7 @@ function deleteAtCursor() {
 }
 
 /**
- * Clears the contents of mathTextView.
+ * Clear the contents of mathTextView.
  */
 function clear() {
   setText('');
@@ -342,7 +342,7 @@ function clear() {
 
 /**
  * Undo the last change to mathTextView by restoring a previous state from the undo stack.
- * If the undo stack is empty, does nothing.
+ * If the undo stack is empty, do nothing.
  */
 function undo() {
   if (undoStack.length === 0) {
@@ -369,7 +369,7 @@ function undo() {
 
 /**
  * Redo the last change to mathTextView by restoring a previous state from the redo stack.
- * If the redo stack is empty, does nothing.
+ * If the redo stack is empty, do nothing.
  */
 function redo() {
   if (redoStack.length === 0) {
@@ -395,7 +395,7 @@ function redo() {
 }
 
 /**
- * Adds a new state to the undo stack and clears redo stack.
+ * Add a new state to the undo stack and clear redo stack.
  */
 function addUndoState() {
   if (!mathTextView.isContentEditable) {
@@ -417,7 +417,7 @@ function addUndoState() {
 }
 
 /**
- * Moves the text cursor one character or one element to the left.
+ * Move the text cursor one character or one element to the left.
  */
 function moveCursorLeft() {
   moveCursorLeftImpl();
@@ -437,7 +437,7 @@ function moveCursorLeft() {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * The cursor movement to the left itself
+   * The cursor movement to the left itself.
    */
   function moveCursorLeftImpl() {
     const selection = window.getSelection();
@@ -467,7 +467,7 @@ function moveCursorLeft() {
 }
 
 /**
- * Moves the text cursor one character or one element to the right.
+ * Move the text cursor one character or one element to the right.
  */
 function moveCursorRight() {
   moveCursorRightImpl();
@@ -487,7 +487,7 @@ function moveCursorRight() {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * The cursor movement to the right itself
+   * The cursor movement to the right itself.
    */
   function moveCursorRightImpl() {
     const selection = window.getSelection();
@@ -516,14 +516,14 @@ function moveCursorRight() {
 }
 
 /**
- * Sets the focus to mathTextView.
+ * Set the focus to mathTextView.
  */
 function requestFocus() {
   mathTextView.focus();
 }
 
 /**
- * Removes the focus from mathTextView.
+ * Remove the focus from mathTextView.
  */
 function clearFocus() {
   mathTextView.blur();

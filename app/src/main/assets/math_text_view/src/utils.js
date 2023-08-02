@@ -1,5 +1,5 @@
 /**
- * Converts math text to HTML.
+ * Convert math text to HTML.
  *
  * @param {string} mathText - The math text to convert to HTML.
  * @param {boolean} [isEditable=false] - Whether the resulting HTML should be editable.
@@ -26,7 +26,7 @@ function toHtml(mathText, isEditable = false) {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Recursively converts math text to HTML.
+   * Recursively convert math text to HTML.
    *
    * @param {string} mathText - The math text to convert to HTML.
    * @param {number} start - The starting index of the portion of the math text to be converted.
@@ -138,7 +138,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Handles the insertion of special symbols like Inf, ComplexInf.
+   * Handle the insertion of special symbols like Inf, ComplexInf.
    *
    * @param {HTMLSpanElement} elem - The element to insert special symbol.
    * @param {string} special - The symbol itself.
@@ -168,7 +168,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Handles the insertion of simple operators like '+', '-'.
+   * Handle the insertion of simple operators like '+', '-'.
    *
    * @param {HTMLSpanElement} elem - The element to insert operator.
    * @param {string} operatorClass - The CSS class of the operator.
@@ -182,7 +182,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Handles the insertion of index operator like '^', '_'.
+   * Handle the insertion of index operator like '^', '_'.
    *
    * @param {HTMLSpanElement?} elem - The element to insert index.
    * @param {string} indexClass - The CSS class of the index operator.
@@ -199,7 +199,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Handles the insertion of fraction.
+   * Handle the insertion of fraction.
    *
    * @param {HTMLSpanElement?} elem - The element to insert fraction.
    * @returns {HTMLSpanElement} New child element.
@@ -251,9 +251,9 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Handles the insertion of brackets with or without function.
+   * Handle the insertion of brackets with or without function.
    *
-   * @param {HTMLSpanElement} rootElem - The root element to insert brackets .
+   * @param {HTMLSpanElement} rootElem - The root element to insert brackets.
    * @param {HTMLSpanElement?} childElem - The child element to insert open bracket.
    * @param {string} mathText - The math text to convert to HTML.
    * @param {number} start - The position of the open bracket.
@@ -304,7 +304,7 @@ function toHtml(mathText, isEditable = false) {
     //---------------------------------------------------------------------------------------------------------//
 
     /**
-     * Put in brackets the given element.
+     * Put the given element in brackets.
      *
      * @param {HTMLSpanElement} elem - The element to put in brackets.
      */
@@ -314,7 +314,7 @@ function toHtml(mathText, isEditable = false) {
     }
 
     /**
-     * Creates a function element by its name and nested element.
+     * Create a function element by its name and nested element.
      *
      * @param {HTMLSpanElement} elem - The element to put in function.
      * @param {string} funcName - The function name.
@@ -410,7 +410,7 @@ function toHtml(mathText, isEditable = false) {
     }
 
     /**
-     * Creates a function name element by its name.
+     * Create a function name element by its name.
      *
      * @param {string} funcName - The function name.
      * @returns {HTMLSpanElement} New function name element.
@@ -467,7 +467,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Handles the insertion of space.
+   * Handle the insertion of space.
    *
    * @param {HTMLSpanElement?} elem - The element to insert space.
    * @returns {HTMLSpanElement?} New child element.
@@ -482,7 +482,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Inserts text hints into containers recursively.
+   * Insert text hints into containers recursively.
    *
    * @param {HTMLSpanElement} elem - The element to insert text hints.
    */
@@ -498,7 +498,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Get first letters.
+   * Get first letters in the given math text.
    *
    * @param {string} mathText - The math text to convert to HTML.
    * @param {number} start - The first position to search.
@@ -521,7 +521,7 @@ function toHtml(mathText, isEditable = false) {
     //---------------------------------------------------------------------------------------------------------//
 
     /**
-     * Determines if a given character is a letter.
+     * Determine if a given character is a letter.
      *
      * @param {string} ch - The character to check.
      * @returns {boolean} True if the character is a letter, false otherwise.
@@ -532,7 +532,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Returns the position of the close bracket for the given range of the math text.
+   * Return the position of the close bracket for the given range of the math text.
    *
    * @param {string} mathText - The math text to search in.
    * @param {number} start - The position of the open bracket.
@@ -562,7 +562,7 @@ function toHtml(mathText, isEditable = false) {
   }
 
   /**
-   * Chooses the element to insert into it.
+   * Choose the element to insert into it.
    *
    * @param {HTMLSpanElement} rootElem - The root element being constructed.
    * @param {HTMLSpanElement} childElem - The child element being constructed.
@@ -585,7 +585,7 @@ function toHtml(mathText, isEditable = false) {
 }
 
 /**
- * Converts HTML to math text.
+ * Convert HTML to math text.
  *
  * @param {string} html - The input HTML to convert.
  * @param {boolean} [isEditable=false] - Whether or not the given HTML is editable.
@@ -685,7 +685,7 @@ function toMathText(html, isEditable = false) {
   }
 
   /**
-   * Converts element's children to math text.
+   * Convert element's children to math text.
    *
    * @param {HTMLSpanElement} elem - The HTML element whose children should be converted.
    * @returns {string} The math text representation of the element children.
@@ -724,7 +724,7 @@ function toMathText(html, isEditable = false) {
   }
 
   /**
-   * Puts the text in brackets.
+   * Put the text in brackets.
    *
    * @param {String} text - The text to put in brackets.
    * @returns {String} The result.
@@ -734,7 +734,7 @@ function toMathText(html, isEditable = false) {
   }
 
   /**
-   * Puts the text in brackets if its length > 1, otherwise does nothing.
+   * Put the text in brackets if its length > 1, otherwise do nothing.
    *
    * @param {String} text - The text to put in brackets.
    * @returns {String} The result.
@@ -749,7 +749,7 @@ function toMathText(html, isEditable = false) {
 }
 
 /**
- * Sets size and color of all SVG sub children in the given element.
+ * Set size and color of all SVG sub children in the given element.
  *
  * @param {HTMLSpanElement} elem - The element to search.
  */
@@ -823,7 +823,7 @@ function redrawSvg(elem) {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Updates the height stack with the given height.
+   * Update the height stack with the given height.
    *
    * @param {number[]} maxHeightStack - The height stack to update.
    * @param {number} height - The given height.
@@ -858,7 +858,7 @@ function redrawSvg(elem) {
   }
 
   /**
-   * Returns the minimal height of SVG brackets.
+   * Return the minimal height of SVG brackets.
    *
    * @param {number} height - The minimal height.
    */
@@ -867,7 +867,7 @@ function redrawSvg(elem) {
   }
 
   /**
-   * Returns the delta height of SVG brackets.
+   * Return the delta height of SVG brackets.
    *
    * @param {number} height - The delta height.
    */
@@ -876,7 +876,7 @@ function redrawSvg(elem) {
   }
 
   /**
-   * Sets the SVG element height.
+   * Set the SVG element height.
    *
    * @param {SVGSVGElement} elem - The SVG element to set its height.
    * @param {number} height - The height to set.
@@ -888,7 +888,7 @@ function redrawSvg(elem) {
   }
 
   /**
-   * Sets the SVG icon color.
+   * Set the SVG icon color.
    *
    * @param {SVGSVGElement} elem - The SVG element to set its color.
    */
@@ -899,7 +899,7 @@ function redrawSvg(elem) {
 }
 
 /**
- * Concatenates the elements outside the first .
+ * Concatenate the elements outside the first.
  *
  * @param {HTMLSpanElement} firstElem - The first element to concatenate.
  * @param {HTMLSpanElement} lastElem - The last element to concatenate.
@@ -982,7 +982,7 @@ function concatElementsOutside(firstElem, lastElem) {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Returns the index of the previous element or of the given element or of the first element.
+   * Return the index of the previous element or of the given element or of the first element.
    *
    * @param {HTMLSpanElement} elem - The element to find its index.
    * @returns {number} The element index.
@@ -1006,7 +1006,7 @@ function concatElementsOutside(firstElem, lastElem) {
   }
 
   /**
-   * Returns the index of the next element or of the given element or of the last element.
+   * Return the index of the next element or of the given element or of the last element.
    *
    * @param {HTMLSpanElement} elem - The element to find its index.
    * @returns {number} The element index.
@@ -1031,7 +1031,7 @@ function concatElementsOutside(firstElem, lastElem) {
 }
 
 /**
- * Concatenates two text elements and restores the cursor position.
+ * Concatenate two text elements and restore the cursor position.
  *
  * @param {HTMLSpanElement?} leftElem - The left element to check.
  * @param {HTMLSpanElement?} rightElem - The right element to check.
@@ -1065,7 +1065,7 @@ function concatTextElements(leftElem, rightElem) {
 }
 
 /**
- * Inserts text hints from the start child to the end child of the given element.
+ * Insert text hints from the start child to the end child of the given element.
  *
  * @param {HTMLSpanElement} elem - The element to insert text hints.
  * @param {number} start - The start index to check.
@@ -1116,7 +1116,7 @@ function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
 }
 
 /**
- * Inserts empty text elements from the start child to the end child of the given element.
+ * Insert empty text elements from the start child to the end child of the given element.
  *
  * @param {HTMLSpanElement} elem - The element to insert empty texts.
  * @param {number} start - The start index to check.
@@ -1166,7 +1166,7 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
 }
 
 /**
- * Inserts borders inside containers recursively.
+ * Insert borders inside containers recursively.
  *
  * @param {HTMLSpanElement} elem - The element to insert borders.
  */
@@ -1210,7 +1210,7 @@ function insertBordersRec(elem) {
 }
 
 /**
- * Parses the operator class name from the operator name.
+ * Parse the operator class name from the operator name.
  *
  * @param {HTMLSpanElement} prevElem - The previous element.
  * @param {string} operName - The name of the operator.
@@ -1250,7 +1250,7 @@ function parseOperator(prevElem, operName) {
 }
 
 /**
- * Returns the first text hint element found within the given range of child elements of the specified parent element.
+ * Return the first text hint element found within the given range of child elements of the specified parent element.
  *
  * @param {HTMLSpanElement} rootElem - The root element to search within.
  * @param {number} startIndex - The index of the first child element to check.
@@ -1285,7 +1285,7 @@ function findFirstTextHintElement(rootElem, startIndex, endIndex) {
 }
 
 /**
- * Sets the cursor to the text element.
+ * Set the cursor to the text element.
  *
  * @param {HTMLSpanElement} elem - The text element to set the cursor.
  */
@@ -1299,7 +1299,7 @@ function setCursorToTextElement(elem, offset) {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Sets the cursor to the empty element.
+   * Set the cursor to the empty element.
    *
    * @param {HTMLSpanElement} elem - The empty element to set the cursor to.
    */
@@ -1313,7 +1313,7 @@ function setCursorToTextElement(elem, offset) {
   }
 
   /**
-   * Sets the cursor to the non empty element.
+   * Set the cursor to the non empty element.
    *
    * @param {HTMLSpanElement} elem - The non empty element to set the cursor to.
    * @param {number} offset - The offset to set the cursor to.
@@ -1350,7 +1350,7 @@ function setCursorToTextElement(elem, offset) {
 }
 
 /**
- * Sets the cursor to the beginning of the element's content.
+ * Set the cursor to the beginning of the element's content.
  *
  * @param {(HTMLSpanElement | SVGElement)?} elem - The element to set the cursor to the beginning of.
  */
@@ -1391,7 +1391,7 @@ function setCursorToElementBegin(elem) {
 }
 
 /**
- * Sets the cursor to the ending of the element's content.
+ * Set the cursor to the ending of the element's content.
  *
  * @param {(HTMLSpanElement | SVGElement)?} elem - The element to set the cursor to the ending of.
  */
@@ -1447,7 +1447,7 @@ function restoreRange(elem, elemPath, offset) {
 }
 
 /**
- * Returns the path of indices of the given element relative to The root element.
+ * Return the path of indices of the given element relative to The root element.
  *
  * @param {HTMLSpanElement} rootElem - The root element to which the path is relative.
  * @param {HTMLSpanElement} elem - The element for which the path is calculated.
@@ -1471,7 +1471,7 @@ function getElementPath(rootElem, elem) {
 }
 
 /**
- * Checks if the math text of the element is valid.
+ * Check if the math text of the element is valid.
  *
  * @param {HTMLSpanElement} elem - The element to check.
  * @returns {boolean} Whether the element is complete.
@@ -1501,7 +1501,7 @@ function isComplete(elem) {
 }
 
 /**
- * Determines whether the given element is a non empty text element.
+ * Determine whether the given element is a non empty text element.
  *
  * @param {HTMLSpanElement} elem
  * @returns {boolean} Whether the given element is a non empty text element.
@@ -1511,7 +1511,7 @@ function isNotEmptyTextElement(elem) {
 }
 
 /**
- * Determines whether the given element is a empty element.
+ * Determine whether the given element is a empty element.
  *
  * @param {HTMLSpanElement} elem
  * @returns {boolean} Whether the given element is a empty element.
@@ -1521,7 +1521,7 @@ function isEmptyElement(elem) {
 }
 
 /**
- * Checks if all child elements of the given element are empty or not.
+ * Check if all child elements of the given element are empty or not.
  *
  * @param {HTMLSpanElement} elem - The element to check.
  * @returns {boolean} Whether all child elements are empty or not.
@@ -1550,7 +1550,7 @@ function areElementChildrenEmpty(elem) {
 }
 
 /**
- * Inserts children into the element.
+ * Insert children into the element.
  *
  * @param {HTMLSpanElement} elem - The element to insert children.
  * @param {HTMLCollection} children - The children to insert.
@@ -1566,7 +1566,7 @@ function insertChildren(elem, children, beforeElem) {
 }
 
 /**
- * Returns the class name of the HTML or SVG element.
+ * Return the class name of the HTML or SVG element.
  *
  * @param {Node?} elem - The HTML or SVG element.
  * @returns {string} The element class name.
@@ -1584,7 +1584,7 @@ function getClassName(elem) {
 }
 
 /**
- * Sets the class name of the HTML or SVG element.
+ * Set the class name of the HTML or SVG element.
  *
  * @param {HTMLOrSVGElement?} elem - The HTML or SVG element.
  * @param {string} className The class name to set.
@@ -1598,7 +1598,7 @@ function setClassName(elem, className) {
 }
 
 /**
- * Creates a new HTML span element with the specified class name.
+ * Create a new HTML span element with the specified class name.
  *
  * @param {string} className - The class name to use for new element.
  * @param {boolean} [isEditable=false] - Whether new element should be editable.
@@ -1611,7 +1611,7 @@ function createElement(className) {
 }
 
 /**
- * Creates an SVG element with the specified class name, path and view box.
+ * Create an SVG element with the specified class name, path and view box.
  *
  * @param {string} className - The class name to use for new element.
  * @param {string} path - The SVG path to draw.
@@ -1631,7 +1631,7 @@ function createNewSvg(className, path, viewBox) {
 }
 
 /**
- * Creates a cached SVG element.
+ * Create a cached SVG element.
  *
  * @param {string} className - The class name to use for new element.
  * @returns {SVGSVGElement} Created SVG element.
@@ -1645,7 +1645,7 @@ function getColorWithOpacity(color, opacity) {
 }
 
 /**
- * Creates a new RegExp object from the specified string.
+ * Create a new RegExp object from the specified string.
  *
  * @param {string} str - The string to convert to a RegExp object.
  * @returns {RegExp} Newly created RegExp object.
@@ -1655,7 +1655,7 @@ function makeRegexFromString(str) {
 }
 
 /**
- * Returns the Unicode length of the specified string.
+ * Return the Unicode length of the specified string.
  *
  * @param {string} text - The string to measure.
  * @returns {number} The Unicode length of the string.
@@ -1665,7 +1665,7 @@ function getUnicodeTextLength(text) {
 }
 
 /**
- * Removes the first and the last spaces from the given string.
+ * Remove the first and the last spaces from the given string.
  *
  * @param {String} str - The string to remove spaces from.
  * @returns {String} - The result.

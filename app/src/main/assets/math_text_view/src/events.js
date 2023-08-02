@@ -18,7 +18,7 @@ setInterval(function () {
 //---------------------------------------------------------------------------------------------------------//
 
 /**
- * Disables default cotext menu.
+ * Disable default cotext menu.
  *
  * @param {MouseEvent} event - The context menu event.
  */
@@ -27,7 +27,7 @@ function onContextMenu(event) {
 }
 
 /**
- * Disables double click.
+ * Disable double click.
  *
  * @param {MouseEvent} event - The mouse down event.
  */
@@ -72,7 +72,7 @@ function onTextChange() {
 }
 
 /**
- * Deselects the previously selected element and selects the element where the cursor is currently placed.
+ * Deselect the previously selected element and select the element where the cursor is currently placed.
  */
 function onSelectedElementChanged() {
   deselectElement(selectedElem);
@@ -96,7 +96,7 @@ function onSelectedElementChanged() {
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Selects the element where the cursor is currently placed and sets its style.
+   * Select the element where the cursor is currently placed and sets its style.
    *
    * @param {HTMLSpanElement} elem - The element where the cursor is currently placed.
    */
@@ -127,7 +127,7 @@ function onSelectedElementChanged() {
   }
 
   /**
-   * Deselects the element where the cursor is currently placed and sets its style.
+   * Deselect the element where the cursor is currently placed and sets its style.
    */
   function deselectElement(elem) {
     if (!mathTextView.isContentEditable) {
