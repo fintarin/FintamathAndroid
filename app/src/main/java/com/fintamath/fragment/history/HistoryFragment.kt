@@ -14,8 +14,14 @@ import com.fintamath.databinding.FragmentHistoryBinding
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.storage.CalculatorInputStorage
+import java.util.Timer
+import java.util.TimerTask
+import kotlin.concurrent.schedule
 
 class HistoryFragment : Fragment() {
+
+    private val loadingTime: Long = 1000
+    private lateinit var loadingTask: TimerTask
 
     private lateinit var viewBinding: FragmentHistoryBinding
 
@@ -37,7 +43,20 @@ class HistoryFragment : Fragment() {
 
         initBarButtons()
 
+        loadingTask = Timer().schedule(loadingTime) {
+            requireActivity().runOnUiThread {
+                viewBinding.loadingView.visibility = View.GONE
+                onItemsCountChange()
+            }
+        }
+
         return viewBinding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        loadingTask.cancel()
     }
 
     private fun initBarButtons() {
@@ -48,12 +67,10 @@ class HistoryFragment : Fragment() {
     }
 
     private fun onItemsCountChange() {
-        val count = HistoryStorage.getItems().size
-
-        if (HistoryStorage.getItems().isEmpty() && viewBinding.emptyHistoryTextView.visibility != VISIBLE) {
+        if (HistoryStorage.getItems().isEmpty()) {
             viewBinding.historyListView.visibility = GONE
             viewBinding.emptyHistoryTextView.visibility = VISIBLE
-        } else if (count > 0 && viewBinding.emptyHistoryTextView.visibility != GONE) {
+        } else {
             viewBinding.emptyHistoryTextView.visibility = GONE
             viewBinding.historyListView.visibility = VISIBLE
         }

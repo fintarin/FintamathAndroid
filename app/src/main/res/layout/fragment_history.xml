@@ -79,7 +79,18 @@
 
     <RelativeLayout 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
+        <com.fintamath.widget.loading.LoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:dots_color="@color/text_main"
+            app:dots_duration="500"
+            app:dots_count="3"
+            app:dots_radius="@dimen/radius_loading_dots" />
 
         <TextView
             android:id="@+id/emptyHistoryTextView"
@@ -87,6 +98,7 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:gravity="center"
+            android:visibility="gone"
             android:text="@string/empty_history_message"
             android:textSize="@dimen/text_size_main"
             android:textColor="@color/text_hint" />
@@ -97,6 +109,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:visibility="invisible"
             app:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/layout_history_item"/>
 
