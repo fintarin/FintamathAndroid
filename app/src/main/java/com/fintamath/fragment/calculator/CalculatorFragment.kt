@@ -278,38 +278,23 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun cutSolutionTexts(texts: List<String>): List<String> {
-        val inputText = formatSolution(texts.first())
-        val result = mutableListOf<String>()
+        val inText = texts.first()
+        val solTexts = texts.distinctBy { formatSolution(it) }.toMutableList()
 
-        val distinctTexts = texts.distinctBy {
-            formatSolution(it)
+        if (solTexts.size > 1 && solTexts.first() == inText) {
+            solTexts.removeFirst()
         }
 
-        for (i in distinctTexts.indices) {
-            if (formatSolution(distinctTexts[i]) != inputText) {
-                result.add(distinctTexts[i])
-            }
+        while (solTexts.size > 1 && countTextsLength(solTexts) > maxSolutionLength) {
+            solTexts.removeFirst()
         }
 
-        if (result.isEmpty()) {
-            result.add(distinctTexts.first())
-        }
-
-        if (result.size > 1) {
-            if (countTextsLength(distinctTexts) > maxSolutionLength) {
-                result.removeFirst()
-            }
-        }
-
-        return result
+        return solTexts
     }
 
     private fun formatSolution(text: String): String {
         var result = text
         result = result.replace("""\.0(\D|\b)""".toRegex(), "$1")
-        result = result.replace("(", "");
-        result = result.replace(")", "");
-        result = result.replace(" ", "");
         return result
     }
 

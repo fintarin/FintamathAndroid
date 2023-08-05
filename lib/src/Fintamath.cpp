@@ -30,12 +30,14 @@ std::string makeOutResult(const std::string &res) {
 
 std::string calculate(const std::string &inStr) {
   try {
-    Expression inExpr(inStr);
-    Expression solExpr = solve(inExpr);
+    ArgumentPtr inExpr = parseExpr(inStr);
+    Expression simplExpr(inExpr);
+    Expression solExpr = solve(simplExpr);
     Expression solPrecise10Expr = solExpr.precise(10);
 
-    std::string solutions =
-        makeOutResult(inStr) + makeOutResult(solExpr.toString()) + makeOutResult(solPrecise10Expr.toString());
+    std::string solutions = makeOutResult(inExpr->toString()) + //
+                            makeOutResult(solExpr.toString()) + //
+                            makeOutResult(solPrecise10Expr.toString());
 
     if (solutions.empty() || solutions.size() >= maxSolutionLength) {
       return charLimitExc;
