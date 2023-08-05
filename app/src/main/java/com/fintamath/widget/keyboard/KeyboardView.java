@@ -220,7 +220,7 @@ public class KeyboardView extends View implements View.OnClickListener {
 
     private static final int REPEAT_INTERVAL = 50; // ~20 keys per second
     private static final int REPEAT_START_DELAY = 400;
-    private static final int LONGPRESS_TIMEOUT = 20;
+    private static final int LONGPRESS_TIMEOUT = 10;
 
     private static final int MAX_NEARBY_KEYS = 12;
     private final int[] mDistances = new int[MAX_NEARBY_KEYS];
