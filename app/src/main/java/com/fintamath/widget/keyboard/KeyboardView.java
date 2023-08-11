@@ -169,7 +169,6 @@ public class KeyboardView extends View implements View.OnClickListener {
     private static final int MSG_SHOW_PREVIEW = 1;
     private static final int MSG_REMOVE_PREVIEW = 2;
     private static final int MSG_REPEAT = 3;
-    private static final int MSG_LONGPRESS = 4;
 
     private static final int DELAY_BEFORE_PREVIEW = 0;
     private static final int DELAY_AFTER_PREVIEW = 30;
@@ -220,7 +219,6 @@ public class KeyboardView extends View implements View.OnClickListener {
 
     private static final int REPEAT_INTERVAL = 50; // ~20 keys per second
     private static final int REPEAT_START_DELAY = 400;
-    private static final int LONGPRESS_TIMEOUT = 10;
 
     private static final int MAX_NEARBY_KEYS = 12;
     private final int[] mDistances = new int[MAX_NEARBY_KEYS];
@@ -336,9 +334,6 @@ public class KeyboardView extends View implements View.OnClickListener {
                                 Message repeat = Message.obtain(this, MSG_REPEAT);
                                 sendMessageDelayed(repeat, REPEAT_INTERVAL);
                             }
-                            break;
-                        case MSG_LONGPRESS:
-                            openPopupIfRequired((MotionEvent) msg.obj);
                             break;
                     }
                 }
@@ -956,6 +951,8 @@ public class KeyboardView extends View implements View.OnClickListener {
         }
 
         mPreviewTextContainer.setVisibility(VISIBLE);
+
+        showPopupKeyboard(keyIndex);
     }
 
     /**
@@ -990,31 +987,16 @@ public class KeyboardView extends View implements View.OnClickListener {
         invalidate();
     }
 
-    private boolean openPopupIfRequired(MotionEvent me) {
+    protected boolean showPopupKeyboard(int popupKeyId) {
         // Check if we have a popup layout specified first.
         if (mPopupLayout == 0) {
             return false;
         }
-        if (mCurrentKey < 0 || mCurrentKey >= mKeys.length) {
+        if (popupKeyId < 0 || popupKeyId >= mKeys.length) {
             return false;
         }
 
-        Key popupKey = mKeys[mCurrentKey];
-        boolean result = onLongPress(popupKey);
-        if (result) {
-            mAbortKey = true;
-        }
-        return result;
-    }
-
-    /**
-     * Called when a key is long pressed. By default this will open any popup keyboard associated
-     * with this key through the attributes popupLayout and popupCharacters.
-     * @param popupKey the key that was long pressed
-     * @return true if the long press is handled, false otherwise. Subclasses should call the
-     * method on the base class if the subclass doesn't wish to handle the call.
-     */
-    protected boolean onLongPress(Key popupKey) {
+        Key popupKey = mKeys[popupKeyId];
         int popupKeyboardId = popupKey.popupResId;
 
         if (popupKeyboardId == 0) {
@@ -1190,7 +1172,6 @@ public class KeyboardView extends View implements View.OnClickListener {
         if (mGestureDetector.onTouchEvent(me)) {
             showPreview(NOT_A_KEY);
             mHandler.removeMessages(MSG_REPEAT);
-            mHandler.removeMessages(MSG_LONGPRESS);
             return true;
         }
 
@@ -1228,15 +1209,10 @@ public class KeyboardView extends View implements View.OnClickListener {
                         break;
                     }
                 }
-                if (mCurrentKey != NOT_A_KEY) {
-                    Message msg = mHandler.obtainMessage(MSG_LONGPRESS, me);
-                    mHandler.sendMessageDelayed(msg, LONGPRESS_TIMEOUT);
-                }
                 showPreview(keyIndex);
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                boolean continueLongPress = false;
                 if (keyIndex != NOT_A_KEY) {
                     if (mCurrentKey == NOT_A_KEY) {
                         mCurrentKey = keyIndex;
@@ -1244,7 +1220,6 @@ public class KeyboardView extends View implements View.OnClickListener {
                     } else {
                         if (keyIndex == mCurrentKey) {
                             mCurrentKeyTime += eventTime - mLastMoveTime;
-                            continueLongPress = true;
                         } else if (mRepeatKeyIndex == NOT_A_KEY) {
                             resetMultiTap();
                             mLastKey = mCurrentKey;
@@ -1255,15 +1230,6 @@ public class KeyboardView extends View implements View.OnClickListener {
                             mCurrentKey = keyIndex;
                             mCurrentKeyTime = 0;
                         }
-                    }
-                }
-                if (!continueLongPress) {
-                    // Cancel old longpress
-                    mHandler.removeMessages(MSG_LONGPRESS);
-                    // Start new longpress if key has changed
-                    if (keyIndex != NOT_A_KEY) {
-                        Message msg = mHandler.obtainMessage(MSG_LONGPRESS, me);
-                        mHandler.sendMessageDelayed(msg, LONGPRESS_TIMEOUT);
                     }
                 }
                 showPreview(mCurrentKey);
@@ -1393,7 +1359,6 @@ public class KeyboardView extends View implements View.OnClickListener {
     private void removeMessages() {
         if (mHandler != null) {
             mHandler.removeMessages(MSG_REPEAT);
-            mHandler.removeMessages(MSG_LONGPRESS);
             mHandler.removeMessages(MSG_SHOW_PREVIEW);
         }
     }
