@@ -279,7 +279,7 @@ class CalculatorFragment : Fragment() {
 
     private fun cutSolutionTexts(texts: List<String>): List<String> {
         val inText = texts.first()
-        val solTexts = texts.distinctBy { formatSolution(it) }.toMutableList()
+        val solTexts = texts.map { formatSolution(it) }.distinct().toMutableList()
 
         if (solTexts.size > 1 && solTexts.first() == inText) {
             solTexts.removeFirst()
