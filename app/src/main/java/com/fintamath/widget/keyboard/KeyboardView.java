@@ -46,9 +46,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewPropertyAnimator;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.fintamath.R;
 
@@ -1101,7 +1104,9 @@ public class KeyboardView extends View implements View.OnClickListener {
                 case MotionEvent.ACTION_DOWN:
                     performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 case MotionEvent.ACTION_UP:
-                    performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                    if (mPreviewPopup.isShowing()) {
+                        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                    }
             }
         }
 
@@ -1354,6 +1359,10 @@ public class KeyboardView extends View implements View.OnClickListener {
         mBuffer = null;
         mCanvas = null;
         mMiniKeyboardCache.clear();
+
+        mAbortKey = true;
+        showPreview(NOT_A_KEY);
+        invalidateKey(mCurrentKey);
     }
 
     private void removeMessages() {
@@ -1367,6 +1376,22 @@ public class KeyboardView extends View implements View.OnClickListener {
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         closing();
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+
+        if (visibility != View.VISIBLE) {
+            closing();
+        }
+    }
+
+    @Override
+    public ViewPropertyAnimator animate() {
+        closing();
+
+        return super.animate();
     }
 
     private void dismissPopupKeyboard() {
