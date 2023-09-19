@@ -178,6 +178,7 @@ function toHtml(mathText, isEditable = false) {
   function insertOperator(elem, operatorClass, operatorName) {
     const operElem = createElement(operatorClass);
     operElem.innerHTML = operatorName;
+    operElem.contentEditable = 'false';
     return elem.appendChild(operElem);
   }
 
