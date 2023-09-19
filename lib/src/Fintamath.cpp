@@ -21,8 +21,7 @@ const char *failedToSolveExc = "Failed to solve";
 
 static pid_t calcPid = -1;
 
-static auto *solutionStrShared =
-    (char *)mmap(nullptr, maxSolutionLength, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+static auto *solutionStrShared = (char *)mmap(nullptr, maxSolutionLength, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 
 std::string makeOutResult(const std::string &res) {
   return res + "\n";
@@ -35,8 +34,8 @@ std::string calculate(const std::string &inStr) {
     Expression solExpr = solve(simplExpr);
     Expression solPrecise10Expr = solExpr.precise(10);
 
-    std::string solutions = makeOutResult(inExpr->toString()) + //
-                            makeOutResult(solExpr.toString()) + //
+    std::string solutions = makeOutResult(inExpr->toString()) +
+                            makeOutResult(solExpr.toString()) +
                             makeOutResult(solPrecise10Expr.toString());
 
     if (solutions.empty() || solutions.size() >= maxSolutionLength) {
@@ -59,8 +58,7 @@ void stopCurrentCalculations() {
   }
 }
 
-extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNIEnv *env, jobject instance,
-                                                                             jstring inJStr) {
+extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNIEnv *env, jobject instance, jstring inJStr) {
   stopCurrentCalculations();
 
   std::string inStr = env->GetStringUTFChars(inJStr, nullptr);
@@ -111,7 +109,6 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
   }
 }
 
-extern "C" JNIEXPORT void JNICALL Java_com_fintamath_calculator_Calculator_stopCurrentCalculations(JNIEnv *env,
-                                                                                                   jobject instance) {
+extern "C" JNIEXPORT void JNICALL Java_com_fintamath_calculator_Calculator_stopCurrentCalculations(JNIEnv *env, jobject instance) {
   stopCurrentCalculations();
 }
