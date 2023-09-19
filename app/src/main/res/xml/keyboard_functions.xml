@@ -126,7 +126,7 @@
     <Row>
         <Key
             app:keyOutputText="I"
-            app:keyLabel="𝑖"/>
+            app:keyLabel="𝘪"/>
         <Key
             app:keyOutputText="abs()"
             app:keyIcon="@drawable/ic_key_abs" />
