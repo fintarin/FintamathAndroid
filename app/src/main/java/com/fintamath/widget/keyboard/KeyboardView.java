@@ -59,6 +59,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A view that renders a virtual {@link Keyboard}. It handles rendering of keys and
@@ -331,6 +332,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                             break;
                         case MSG_REMOVE_PREVIEW:
                             mPreviewTextContainer.setVisibility(INVISIBLE);
+                            dismissPopupKeyboard();
                             break;
                         case MSG_REPEAT:
                             if (repeatKey()) {
@@ -1110,10 +1112,6 @@ public class KeyboardView extends View implements View.OnClickListener {
             }
         }
 
-        if (mMiniKeyboardOnScreen && mMiniKeyboard != null && mMiniKeyboard.isAttachedToWindow()) {
-            return onMiniKeyboardTouchEvent(me);
-        }
-
         // Convert multi-pointer up/down events to single up/down events to
         // deal with the typical multi-pointer behavior of two-thumb typing
         final int pointerCount = me.getPointerCount();
@@ -1182,8 +1180,12 @@ public class KeyboardView extends View implements View.OnClickListener {
 
         // Needs to be called after the gesture detector gets a turn, as it may have
         // displayed the mini keyboard
-        if (mMiniKeyboardOnScreen && action != MotionEvent.ACTION_CANCEL) {
-            return true;
+        if (mMiniKeyboardOnScreen &&
+                mMiniKeyboard != null &&
+                mMiniKeyboard.isAttachedToWindow() &&
+                action != MotionEvent.ACTION_CANCEL) {
+
+            return onMiniKeyboardTouchEvent(me);
         }
 
         switch (action) {
@@ -1281,6 +1283,7 @@ public class KeyboardView extends View implements View.OnClickListener {
     }
 
     private boolean onMiniKeyboardTouchEvent(MotionEvent me) {
+        final int action = me.getAction();
         final long now = me.getEventTime();
         float rawX = me.getRawX();
         float rawY = me.getRawY();
@@ -1291,14 +1294,16 @@ public class KeyboardView extends View implements View.OnClickListener {
         Rect miniKeyboardRect = getViewDrawingRect(mMiniKeyboard);
         Rect previewRect = getViewDrawingRect(mPreviewTextContainer);
 
-        if (rawX < miniKeyboardRect.left - widthDelta
-                || rawX > miniKeyboardRect.right + widthDelta
-                || rawY < previewRect.top - heightDelta
-                || rawY > previewRect.bottom + heightDelta) {
+        if (action == MotionEvent.ACTION_MOVE) {
+            if (rawX < miniKeyboardRect.left - widthDelta
+                    || rawX > miniKeyboardRect.right + widthDelta
+                    || rawY < previewRect.top - heightDelta
+                    || rawY > previewRect.bottom + heightDelta) {
 
-            dismissPopupKeyboard();
-            return onTouchEvent(MotionEvent.obtain(now, now,
-                    MotionEvent.ACTION_DOWN, me.getX(), me.getY(), me.getMetaState()));
+                dismissPopupKeyboard();
+                return onTouchEvent(MotionEvent.obtain(now, now,
+                        MotionEvent.ACTION_DOWN, me.getX(), me.getY(), me.getMetaState()));
+            }
         }
 
         float x = me.getX() - mMiniKeyboard.mMiniKeyboardOffsetX;
@@ -1306,14 +1311,8 @@ public class KeyboardView extends View implements View.OnClickListener {
         x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
         float y = mMiniKeyboard.getY() + mMiniKeyboardOffsetY;
 
-        int action = me.getAction() == MotionEvent.ACTION_MOVE ? MotionEvent.ACTION_DOWN : me.getAction();
-
-        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP) {
-            return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,
-                    action, x, y, me.getMetaState()));
-        }
-
-        return false;
+        return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,
+                action, x, y, me.getMetaState()));
     }
 
     private Rect getViewDrawingRect(View view) {
@@ -1379,23 +1378,17 @@ public class KeyboardView extends View implements View.OnClickListener {
     }
 
     @Override
-    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
-
-        if (visibility != View.VISIBLE) {
-            closing();
-        }
-    }
-
-    @Override
     public ViewPropertyAnimator animate() {
         closing();
-
         return super.animate();
     }
 
     private void dismissPopupKeyboard() {
         if (mPopupKeyboard.isShowing()) {
+            if (mMiniKeyboard != null) {
+                mMiniKeyboard.showPreview(NOT_A_KEY);
+            }
+
             mPopupKeyboard.dismiss();
             mMiniKeyboardOnScreen = false;
             showPreview(NOT_A_KEY);
