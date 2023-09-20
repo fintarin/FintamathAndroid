@@ -41,23 +41,23 @@ svg {
 
 .text {
   line-height: 1;
-  margin-top: 2px;
-  padding-top: 0.5px;
-  padding-bottom: 0.5px;
+  margin-top: 0.1em;
+  padding-top: 0.025em;
+  padding-bottom: 0.025em;
 }
 
 .text:empty::before {
   content: attr(empty-hint);
-  padding-left: 0.01px;
-  padding-right: 0.01px;
+  padding-left: 0.001em;
+  padding-right: 0.001em;
   opacity: 0.5;
 }
 
 .text-hint {
   line-height: 1;
-  margin-top: 2px;
-  padding-top: 0.5px;
-  padding-bottom: 0.5px;
+  margin-top: 0.1em;
+  padding-top: 0.025em;
+  padding-bottom: 0.025em;
 }
 
 .text-hint:empty::before {
@@ -72,33 +72,33 @@ svg {
 .binary-operator,
 .unary-prefix-operator,
 .unary-postfix-operator {
-  margin-top: 2px;
+  margin-top: 0.1em;
   opacity: 0.75;
 }
 
 .binary-operator {
-  margin-left: 2px;
-  margin-right: 2px;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
 }
 
 .sup {
   font-size: 70%;
   vertical-align: super; /* TODO: remove */
-  margin-left: 1px;
-  margin-right: 2px;
+  margin-left: 0.05em;
+  margin-right: 0.1em;
 }
 
 .sub {
   font-size: 70%;
   vertical-align: sub; /* TODO: remove */
-  margin-left: 1px;
-  margin-right: 2px;
+  margin-left: 0.05em;
+  margin-right: 0.1em;
 }
 
 .fraction {
   text-align: center; /* TODO: remove */
-  margin-left: 7px;
-  margin-right: 7px;
+  margin-left: 0.35em;
+  margin-right: 0.35em;
 }
 
 .numerator {
@@ -115,15 +115,15 @@ svg {
   display: block;
   margin-top: 0.15em;
   margin-bottom: 0.15em;
-  margin-left: -3px;
-  margin-right: -3px;
+  margin-left: -0.15em;
+  margin-right: -0.15em;
   opacity: 0.75;
 }
 
 .function-name {
-  margin-top: 2px;
-  margin-left: 1px;
-  margin-right: -2px;
+  margin-top: 0.1em;
+  margin-left: 0.05em;
+  margin-right: -0.1em;
 }
 
 .function-name::before {
@@ -139,11 +139,11 @@ svg {
 }
 
 .open-bracket {
-  margin-left: 3px;
+  margin-left: 0.15em;
 }
 
 .close-bracket {
-  margin-right: 3px;
+  margin-right: 0.15em;
 }
 
 .abs-prefix,
@@ -153,29 +153,29 @@ svg {
 }
 
 .abs-prefix {
-  margin-left: 1.5px;
+  margin-left: 0.075em;
 }
 
 .abs-postfix {
-  margin-right: 1.5px;
+  margin-right: 0.075em;
 }
 
 .sqrt {
-  margin-right: 4px;
+  margin-right: 0.2em;
 }
 
 .root {
-  margin-right: 4px;
-  margin-left: 4px;
+  margin-right: 0.2em;
+  margin-left: 0.2em;
 }
 
 .root-content {
   border-top: 0.08em solid;
   border-left: 0.08em solid;
-  padding-top: 1.5px;
-  padding-bottom: 1.5px;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-top: 0.075em;
+  padding-bottom: 0.075em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
 }
 
 .root-prefix {
@@ -198,8 +198,8 @@ svg {
 .log-index {
   font-size: 70%;
   vertical-align: sub; /* TODO: remove */
-  margin-left: 2px;
-  margin-right: -2px;
+  margin-left: 0.1em;
+  margin-right: -0.1em;
 }
 
 .open-bracket,
@@ -209,17 +209,17 @@ svg {
 }
 
 .open-bracket {
-  margin-left: 3px;
+  margin-left: 0.15em;
 }
 
 .close-bracket {
-  margin-right: 3px;
+  margin-right: 0.15em;
 }
 
 .infinite,
 .complex-infinite {
   width: 0.7em;
   height: 0.7em;
-  margin-left: 2px;
-  margin-right: 2px;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
 }
