@@ -158,7 +158,6 @@ public class KeyboardView extends View implements View.OnClickListener {
 
     private final PopupWindow mPopupKeyboard;
     private KeyboardView mMiniKeyboard;
-    private boolean mMiniKeyboardOnScreen;
     private boolean mIsMiniKeyboard;
     private int mMiniKeyboardLocationFlags;
     private View mPopupParent;
@@ -1094,7 +1093,6 @@ public class KeyboardView extends View implements View.OnClickListener {
         mPopupKeyboard.setWidth(mMiniKeyboardContainer.getMeasuredWidth());
         mPopupKeyboard.setHeight(mMiniKeyboardContainer.getMeasuredHeight());
         mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y);
-        mMiniKeyboardOnScreen = true;
         invalidateAllKeys();
 
         return true;
@@ -1186,11 +1184,7 @@ public class KeyboardView extends View implements View.OnClickListener {
 
         // Needs to be called after the gesture detector gets a turn, as it may have
         // displayed the mini keyboard
-        if (mMiniKeyboardOnScreen &&
-                mMiniKeyboard != null &&
-                mMiniKeyboard.isAttachedToWindow() &&
-                action != MotionEvent.ACTION_CANCEL) {
-
+        if (inMiniKeyboardAttached() && action != MotionEvent.ACTION_CANCEL) {
             return onMiniKeyboardTouchEvent(me);
         }
 
@@ -1269,7 +1263,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                 showPreview(NOT_A_KEY);
                 Arrays.fill(mKeyIndices, NOT_A_KEY);
                 // If we're not on a repeating key (which sends on a DOWN event)
-                if (mRepeatKeyIndex == NOT_A_KEY && !mMiniKeyboardOnScreen && !mAbortKey) {
+                if (mRepeatKeyIndex == NOT_A_KEY && !inMiniKeyboardAttached() && !mAbortKey) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime);
                 }
                 invalidateKey(keyIndex);
@@ -1396,7 +1390,6 @@ public class KeyboardView extends View implements View.OnClickListener {
             }
 
             mPopupKeyboard.dismiss();
-            mMiniKeyboardOnScreen = false;
             showPreview(NOT_A_KEY);
             invalidateAllKeys();
         }
@@ -1425,6 +1418,10 @@ public class KeyboardView extends View implements View.OnClickListener {
         if (eventTime > mLastTapTime + MULTITAP_INTERVAL || keyIndex != mLastSentIndex) {
             resetMultiTap();
         }
+    }
+
+    private boolean inMiniKeyboardAttached() {
+        return mMiniKeyboard != null && mMiniKeyboard.isAttachedToWindow();
     }
 
     private static class SwipeTracker {
