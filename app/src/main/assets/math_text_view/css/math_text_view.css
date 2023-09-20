@@ -153,10 +153,12 @@ svg {
 }
 
 .abs-prefix {
+  padding-right: 0.075em;
   margin-left: 0.075em;
 }
 
 .abs-postfix {
+  padding-left: 0.075em;
   margin-right: 0.075em;
 }
 
