@@ -156,4 +156,5 @@ const svgElementsMap = {
 };
 
 // Define numeric coefficients
-const bracketsScale = 0.1;
+const bracketFirstScale = 1.175;
+const bracketNextScale = 1.1;

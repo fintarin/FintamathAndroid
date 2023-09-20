@@ -793,7 +793,7 @@ function redrawSvg(elem) {
           popHeightStack(maxHeightStack);
           setSvgHeight(openBracketElemsStack.pop(), height);
         } else {
-          updateHeightStack(maxHeightStack, height + getDeltaBracketsHeight());
+          updateHeightStack(maxHeightStack, height * bracketNextScale);
         }
 
         break;
@@ -849,7 +849,7 @@ function redrawSvg(elem) {
    */
   function popHeightStack(maxHeightStack) {
     let height = maxHeightStack.pop();
-    let prevHeight = height + height * bracketsScale;
+    let prevHeight = height * bracketNextScale;
 
     if (maxHeightStack[maxHeightStack.length - 1] < prevHeight) {
       updateHeightStack(maxHeightStack, prevHeight);
@@ -864,16 +864,7 @@ function redrawSvg(elem) {
    * @param {number} height - The minimal height.
    */
   function getMinBracketsHeight() {
-    return mathTextView.firstChild.clientHeight + getDeltaBracketsHeight();
-  }
-
-  /**
-   * Return the delta height of SVG brackets.
-   *
-   * @param {number} height - The delta height.
-   */
-  function getDeltaBracketsHeight() {
-    return mathTextView.firstChild.clientHeight * bracketsScale;
+    return mathTextView.firstChild.clientHeight * bracketFirstScale;
   }
 
   /**

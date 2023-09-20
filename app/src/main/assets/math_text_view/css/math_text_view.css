@@ -84,12 +84,14 @@ svg {
 .sup {
   font-size: 70%;
   vertical-align: super; /* TODO: remove */
+  margin-left: 1px;
   margin-right: 2px;
 }
 
 .sub {
   font-size: 70%;
   vertical-align: sub; /* TODO: remove */
+  margin-left: 1px;
   margin-right: 2px;
 }
 
@@ -146,7 +148,7 @@ svg {
 
 .abs-prefix,
 .abs-postfix {
-  width: 0.4em;
+  width: 0.3em;
   height: 1em;
 }
 
