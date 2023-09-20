@@ -1241,6 +1241,7 @@ function parseOperator(prevElem, operName) {
 
 /**
  * Return the first text hint element found within the given range of child elements of the specified parent element.
+ * Skips text hint elements before binary operators or indexes.
  *
  * @param {HTMLSpanElement} rootElem - The root element to search within.
  * @param {number} startIndex - The index of the first child element to check.
@@ -1259,7 +1260,14 @@ function findFirstTextHintElement(rootElem, startIndex, endIndex) {
     const childElem = rootElem.children[i];
 
     if (getClassName(childElem) === textHintClass) {
-      return childElem;
+      const nextElem = childElem.nextElementSibling;
+
+      if (
+        nextElem === null ||
+        (getClassName(nextElem) !== binaryOperatorClass && !indexContainerClasses.includes(getClassName(nextElem)))
+      ) {
+        return childElem;
+      }
     }
 
     if (childElem instanceof HTMLElement) {
