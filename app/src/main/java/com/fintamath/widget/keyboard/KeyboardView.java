@@ -1021,12 +1021,18 @@ public class KeyboardView extends View implements View.OnClickListener {
             mMiniKeyboard.setOnKeyboardActionListener(new OnKeyboardActionListener() {
                 public void onKey(int primaryCode, int[] keyCodes) {
                     getOnKeyboardActionListener().onKey(primaryCode, keyCodes);
-                    dismissPopupKeyboard();
+
+                    mHandler.sendMessageDelayed(mHandler
+                                    .obtainMessage(MSG_REMOVE_PREVIEW),
+                            DELAY_AFTER_PREVIEW);
                 }
 
                 public void onText(CharSequence text) {
                     getOnKeyboardActionListener().onText(text);
-                    dismissPopupKeyboard();
+
+                    mHandler.sendMessageDelayed(mHandler
+                                    .obtainMessage(MSG_REMOVE_PREVIEW),
+                            DELAY_AFTER_PREVIEW);
                 }
 
                 public void swipeLeft() { }
@@ -1106,7 +1112,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                 case MotionEvent.ACTION_DOWN:
                     performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                 case MotionEvent.ACTION_UP:
-                    if (mPreviewPopup.isShowing()) {
+                    if (mPreviewPopup.isShowing() && mPreviewTextContainer.getVisibility() == VISIBLE) {
                         performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
                     }
             }
@@ -1271,7 +1277,6 @@ public class KeyboardView extends View implements View.OnClickListener {
                 break;
             case MotionEvent.ACTION_CANCEL:
                 removeMessages();
-                dismissPopupKeyboard();
                 mAbortKey = true;
                 showPreview(NOT_A_KEY);
                 invalidateKey(mCurrentKey);
@@ -1311,8 +1316,14 @@ public class KeyboardView extends View implements View.OnClickListener {
         x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
         float y = mMiniKeyboard.getY() + mMiniKeyboardOffsetY;
 
-        return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,
-                action, x, y, me.getMetaState()));
+        int miniKeyboardAction = action == MotionEvent.ACTION_MOVE ? MotionEvent.ACTION_DOWN : action;
+
+        if (miniKeyboardAction == MotionEvent.ACTION_DOWN || miniKeyboardAction == MotionEvent.ACTION_UP) {
+            return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,
+                    miniKeyboardAction, x, y, me.getMetaState()));
+        }
+
+        return false;
     }
 
     private Rect getViewDrawingRect(View view) {
@@ -1349,12 +1360,7 @@ public class KeyboardView extends View implements View.OnClickListener {
     }
 
     public void closing() {
-        if (mPreviewPopup.isShowing()) {
-            mPreviewPopup.dismiss();
-        }
         removeMessages();
-
-        dismissPopupKeyboard();
         mBuffer = null;
         mCanvas = null;
         mMiniKeyboardCache.clear();
@@ -1394,14 +1400,6 @@ public class KeyboardView extends View implements View.OnClickListener {
             showPreview(NOT_A_KEY);
             invalidateAllKeys();
         }
-    }
-
-    public boolean handleBack() {
-        if (mPopupKeyboard.isShowing()) {
-            dismissPopupKeyboard();
-            return true;
-        }
-        return false;
     }
 
     private void resetMultiTap() {
