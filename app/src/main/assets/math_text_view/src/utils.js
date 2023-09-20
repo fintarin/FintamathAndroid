@@ -1679,3 +1679,25 @@ function cutSpaces(str) {
 
   return str;
 }
+
+/**
+ * Creates a new container with all SVG elements to pre-load them.
+ */
+function preloadSVG() {
+  for (let i = 0; i < document.body.childElementCount; i++) {
+    const childElem = document.body.children[i];
+
+    if (getClassName(childElem) === mathTextViewPreloadClass) {
+      return;
+    }
+  }
+
+  const preloadContainer = createElement(mathTextViewPreloadClass);
+
+  document.body.appendChild(preloadContainer);
+  preloadContainer.innerHTML = toHtml('Inf ComplexInf () abs() sqrt()');
+
+  setTimeout(() => {
+    preloadContainer.style.visibility = 'hidden';
+  }, 10);
+}

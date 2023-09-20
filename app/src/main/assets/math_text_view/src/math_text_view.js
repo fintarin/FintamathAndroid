@@ -65,6 +65,10 @@ function setColor(color) {
 function setContentEditable(contentEditable) {
   mathTextView.contentEditable = contentEditable;
   requestFocus();
+
+  if (contentEditable === 'true') {
+    preloadSVG();
+  }
 }
 
 /**
