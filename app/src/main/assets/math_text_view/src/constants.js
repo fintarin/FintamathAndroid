@@ -1,5 +1,6 @@
 // Define a set of CSS class names that are used to style the math elements in the HTML.
 const mathTextViewClass = 'math-text-view';
+const mathTextViewPreloadClass = 'math-text-view-preload';
 const undefinedClass = 'undefined';
 const textClass = 'text';
 const textHintClass = 'text-hint';
