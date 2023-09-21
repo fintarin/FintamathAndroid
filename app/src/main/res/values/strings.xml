@@ -30,7 +30,7 @@
     <string name="failed_to_solve">Failed to solve</string>
 
     <string name="invalid_input_message">Sorry, we don\'t quite understand your math problem…</string>
-    <string name="character_limit_exceeded_message">Sorry, solution character limit exceeded…</string>
+    <string name="character_limit_exceeded_message">Sorry, the result is too big to print…</string>
     <string name="incomplete_input_message">Please, enter a complete math problem.</string>
     <string name="failed_to_solve_message">Sorry, we can\'t solve this problem yet…</string>
 
