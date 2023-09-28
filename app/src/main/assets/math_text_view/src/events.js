@@ -118,7 +118,7 @@ function onSelectedElementChanged() {
     }
 
     selectedElem = elem;
-    selectedElem.setAttribute(emptyHintAttr, textEmptyHintSelected);
+    selectedElem.setAttribute(hintAttr, textEmptyHintSelected);
     selectedElem.style.textDecoration = textDecorationAttr;
 
     if (selectedElem.innerHTML !== '') {
@@ -142,7 +142,7 @@ function onSelectedElementChanged() {
       return;
     }
 
-    elem.setAttribute(emptyHintAttr, '');
+    elem.setAttribute(hintAttr, '');
     elem.style.textDecoration = textDecorationNoneAttr;
 
     selectedElem = null;

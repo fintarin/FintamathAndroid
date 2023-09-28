@@ -164,6 +164,10 @@ class CalculatorFragment : Fragment() {
         CalculatorInputStorage.mathTextData = MathTextData(text)
         cancelSaveToHistoryTask()
 
+        viewBinding.inTextViewHint.visibility = if (viewBinding.inTextView.text.isNotEmpty())
+            View.GONE else
+            View.VISIBLE
+
         if (viewBinding.inTextView.text.isEmpty()) {
             calculatorProcessor.stopCurrentCalculations()
             viewBinding.outSolutionView.hideCurrentView()

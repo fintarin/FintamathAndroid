@@ -42,14 +42,6 @@ class MathTextView @JvmOverloads constructor(
             }
         }
 
-    var hint: String = ""
-        set(value) {
-            if (field != value) {
-                field = value
-                evaluateJavascript("setHint(\"$field\")") { }
-            }
-        }
-
     var textColor: Int = 0xFF000000.toInt()
         set(value) {
             if (field != value) {
@@ -124,7 +116,6 @@ class MathTextView @JvmOverloads constructor(
 
         val a = context.obtainStyledAttributes(attrs, R.styleable.MathTextView)
 
-        hint = a.getString(R.styleable.MathTextView_hint) ?: hint
         textColor = a.getColor(R.styleable.MathTextView_textColor, textColor)
         textSize = toSp(a.getDimensionPixelSize(R.styleable.MathTextView_textSize, toPx(textSize)))
         isEditable = a.getBoolean(R.styleable.MathTextView_isEditable, isEditable)

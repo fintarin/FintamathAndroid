@@ -6,7 +6,6 @@
         <attr name="textColor" format="color" />
         <attr name="textSize" format="dimension" />
         <attr name="isEditable" format="boolean" />
-        <attr name="hint" format="string" />
         <attr name="quickActionPopupLayout" format="reference" />
     </declare-styleable>
 

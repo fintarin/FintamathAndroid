@@ -104,16 +104,27 @@
                     android:clickable="true"
                     android:focusable="true">
 
-                    <com.fintamath.widget.mathview.MathTextView
-                        android:id="@+id/inTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        app:isEditable="true"
-                        app:hint="@string/math_edit_text_hint"
-                        app:textSize="@dimen/text_size_math_text_view"
-                        app:textColor="@color/text_main"
-                        app:quickActionPopupLayout="@layout/layout_popup_quick_action" />
+                        <com.fintamath.widget.mathview.MathTextView
+                            android:id="@+id/inTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            app:isEditable="true"
+                            app:textSize="@dimen/text_size_math_text_view"
+                            app:textColor="@color/text_main"
+                            app:quickActionPopupLayout="@layout/layout_popup_quick_action" />
+
+                        <TextView
+                            android:id="@+id/inTextViewHint"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingHorizontal="18sp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textSize="@dimen/text_size_math_text_view"
+                            android:textColor="@color/text_hint"
+                            android:text="@string/math_edit_text_hint" />
 
                 </FrameLayout>
 

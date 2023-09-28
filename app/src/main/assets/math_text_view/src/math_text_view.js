@@ -39,15 +39,6 @@ function setText(mathText) {
 }
 
 /**
- * Set the hint (:before element) of mathTextView from the given.
- *
- * @param {string} hintText - The hint text to set.
- */
-function setHint(hintText) {
-  mathTextView.setAttribute(mathTextViewHintAttr, hintText);
-}
-
-/**
  * Set the text color of mathTextView from the given.
  *
  * @param {string} color - The color to set.

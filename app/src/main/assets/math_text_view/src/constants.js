@@ -30,8 +30,7 @@ const infClass = 'infinite';
 const complexInfClass = 'complex-infinite';
 
 // Define a set of CSS attributes.
-const mathTextViewHintAttr = 'hint';
-const emptyHintAttr = 'empty-hint';
+const hintAttr = 'hint';
 const beforeContentAttr = 'before-content';
 const textDecorationAttr = 'underline dashed 0.05em';
 const textDecorationNoneAttr = 'none';
