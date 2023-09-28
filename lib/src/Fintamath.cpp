@@ -32,11 +32,11 @@ std::string calculate(const std::string &inStr) {
     ArgumentPtr inExpr = parseExpr(inStr);
     Expression simplExpr(inExpr);
     Expression solExpr = solve(simplExpr);
-    Expression solPrecise10Expr = solExpr.precise(10);
+    Expression solApprox10Expr = solExpr.approximate(10);
 
     std::string solutions = makeOutResult(inExpr->toString()) +
                             makeOutResult(solExpr.toString()) +
-                            makeOutResult(solPrecise10Expr.toString());
+                            makeOutResult(solApprox10Expr.toString());
 
     if (solutions.empty() || solutions.size() >= maxSolutionLength) {
       return charLimitExc;
