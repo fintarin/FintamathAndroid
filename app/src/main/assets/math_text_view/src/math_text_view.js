@@ -6,6 +6,13 @@
 const mathTextView = document.getElementById(mathTextViewClass);
 
 /**
+ * Container to preload SVG images.
+ *
+ * @type {HTMLSpanElement}
+ */
+const svgPreloader = document.getElementById(svgPreloaderClass);
+
+/**
  * Undo stack for undo operation.
  *
  * @type {HTMLSpanElement[]}
@@ -18,6 +25,20 @@ let undoStack = [];
  * @type {HTMLSpanElement[]}
  */
 let redoStack = [];
+
+//---------------------------------------------------------------------------------------------------------//
+
+preloadSvg(openBracketClass, openBracketSvgPath, bracketSvgViewBox);
+preloadSvg(closeBracketClass, closeBracketSvgPath, bracketSvgViewBox);
+preloadSvg(prefixAbsClass, absBorderSvgPath, absBorderSvgViewBox);
+preloadSvg(postfixAbsClass, absBorderSvgPath, absBorderSvgViewBox);
+preloadSvg(rootPrefixClass, sqrtPrefixSvgPath, sqrtPrefixViewBox);
+preloadSvg(infClass, infSvgPath, infViewBox);
+preloadSvg(complexInfClass, complexInfSvgPath, infViewBox);
+
+setTimeout(() => {
+  svgPreloader.style.visibility = 'hidden';
+}, 10);
 
 //---------------------------------------------------------------------------------------------------------//
 
@@ -56,10 +77,6 @@ function setColor(color) {
 function setContentEditable(contentEditable) {
   mathTextView.contentEditable = contentEditable;
   requestFocus();
-
-  if (contentEditable === 'true') {
-    preloadSVG();
-  }
 }
 
 /**

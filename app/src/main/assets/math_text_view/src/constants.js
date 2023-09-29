@@ -1,6 +1,6 @@
 // Define a set of CSS class names that are used to style the math elements in the HTML.
 const mathTextViewClass = 'math-text-view';
-const mathTextViewPreloadClass = 'math-text-view-preload';
+const svgPreloaderClass = 'svg-preloader';
 const undefinedClass = 'undefined';
 const textClass = 'text';
 const textHintClass = 'text-hint';
@@ -143,17 +143,6 @@ const bracketSvgViewBox = '0 0 57 166';
 const absBorderSvgViewBox = '0 0 55 166';
 const sqrtPrefixViewBox = '0 0 43 81';
 const infViewBox = '0 0 218 218';
-
-// Define a mapping of class names to SVG elements.
-const svgElementsMap = {
-  [openBracketClass]: createNewSvg(openBracketClass, openBracketSvgPath, bracketSvgViewBox),
-  [closeBracketClass]: createNewSvg(closeBracketClass, closeBracketSvgPath, bracketSvgViewBox),
-  [prefixAbsClass]: createNewSvg(prefixAbsClass, absBorderSvgPath, absBorderSvgViewBox),
-  [postfixAbsClass]: createNewSvg(postfixAbsClass, absBorderSvgPath, absBorderSvgViewBox),
-  [rootPrefixClass]: createNewSvg(rootPrefixClass, sqrtPrefixSvgPath, sqrtPrefixViewBox),
-  [infClass]: createNewSvg(infClass, infSvgPath, infViewBox),
-  [complexInfClass]: createNewSvg(complexInfClass, complexInfSvgPath, infViewBox),
-};
 
 // Define numeric coefficients
 const bracketFirstScale = 1.175;

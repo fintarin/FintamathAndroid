@@ -1609,14 +1609,23 @@ function createElement(className) {
 }
 
 /**
- * Create an SVG element with the specified class name, path and view box.
+ * Create a cached SVG element.
  *
  * @param {string} className - The class name to use for new element.
+ * @returns {SVGSVGElement} Created SVG element.
+ */
+function createSvg(className) {
+  return svgPreloader.getElementsByClassName(className)[0].cloneNode(true);
+}
+
+/**
+ * Preload an SVG element with the specified class name, path and view box.
+ *
+ * @param {string} className - The class name to use for SVG element.
  * @param {string} path - The SVG path to draw.
  * @param {string} viewBox - The SVG view box.
- * @returns {SVGSVGElement} Newly created SVG element.
  */
-function createNewSvg(className, path, viewBox) {
+function preloadSvg(className, path, viewBox) {
   const pathElem = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   pathElem.setAttribute('d', path);
 
@@ -1625,17 +1634,7 @@ function createNewSvg(className, path, viewBox) {
   svgElem.setAttribute('viewBox', viewBox);
   svgElem.appendChild(pathElem);
 
-  return svgElem;
-}
-
-/**
- * Create a cached SVG element.
- *
- * @param {string} className - The class name to use for new element.
- * @returns {SVGSVGElement} Created SVG element.
- */
-function createSvg(className) {
-  return svgElementsMap[[className]].cloneNode(true);
+  svgPreloader.appendChild(svgElem);
 }
 
 function getColorWithOpacity(color, opacity) {
@@ -1678,26 +1677,4 @@ function cutSpaces(str) {
   }
 
   return str;
-}
-
-/**
- * Creates a new container with all SVG elements to pre-load them.
- */
-function preloadSVG() {
-  for (let i = 0; i < document.body.childElementCount; i++) {
-    const childElem = document.body.children[i];
-
-    if (getClassName(childElem) === mathTextViewPreloadClass) {
-      return;
-    }
-  }
-
-  const preloadContainer = createElement(mathTextViewPreloadClass);
-
-  document.body.appendChild(preloadContainer);
-  preloadContainer.innerHTML = toHtml('Inf ComplexInf () abs() sqrt()');
-
-  setTimeout(() => {
-    preloadContainer.style.visibility = 'hidden';
-  }, 10);
 }

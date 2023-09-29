@@ -13,7 +13,7 @@ mathTextView.onmousedown = onMouseDown;
 
 setInterval(function () {
   onSelectedElementChanged();
-}, 30);
+}, 10);
 
 //---------------------------------------------------------------------------------------------------------//
 
