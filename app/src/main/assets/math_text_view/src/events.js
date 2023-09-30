@@ -75,6 +75,10 @@ function onTextChange() {
  * Deselect the previously selected element and select the element where the cursor is currently placed.
  */
 function onSelectedElementChanged() {
+  if (!mathTextView.isContentEditable) {
+    return;
+  }
+
   deselectElement(selectedElem);
 
   if (document.activeElement === document.body) {
@@ -101,10 +105,6 @@ function onSelectedElementChanged() {
    * @param {HTMLSpanElement} elem - The element where the cursor is currently placed.
    */
   function selectElement(elem) {
-    if (!mathTextView.isContentEditable) {
-      return;
-    }
-
     if (getClassName(elem) === undefinedClass) {
       elem = elem.parentElement;
     }
@@ -130,10 +130,6 @@ function onSelectedElementChanged() {
    * Deselect the element where the cursor is currently placed and sets its style.
    */
   function deselectElement(elem) {
-    if (!mathTextView.isContentEditable) {
-      return;
-    }
-
     if (elem === null) {
       return;
     }

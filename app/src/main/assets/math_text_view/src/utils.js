@@ -1160,6 +1160,10 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
  * @param {HTMLSpanElement} elem - The element to insert borders.
  */
 function insertBordersRec(elem) {
+  if (!elem.isContentEditable) {
+    return;
+  }
+
   for (let i = 0; i < elem.childElementCount; i++) {
     const childElem = elem.children[i];
 
