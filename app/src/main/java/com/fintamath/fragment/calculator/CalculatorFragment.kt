@@ -76,7 +76,7 @@ class CalculatorFragment : Fragment() {
         viewBinding.inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
         viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
-        viewBinding.inTextView.setOnTextChangedListener { onInTextChange(it) }
+        viewBinding.inTextView.setOnTextChangedListener { _, text -> onInTextChange(text) }
         viewBinding.inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
 
         Timer().schedule(requestFocusDelay) {
@@ -165,6 +165,10 @@ class CalculatorFragment : Fragment() {
         cancelSaveToHistoryTask()
 
         viewBinding.inTextViewHint.visibility = if (viewBinding.inTextView.text.isNotEmpty())
+            View.GONE else
+            View.VISIBLE
+
+        viewBinding.outSolutionView.visibility = if (viewBinding.inTextView.text.isEmpty())
             View.GONE else
             View.VISIBLE
 

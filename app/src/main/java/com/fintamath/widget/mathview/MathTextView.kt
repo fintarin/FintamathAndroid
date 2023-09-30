@@ -1,6 +1,7 @@
 package com.fintamath.widget.mathview
 
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -78,7 +79,7 @@ class MathTextView @JvmOverloads constructor(
     private var isClicking = false
     private var wasLastScrollHorizontal = false
 
-    private var onTextChangedListener: ((text: String) -> Unit)? = null
+    private var onTextChangedListener: ((textView: MathTextView, text: String) -> Unit)? = null
     private var onClickListener: OnClickListener? = null
 
     private var isLoaded = false
@@ -209,7 +210,7 @@ class MathTextView @JvmOverloads constructor(
         quickActionPopup!!.dismiss()
     }
 
-    fun setOnTextChangedListener(listener: (text: String) -> Unit) {
+    fun setOnTextChangedListener(listener: ((textView: MathTextView, text: String) -> Unit)?) {
         onTextChangedListener = listener
     }
 
@@ -337,7 +338,7 @@ class MathTextView @JvmOverloads constructor(
         isComplete = isCompleteStr == "true"
 
         getActivity()?.runOnUiThread {
-            onTextChangedListener?.invoke(newText)
+            onTextChangedListener?.invoke(this, newText)
         }
     }
 

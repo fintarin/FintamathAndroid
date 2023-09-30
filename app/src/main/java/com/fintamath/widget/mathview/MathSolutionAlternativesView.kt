@@ -3,7 +3,6 @@ package com.fintamath.widget.mathview
 import android.content.Context
 import android.content.res.TypedArray
 import android.widget.LinearLayout
-import android.view.LayoutInflater
 import android.view.View
 import com.fintamath.R
 
@@ -43,7 +42,6 @@ internal class MathSolutionAlternativesView constructor(
         for (i in 1 until texts.size) {
             textViews[i].text = texts[i]
             textViews[i].visibility = VISIBLE
-            delimiters[i - 1].visibility = VISIBLE
         }
 
         for (i in texts.size until textViews.size) {
@@ -71,8 +69,15 @@ internal class MathSolutionAlternativesView constructor(
         }
     }
 
+    private fun onTextChanged(textView: MathTextView) {
+        if (textView.text.isNotEmpty()) {
+            delimiters.getOrNull(textViews.indexOf(textView) - 1)?.visibility = VISIBLE
+        }
+    }
+
     private fun addTextView() {
         val textView = inflate(context, mathTextViewLayout, null) as MathTextView
+        textView.setOnTextChangedListener { changedTextView, _ -> onTextChanged(changedTextView) }
         textView.setOnTouchListener(onTouchListener)
         textView.setOnClickListener(onClickListener)
         textViews.add(textView)
