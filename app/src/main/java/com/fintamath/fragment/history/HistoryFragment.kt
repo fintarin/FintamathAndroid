@@ -21,7 +21,7 @@ import kotlin.concurrent.schedule
 class HistoryFragment : Fragment() {
 
     private val loadingTime: Long = 1000
-    private lateinit var loadingTask: TimerTask
+    private var loadingTask: TimerTask? = null
 
     private lateinit var viewBinding: FragmentHistoryBinding
 
@@ -56,7 +56,7 @@ class HistoryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        loadingTask.cancel()
+        loadingTask?.cancel()
     }
 
     private fun initBarButtons() {
