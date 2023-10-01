@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.fintamath.databinding.FragmentSettingsBinding
+import com.fintamath.storage.SettingsStorage
+import com.google.android.material.slider.Slider
 
 class SettingsFragment : Fragment() {
 
@@ -20,7 +22,14 @@ class SettingsFragment : Fragment() {
 
         viewBinding.settingsBackButton.setOnClickListener { executeBack() }
 
+        viewBinding.precisionSlider.value = SettingsStorage.getPrecision().toFloat()
+        viewBinding.precisionSlider.addOnChangeListener(Slider.OnChangeListener { _, value, _ -> onPrecisionChanged(value.toInt()) })
+
         return viewBinding.root
+    }
+
+    private fun onPrecisionChanged(precision: Int) {
+        SettingsStorage.setPrecision(precision)
     }
 
     private fun executeBack() {

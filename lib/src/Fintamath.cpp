@@ -11,16 +11,16 @@
 
 using namespace fintamath;
 
-static const char *loggerTag = "com.fintamath.lib";
-
-constexpr int32_t maxSolutionLength = 1000000;
+const char *loggerTag = "com.fintamath.lib";
 
 const char *charLimitExc = "Character limit exceeded";
 const char *invalidInputExc = "Invalid input";
 const char *failedToSolveExc = "Failed to solve";
 
-static pid_t calcPid = -1;
+constexpr int32_t maxSolutionLength = 1000000;
+static uint8_t precision = 10;
 
+static pid_t calcPid = -1;
 static auto *solutionStrShared = (char *)mmap(nullptr, maxSolutionLength, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 
 std::string makeOutResult(const std::string &res) {
@@ -32,11 +32,11 @@ std::string calculate(const std::string &inStr) {
     ArgumentPtr inExpr = parseExpr(inStr);
     Expression simplExpr(inExpr);
     Expression solExpr = solve(simplExpr);
-    Expression solApprox10Expr = solExpr.approximate(10);
+    Expression solApproxExpr = solExpr.approximate(precision);
 
     std::string solutions = makeOutResult(inExpr->toString()) +
                             makeOutResult(solExpr.toString()) +
-                            makeOutResult(solApprox10Expr.toString());
+                            makeOutResult(solApproxExpr.toString());
 
     if (solutions.empty() || solutions.size() >= maxSolutionLength) {
       return charLimitExc;
@@ -111,4 +111,20 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_calculate(JNI
 
 extern "C" JNIEXPORT void JNICALL Java_com_fintamath_calculator_Calculator_stopCurrentCalculations(JNIEnv *env, jobject instance) {
   stopCurrentCalculations();
+}
+
+extern "C" JNIEXPORT jint Java_com_fintamath_calculator_Calculator_getPrecision(JNIEnv *env, jobject instance) {
+  return precision;
+}
+
+extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_setPrecision(JNIEnv *env, jobject instance, jint inPrecision) {
+  if (inPrecision <= 0) {
+    precision = 1;
+  }
+  else if (inPrecision > FINTAMATH_PRECISION) {
+    precision = FINTAMATH_PRECISION;
+  }
+  else {
+    precision = uint8_t(inPrecision);
+  }
 }

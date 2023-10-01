@@ -13,10 +13,12 @@ import com.fintamath.databinding.FragmentCalculatorBinding
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.storage.CalculatorInputStorage
+import com.fintamath.storage.SettingsStorage
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
 import java.util.Timer
 import java.util.TimerTask
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.schedule
 
 
@@ -28,6 +30,8 @@ class CalculatorFragment : Fragment() {
 
     private val saveToHistoryDelay: Long = 2000
     private var saveToHistoryTask: TimerTask? = null
+
+    private var wereSettingsUpdated = AtomicBoolean(false)
 
     private val maxSolutionLength = 1000
 
@@ -51,16 +55,23 @@ class CalculatorFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        updateSettings()
+
         if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
             viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         }
 
-        if (viewBinding.outSolutionView.isShowingLoading()) {
+        if (viewBinding.outSolutionView.isShowingLoading() ||
+            (wereSettingsUpdated.get() && viewBinding.outSolutionView.isShowingSolution())) {
+
+            viewBinding.outSolutionView.showLoading()
             calculatorProcessor.calculate(viewBinding.inTextView.text)
         }
 
         viewBinding.inTextView.requestFocus()
         keyboardSwitcher.showCurrentKeyboard()
+
+        wereSettingsUpdated.set(false)
     }
 
     override fun onPause() {
@@ -151,6 +162,14 @@ class CalculatorFragment : Fragment() {
         viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
         viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
+    }
+
+    private fun updateSettings() {
+        val precision = SettingsStorage.getPrecision()
+        if (precision != calculatorProcessor.getPrecision()) {
+            calculatorProcessor.setPrecision(precision)
+            wereSettingsUpdated.set(true)
+        }
     }
 
     private fun onInTextChange(text: String) {

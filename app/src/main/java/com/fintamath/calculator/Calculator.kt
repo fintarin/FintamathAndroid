@@ -12,6 +12,10 @@ internal class Calculator(
 
     external fun stopCurrentCalculations()
 
+    external fun getPrecision(): Int
+
+    external fun setPrecision(int: Int)
+
     private fun onCalculated(str: String) {
         calculatedCallback.invoke(listOf(*str.split("\n").toTypedArray()))
     }

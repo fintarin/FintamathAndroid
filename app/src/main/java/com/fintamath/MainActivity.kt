@@ -1,8 +1,10 @@
 package com.fintamath
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fintamath.storage.HistoryStorage
+import com.fintamath.storage.SettingsStorage
 import java.io.File
 
 
@@ -12,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        SettingsStorage.init(getPreferences(Context.MODE_PRIVATE), resources)
         loadFromFiles()
     }
 

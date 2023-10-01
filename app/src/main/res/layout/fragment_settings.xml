@@ -45,19 +45,58 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:gravity="center"
-            android:text="@string/empty_settings_message"
-            android:textSize="@dimen/text_size_main"
-            android:textColor="@color/text_hint" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingVertical="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/precision"
+                    android:textColor="@color/text_main"
+                    android:textSize="@dimen/text_size_setting" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/precision_details"
+                    android:textColor="@color/text_hint"
+                    android:textSize="@dimen/text_size_setting_details" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/precisionSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/precision"
+                    android:value="10.0"
+                    android:valueFrom="1.0"
+                    android:valueTo="80.0"
+                    android:stepSize="1.0"
+                    app:trackColorActive="@color/track_color_active"
+                    app:trackColorInactive="@color/track_color_inactive"
+                    app:thumbColor="@color/thumb_color"
+                    app:tickColor="@color/tick_color" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

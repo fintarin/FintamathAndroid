@@ -46,6 +46,10 @@ class CalculatorProcessor(
         }
     }
 
+    fun getPrecision() = calculator.getPrecision()
+
+    fun setPrecision(precision: Int) = calculator.setPrecision(precision)
+
     private fun onCalculated(result: List<String>) {
         callbacksThread {
             isCalculating.set(false)

@@ -33,12 +33,13 @@
     <string name="character_limit_exceeded_message">Sorry, the result is too big to print…</string>
     <string name="incomplete_input_message">Please, enter a complete math problem.</string>
     <string name="failed_to_solve_message">Sorry, we can\'t solve this problem yet…</string>
-
     <string name="empty_history_message">No calculation history found.\nStart any calculation and the history will appear.</string>
-    <string name="empty_settings_message">No settings yet…</string>
 
     <string name="page_link">https://github.com/fintarin/FintamathAndroid</string>
     <string name="contact_link">support@fintamath.com</string>
+
+    <string name="precision">Precision</string>
+    <string name="precision_details">Number of digits in approximated number</string>
 
     <string name="history_filename">history.json</string>
     <string name="math_text_filename">math_text.json</string>

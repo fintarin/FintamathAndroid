@@ -103,6 +103,10 @@ class MathSolutionView @JvmOverloads constructor(
         currentView = null
     }
 
+    fun isShowingSolution(): Boolean {
+        return currentView == alternativesView
+    }
+
     fun isShowingLoading(): Boolean {
         return currentView == loadingView
     }
