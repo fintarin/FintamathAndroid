@@ -29,8 +29,6 @@ class CalculatorFragment : Fragment() {
     private val saveToHistoryDelay: Long = 2000
     private var saveToHistoryTask: TimerTask? = null
 
-    private val requestFocusDelay: Long = 50
-
     private val maxSolutionLength = 1000
 
     override fun onCreateView(
@@ -78,12 +76,7 @@ class CalculatorFragment : Fragment() {
         viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         viewBinding.inTextView.setOnTextChangedListener { _, text -> onInTextChange(text) }
         viewBinding.inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
-
-        Timer().schedule(requestFocusDelay) {
-            requireActivity().runOnUiThread {
-                viewBinding.inTextView.requestFocus()
-            }
-        }
+        viewBinding.inTextView.requestFocus()
     }
 
     private fun initProcessors() {
