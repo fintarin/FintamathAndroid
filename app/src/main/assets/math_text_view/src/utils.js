@@ -177,8 +177,7 @@ function toHtml(mathText, isEditable = false) {
    */
   function insertOperator(elem, operatorClass, operatorName) {
     const operElem = createElement(operatorClass);
-    operElem.innerHTML = operatorName;
-    operElem.contentEditable = 'false';
+    operElem.setAttribute(beforeContentAttr, operatorName);
     return elem.appendChild(operElem);
   }
 
@@ -449,7 +448,7 @@ function toHtml(mathText, isEditable = false) {
 
         let isCommaFound = false;
 
-        if (childElem.innerHTML === comma) {
+        if (childElem.getAttribute(beforeContentAttr) === comma) {
           if (bracketsCount === 0) {
             lastTokenElem = createElement();
             tokenElems.push(lastTokenElem);
@@ -673,7 +672,7 @@ function toMathText(html, isEditable = false) {
       }
       default: {
         if (operatorClasses.includes(getClassName(elem))) {
-          return elem.innerText;
+          return elem.getAttribute(beforeContentAttr);
         }
 
         if (elem instanceof HTMLElement) {
@@ -707,7 +706,7 @@ function toMathText(html, isEditable = false) {
         !bracketPostfixClasses.includes(getClassName(childElem)) &&
         !childContainerClasses.includes(getClassName(childElem)) &&
         !indexContainerClasses.includes(getClassName(childElem)) &&
-        !unaryPostfixOperators.includes(childElem.innerHTML) &&
+        getClassName(childElem) !== unaryPostfixOperatorClass &&
         getClassName(prevChildElem) !== undefinedClass &&
         getClassName(prevChildElem) !== unaryPrefixOperatorClass &&
         getClassName(prevChildElem) !== functionNameClass &&
@@ -941,19 +940,19 @@ function concatElementsOutside(firstElem, lastElem) {
   let nextLastElem = lastElem !== null ? lastElem.nextElementSibling : null;
 
   if (operatorClasses.includes(getClassName(firstElem))) {
-    setClassName(firstElem, parseOperator(prevFirstElem, firstElem.innerText));
+    setClassName(firstElem, parseOperator(prevFirstElem, firstElem.getAttribute(beforeContentAttr)));
   }
 
   if (operatorClasses.includes(getClassName(nextFirstElem))) {
-    setClassName(nextFirstElem, parseOperator(firstElem, nextFirstElem.innerText));
+    setClassName(nextFirstElem, parseOperator(firstElem, nextFirstElem.getAttribute(beforeContentAttr)));
   }
 
   if (operatorClasses.includes(getClassName(lastElem))) {
-    setClassName(lastElem, parseOperator(prevLastElem, lastElem.innerText));
+    setClassName(lastElem, parseOperator(prevLastElem, lastElem.getAttribute(beforeContentAttr)));
   }
 
   if (operatorClasses.includes(getClassName(nextLastElem))) {
-    setClassName(nextLastElem, parseOperator(lastElem, nextLastElem.innerText));
+    setClassName(nextLastElem, parseOperator(lastElem, nextLastElem.getAttribute(beforeContentAttr)));
   }
 
   insertHints(parentElem, getPreviousIndex(firstElem), getNextIndex(lastElem));
@@ -1167,7 +1166,8 @@ function insertBordersRec(elem) {
     if (
       (specialSvgClasses.includes(getClassName(childElem)) ||
         getClassName(childElem) === openBracketClass ||
-        getClassName(childElem) === prefixAbsClass) &&
+        getClassName(childElem) === prefixAbsClass ||
+        operatorClasses.includes(getClassName(childElem))) &&
       isNotEmptyTextElement(childElem.nextElementSibling)
     ) {
       elem.insertBefore(createElement(borderClass), childElem.nextElementSibling);
@@ -1176,7 +1176,8 @@ function insertBordersRec(elem) {
     if (
       (specialSvgClasses.includes(getClassName(childElem)) ||
         getClassName(childElem) === closeBracketClass ||
-        getClassName(childElem) === postfixAbsClass) &&
+        getClassName(childElem) === postfixAbsClass ||
+        operatorClasses.includes(getClassName(childElem))) &&
       isNotEmptyTextElement(childElem.previousElementSibling)
     ) {
       elem.insertBefore(createElement(borderClass), childElem);

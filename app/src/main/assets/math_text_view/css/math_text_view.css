@@ -73,12 +73,31 @@ svg {
 .unary-prefix-operator,
 .unary-postfix-operator {
   margin-top: 0.1em;
-  opacity: 0.75;
 }
 
 .binary-operator {
   margin-left: 0.1em;
   margin-right: 0.1em;
+}
+
+.binary-operator::before,
+.unary-prefix-operator::before,
+.unary-postfix-operator::before {
+  content: attr(before-content);
+  opacity: 0.75;
+  float: left;
+}
+
+.function-name {
+  margin-top: 0.1em;
+  margin-left: 0.05em;
+  margin-right: -0.1em;
+}
+
+.function-name::before {
+  content: attr(before-content);
+  opacity: 0.75;
+  float: left;
 }
 
 .sup {
@@ -118,18 +137,6 @@ svg {
   margin-left: -0.15em;
   margin-right: -0.15em;
   opacity: 0.75;
-}
-
-.function-name {
-  margin-top: 0.1em;
-  margin-left: 0.05em;
-  margin-right: -0.1em;
-}
-
-.function-name::before {
-  content: attr(before-content);
-  opacity: 0.75;
-  float: left;
 }
 
 .open-bracket,
