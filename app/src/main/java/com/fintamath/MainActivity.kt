@@ -22,13 +22,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadFromFiles() {
-        val historyFile = File(applicationContext.filesDir.path + R.string.history_filename)
+        val historyFile = File(applicationContext.filesDir.path + "/" + getString(R.string.history_filename))
         historyFile.createNewFile()
         HistoryStorage.loadFromFile(historyFile)
     }
 
     private fun saveToFiles() {
-        val historyFile = File(applicationContext.filesDir.path + R.string.history_filename)
+        val historyFile = File(applicationContext.filesDir.path + "/" + getString(R.string.history_filename))
         historyFile.createNewFile()
         HistoryStorage.saveToFile(historyFile)
     }
