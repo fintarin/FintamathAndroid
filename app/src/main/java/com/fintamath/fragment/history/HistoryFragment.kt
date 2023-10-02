@@ -20,9 +20,6 @@ import kotlin.concurrent.schedule
 
 class HistoryFragment : Fragment() {
 
-    private val loadingTime: Long = 1000
-    private var loadingTask: TimerTask? = null
-
     private lateinit var viewBinding: FragmentHistoryBinding
 
     override fun onCreateView(
@@ -31,22 +28,18 @@ class HistoryFragment : Fragment() {
     ): View {
         viewBinding = FragmentHistoryBinding.inflate(inflater, container, false)
 
-        with(viewBinding.historyListView) {
-            layoutManager = LinearLayoutManager(context)
-
-            val historyAdapter = HistoryRecyclerViewAdapter()
-            historyAdapter.onCalculate = { onCalculate(it) }
-            historyAdapter.onItemsCountChange = { onItemsCountChange() }
-
-            adapter = historyAdapter
-        }
-
         initBarButtons()
 
-        loadingTask = Timer().schedule(loadingTime) {
-            requireActivity().runOnUiThread {
-                viewBinding.loadingView.visibility = View.GONE
-                onItemsCountChange()
+        viewBinding.loadingView.postOnAnimation {
+            with(viewBinding.historyListView) {
+                layoutManager = LinearLayoutManager(context)
+
+                val historyAdapter = HistoryRecyclerViewAdapter()
+                historyAdapter.onLoaded = { onHistoryLoaded() }
+                historyAdapter.onCalculate = { onCalculate(it) }
+                historyAdapter.onItemsCountChange = { onItemsCountChange() }
+
+                adapter = historyAdapter
             }
         }
 
@@ -55,8 +48,6 @@ class HistoryFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        loadingTask?.cancel()
     }
 
     private fun initBarButtons() {
@@ -74,6 +65,11 @@ class HistoryFragment : Fragment() {
             viewBinding.emptyHistoryTextView.visibility = GONE
             viewBinding.historyListView.visibility = VISIBLE
         }
+    }
+
+    private fun onHistoryLoaded() {
+        viewBinding.loadingView.visibility = GONE
+        onItemsCountChange()
     }
 
     private fun onCalculate(text: String) {

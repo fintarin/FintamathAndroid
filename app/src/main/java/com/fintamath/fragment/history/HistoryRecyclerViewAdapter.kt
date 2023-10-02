@@ -10,13 +10,17 @@ import com.fintamath.storage.HistoryStorage
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.util.concurrent.atomic.AtomicInteger
 
 internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemViewHolder>() {
 
-    var recyclerView: RecyclerView? = null
-
+    var onLoaded: (() -> Unit)? = null
     var onItemsCountChange: ((Int) -> Unit)? = null
     var onCalculate: ((String) -> Unit)? = null
+
+    private var recyclerView: RecyclerView? = null
+
+    private var itemsToLoadNum = AtomicInteger(0)
 
     init {
         HistoryStorage.onItemsLoaded = { start, end ->
@@ -41,6 +45,10 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
         super.onAttachedToRecyclerView(recyclerView)
 
         this.recyclerView = recyclerView
+
+        if (itemCount == 0) {
+            invokeOnLoaded()
+        }
     }
 
     override fun getItemCount() = HistoryStorage.getItems().size
@@ -51,6 +59,22 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
     }
 
     override fun onBindViewHolder(viewHolder: HistoryItemViewHolder, position: Int) {
+        if (itemsToLoadNum.get() != -1) {
+            itemsToLoadNum.incrementAndGet()
+
+            viewHolder.mathTextView.setOnTextChangedListener { _, _ ->
+                if (itemsToLoadNum.get() == -1) {
+                    return@setOnTextChangedListener
+                }
+
+                itemsToLoadNum.decrementAndGet()
+
+                if (itemsToLoadNum.get() == 0) {
+                    invokeOnLoaded()
+                }
+            }
+        }
+
         viewHolder.removeButton.setOnClickListener {
             onRemoveButtonClicked(viewHolder)
         }
@@ -78,6 +102,11 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
     private fun onRemoveButtonClicked(viewHolder: HistoryItemViewHolder) {
         val index = viewHolder.absoluteAdapterPosition
         HistoryStorage.removeItem(index)
+    }
+
+    private fun invokeOnLoaded() {
+        onLoaded?.invoke()
+        itemsToLoadNum.set(-1)
     }
 
     private fun formatDataTime(dataTimeString: String): String {
