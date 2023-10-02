@@ -42,5 +42,4 @@
     <string name="precision_details">Number of digits in approximated number</string>
 
     <string name="history_filename">history.json</string>
-    <string name="math_text_filename">math_text.json</string>
 </resources>
