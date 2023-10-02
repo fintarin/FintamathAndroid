@@ -61,11 +61,9 @@ class CalculatorFragment : Fragment() {
             viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         }
 
-        if (viewBinding.outSolutionView.isShowingLoading() ||
-            (wereSettingsUpdated.get() && viewBinding.outSolutionView.isShowingSolution())) {
-
+        if (viewBinding.outSolutionView.isShowingLoading() || wereSettingsUpdated.get()) {
             viewBinding.outSolutionView.showLoading()
-            calculatorProcessor.calculate(viewBinding.inTextView.text)
+            onInTextChange(viewBinding.inTextView.text)
         }
 
         viewBinding.inTextView.requestFocus()
