@@ -31,12 +31,14 @@ internal class HistoryRecyclerViewAdapter : RecyclerView.Adapter<HistoryItemView
             notifyItemRemoved(it)
             onItemsCountChange?.invoke(itemCount)
         }
-        HistoryStorage.onItemInserted = {
-            notifyItemInserted(it)
-            onItemsCountChange?.invoke(itemCount)
+        HistoryStorage.onItemMoved = { fromPos, toPos ->
+            notifyItemMoved(fromPos, toPos)
 
-            if (HistoryStorage.getItems()[it].isBookmarked) {
-                recyclerView?.smoothScrollToPosition(it)
+            if (HistoryStorage.getItems()[toPos].isBookmarked) {
+                recyclerView?.scrollToPosition(toPos)
+            }
+            else {
+                recyclerView?.scrollToPosition(fromPos)
             }
         }
     }

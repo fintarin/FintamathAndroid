@@ -14,7 +14,7 @@ object HistoryStorage {
 
     var onItemsLoaded: ((Int, Int) -> Unit)? = null
     var onItemRemoved: ((Int) -> Unit)? = null
-    var onItemInserted: ((Int) -> Unit)? = null
+    var onItemMoved: ((Int, Int) -> Unit)? = null
 
     private const val maxItemsNum = 200
 
@@ -76,7 +76,6 @@ object HistoryStorage {
             false,
             LocalDateTime.now().toString()
         ))
-        onItemRemoved?.invoke(0)
     }
 
     fun removeItem(index: Int) {
@@ -89,19 +88,18 @@ object HistoryStorage {
             return
         }
 
-        val historyItem = historyList[index]
-        historyItem.isBookmarked = isBookmarked
-        moveItemOnBookmarkChange(historyItem, index)
+        historyList[index].isBookmarked = isBookmarked
+        moveItemOnBookmarkChange(index)
     }
 
-    private fun moveItemOnBookmarkChange(item: HistoryItemData, index: Int) {
+    private fun moveItemOnBookmarkChange(index: Int) {
+        val historyItem = historyList[index]
         historyList.removeAt(index)
 
-        val insertIndex = findNewIndexOfItemOnBookmarkChange(item)
-        historyList.add(insertIndex, item)
+        val newIndex = findNewIndexOfItemOnBookmarkChange(historyItem)
+        historyList.add(newIndex, historyItem)
 
-        onItemRemoved?.invoke(index)
-        onItemInserted?.invoke(insertIndex)
+        onItemMoved?.invoke(index, newIndex)
     }
 
     private fun findNewIndexOfItemOnBookmarkChange(item: HistoryItemData): Int {
