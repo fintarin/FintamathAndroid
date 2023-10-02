@@ -14,14 +14,16 @@ FintamathAndroid is the frontend of [Fintamath](https://github.com/fintarin/Fint
 
 Key features:
 
-- Advanced mathematical problem solving
-- Calculating numbers of any magnitude
-- High-precision calculations
-- Beautiful display of mathematical formulas
-- Advanced navigation in formulas
-- Copy and paste formulas even outside the application
+- Expression simplification and equation solving
+- Wide range of math functions
+- Arbitrary precision arithmetic
+- High precision approximation
+- Complex numbers
+- Logic optimization
+- Rich display of math expressions
+- Copy and paste expressions
 - Undo and redo actions
-- History of your last entered formulas
+- History of recently entered expressions
 
 <p align="center">
   <img src="./docs/images/example.png" alt="drawing" width="250"/>
