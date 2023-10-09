@@ -354,10 +354,12 @@ class MathTextView @JvmOverloads constructor(
         return '#' + Integer.toHexString(color).substring(2)
     }
 
+    @Suppress("DEPRECATION")
     private fun toSp(size: Int): Int {
         return (size  / resources.displayMetrics.scaledDensity).toInt()
     }
 
+    @Suppress("DEPRECATION")
     private fun toPx(size: Int): Int {
         return (size  * resources.displayMetrics.scaledDensity).toInt()
     }
