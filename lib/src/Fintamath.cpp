@@ -1,6 +1,7 @@
 #include "fintamath/exceptions/UndefinedException.hpp"
 #include "fintamath/expressions/Expression.hpp"
 #include "fintamath/expressions/ExpressionFunctions.hpp"
+#include "fintamath/expressions/ExpressionParser.hpp"
 
 #include <android/log.h>
 #include <jni.h>
@@ -29,7 +30,7 @@ std::string makeOutResult(const std::string &res) {
 
 std::string calculate(const std::string &inStr) {
   try {
-    ArgumentPtr inExpr = parseExpr(inStr);
+    ArgumentPtr inExpr = parseFintamath(inStr);
     Expression simplExpr(inExpr);
     Expression solExpr = solve(simplExpr);
     Expression solApproxExpr = solExpr.approximate(precision);
