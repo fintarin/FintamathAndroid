@@ -40,4 +40,10 @@ Key features:
 
 ## Build and Run
 
-Just open the project in AndroidStudio.
+Init submodules.
+
+```bash
+git submodule update --init --recursive
+```
+
+And just open the project in AndroidStudio.
