@@ -349,10 +349,10 @@ public class KeyboardView extends View implements View.OnClickListener {
             int y = 0;
 
             switch (mMiniKeyboardLocationFlags) {
-                case Keyboard.POPUP_LOCATION_LEFT: {
+                case Keyboard.POPUP_LOCATION_RIGHT: {
                     break;
                 }
-                case Keyboard.POPUP_LOCATION_RIGHT: {
+                case Keyboard.POPUP_LOCATION_LEFT: {
                     x = getMeasuredWidth();
                     break;
                 }
@@ -1071,10 +1071,10 @@ public class KeyboardView extends View implements View.OnClickListener {
         mPopupY = mPopupY - mMiniKeyboardContainer.getMeasuredHeight() - popupHeightOffset;
 
         switch (mMiniKeyboard.mMiniKeyboardLocationFlags) {
-            case Keyboard.POPUP_LOCATION_LEFT: {
+            case Keyboard.POPUP_LOCATION_RIGHT: {
                 break;
             }
-            case Keyboard.POPUP_LOCATION_RIGHT: {
+            case Keyboard.POPUP_LOCATION_LEFT: {
                 mPopupX = mPopupX + popupKey.width - mMiniKeyboardContainer.getMeasuredWidth();
                 break;
             }

@@ -89,13 +89,13 @@
             app:keyOutputText="sin()"
             app:keyLabel="sin"
             app:keyTopLabel="sinh⠀"
-            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_sin" />
         <Key
             app:keyOutputText="asin()"
             app:keyLabel="asin"
             app:keyTopLabel="asinh⠀"
-            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_asin" />
     </Row>
 
@@ -113,13 +113,13 @@
             app:keyOutputText="cos()"
             app:keyLabel="cos"
             app:keyTopLabel="cosh⠀"
-            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_cos" />
         <Key
             app:keyOutputText="acos()"
             app:keyLabel="acos"
             app:keyTopLabel="acosh⠀"
-            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_acos" />
     </Row>
 
@@ -137,13 +137,13 @@
             app:keyOutputText="tan()"
             app:keyLabel="tan"
             app:keyTopLabel="tanh⠀"
-            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_tan" />
         <Key
             app:keyOutputText="atan()"
             app:keyLabel="atan"
             app:keyTopLabel="atanh⠀"
-            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_atan" />
     </Row>
 
@@ -161,13 +161,13 @@
             app:keyOutputText="cot()"
             app:keyLabel="cot"
             app:keyTopLabel="coth⠀"
-            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_cot" />
         <Key
             app:keyOutputText="acot()"
             app:keyLabel="acot"
             app:keyTopLabel="acoth⠀"
-            app:popupKeyboardLocationFlags="right"
+            app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_acot" />
     </Row>
 

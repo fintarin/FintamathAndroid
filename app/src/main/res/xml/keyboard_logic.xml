@@ -151,7 +151,6 @@
             app:keyOutputText="&lt;-&gt;"
             app:keyLabel="≡"
             app:keyTopLabel="≢"
-            app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_logic_equiv" />
         <Key
             app:keyOutputText="-&gt;"

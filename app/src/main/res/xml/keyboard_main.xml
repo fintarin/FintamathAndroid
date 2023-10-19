@@ -180,7 +180,6 @@
             app:keyOutputText="="
             app:keyLabel="="
             app:keyTopLabel="≠"
-            app:popupKeyboardLocationFlags="right"
             app:popupKeyboard="@xml/popup_keyboard_main_equal" />
         <Key
             app:keyOutputText="+"
