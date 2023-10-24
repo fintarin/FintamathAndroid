@@ -5,8 +5,14 @@
 
     <Row>
         <Key
+            app:keyOutputText="acosh()"
+            app:keyLabel="acosh" />
+        <Key
             app:keyOutputText="cosh()"
             app:keyLabel="cosh" />
+        <Key
+            app:keyOutputText="acos()"
+            app:keyLabel="acos" />
         <Key
             app:keyOutputText="cos()"
             app:keyLabel="cos" />

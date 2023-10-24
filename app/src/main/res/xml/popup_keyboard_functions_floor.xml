@@ -5,11 +5,11 @@
 
     <Row>
         <Key
-            app:keyOutputText="acoth()"
-            app:keyLabel="acoth" />
+            app:keyOutputText="ceil()"
+            app:keyLabel="⌈x⌉" />
         <Key
-            app:keyOutputText="acot()"
-            app:keyLabel="acot" />
+            app:keyOutputText="floor()"
+            app:keyLabel="⌊x⌋" />
     </Row>
 
 </Keyboard>

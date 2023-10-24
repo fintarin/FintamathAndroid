@@ -5,8 +5,14 @@
 
     <Row>
         <Key
+            app:keyOutputText="asinh()"
+            app:keyLabel="asinh" />
+        <Key
             app:keyOutputText="sinh()"
             app:keyLabel="sinh" />
+        <Key
+            app:keyOutputText="asin()"
+            app:keyLabel="asin" />
         <Key
             app:keyOutputText="sin()"
             app:keyLabel="sin" />

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="@dimen/keyboard_functions_key_width"
+    app:keyHeight="@dimen/keyboard_key_height">
+
+    <Row>
+        <Key
+            app:keyOutputText="asech()"
+            app:keyLabel="asech" />
+        <Key
+            app:keyOutputText="sech()"
+            app:keyLabel="sech" />
+        <Key
+            app:keyOutputText="asec()"
+            app:keyLabel="asec" />
+        <Key
+            app:keyOutputText="sec()"
+            app:keyLabel="sec" />
+    </Row>
+
+</Keyboard>

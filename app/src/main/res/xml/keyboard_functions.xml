@@ -88,15 +88,15 @@
         <Key
             app:keyOutputText="sin()"
             app:keyLabel="sin"
-            app:keyTopLabel="sinh⠀"
+            app:keyTopLabel="asinh⠀"
             app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_sin" />
         <Key
-            app:keyOutputText="asin()"
-            app:keyLabel="asin"
-            app:keyTopLabel="asinh⠀"
+            app:keyOutputText="cos()"
+            app:keyLabel="cos"
+            app:keyTopLabel="acosh⠀"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_asin" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_cos" />
     </Row>
 
     <Row>
@@ -110,17 +110,17 @@
             app:keyOutputText="log(,)"
             app:keyLabel="log" />
         <Key
-            app:keyOutputText="cos()"
-            app:keyLabel="cos"
-            app:keyTopLabel="cosh⠀"
+            app:keyOutputText="tan()"
+            app:keyLabel="tan"
+            app:keyTopLabel="atanh⠀"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_cos" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_tan" />
         <Key
-            app:keyOutputText="acos()"
-            app:keyLabel="acos"
-            app:keyTopLabel="acosh⠀"
+            app:keyOutputText="cot()"
+            app:keyLabel="cot"
+            app:keyTopLabel="acoth⠀"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_acos" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_cot" />
     </Row>
 
     <Row>
@@ -134,17 +134,17 @@
             app:keyOutputText="exp()"
             app:keyLabel="exp" />
         <Key
-            app:keyOutputText="tan()"
-            app:keyLabel="tan"
-            app:keyTopLabel="tanh⠀"
+            app:keyOutputText="sec()"
+            app:keyLabel="sec"
+            app:keyTopLabel="asech⠀"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_tan" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_sec" />
         <Key
-            app:keyOutputText="atan()"
-            app:keyLabel="atan"
-            app:keyTopLabel="atanh⠀"
+            app:keyOutputText="csc()"
+            app:keyLabel="csc"
+            app:keyTopLabel="acsch⠀"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_atan" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_csc" />
     </Row>
 
     <Row>
@@ -158,17 +158,14 @@
             app:keyOutputText="sign()"
             app:keyLabel="sign" />
         <Key
-            app:keyOutputText="cot()"
-            app:keyLabel="cot"
-            app:keyTopLabel="coth⠀"
-            app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_cot" />
+            app:keyOutputText="mod"
+            app:keyLabel="mod" />
         <Key
-            app:keyOutputText="acot()"
-            app:keyLabel="acot"
-            app:keyTopLabel="acoth⠀"
+            app:keyOutputText="floor()"
+            app:keyLabel="⌊x⌋"
+            app:keyTopLabel="⌈x⌉"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_acot" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_floor" />
     </Row>
 
 </Keyboard>

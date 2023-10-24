@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="@dimen/keyboard_functions_key_width"
+    app:keyHeight="@dimen/keyboard_key_height">
+
+    <Row>
+        <Key
+            app:keyOutputText="acsch()"
+            app:keyLabel="acsch" />
+        <Key
+            app:keyOutputText="csch()"
+            app:keyLabel="csch" />
+        <Key
+            app:keyOutputText="acsc()"
+            app:keyLabel="acsc" />
+        <Key
+            app:keyOutputText="csc()"
+            app:keyLabel="csc" />
+    </Row>
+
+</Keyboard>

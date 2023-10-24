@@ -5,8 +5,14 @@
 
     <Row>
         <Key
+            app:keyOutputText="atanh()"
+            app:keyLabel="atanh" />
+        <Key
             app:keyOutputText="tanh()"
             app:keyLabel="tanh" />
+        <Key
+            app:keyOutputText="atan()"
+            app:keyLabel="atan" />
         <Key
             app:keyOutputText="tan()"
             app:keyLabel="tan" />
