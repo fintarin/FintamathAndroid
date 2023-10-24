@@ -40,10 +40,10 @@ Key features:
 
 ## Build and Run
 
-Init submodules.
+Clone repository with its submodules.
 
 ```bash
-git submodule update --init --recursive
+git clone --recurse-submodules https://github.com/fintarin/FintamathAndroid
 ```
 
 And just open the project in AndroidStudio.
