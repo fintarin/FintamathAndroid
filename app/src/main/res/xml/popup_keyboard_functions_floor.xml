@@ -6,10 +6,10 @@
     <Row>
         <Key
             app:keyOutputText="ceil()"
-            app:keyLabel="⌈x⌉" />
+            app:keyIcon="@drawable/ic_key_ceil" />
         <Key
             app:keyOutputText="floor()"
-            app:keyLabel="⌊x⌋" />
+            app:keyIcon="@drawable/ic_key_floor" />
     </Row>
 
 </Keyboard>

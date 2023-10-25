@@ -162,8 +162,8 @@
             app:keyLabel="mod" />
         <Key
             app:keyOutputText="floor()"
-            app:keyLabel="⌊x⌋"
-            app:keyTopLabel="⌈x⌉"
+            app:keyIcon="@drawable/ic_key_floor"
+            app:keyTopIcon="@drawable/ic_key_ceil_top"
             app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_floor" />
     </Row>
