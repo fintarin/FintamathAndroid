@@ -11,7 +11,7 @@ android {
         applicationId "com.fintamath"
         minSdk 27
         targetSdk 34
-        versionCode 34
+        versionCode 35
         versionName "0.4.0 alpha"
     }
 
