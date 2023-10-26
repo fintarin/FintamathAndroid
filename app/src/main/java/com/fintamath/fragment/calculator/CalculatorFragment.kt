@@ -297,7 +297,7 @@ class CalculatorFragment : Fragment() {
 
     private fun cutSolutionTexts(texts: List<String>): List<String> {
         val inText = texts.first()
-        val solTexts = texts.map { formatSolution(it) }.distinct().toMutableList()
+        val solTexts = texts.distinct().toMutableList()
 
         if (solTexts.size > 1 && solTexts.first() == inText) {
             solTexts.removeFirst()
@@ -308,12 +308,6 @@ class CalculatorFragment : Fragment() {
         }
 
         return solTexts
-    }
-
-    private fun formatSolution(text: String): String {
-        var result = text
-        result = result.replace("""\.0(\D|\b)""".toRegex(), "$1")
-        return result
     }
 
     private fun countTextsLength(distinctTexts: List<String>): Int {
