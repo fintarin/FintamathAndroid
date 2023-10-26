@@ -353,7 +353,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                     break;
                 }
                 case Keyboard.POPUP_LOCATION_LEFT: {
-                    x = getMeasuredWidth();
+                    x = getMeasuredWidth() - 1;
                     break;
                 }
                 case Keyboard.POPUP_LOCATION_CENTER: {
