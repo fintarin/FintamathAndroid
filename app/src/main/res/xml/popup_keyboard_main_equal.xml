@@ -5,11 +5,11 @@
 
     <Row>
         <Key
-            app:keyOutputText="!="
-            app:keyLabel="≠"/>
-        <Key
             app:keyOutputText="="
             app:keyLabel="=" />
+        <Key
+            app:keyOutputText="!="
+            app:keyLabel="≠"/>
     </Row>
 
 </Keyboard>
