@@ -1620,17 +1620,18 @@ function createElement(className) {
  * @returns {SVGSVGElement} Created SVG element.
  */
 function createSvg(className) {
-  return svgPreloader.getElementsByClassName(className)[0].cloneNode(true);
+  return svgElementsMap[[className]].cloneNode(true);
 }
 
 /**
- * Preload an SVG element with the specified class name, path and view box.
+ * Create an SVG element with the specified class name, path and view box.
  *
- * @param {string} className - The class name to use for SVG element.
+ * @param {string} className - The class name to use for new element.
  * @param {string} path - The SVG path to draw.
  * @param {string} viewBox - The SVG view box.
+ * @returns {SVGSVGElement} Newly created SVG element.
  */
-function preloadSvg(className, path, viewBox) {
+function createNewSvg(className, path, viewBox) {
   const pathElem = document.createElementNS('http://www.w3.org/2000/svg', 'path');
   pathElem.setAttribute('d', path);
 
@@ -1639,7 +1640,7 @@ function preloadSvg(className, path, viewBox) {
   svgElem.setAttribute('viewBox', viewBox);
   svgElem.appendChild(pathElem);
 
-  svgPreloader.appendChild(svgElem);
+  return svgElem;
 }
 
 function getColorWithOpacity(color, opacity) {
