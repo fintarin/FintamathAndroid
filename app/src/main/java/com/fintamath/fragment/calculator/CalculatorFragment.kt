@@ -62,7 +62,7 @@ class CalculatorFragment : Fragment() {
         }
 
         if (viewBinding.outSolutionView.isShowingLoading() || wereSettingsUpdated.get()) {
-            viewBinding.outSolutionView.showLoading()
+            startLoading()
             onInTextChange(viewBinding.inTextView.text)
         }
 
