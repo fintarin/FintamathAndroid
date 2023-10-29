@@ -71,6 +71,7 @@ class MathTextView @JvmOverloads constructor(
         private set
 
     private var textCached = ""
+    private var visibilityCached = VISIBLE
 
     private val quickActionPopupLayout: Int
 
@@ -95,7 +96,7 @@ class MathTextView @JvmOverloads constructor(
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
 
-            visibility = VISIBLE
+            visibility = visibilityCached
             isLoaded = true
 
             for (callback in onLoadedCallbacks) {
@@ -105,7 +106,10 @@ class MathTextView @JvmOverloads constructor(
     }
 
     init {
+        val initialVisibility = visibility
         visibility = INVISIBLE
+        visibilityCached = initialVisibility
+
         scrollBarSize = 0
         setBackgroundColor(Color.TRANSPARENT)
 
@@ -272,6 +276,11 @@ class MathTextView @JvmOverloads constructor(
         prevY = event.y
 
         return super.onTouchEvent(event)
+    }
+
+    override fun setVisibility(visibility: Int) {
+        super.setVisibility(visibility)
+        visibilityCached = visibility
     }
 
     private fun onLongClick(): Boolean {
