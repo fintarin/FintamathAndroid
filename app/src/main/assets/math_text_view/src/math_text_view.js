@@ -287,39 +287,29 @@ function deleteAtCursor() {
      * @returns {boolean} Truth if we still have to delete the given element later, false otherwise.
      */
     function deleteMatchingBracket(elem, parentElem, prevElem, nextElem) {
-      // TODO: refactor this
+      var result = true;
 
-      if (getClassName(elem) === prefixAbsClass) {
-        if (
+      if (getClassName(elem) in bracketMap) {
+        result =
           nextElem !== null &&
           getClassName(nextElem) === textHintClass &&
-          getClassName(nextElem.nextElementSibling) === postfixAbsClass
-        ) {
+          getClassName(nextElem.nextElementSibling) === bracketMap[getClassName(elem)];
+
+        if (result) {
           parentElem.removeChild(nextElem.nextElementSibling);
-        } else {
-          return false;
         }
-      } else if (getClassName(elem) === postfixAbsClass) {
-        if (
+      } else if (getClassName(elem) in bracketMapReversed) {
+        result =
           prevElem !== null &&
           getClassName(prevElem) === textHintClass &&
-          getClassName(prevElem.previousElementSibling) === prefixAbsClass
-        ) {
+          getClassName(prevElem.previousElementSibling) === bracketMapReversed[getClassName(elem)];
+
+        if (result) {
           parentElem.removeChild(prevElem.previousElementSibling);
-        } else {
-          return false;
-        }
-      } else if (getClassName(elem) === openBracketClass) {
-        if (
-          nextElem !== null &&
-          getClassName(nextElem) === textHintClass &&
-          getClassName(nextElem.nextElementSibling) === closeBracketClass
-        ) {
-          parentElem.removeChild(nextElem.nextElementSibling);
         }
       }
 
-      return true;
+      return result;
     }
   }
 }

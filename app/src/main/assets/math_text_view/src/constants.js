@@ -10,8 +10,20 @@ const unaryPrefixOperatorClass = 'unary-prefix-operator';
 const unaryPostfixOperatorClass = 'unary-postfix-operator';
 const openBracketClass = 'open-bracket';
 const closeBracketClass = 'close-bracket';
-const prefixAbsClass = 'abs-prefix';
-const postfixAbsClass = 'abs-postfix';
+const absPrefixClass = 'abs-prefix';
+const absPostfixClass = 'abs-postfix';
+const floorPrefixClass = 'floor-prefix';
+const floorPostfixClass = 'floor-postfix';
+const floorPrefixVerticalClass = 'floor-vertical-prefix';
+const floorPostfixVerticalClass = 'floor-vertical-postfix';
+const floorPrefixHorizontalClass = 'floor-horizontal-prefix';
+const floorPostfixHorizontalClass = 'floor-horizontal-postfix';
+const ceilPrefixClass = 'ceil-prefix';
+const ceilPostfixClass = 'ceil-postfix';
+const ceilPrefixVerticalClass = 'ceil-vertical-prefix';
+const ceilPostfixVerticalClass = 'ceil-vertical-postfix';
+const ceilPrefixHorizontalClass = 'ceil-horizontal-prefix';
+const ceilPostfixHorizontalClass = 'ceil-horizontal-postfix';
 const supClass = 'sup';
 const subClass = 'sub';
 const sqrtClass = 'sqrt';
@@ -37,11 +49,16 @@ const textDecorationNoneAttr = 'none';
 // Define arrays of CSS class names to group related classes together.
 const textClasses = [textClass, textHintClass];
 const operatorClasses = [unaryPrefixOperatorClass, unaryPostfixOperatorClass, binaryOperatorClass];
-const bracketPrefixClasses = [openBracketClass, prefixAbsClass];
-const bracketPostfixClasses = [closeBracketClass, postfixAbsClass];
-const bracketClasses = bracketPrefixClasses + bracketPostfixClasses;
 const specialSvgClasses = [infClass, complexInfClass];
-const parentContainerClasses = [fractionClass, sqrtClass, logClass];
+const parentContainerClasses = [
+  fractionClass,
+  sqrtClass,
+  logClass,
+  floorPrefixClass,
+  floorPostfixClass,
+  ceilPrefixClass,
+  ceilPostfixClass,
+];
 const childContainerClasses = [
   numeratorClass,
   denominatorClass,
@@ -61,6 +78,8 @@ const supOperator = '^';
 const subOperator = '_';
 const modOperator = 'mod';
 const absFunction = 'abs';
+const floorFunction = 'floor';
+const ceilFunction = 'ceil';
 const sqrtFunction = 'sqrt';
 const rootFunction = 'root';
 const logFunction = 'log';
@@ -122,6 +141,15 @@ const unaryPostfixOperators = ['%', '!', mathHtmlMap['deg']];
 // Define array of special symbols to be displayed as an SVG.
 const specialSvgSymbols = [mathHtmlMap['Inf'], mathHtmlMap['ComplexInf'], modOperator];
 
+// Define a mapping for pairs like '(' and ')'.
+const bracketMap = {
+  [openBracketClass]: closeBracketClass,
+  [absPrefixClass]: absPostfixClass,
+  [floorPrefixClass]: floorPostfixClass,
+  [ceilPrefixClass]: ceilPostfixClass,
+};
+const bracketMapReversed = reverseMap(bracketMap);
+
 // Define constants for text styling.
 const textEmptyHintSelected = '\u2B1A'; // TODO: use svg image instead
 const linesOpacity = 0.75;
@@ -132,7 +160,8 @@ const openBracketSvgPath =
   'M43.256 0H57.14S14.95 25.902 15.086 83.25c.135 57.348 42.054 83.25 42.054 83.25H43.244S.366 138.573.002 83.25C-.362 27.927 43.256 0 43.256 0z';
 const closeBracketSvgPath =
   'M13.883 0H0s42.19 25.902 42.054 83.25C41.92 140.598 0 166.5 0 166.5h13.896s42.877-27.927 43.241-83.25C57.502 27.927 13.883 0 13.883 0z';
-const absBorderSvgPath = 'm19.816564 0 h15 v166.5 h-15z';
+const verticalLineSvgPath = 'M19.816564 0 h15 v166.5 h-15z';
+const horizontalLineSvgPath = 'M-44.4 0v11.95H88.4V0z';
 const sqrtPrefixSvgPath = 'M66.567 81.535l-4.56.003L14.993 9.987.008 9.904 0 .019 22.329 0l44.238 66.087z';
 const infSvgPath =
   'M157.226 171.724c-25.653-3.105-36.571-18.532-43.457-28.85-6.886-10.317-5.067-7.675-23.498 13.36-18.43 21.036-43.719 15.107-50.898 13.69-7.18-1.418-22.736-11.555-30.485-26.86-7.749-15.304-10.622-36.6-3.562-59.373 7.059-22.772 35.3-44.18 60.994-36.669 25.694 7.511 30.43 17.725 37.917 26.583 7.489 8.859 8.476 8.734 12.553 1.692 4.076-7.041 12.435-25.435 39.393-28.99 26.957-3.555 57.45 12.563 60.156 60.81 2.705 48.246-33.46 67.711-59.113 64.607zm11.089-21.592c22.376-1.604 34.605-52.625 16.38-71.504-18.226-18.878-34.835-10.544-49.626 8.153-14.791 18.698-12.654 25.881-3.387 40.918 9.266 15.036 14.256 24.037 36.633 22.433zM87.94 124.314c8.115-13.107 8.403-18.457-5.566-41.06C68.406 60.653 35.468 58.18 27.1 90.147c-8.368 31.966 3.564 54.055 21.707 59.69 18.142 5.633 31.02-12.415 39.135-25.522z';
@@ -141,7 +170,8 @@ const complexInfSvgPath =
 
 // Define constants for SVG view boxes.
 const bracketSvgViewBox = '0 0 57 166';
-const absBorderSvgViewBox = '0 0 55 166';
+const verticalLineSvgViewBox = '0 0 55 166';
+const horizontalLineSvgViewBox = '0 0 44 12';
 const sqrtPrefixViewBox = '0 0 43 81';
 const infViewBox = '0 0 218 218';
 
@@ -149,8 +179,28 @@ const infViewBox = '0 0 218 218';
 const svgElementsMap = {
   [openBracketClass]: createNewSvg(openBracketClass, openBracketSvgPath, bracketSvgViewBox),
   [closeBracketClass]: createNewSvg(closeBracketClass, closeBracketSvgPath, bracketSvgViewBox),
-  [prefixAbsClass]: createNewSvg(prefixAbsClass, absBorderSvgPath, absBorderSvgViewBox),
-  [postfixAbsClass]: createNewSvg(postfixAbsClass, absBorderSvgPath, absBorderSvgViewBox),
+  [absPrefixClass]: createNewSvg(absPrefixClass, verticalLineSvgPath, verticalLineSvgViewBox),
+  [absPostfixClass]: createNewSvg(absPostfixClass, verticalLineSvgPath, verticalLineSvgViewBox),
+  [floorPrefixVerticalClass]: createNewSvg(floorPrefixVerticalClass, verticalLineSvgPath, verticalLineSvgViewBox),
+  [floorPostfixVerticalClass]: createNewSvg(floorPostfixVerticalClass, verticalLineSvgPath, verticalLineSvgViewBox),
+  [ceilPrefixVerticalClass]: createNewSvg(ceilPrefixVerticalClass, verticalLineSvgPath, verticalLineSvgViewBox),
+  [ceilPostfixVerticalClass]: createNewSvg(ceilPostfixVerticalClass, verticalLineSvgPath, verticalLineSvgViewBox),
+  [floorPrefixHorizontalClass]: createNewSvg(
+    floorPrefixHorizontalClass,
+    horizontalLineSvgPath,
+    horizontalLineSvgViewBox
+  ),
+  [floorPostfixHorizontalClass]: createNewSvg(
+    floorPostfixHorizontalClass,
+    horizontalLineSvgPath,
+    horizontalLineSvgViewBox
+  ),
+  [ceilPrefixHorizontalClass]: createNewSvg(ceilPrefixHorizontalClass, horizontalLineSvgPath, horizontalLineSvgViewBox),
+  [ceilPostfixHorizontalClass]: createNewSvg(
+    ceilPostfixHorizontalClass,
+    horizontalLineSvgPath,
+    horizontalLineSvgViewBox
+  ),
   [rootPrefixClass]: createNewSvg(rootPrefixClass, sqrtPrefixSvgPath, sqrtPrefixViewBox),
   [infClass]: createNewSvg(infClass, infSvgPath, infViewBox),
   [complexInfClass]: createNewSvg(complexInfClass, complexInfSvgPath, infViewBox),
