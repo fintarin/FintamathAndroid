@@ -176,6 +176,10 @@ class MathTextView @JvmOverloads constructor(
         evaluateJavascript("redo()") { }
     }
 
+    fun clearUndoStates() {
+        evaluateJavascript("clearUndoStates()") { }
+    }
+
     fun moveCursorLeft() {
         evaluateJavascript("moveCursorLeft()") { }
     }

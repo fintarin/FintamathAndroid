@@ -408,6 +408,14 @@ function addUndoState() {
 }
 
 /**
+ * Clear undo and redo stacks.
+ */
+function clearUndoStates() {
+  undoStack = [];
+  redoStack = [];
+}
+
+/**
  * Move the text cursor one character or one element to the left.
  */
 function moveCursorLeft() {

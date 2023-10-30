@@ -1,5 +1,6 @@
 package com.fintamath.fragment.calculator
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -11,14 +12,15 @@ import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.databinding.FragmentCalculatorBinding
 import com.fintamath.storage.HistoryStorage
-import com.fintamath.storage.MathTextData
 import com.fintamath.storage.CalculatorInputStorage
+import com.fintamath.storage.MathTextData
 import com.fintamath.storage.SettingsStorage
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
 import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.concurrent.schedule
 
 
@@ -35,6 +37,14 @@ class CalculatorFragment : Fragment() {
 
     private val maxSolutionLength = 1000
 
+    private val inTextViewPreloadString = "abc * 123 Inf () sqrt() abs()"
+    private var inTextViewInitialColor = 0
+
+    private val inTextViewCreated = 0
+    private val inTextViewChanged = 1
+    private val inTextViewReady = 2
+    private var inTextViewState = AtomicInteger(inTextViewCreated)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -47,6 +57,11 @@ class CalculatorFragment : Fragment() {
             initKeyboards()
             initKeyboardActions()
             initBarButtons()
+
+            // Preloading - part 1
+            inTextViewInitialColor = viewBinding.inTextView.textColor
+            viewBinding.inTextView.textColor = (viewBinding.inOutLayout.background as ColorDrawable).color
+            viewBinding.inTextView.text = inTextViewPreloadString
         }
 
         return viewBinding.root
@@ -55,19 +70,22 @@ class CalculatorFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        keyboardSwitcher.showCurrentKeyboard()
+
         updateSettings()
 
-        if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
-            viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
-        }
+        if (inTextViewState.get() == inTextViewReady) {
+            if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
+                viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
+            }
 
-        if (viewBinding.outSolutionView.isShowingLoading() || wereSettingsUpdated.get()) {
-            startLoading()
-            onInTextChange(viewBinding.inTextView.text)
-        }
+            if (viewBinding.outSolutionView.isShowingLoading() || wereSettingsUpdated.get()) {
+                startLoading()
+                onInTextChange(viewBinding.inTextView.text)
+            }
 
-        viewBinding.inTextView.requestFocus()
-        keyboardSwitcher.showCurrentKeyboard()
+            viewBinding.inTextView.requestFocus()
+        }
 
         wereSettingsUpdated.set(false)
     }
@@ -85,7 +103,6 @@ class CalculatorFragment : Fragment() {
         viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
         viewBinding.inTextView.setOnTextChangedListener { _, text -> onInTextChange(text) }
         viewBinding.inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
-        viewBinding.inTextView.requestFocus()
     }
 
     private fun initProcessors() {
@@ -171,6 +188,23 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun onInTextChange(text: String) {
+        when (inTextViewState.get()) {
+            inTextViewCreated -> {
+                // Preloading - part 2
+                viewBinding.inTextView.clear()
+                inTextViewState.incrementAndGet()
+                return
+            }
+            inTextViewChanged -> {
+                // Preloading - part 3
+                viewBinding.inTextView.clearUndoStates()
+                viewBinding.inTextView.requestFocus()
+                viewBinding.inTextView.textColor = inTextViewInitialColor
+                inTextViewState.incrementAndGet()
+                return
+            }
+        }
+
         CalculatorInputStorage.mathTextData = MathTextData(text)
         cancelSaveToHistoryTask()
 
