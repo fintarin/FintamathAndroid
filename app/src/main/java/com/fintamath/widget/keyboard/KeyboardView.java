@@ -36,7 +36,6 @@ import com.fintamath.widget.keyboard.Keyboard.Key;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -51,15 +50,12 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.fintamath.R;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A view that renders a virtual {@link Keyboard}. It handles rendering of keys and
@@ -342,28 +338,6 @@ public class KeyboardView extends View implements View.OnClickListener {
                     }
                 }
             };
-        }
-
-        if (mIsMiniKeyboard) {
-            int x = 0;
-            int y = 0;
-
-            switch (mMiniKeyboardLocationFlags) {
-                case Keyboard.POPUP_LOCATION_RIGHT: {
-                    break;
-                }
-                case Keyboard.POPUP_LOCATION_LEFT: {
-                    x = getMeasuredWidth() - 1;
-                    break;
-                }
-                case Keyboard.POPUP_LOCATION_CENTER: {
-                    x = getMeasuredWidth() / 2;
-                    break;
-                }
-            }
-
-            onTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
-                    MotionEvent.ACTION_DOWN, x, y, 0));
         }
     }
 
@@ -1087,6 +1061,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         final int x = mPopupX + mMiniKeyboardContainer.getPaddingRight() + mCoordinates[0];
         final int y = mPopupY + mMiniKeyboardContainer.getPaddingBottom() + mCoordinates[1];
 
+        mMiniKeyboard.pressKey();
         mMiniKeyboard.setPopupOffset(Math.max(x, 0), y);
         mMiniKeyboard.setShifted(isShifted());
         mPopupKeyboard.setContentView(mMiniKeyboardContainer);
@@ -1096,6 +1071,26 @@ public class KeyboardView extends View implements View.OnClickListener {
         invalidateAllKeys();
 
         return true;
+    }
+
+    private void pressKey() {
+        int pressedKeyId = 0;
+
+        switch (mMiniKeyboardLocationFlags) {
+            case Keyboard.POPUP_LOCATION_RIGHT: {
+                break;
+            }
+            case Keyboard.POPUP_LOCATION_LEFT: {
+                pressedKeyId = mKeys.length - 1;
+                break;
+            }
+            case Keyboard.POPUP_LOCATION_CENTER: {
+                pressedKeyId = mKeys.length / 2;
+                break;
+            }
+        }
+
+        showPreview(pressedKeyId);
     }
 
     @Override
@@ -1171,8 +1166,10 @@ public class KeyboardView extends View implements View.OnClickListener {
         mSwipeTracker.addMovement(me);
 
         // Ignore all motion events until a DOWN.
-        if (mAbortKey
-                && action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_CANCEL) {
+        if (!mIsMiniKeyboard
+                && mAbortKey
+                && action != MotionEvent.ACTION_DOWN
+                && action != MotionEvent.ACTION_CANCEL) {
             return true;
         }
 
@@ -1263,7 +1260,10 @@ public class KeyboardView extends View implements View.OnClickListener {
                 showPreview(NOT_A_KEY);
                 Arrays.fill(mKeyIndices, NOT_A_KEY);
                 // If we're not on a repeating key (which sends on a DOWN event)
-                if (mRepeatKeyIndex == NOT_A_KEY && !inMiniKeyboardAttached() && !mAbortKey) {
+                if (mIsMiniKeyboard
+                        || (mRepeatKeyIndex == NOT_A_KEY
+                        && !inMiniKeyboardAttached()
+                        && !mAbortKey)) {
                     detectAndSendKey(mCurrentKey, touchX, touchY, eventTime);
                 }
                 invalidateKey(keyIndex);
