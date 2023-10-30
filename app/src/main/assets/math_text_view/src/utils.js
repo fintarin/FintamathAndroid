@@ -70,18 +70,13 @@ function toHtml(mathText, isEditable = false) {
         }
       }
 
-      if (specialSvgSymbols.includes(ch)) {
-        childElem = insertSpecialSymbol(chooseElement(rootElem, childElem), ch);
-        continue;
-      }
-
       if (unaryPrefixOperators.includes(ch) && indexContainerClasses.includes(getClassName(childElem))) {
         childElem = insertOperator(childElem, unaryPrefixOperatorClass, ch);
         continue;
       }
 
       {
-        let operElemClassName = parseOperator(childElem, ch);
+        const operElemClassName = parseOperator(childElem, ch);
 
         if (operElemClassName !== undefinedClass) {
           childElem = insertOperator(rootElem, operElemClassName, ch);
@@ -100,6 +95,12 @@ function toHtml(mathText, isEditable = false) {
         }
       } else {
         symbols = ch;
+      }
+
+      if (specialSvgSymbols.includes(symbols)) {
+        childElem = insertSpecialSymbol(chooseElement(rootElem, childElem), symbols);
+        i += symbols.length - 1;
+        continue;
       }
 
       if (i > start && mathText[i - 1] === space && getClassName(childElem) === textClass) {
@@ -145,26 +146,23 @@ function toHtml(mathText, isEditable = false) {
    * @returns {HTMLSpanElement} New child element.
    */
   function insertSpecialSymbol(elem, special) {
-    let specialElem = null;
-
     switch (special) {
       case mathHtmlMap['Inf']: {
-        specialElem = createSvg(infClass);
+        elem = elem.appendChild(createSvg(infClass));
         break;
       }
       case mathHtmlMap['ComplexInf']: {
-        specialElem = createSvg(complexInfClass);
+        elem = elem.appendChild(createSvg(complexInfClass));
         break;
       }
-      default:
+      case modOperator: {
+        const operElemClass = parseOperator(null, special);
+        elem = insertOperator(elem, operElemClass, special);
         break;
+      }
     }
 
-    if (specialElem == null) {
-      return elem;
-    }
-
-    return elem.appendChild(specialElem);
+    return elem;
   }
 
   /**

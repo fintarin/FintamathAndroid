@@ -59,6 +59,7 @@ const closeBracket = ')';
 const divOperator = '/';
 const supOperator = '^';
 const subOperator = '_';
+const modOperator = 'mod';
 const absFunction = 'abs';
 const sqrtFunction = 'sqrt';
 const rootFunction = 'root';
@@ -113,12 +114,13 @@ const binaryOperators = [
   mathHtmlMap['<->'],
   mathHtmlMap['!<->'],
   comma,
+  modOperator,
 ];
 const unaryPrefixOperators = ['+', mathHtmlMap['-'], mathHtmlMap['~']];
 const unaryPostfixOperators = ['%', '!', mathHtmlMap['deg']];
 
 // Define array of special symbols to be displayed as an SVG.
-const specialSvgSymbols = [mathHtmlMap['Inf'], mathHtmlMap['ComplexInf']];
+const specialSvgSymbols = [mathHtmlMap['Inf'], mathHtmlMap['ComplexInf'], modOperator];
 
 // Define constants for text styling.
 const textEmptyHintSelected = '\u2B1A'; // TODO: use svg image instead
