@@ -260,7 +260,7 @@ function toHtml(mathText, isEditable = false) {
    */
   function insertBrackets(rootElem, childElem, mathText, start, end, funcName = '') {
     if (mathText[start] === closeBracket) {
-      childElem = rootElem.appendChild(createSvg(closeBracketClass));
+      childElem = rootElem.appendChild(createSvg(bracketPostfixClass));
       return { start, childElem };
     }
 
@@ -294,7 +294,7 @@ function toHtml(mathText, isEditable = false) {
         rootElem.appendChild(createFunctionNameElement(funcName));
       }
 
-      childElem = rootElem.appendChild(createSvg(openBracketClass));
+      childElem = rootElem.appendChild(createSvg(bracketPrefixClass));
     }
 
     return { start, childElem };
@@ -307,8 +307,8 @@ function toHtml(mathText, isEditable = false) {
      * @param {HTMLSpanElement} elem - The element to put in brackets.
      */
     function putInBrackets(elem) {
-      elem.insertBefore(createSvg(openBracketClass), elem.firstElementChild);
-      elem.appendChild(createSvg(closeBracketClass));
+      elem.insertBefore(createSvg(bracketPrefixClass), elem.firstElementChild);
+      elem.appendChild(createSvg(bracketPostfixClass));
     }
 
     /**
@@ -362,9 +362,9 @@ function toHtml(mathText, isEditable = false) {
 
           elem = createElement(logClass);
           elem.appendChild(logIndexElem, elem.firstElementChild);
-          elem.appendChild(createSvg(openBracketClass));
+          elem.appendChild(createSvg(bracketPrefixClass));
           elem.insertBefore(createFunctionNameElement(funcName), elem.firstElementChild);
-          elem.appendChild(createSvg(closeBracketClass));
+          elem.appendChild(createSvg(bracketPostfixClass));
           elem.insertBefore(logContentElem, elem.lastElementChild);
 
           break;
@@ -506,11 +506,11 @@ function toHtml(mathText, isEditable = false) {
         const childElem = elem.firstElementChild;
 
         switch (getClassName(childElem)) {
-          case openBracketClass: {
+          case bracketPrefixClass: {
             bracketsCount++;
             break;
           }
-          case closeBracketClass: {
+          case bracketPostfixClass: {
             bracketsCount--;
             break;
           }
@@ -691,10 +691,10 @@ function toMathText(html, isEditable = false) {
    */
   function toMathTextRec(elem) {
     switch (getClassName(elem)) {
-      case openBracketClass: {
+      case bracketPrefixClass: {
         return openBracket;
       }
-      case closeBracketClass:
+      case bracketPostfixClass:
       case absPostfixClass:
       case floorPostfixClass:
       case ceilPostfixClass: {
@@ -883,7 +883,7 @@ function redrawSvg(elem) {
     let childElemHeight = childElem.clientHeight;
 
     switch (getClassName(childElem)) {
-      case openBracketClass:
+      case bracketPrefixClass:
       case absPrefixClass:
       case floorPrefixClass:
       case ceilPrefixClass: {
@@ -891,7 +891,7 @@ function redrawSvg(elem) {
         bracketMaxHeightStack.push(bracketMinHeight);
         break;
       }
-      case closeBracketClass:
+      case bracketPostfixClass:
       case absPostfixClass:
       case floorPostfixClass:
       case ceilPostfixClass: {
@@ -1599,9 +1599,9 @@ function isComplete(elem) {
       return false;
     }
 
-    if (getClassName(childElem) === openBracketClass) {
+    if (getClassName(childElem) === bracketPrefixClass) {
       openBracketsCount++;
-    } else if (getClassName(childElem) === closeBracketClass) {
+    } else if (getClassName(childElem) === bracketPostfixClass) {
       openBracketsCount--;
     }
 
@@ -1839,7 +1839,7 @@ function cutSpaces(str) {
  * @returns {Object} - the reverse map object.
  */
 function reverseMap(mapObj) {
-  var res = {};
+  let res = {};
 
   Object.keys(mapObj).map((key) => {
     res[mapObj[key]] = key;

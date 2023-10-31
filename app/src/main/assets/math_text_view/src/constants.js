@@ -8,8 +8,8 @@ const functionNameClass = 'function-name';
 const binaryOperatorClass = 'binary-operator';
 const unaryPrefixOperatorClass = 'unary-prefix-operator';
 const unaryPostfixOperatorClass = 'unary-postfix-operator';
-const openBracketClass = 'open-bracket';
-const closeBracketClass = 'close-bracket';
+const bracketPrefixClass = 'open-bracket';
+const bracketPostfixClass = 'close-bracket';
 const absPrefixClass = 'abs-prefix';
 const absPostfixClass = 'abs-postfix';
 const floorPrefixClass = 'floor-prefix';
@@ -143,7 +143,7 @@ const specialSvgSymbols = [mathHtmlMap['Inf'], mathHtmlMap['ComplexInf'], modOpe
 
 // Define a mapping for pairs like '(' and ')'.
 const bracketMap = {
-  [openBracketClass]: closeBracketClass,
+  [bracketPrefixClass]: bracketPostfixClass,
   [absPrefixClass]: absPostfixClass,
   [floorPrefixClass]: floorPostfixClass,
   [ceilPrefixClass]: ceilPostfixClass,
@@ -177,8 +177,8 @@ const infViewBox = '0 0 218 218';
 
 // Define a mapping of class names to SVG elements.
 const svgElementsMap = {
-  [openBracketClass]: createNewSvg(openBracketClass, openBracketSvgPath, bracketSvgViewBox),
-  [closeBracketClass]: createNewSvg(closeBracketClass, closeBracketSvgPath, bracketSvgViewBox),
+  [bracketPrefixClass]: createNewSvg(bracketPrefixClass, openBracketSvgPath, bracketSvgViewBox),
+  [bracketPostfixClass]: createNewSvg(bracketPostfixClass, closeBracketSvgPath, bracketSvgViewBox),
   [absPrefixClass]: createNewSvg(absPrefixClass, verticalLineSvgPath, verticalLineSvgViewBox),
   [absPostfixClass]: createNewSvg(absPostfixClass, verticalLineSvgPath, verticalLineSvgViewBox),
   [floorPrefixVerticalClass]: createNewSvg(floorPrefixVerticalClass, verticalLineSvgPath, verticalLineSvgViewBox),

@@ -287,7 +287,7 @@ function deleteAtCursor() {
      * @returns {boolean} Truth if we still have to delete the given element later, false otherwise.
      */
     function deleteMatchingBracket(elem, parentElem, prevElem, nextElem) {
-      var result = true;
+      let result = true;
 
       if (getClassName(elem) in bracketMap) {
         result =
@@ -298,7 +298,9 @@ function deleteAtCursor() {
         if (result) {
           parentElem.removeChild(nextElem.nextElementSibling);
         }
-      } else if (getClassName(elem) in bracketMapReversed) {
+
+        result = result || getClassName(elem) === bracketPrefixClass;
+      } else if (getClassName(elem) in bracketMapReversed && getClassName(elem) !== bracketPostfixClass) {
         result =
           prevElem !== null &&
           getClassName(prevElem) === textHintClass &&
