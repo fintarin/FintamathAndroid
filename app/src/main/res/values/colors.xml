@@ -49,4 +49,5 @@
 
     <color name="launcher_icon_background">#4A1B7D</color>
     <color name="launcher_icon">@color/text_main</color>
+    <color name="logo">#631D9B</color>
 </resources>
