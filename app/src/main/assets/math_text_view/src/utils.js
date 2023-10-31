@@ -45,12 +45,28 @@ function toHtml(mathText, isEditable = false) {
     let childElem = null;
 
     for (let i = start; i <= end; i++) {
-      const ch = mathText[i];
+      let symbols = getLetters(mathText, i, end);
 
-      switch (ch) {
+      if (symbols !== '') {
+        let pos = i + symbols.length;
+
+        // Insert a function
+        if (pos <= end && mathText[pos] === openBracket) {
+          ({ start: i, childElem: childElem } = insertBrackets(rootElem, childElem, mathText, pos, end, symbols));
+          continue;
+        }
+      } else {
+        symbols = mathText[i];
+      }
+
+      const prevIndex = i;
+      i += symbols.length - 1;
+
+      // Insert special symbols
+      switch (symbols) {
         case openBracket:
         case closeBracket: {
-          ({ start: i, childElem: childElem } = insertBrackets(rootElem, childElem, mathText, i, end));
+          ({ start: i, childElem: childElem } = insertBrackets(rootElem, childElem, mathText, prevIndex, end));
           continue;
         }
         case divOperator: {
@@ -65,45 +81,37 @@ function toHtml(mathText, isEditable = false) {
           childElem = insertIndex(chooseElement(rootElem, childElem), subClass);
           continue;
         }
+        case mathHtmlMap['Inf']: {
+          childElem = childElem.appendChild(createSvg(infClass));
+          break;
+        }
+        case mathHtmlMap['ComplexInf']: {
+          childElem = childElem.appendChild(createSvg(complexInfClass));
+          break;
+        }
         case space: {
           continue;
         }
       }
 
-      if (unaryPrefixOperators.includes(ch) && indexContainerClasses.includes(getClassName(childElem))) {
-        childElem = insertOperator(childElem, unaryPrefixOperatorClass, ch);
+      // Insert an unary prefix operator into the index container
+      if (unaryPrefixOperators.includes(symbols) && indexContainerClasses.includes(getClassName(childElem))) {
+        childElem = insertOperator(childElem, unaryPrefixOperatorClass, symbols);
         continue;
       }
 
+      // Insert an operator
       {
-        const operElemClassName = parseOperator(childElem, ch);
+        const operElemClassName = parseOperator(childElem, symbols);
 
         if (operElemClassName !== undefinedClass) {
-          childElem = insertOperator(rootElem, operElemClassName, ch);
+          childElem = insertOperator(rootElem, operElemClassName, symbols);
           continue;
         }
       }
 
-      let symbols = getLetters(mathText, i, end);
-
-      if (symbols !== '') {
-        let pos = i + symbols.length;
-
-        if (pos <= end && mathText[pos] === openBracket) {
-          ({ start: i, childElem: childElem } = insertBrackets(rootElem, childElem, mathText, pos, end, symbols));
-          continue;
-        }
-      } else {
-        symbols = ch;
-      }
-
-      if (specialSvgSymbols.includes(symbols)) {
-        childElem = insertSpecialSymbol(chooseElement(rootElem, childElem), symbols);
-        i += symbols.length - 1;
-        continue;
-      }
-
-      if (i > start && mathText[i - 1] === space && getClassName(childElem) === textClass) {
+      // Insert a text element
+      if (prevIndex > start && mathText[prevIndex - 1] === space && getClassName(childElem) === textClass) {
         childElem = insertSpace(rootElem);
       } else if (childElem === null) {
         childElem = rootElem.appendChild(createElement(textClass));
@@ -122,47 +130,21 @@ function toHtml(mathText, isEditable = false) {
         childElem = parentElem.appendChild(newChildElem);
       }
 
+      // Remove previous empty text element
       if (childElem.innerHTML === '' && getClassName(childElem.previousElementSibling) === textClass) {
         let parentElem = childElem.parentElement;
         parentElem.removeChild(childElem);
         childElem = parentElem.lastElementChild;
       }
 
+      // Insert text to the current text element
       childElem.innerHTML += symbols;
-      i += symbols.length - 1;
     }
 
     insertHints(rootElem);
     insertEmptyTexts(rootElem);
 
     return rootElem;
-  }
-
-  /**
-   * Handle the insertion of special symbols like Inf, ComplexInf.
-   *
-   * @param {HTMLSpanElement} elem - The element to insert special symbol.
-   * @param {string} special - The symbol itself.
-   * @returns {HTMLSpanElement} New child element.
-   */
-  function insertSpecialSymbol(elem, special) {
-    switch (special) {
-      case mathHtmlMap['Inf']: {
-        elem = elem.appendChild(createSvg(infClass));
-        break;
-      }
-      case mathHtmlMap['ComplexInf']: {
-        elem = elem.appendChild(createSvg(complexInfClass));
-        break;
-      }
-      case modOperator: {
-        const operElemClass = parseOperator(null, special);
-        elem = insertOperator(elem, operElemClass, special);
-        break;
-      }
-    }
-
-    return elem;
   }
 
   /**

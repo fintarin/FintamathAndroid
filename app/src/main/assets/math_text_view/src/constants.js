@@ -76,7 +76,6 @@ const closeBracket = ')';
 const divOperator = '/';
 const supOperator = '^';
 const subOperator = '_';
-const modOperator = 'mod';
 const absFunction = 'abs';
 const floorFunction = 'floor';
 const ceilFunction = 'ceil';
@@ -133,13 +132,10 @@ const binaryOperators = [
   mathHtmlMap['<->'],
   mathHtmlMap['!<->'],
   comma,
-  modOperator,
+  'mod',
 ];
 const unaryPrefixOperators = ['+', mathHtmlMap['-'], mathHtmlMap['~']];
 const unaryPostfixOperators = ['%', '!', mathHtmlMap['deg']];
-
-// Define array of special symbols to be displayed as an SVG.
-const specialSvgSymbols = [mathHtmlMap['Inf'], mathHtmlMap['ComplexInf'], modOperator];
 
 // Define a mapping for pairs like '(' and ')'.
 const bracketMap = {
