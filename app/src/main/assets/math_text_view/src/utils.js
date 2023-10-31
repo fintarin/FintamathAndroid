@@ -372,39 +372,64 @@ function toHtml(mathText, isEditable = false) {
         case fracFunction: {
           let tokenElems = tokenizeByComma(elem);
 
-          let numeratorElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
-          setClassName(numeratorElem, numeratorClass);
+          if (tokenElems.length > 2) {
+            let integerElem = tokenElems[0];
+            setClassName(integerElem, textClass);
 
-          let denominatorElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
-          setClassName(denominatorElem, denominatorClass);
+            let numeratorElem = tokenElems[1];
+            setClassName(numeratorElem, numeratorClass);
 
-          elem = createElement(fractionClass);
-          elem.appendChild(numeratorElem);
-          elem.appendChild(denominatorElem);
+            let denominatorElem = tokenElems[2];
+            setClassName(denominatorElem, denominatorClass);
+
+            let fracElem = createElement(fractionClass);
+            fracElem.appendChild(numeratorElem);
+            fracElem.appendChild(denominatorElem);
+
+            elem = createElement();
+            elem.appendChild(integerElem);
+            elem.appendChild(fracElem);
+
+            isSpecialFunc = false;
+          } else {
+            let numeratorElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
+            setClassName(numeratorElem, numeratorClass);
+
+            let denominatorElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
+            setClassName(denominatorElem, denominatorClass);
+
+            elem = createElement(fractionClass);
+            elem.appendChild(numeratorElem);
+            elem.appendChild(denominatorElem);
+          }
 
           break;
         }
         case absFunction: {
           elem.insertBefore(createSvg(absPrefixClass), elem.firstChild);
           elem.appendChild(createSvg(absPostfixClass));
+
           isSpecialFunc = false;
           break;
         }
         case floorFunction: {
           elem.insertBefore(createFloorCeilElement(floorPrefixClass), elem.firstChild);
           elem.appendChild(createFloorCeilElement(floorPostfixClass));
+
           isSpecialFunc = false;
           break;
         }
         case ceilFunction: {
           elem.insertBefore(createFloorCeilElement(ceilPrefixClass), elem.firstChild);
           elem.appendChild(createFloorCeilElement(ceilPostfixClass));
+
           isSpecialFunc = false;
           break;
         }
         default: {
           putInBrackets(elem);
           elem.insertBefore(createFunctionNameElement(funcName), elem.firstElementChild);
+
           isSpecialFunc = false;
           break;
         }
@@ -752,6 +777,26 @@ function toMathText(html, isEditable = false) {
       const childElem = elem.children[i];
 
       if (isEmptyElement(childElem)) {
+        continue;
+      }
+
+      const nextChildElem = childElem.nextElementSibling;
+
+      if (isNumberElement(childElem) && isNumberFractionElement(nextChildElem)) {
+        text +=
+          fracFunction +
+          putInBrackets(
+            toMathTextRec(childElem) +
+              comma +
+              space +
+              toMathTextChildren(nextChildElem.children[0]) +
+              comma +
+              space +
+              toMathTextChildren(nextChildElem.children[1])
+          );
+
+        i++;
+        prevChildElem = nextChildElem;
         continue;
       }
 
@@ -1571,7 +1616,7 @@ function isComplete(elem) {
 /**
  * Determine whether the given element is a non empty text element.
  *
- * @param {HTMLSpanElement} elem
+ * @param {HTMLSpanElement} elem - The element to check.
  * @returns {boolean} Whether the given element is a non empty text element.
  */
 function isNotEmptyTextElement(elem) {
@@ -1581,11 +1626,48 @@ function isNotEmptyTextElement(elem) {
 /**
  * Determine whether the given element is a empty element.
  *
- * @param {HTMLSpanElement} elem
+ * @param {HTMLSpanElement} elem - The element to check.
  * @returns {boolean} Whether the given element is a empty element.
  */
 function isEmptyElement(elem) {
   return (textClasses.includes(getClassName(elem)) || getClassName(elem) === borderClass) && elem.innerHTML === '';
+}
+
+/**
+ * Determine whether the given element is a text of a number.
+ *
+ * @param {HTMLSpanElement} elem - The element to check.
+ * @returns {boolean} Whether the given element is a number element.
+ */
+function isNumberElement(elem) {
+  return textClasses.includes(getClassName(elem)) && isNumber(elem.innerText);
+}
+
+/**
+ * Determine whether the given element is a fraction of number elements.
+ *
+ * @param {HTMLSpanElement} elem - The element to check.
+ * @returns {boolean} Whether the given element is a number fraction element.
+ */
+function isNumberFractionElement(elem) {
+  if (getClassName(elem) !== fractionClass) {
+    return false;
+  }
+
+  // TODO: improve performance
+  const numeratorText = toMathText(elem.firstChild.innerHTML);
+  const denominatorText = toMathText(elem.lastChild.innerHTML);
+  return isNumber(numeratorText) && isNumber(denominatorText);
+}
+
+/**
+ * Determine whether the given string is a natural number.
+ *
+ * @param {String} string - The string to check.
+ * @returns {boolean} Whether the given string is a number.
+ */
+function isNumber(string) {
+  return /^\d+$/.test(string);
 }
 
 /**
