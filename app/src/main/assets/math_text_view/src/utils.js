@@ -82,12 +82,12 @@ function toHtml(mathText, isEditable = false) {
           continue;
         }
         case mathHtmlMap['Inf']: {
-          childElem = childElem.appendChild(createSvg(infClass));
-          break;
+          childElem = chooseElement(rootElem, childElem).appendChild(createSvg(infClass));
+          continue;
         }
         case mathHtmlMap['ComplexInf']: {
-          childElem = childElem.appendChild(createSvg(complexInfClass));
-          break;
+          childElem = chooseElement(rootElem, childElem).appendChild(createSvg(complexInfClass));
+          continue;
         }
         case space: {
           continue;
