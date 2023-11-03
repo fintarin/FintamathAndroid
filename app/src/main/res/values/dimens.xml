@@ -9,8 +9,7 @@
     <dimen name="text_size_keyboard_special_big">34dp</dimen>
     <dimen name="text_size_keyboard_special_huge">54dp</dimen>
     <dimen name="text_size_keyboard_top_label">12dp</dimen>
-    <dimen name="text_size_keyboard_top_special">14dp</dimen>
-    <dimen name="text_size_keyboard_top_special_big">16dp</dimen>
+    <dimen name="text_size_keyboard_top_special">13dp</dimen>
     <dimen name="text_size_alternative">16sp</dimen>
     <dimen name="text_size_solution_message">16sp</dimen>
     <dimen name="text_size_message_version">14sp</dimen>
@@ -36,7 +35,7 @@
 
     <dimen name="width_cursor">1dp</dimen>
 
-    <dimen name="keyboard_key_height">70dp</dimen>
+    <dimen name="keyboard_key_height">60dp</dimen>
     <dimen name="keyboard_key_width">100%</dimen>
     <dimen name="keyboard_main_key_width">16.67%</dimen>
     <dimen name="keyboard_letters_key_width">12.5%</dimen>
