@@ -137,6 +137,7 @@ public class KeyboardView extends View implements View.OnClickListener {
     private static final int NOT_A_KEY = -1;
     private static final int[] KEY_DELETE = { Keyboard.KEYCODE_DELETE };
     private static final int[] LONG_PRESSABLE_STATE_SET = { R.attr.state_long_pressable };
+    public static final int TOP_LABEL_PADDING_SCALE = 20;
 
     private Keyboard mKeyboard;
     private int mCurrentKeyIndex = NOT_A_KEY;
@@ -148,7 +149,6 @@ public class KeyboardView extends View implements View.OnClickListener {
     private TextView mPreviewText;
     private View mPreviewTextContainer;
     private final PopupWindow mPreviewPopup;
-    private int mPreviewTextSizeLarge;
     // Working variable
     private final int[] mCoordinates = new int[2];
 
@@ -274,7 +274,6 @@ public class KeyboardView extends View implements View.OnClickListener {
         mPreviewPopup = new PopupWindow(context);
         if (previewLayout != 0) {
             mPreviewText = (TextView) inflate(getContext(), previewLayout, null);
-            mPreviewTextSizeLarge = (int) mPreviewText.getTextSize();
 
             FrameLayout previewTextContainer = new FrameLayout(getContext());
             previewTextContainer.setLayoutParams(new FrameLayout.LayoutParams(0, 0));
@@ -680,25 +679,26 @@ public class KeyboardView extends View implements View.OnClickListener {
 
             String topLabel = key.topLabel == null ? null : adjustCase(key.topLabel).toString();
 
+            final int topLabelRightPadding = key.width / 12;
+            final int topLabelTopPadding = key.height / 12;
+
             if (topLabel != null) {
                 paint.setTextSize(mKeyTopLabelTextSize);
                 paint.setTypeface(mFontFamily);
                 paint.setColor(mKeyTopLabelTextColor);
 
-                // Draw the label text
-                canvas.drawText(topLabel,
-                        (float) (key.width - padding.left - padding.right) * 4 / 5
-                                + padding.left,
-                        (float) (padding.top - padding.bottom) +
-                                (paint.getTextSize() - paint.descent()) * 2 + padding.top,
-                        paint);
+                Rect textBounds = new Rect();
+                paint.getTextBounds(topLabel, 0, topLabel.length(), textBounds);
+
+                final int drawableX = key.width - textBounds.width() / 2 - topLabelRightPadding;
+                final int drawableY = textBounds.height() + topLabelTopPadding;
+
+                canvas.drawText(topLabel, (float) drawableX, (float) drawableY, paint);
 
                 paint.setColor(mKeyTextColor);
             } else if (key.topIcon != null) {
-                final int drawableX = (key.width - padding.left - padding.right
-                        - key.topIcon.getIntrinsicWidth()) * 4 / 5 + padding.left;
-                final int drawableY = (key.height - padding.top - padding.bottom
-                        - key.topIcon.getIntrinsicHeight()) / 10 + padding.top;
+                final int drawableX = key.width - key.topIcon.getIntrinsicWidth() - topLabelRightPadding;
+                final int drawableY = topLabelTopPadding;
                 canvas.translate(drawableX, drawableY);
                 key.topIcon.setBounds(0, 0,
                         key.topIcon.getIntrinsicWidth(), key.topIcon.getIntrinsicHeight());
@@ -890,7 +890,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         } else {
             mPreviewText.setCompoundDrawables(null, null, null, null);
             mPreviewText.setText(getPreviewText(key));
-            mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mPreviewTextSizeLarge);
+            mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mKeyTextSize);
             mPreviewText.setTypeface(mFontFamily);
         }
 

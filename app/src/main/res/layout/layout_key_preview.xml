@@ -5,6 +5,5 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/background_popup_key_normal"
-    android:textColor="@color/text_main"
-    android:textSize="@dimen/text_size_keyboard" >
+    android:textColor="@color/text_main" >
 </TextView>
