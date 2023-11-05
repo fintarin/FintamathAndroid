@@ -139,10 +139,20 @@ svg {
   opacity: 0.75;
 }
 
+.log {
+  vertical-align: baseline; /* TODO: remove */
+}
+
+.log-index {
+  font-size: 70%;
+  vertical-align: sub; /* TODO: remove */
+  margin-left: 0.1em;
+  margin-right: -0.1em;
+}
+
 .open-bracket,
 .close-bracket {
   width: 0.4em;
-  height: 1em;
 }
 
 .open-bracket {
@@ -232,31 +242,6 @@ svg {
   margin-bottom: 1.15em;
   margin-right: -0.75em;
   vertical-align: bottom;
-}
-
-.log {
-  vertical-align: baseline; /* TODO: remove */
-}
-
-.log-index {
-  font-size: 70%;
-  vertical-align: sub; /* TODO: remove */
-  margin-left: 0.1em;
-  margin-right: -0.1em;
-}
-
-.open-bracket,
-.close-bracket {
-  width: 0.4em;
-  height: 1em;
-}
-
-.open-bracket {
-  margin-left: 0.15em;
-}
-
-.close-bracket {
-  margin-right: 0.15em;
 }
 
 .infinite,
