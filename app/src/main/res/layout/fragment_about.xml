@@ -63,7 +63,7 @@
             android:padding="15dp"
             android:gravity="center"
             android:text="@string/page_link"
-            android:textSize="@dimen/text_size_main_small"
+            android:textSize="@dimen/text_size_about_link"
             android:textColor="@color/text_main"
             android:textColorLink="@color/text_main"
             android:textColorHighlight="@color/background_main"
@@ -77,7 +77,7 @@
             android:paddingHorizontal="15dp"
             android:gravity="center"
             android:text="@string/contact_us"
-            android:textSize="@dimen/text_size_main_small"
+            android:textSize="@dimen/text_size_about_link"
             android:textColor="@color/text_hint"/>
 
         <TextView
@@ -87,7 +87,7 @@
             android:paddingBottom="15dp"
             android:gravity="center"
             android:text="@string/contact_link"
-            android:textSize="@dimen/text_size_main_small"
+            android:textSize="@dimen/text_size_about_link"
             android:textColor="@color/text_main"
             android:textColorLink="@color/text_main"
             android:textColorHighlight="@color/background_main"
@@ -108,7 +108,7 @@
         android:padding="15dp"
         android:gravity="center"
         android:text="@string/version_message"
-        android:textSize="@dimen/text_size_message_version"
+        android:textSize="@dimen/text_size_version_name"
         android:textColor="@color/text_hint" />
 
 </LinearLayout>

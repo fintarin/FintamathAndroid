@@ -34,7 +34,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/delimiter_width"
+            android:layout_height="@dimen/height_delimiter"
             android:background="@drawable/background_dashed_line"/>
 
         <LinearLayout
@@ -50,7 +50,7 @@
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
                 android:textColor="@color/text_main"
-                android:textSize="@dimen/text_size_solution_message"/>
+                android:textSize="@dimen/text_size_history_item_time"/>
 
             <Space
                 android:layout_width="0dp"

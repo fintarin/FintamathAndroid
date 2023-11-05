@@ -10,8 +10,8 @@
     android:paddingEnd="15dp">
 
     <ImageView
-        android:layout_width="@dimen/diameter_warning"
-        android:layout_height="@dimen/diameter_warning"
+        android:layout_width="@dimen/diameter_solution_warning"
+        android:layout_height="@dimen/diameter_solution_warning"
         android:layout_gravity="center"
         android:paddingEnd="10dp"
         android:src="@drawable/ic_warning"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:keyWidth="@dimen/keyboard_key_width"
-    app:keyHeight="@dimen/keyboard_key_height">
+    app:keyWidth="@dimen/width_keyboard_key"
+    app:keyHeight="@dimen/height_keyboard_key">
 
     <Row>
         <Key
@@ -82,19 +82,19 @@
         <Key
             app:keyOutputText="ln()"
             app:keyLabel="ln"
-            app:keyTopLabel="lb lg⠀"
+            app:keyTopLabel="lb lg"
             app:popupKeyboardLocationFlags="center"
             app:popupKeyboard="@xml/popup_keyboard_functions_logarithms" />
         <Key
             app:keyOutputText="sin()"
             app:keyLabel="sin"
-            app:keyTopLabel="asinh⠀"
+            app:keyTopLabel="asinh"
             app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_sin" />
         <Key
             app:keyOutputText="cos()"
             app:keyLabel="cos"
-            app:keyTopLabel="acosh⠀"
+            app:keyTopLabel="acosh"
             app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_cos" />
     </Row>
@@ -112,13 +112,13 @@
         <Key
             app:keyOutputText="tan()"
             app:keyLabel="tan"
-            app:keyTopLabel="atanh⠀"
+            app:keyTopLabel="atanh"
             app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_tan" />
         <Key
             app:keyOutputText="cot()"
             app:keyLabel="cot"
-            app:keyTopLabel="acoth⠀"
+            app:keyTopLabel="acoth"
             app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_cot" />
     </Row>
@@ -136,13 +136,13 @@
         <Key
             app:keyOutputText="sec()"
             app:keyLabel="sec"
-            app:keyTopLabel="asech⠀"
+            app:keyTopLabel="asech"
             app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_sec" />
         <Key
             app:keyOutputText="csc()"
             app:keyLabel="csc"
-            app:keyTopLabel="acsch⠀"
+            app:keyTopLabel="acsch"
             app:popupKeyboardLocationFlags="left"
             app:popupKeyboard="@xml/popup_keyboard_functions_csc" />
     </Row>

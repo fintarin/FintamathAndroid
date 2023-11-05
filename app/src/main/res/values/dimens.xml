@@ -1,49 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size_main">18sp</dimen>
-    <dimen name="text_size_main_small">16sp</dimen>
     <dimen name="text_size_bar">22sp</dimen>
-    <dimen name="text_size_math_text_view">22sp</dimen>
-    <dimen name="text_size_keyboard">22dp</dimen>
-    <dimen name="text_size_keyboard_special">26dp</dimen>
-    <dimen name="text_size_keyboard_special_big">34dp</dimen>
-    <dimen name="text_size_keyboard_special_huge">54dp</dimen>
-    <dimen name="text_size_keyboard_top_label">12dp</dimen>
-    <dimen name="text_size_keyboard_top_special">13dp</dimen>
-    <dimen name="text_size_alternative">16sp</dimen>
-    <dimen name="text_size_solution_message">16sp</dimen>
-    <dimen name="text_size_message_version">14sp</dimen>
     <dimen name="text_size_quick_bar">14sp</dimen>
+
+    <dimen name="text_size_history_empty">18sp</dimen>
+    <dimen name="text_size_history_item_time">16sp</dimen>
+
+    <dimen name="text_size_about_link">16sp</dimen>
+    <dimen name="text_size_version_name">14sp</dimen>
+
     <dimen name="text_size_setting">20sp</dimen>
     <dimen name="text_size_setting_details">16sp</dimen>
 
-    <dimen name="diameter_bar_button">48dp</dimen>
-    <dimen name="diameter_history_item_button">36dp</dimen>
-    <dimen name="diameter_open_keyboard_button">64dp</dimen>
-    <dimen name="diameter_warning">24dp</dimen>
+    <dimen name="text_size_math_text_view">22sp</dimen>
+    <dimen name="text_size_solution_message">16sp</dimen>
+    <dimen name="text_size_alternative">16sp</dimen>
 
-    <dimen name="delimiter_width">2dp</dimen>
+    <dimen name="text_size_keyboard">22dp</dimen>
+    <dimen name="text_size_keyboard_special">26dp</dimen>
+    <dimen name="text_size_keyboard_special_big">34dp</dimen>
+    <dimen name="text_size_keyboard_top_label">12dp</dimen>
+    <dimen name="text_size_keyboard_top_special">13dp</dimen>
 
-    <dimen name="radius_keyboard_key">8dp</dimen>
-    <dimen name="radius_keyboard_switch_key">16dp</dimen>
-    <dimen name="radius_history_button">16dp</dimen>
-    <dimen name="radius_menu_background">16dp</dimen>
-    <dimen name="radius_recognition_background">16dp</dimen>
-
+    <dimen name="height_keyboard_key">7%</dimen>
+    <dimen name="width_keyboard_key">100%</dimen>
+    <dimen name="width_keyboard_main_key">16.67%</dimen>
+    <dimen name="width_keyboard_letters_key">12.5%</dimen>
+    <dimen name="width_keyboard_functions_key">20%</dimen>
+    <dimen name="width_keyboard_analysis_key">20%</dimen>
+    <dimen name="width_keyboard_logic_key">20%</dimen>
     <dimen name="width_keyboard_key_stroke">2dp</dimen>
     <dimen name="width_keyboard_switch_key_stroke">5dp</dimen>
+    <dimen name="radius_keyboard_key">8dp</dimen>
+    <dimen name="radius_keyboard_switch_key">16dp</dimen>
 
-    <dimen name="width_cursor">1dp</dimen>
-
-    <dimen name="keyboard_key_height">60dp</dimen>
-    <dimen name="keyboard_key_width">100%</dimen>
-    <dimen name="keyboard_main_key_width">16.67%</dimen>
-    <dimen name="keyboard_letters_key_width">12.5%</dimen>
-    <dimen name="keyboard_functions_key_width">20%</dimen>
-    <dimen name="keyboard_analysis_key_width">20%</dimen>
-    <dimen name="keyboard_logic_key_width">20%</dimen>
-
+    <dimen name="diameter_bar_button">48dp</dimen>
+    <dimen name="diameter_history_item_button">36dp</dimen>
+    <dimen name="diameter_solution_warning">24dp</dimen>
+    <dimen name="radius_quick_action_popup">8dp</dimen>
+    <dimen name="radius_history_button">16dp</dimen>
     <dimen name="radius_loading_dots">2.5dp</dimen>
 
-    <dimen name="radius_quick_action_popup">8dp</dimen>
+    <dimen name="height_in_math_text_view">70sp</dimen>
+    <dimen name="height_delimiter">2dp</dimen>
 </resources>

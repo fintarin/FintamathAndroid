@@ -100,7 +100,7 @@
                     android:id="@+id/in_text_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="100dp"
+                    android:minHeight="@dimen/height_in_math_text_view"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -119,7 +119,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:paddingHorizontal="18sp"
+                            android:paddingHorizontal="18dp"
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textSize="@dimen/text_size_math_text_view"
@@ -130,7 +130,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/delimiter_width"
+                    android:layout_height="@dimen/height_delimiter"
                     android:background="@drawable/background_dashed_line"/>
 
                 <com.fintamath.widget.mathview.MathSolutionView

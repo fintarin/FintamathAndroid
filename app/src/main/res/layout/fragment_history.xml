@@ -100,7 +100,7 @@
             android:gravity="center"
             android:visibility="gone"
             android:text="@string/empty_history_message"
-            android:textSize="@dimen/text_size_main"
+            android:textSize="@dimen/text_size_history_empty"
             android:textColor="@color/text_hint" />
 
         <androidx.recyclerview.widget.RecyclerView

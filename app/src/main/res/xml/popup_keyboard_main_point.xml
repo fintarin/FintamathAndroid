@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:keyWidth="@dimen/keyboard_main_key_width"
-    app:keyHeight="@dimen/keyboard_key_height">
+    app:keyWidth="@dimen/width_keyboard_main_key"
+    app:keyHeight="@dimen/height_keyboard_key">
 
     <Row>
         <Key

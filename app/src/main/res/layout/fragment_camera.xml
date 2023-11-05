@@ -86,7 +86,7 @@
             android:padding="15dp"
             android:gravity="center"
             android:text="@string/coming_soon"
-            android:textSize="@dimen/text_size_main"
+            android:textSize="@dimen/text_size_history_empty"
             android:textColor="@color/text_hint" />
 
     </LinearLayout>
