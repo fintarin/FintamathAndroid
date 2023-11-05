@@ -2,18 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center"
     android:background="@drawable/background_quick_action_popup">
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@id/cut"
-        android:layout_width="50dp"
+        android:layout_width="@dimen/width_cut"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:background="@drawable/background_quick_action_button"
         android:stateListAnimator="@null"
         android:textAllCaps="false"
@@ -24,36 +19,36 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@id/copy"
-        android:layout_width="55dp"
+        android:layout_width="@dimen/width_copy"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:background="@drawable/background_quick_action_button"
         android:stateListAnimator="@null"
         android:text="@string/copy"
-        android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/text_main"
         android:textSize="@dimen/text_size_quick_bar" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@id/paste"
-        android:layout_width="60dp"
+        android:layout_width="@dimen/width_paste"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:background="@drawable/background_quick_action_button"
         android:stateListAnimator="@null"
         android:text="@string/paste"
-        android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/text_main"
         android:textSize="@dimen/text_size_quick_bar" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@id/delete"
-        android:layout_width="65dp"
+        android:layout_width="@dimen/width_delete"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:background="@drawable/background_quick_action_button"
         android:stateListAnimator="@null"
         android:text="@string/delete"
-        android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/text_main"
         android:textSize="@dimen/text_size_quick_bar" />
