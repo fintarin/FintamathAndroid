@@ -75,7 +75,9 @@
             app:keyOutputText="()"
             app:keyIcon="@drawable/ic_key_brackets"
             app:keyTopLabel="(  )"
-            app:popupKeyboard="@xml/popup_keyboard_logic_brackets" />
+            app:popupKeyboard="@xml/popup_keyboard_logic_brackets"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="a"
             app:keyLabel="a"
@@ -151,7 +153,9 @@
             app:keyOutputText="&lt;-&gt;"
             app:keyLabel="≡"
             app:keyTopLabel="≢"
-            app:popupKeyboard="@xml/popup_keyboard_logic_equiv" />
+            app:popupKeyboard="@xml/popup_keyboard_logic_equiv"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="-&gt;"
             app:keyLabel="⇒" />

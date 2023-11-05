@@ -18,7 +18,7 @@
 
     <dimen name="text_size_keyboard">@dimen/_17sdp</dimen>
     <dimen name="text_size_keyboard_special">@dimen/_20sdp</dimen>
-    <dimen name="text_size_keyboard_special_big">@dimen/_26sdp</dimen>
+    <dimen name="text_size_keyboard_special_big">@dimen/_25sdp</dimen>
     <dimen name="text_size_keyboard_top_label">@dimen/_9sdp</dimen>
     <dimen name="text_size_keyboard_top_special">@dimen/_10sdp</dimen>
 
@@ -48,4 +48,9 @@
     <dimen name="width_copy">@dimen/_50ssp</dimen>
     <dimen name="width_paste">@dimen/_55ssp</dimen>
     <dimen name="width_delete">@dimen/_60ssp</dimen>
+
+    <dimen name="padding_horizontal_keyboard_top_label">1.1%</dimen>
+    <dimen name="padding_vertical_keyboard_top_label">0.9%</dimen>
+    <dimen name="padding_horizontal_keyboard_top_icon">1.1%</dimen>
+    <dimen name="padding_vertical_keyboard_top_icon">0.6%</dimen>
 </resources>

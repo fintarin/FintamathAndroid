@@ -112,6 +112,10 @@
         <attr name="keyTopLabel" format="string" />
         <!-- The icon to display in the top corner of the key instead of top label. -->
         <attr name="keyTopIcon" format="reference" />
+        <!-- The horizontal padding of the key top label. -->
+        <attr name="keyTopLabelPaddingHorizontal" format="dimension|fraction" />
+        <!-- The vertical padding of the key top label. -->
+        <attr name="keyTopLabelPaddingVertical" format="dimension|fraction" />
         <!-- Mode of the keyboard. If the mode doesn't match the
              requested keyboard mode, the key will be skipped. -->
         <attr name="keyboardMode" />

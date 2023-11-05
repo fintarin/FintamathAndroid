@@ -679,9 +679,6 @@ public class KeyboardView extends View implements View.OnClickListener {
 
             String topLabel = key.topLabel == null ? null : adjustCase(key.topLabel).toString();
 
-            final int topLabelRightPadding = key.width / 12;
-            final int topLabelTopPadding = key.height / 12;
-
             if (topLabel != null) {
                 paint.setTextSize(mKeyTopLabelTextSize);
                 paint.setTypeface(mFontFamily);
@@ -690,15 +687,15 @@ public class KeyboardView extends View implements View.OnClickListener {
                 Rect textBounds = new Rect();
                 paint.getTextBounds(topLabel, 0, topLabel.length(), textBounds);
 
-                final int drawableX = key.width - textBounds.width() / 2 - topLabelRightPadding;
-                final int drawableY = textBounds.height() + topLabelTopPadding;
+                final float drawableX = key.width - (float) textBounds.width() / 2 - key.topLabelPaddingHorizontal;
+                final float drawableY = paint.getTextSize() - paint.descent() + key.topLabelPaddingVertical;
 
-                canvas.drawText(topLabel, (float) drawableX, (float) drawableY, paint);
+                canvas.drawText(topLabel, drawableX, drawableY, paint);
 
                 paint.setColor(mKeyTextColor);
             } else if (key.topIcon != null) {
-                final int drawableX = key.width - key.topIcon.getIntrinsicWidth() - topLabelRightPadding;
-                final int drawableY = topLabelTopPadding;
+                final float drawableX = key.width - key.topIcon.getIntrinsicWidth() - key.topLabelPaddingHorizontal;
+                final float drawableY = key.topLabelPaddingVertical;
                 canvas.translate(drawableX, drawableY);
                 key.topIcon.setBounds(0, 0,
                         key.topIcon.getIntrinsicWidth(), key.topIcon.getIntrinsicHeight());

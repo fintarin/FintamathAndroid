@@ -267,6 +267,11 @@ public class Keyboard {
         /** Whether the preview should be displayed */
         public boolean isPreviewEnabled;
 
+        /** The horizontal padding of the key top label. */
+        public int topLabelPaddingHorizontal;
+        /** The vertical padding of the key top label. */
+        public int topLabelPaddingVertical;
+
         /**
          * Flags that specify the anchoring to edges of the keyboard for detecting touch events
          * that are just out of the boundary of the key. This is a bit mask of
@@ -377,6 +382,12 @@ public class Keyboard {
             label = a.getText(R.styleable.Keyboard_Key_keyLabel);
             topLabel = a.getText(R.styleable.Keyboard_Key_keyTopLabel);
             text = a.getText(R.styleable.Keyboard_Key_keyOutputText);
+            topLabelPaddingHorizontal = getDimensionOrFraction(a,
+                    R.styleable.Keyboard_Key_keyTopLabelPaddingHorizontal,
+                    keyboard.mDisplayWidth, 0);
+            topLabelPaddingVertical = getDimensionOrFraction(a,
+                    R.styleable.Keyboard_Key_keyTopLabelPaddingVertical,
+                    keyboard.mDisplayHeight, 0);
 
             if (codes == null) {
                 if (!TextUtils.isEmpty(label)) {

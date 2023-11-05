@@ -75,7 +75,9 @@
             app:keyOutputText="()"
             app:keyIcon="@drawable/ic_key_brackets"
             app:keyTopLabel="(  )"
-            app:popupKeyboard="@xml/popup_keyboard_main_brackets" />
+            app:popupKeyboard="@xml/popup_keyboard_main_brackets"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="frac(,)"
             app:keyIcon="@drawable/ic_key_fraction" />
@@ -101,12 +103,16 @@
             app:keyOutputText="&lt;"
             app:keyLabel="&lt;"
             app:keyTopLabel="≤"
-            app:popupKeyboard="@xml/popup_keyboard_main_less" />
+            app:popupKeyboard="@xml/popup_keyboard_main_less"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="&gt;"
             app:keyLabel="&gt;"
             app:keyTopLabel="≥"
-            app:popupKeyboard="@xml/popup_keyboard_main_more" />
+            app:popupKeyboard="@xml/popup_keyboard_main_more"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="4"
             app:keyLabel="4"
@@ -129,12 +135,16 @@
             app:keyOutputText="^2"
             app:keyIcon="@drawable/ic_key_pow2"
             app:keyTopIcon="@drawable/ic_key_pow_top"
-            app:popupKeyboard="@xml/popup_keyboard_main_power" />
+            app:popupKeyboard="@xml/popup_keyboard_main_power"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_icon"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_icon" />
         <Key
             app:keyOutputText="sqrt()"
             app:keyIcon="@drawable/ic_key_root2"
             app:keyTopIcon="@drawable/ic_key_root_top"
-            app:popupKeyboard="@xml/popup_keyboard_main_root" />
+            app:popupKeyboard="@xml/popup_keyboard_main_root"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_icon"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_icon" />
         <Key
             app:keyOutputText="1"
             app:keyLabel="1"
@@ -157,7 +167,9 @@
             app:keyOutputText="x"
             app:keyLabel="x"
             app:keyTopLabel="yz"
-            app:popupKeyboard="@xml/popup_keyboard_main_xyz" />
+            app:popupKeyboard="@xml/popup_keyboard_main_xyz"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="%"
             app:keyLabel="%" />
@@ -180,7 +192,9 @@
             app:keyOutputText="="
             app:keyLabel="="
             app:keyTopLabel="≠"
-            app:popupKeyboard="@xml/popup_keyboard_main_equal" />
+            app:popupKeyboard="@xml/popup_keyboard_main_equal"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="+"
             app:keyLabel="+" />

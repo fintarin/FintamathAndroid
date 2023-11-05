@@ -78,25 +78,33 @@
             app:keyOutputText="_(1)"
             app:keyIcon="@drawable/ic_key_index1"
             app:keyTopIcon="@drawable/ic_key_index_top"
-            app:popupKeyboard="@xml/popup_keyboard_functions_indexes" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_indexes"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_icon"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_icon" />
         <Key
             app:keyOutputText="ln()"
             app:keyLabel="ln"
             app:keyTopLabel="lb lg"
             app:popupKeyboardLocationFlags="center"
-            app:popupKeyboard="@xml/popup_keyboard_functions_logarithms" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_logarithms"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="sin()"
             app:keyLabel="sin"
             app:keyTopLabel="asinh"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_sin" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_sin"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="cos()"
             app:keyLabel="cos"
             app:keyTopLabel="acosh"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_cos" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_cos"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
     </Row>
 
     <Row>
@@ -114,13 +122,17 @@
             app:keyLabel="tan"
             app:keyTopLabel="atanh"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_tan" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_tan"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="cot()"
             app:keyLabel="cot"
             app:keyTopLabel="acoth"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_cot" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_cot"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
     </Row>
 
     <Row>
@@ -138,13 +150,17 @@
             app:keyLabel="sec"
             app:keyTopLabel="asech"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_sec" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_sec"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
         <Key
             app:keyOutputText="csc()"
             app:keyLabel="csc"
             app:keyTopLabel="acsch"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_csc" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_csc"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_label"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_label" />
     </Row>
 
     <Row>
@@ -165,7 +181,9 @@
             app:keyIcon="@drawable/ic_key_floor"
             app:keyTopIcon="@drawable/ic_key_ceil_top"
             app:popupKeyboardLocationFlags="left"
-            app:popupKeyboard="@xml/popup_keyboard_functions_floor" />
+            app:popupKeyboard="@xml/popup_keyboard_functions_floor"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_icon"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_icon" />
     </Row>
 
 </Keyboard>
