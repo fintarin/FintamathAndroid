@@ -55,6 +55,10 @@ object HistoryStorage {
     }
 
     fun saveItem(text: String) {
+        if (text.isEmpty()) {
+            return
+        }
+
         val oldItemIndex = historyList.indexOfFirst { it.mathTextData.text == text }
 
         if (oldItemIndex != -1) {
