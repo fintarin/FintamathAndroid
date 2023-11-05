@@ -18,7 +18,7 @@ svg {
   vertical-align: middle; /* TODO: remove */
   outline: none;
   white-space: nowrap;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.4ex;
   line-height: 0;
 }
 
@@ -26,12 +26,12 @@ svg {
   display: block;
   position: absolute;
   overflow: hidden;
-  min-width: calc(100% - 1.5em);
+  min-width: calc(100% - 3ex);
   line-height: 1;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding-left: 1.5ex;
+  padding-right: 1.5ex;
+  padding-top: 1ex;
+  padding-bottom: 1ex;
 }
 
 .math-text-view:empty::before {
@@ -41,23 +41,23 @@ svg {
 
 .text {
   line-height: 1;
-  margin-top: 0.1em;
-  padding-top: 0.025em;
-  padding-bottom: 0.025em;
+  margin-top: 0.2ex;
+  padding-top: 0.05ex;
+  padding-bottom: 0.05ex;
 }
 
 .text:empty::before {
   content: attr(hint);
-  padding-left: 0.001em;
-  padding-right: 0.001em;
+  padding-left: 0.001ex;
+  padding-right: 0.001ex;
   opacity: 0.5;
 }
 
 .text-hint {
   line-height: 1;
-  margin-top: 0.1em;
-  padding-top: 0.025em;
-  padding-bottom: 0.025em;
+  margin-top: 0.2ex;
+  padding-top: 0.05ex;
+  padding-bottom: 0.05ex;
 }
 
 .text-hint:empty::before {
@@ -72,12 +72,12 @@ svg {
 .binary-operator,
 .unary-prefix-operator,
 .unary-postfix-operator {
-  margin-top: 0.1em;
+  margin-top: 0.2ex;
 }
 
 .binary-operator {
-  margin-left: 0.1em;
-  margin-right: 0.1em;
+  margin-left: 0.2ex;
+  margin-right: 0.2ex;
 }
 
 .binary-operator::before,
@@ -89,9 +89,9 @@ svg {
 }
 
 .function-name {
-  margin-top: 0.1em;
-  margin-left: 0.05em;
-  margin-right: -0.1em;
+  margin-top: 0.2ex;
+  margin-left: 0.1ex;
+  margin-right: -0.2ex;
 }
 
 .function-name::before {
@@ -103,21 +103,21 @@ svg {
 .sup {
   font-size: 70%;
   vertical-align: super; /* TODO: remove */
-  margin-left: 0.05em;
-  margin-right: 0.1em;
+  margin-left: 0.1ex;
+  margin-right: 0.2ex;
 }
 
 .sub {
   font-size: 70%;
   vertical-align: sub; /* TODO: remove */
-  margin-left: 0.05em;
-  margin-right: 0.1em;
+  margin-left: 0.1ex;
+  margin-right: 0.2ex;
 }
 
 .fraction {
   text-align: center; /* TODO: remove */
-  margin-left: 0.35em;
-  margin-right: 0.35em;
+  margin-left: 0.7ex;
+  margin-right: 0.7ex;
 }
 
 .numerator {
@@ -130,12 +130,12 @@ svg {
 
 .denominator::before {
   content: '';
-  border-top: 0.08em solid;
+  border-top: 0.16ex solid;
   display: block;
-  margin-top: 0.15em;
-  margin-bottom: 0.15em;
-  margin-left: -0.15em;
-  margin-right: -0.15em;
+  margin-top: 0.3ex;
+  margin-bottom: 0.3ex;
+  margin-left: -0.3ex;
+  margin-right: -0.3ex;
   opacity: 0.75;
 }
 
@@ -146,21 +146,21 @@ svg {
 .log-index {
   font-size: 70%;
   vertical-align: sub; /* TODO: remove */
-  margin-left: 0.1em;
-  margin-right: -0.1em;
+  margin-left: 0.2ex;
+  margin-right: -0.2ex;
 }
 
 .open-bracket,
 .close-bracket {
-  width: 0.4em;
+  width: 0.75ex;
 }
 
 .open-bracket {
-  margin-left: 0.15em;
+  margin-left: 0.3ex;
 }
 
 .close-bracket {
-  margin-right: 0.15em;
+  margin-right: 0.3ex;
 }
 
 .abs-prefix,
@@ -168,29 +168,26 @@ svg {
 .floor-vertical-prefix,
 .floor-vertical-postfix,
 .ceil-vertical-prefix,
-.ceil-vertical-postfix {
-  width: 0.3em;
-}
-
+.ceil-vertical-postfix,
 .floor-horizontal-prefix,
 .floor-horizontal-postfix,
 .ceil-horizontal-prefix,
 .ceil-horizontal-postfix {
-  width: 0.26em;
+  width: 0.6ex;
 }
 
 .abs-prefix,
 .floor-prefix,
 .ceil-prefix {
-  margin-left: 0.075em;
-  padding-right: 0.075em;
+  margin-left: 0.15ex;
+  padding-right: 0.15ex;
 }
 
 .abs-postfix,
 .floor-postfix,
 .ceil-postfix {
-  margin-right: 0.075em;
-  padding-left: 0.075em;
+  margin-right: 0.15ex;
+  padding-left: 0.15ex;
 }
 
 .floor-horizontal-prefix,
@@ -205,49 +202,49 @@ svg {
 
 .floor-horizontal-prefix,
 .ceil-horizontal-prefix {
-  margin-left: -0.15em;
+  margin-left: -0.3ex;
 }
 
 .floor-horizontal-postfix,
 .ceil-horizontal-postfix {
-  margin-right: -0.15em;
+  margin-right: -0.3ex;
 }
 
 .sqrt {
-  margin-right: 0.2em;
+  margin-right: 0.4ex;
 }
 
 .root {
-  margin-right: 0.2em;
-  margin-left: 0.2em;
+  margin-right: 0.4ex;
+  margin-left: 0.4ex;
 }
 
 .root-content {
-  border-top: 0.08em solid;
-  border-left: 0.08em solid;
-  padding-top: 0.075em;
-  padding-bottom: 0.075em;
-  padding-left: 0.2em;
-  padding-right: 0.2em;
+  border-top: 0.16ex solid;
+  border-left: 0.16ex solid;
+  padding-top: 0.15ex;
+  padding-bottom: 0.15ex;
+  padding-left: 0.4ex;
+  padding-right: 0.4ex;
 }
 
 .root-prefix {
-  width: 0.6em;
-  height: 0.6em;
+  width: 1.1ex;
+  height: 1.1ex;
   vertical-align: bottom;
 }
 
 .root-index {
   font-size: 60%;
-  margin-bottom: 1.15em;
-  margin-right: -0.75em;
+  margin-bottom: 2.2ex;
+  margin-right: -1.4ex;
   vertical-align: bottom;
 }
 
 .infinite,
 .complex-infinite {
-  width: 0.7em;
-  height: 0.7em;
-  margin-left: 0.1em;
-  margin-right: 0.1em;
+  width: 1.5ex;
+  height: 1.5ex;
+  margin-left: 0.2ex;
+  margin-right: 0.2ex;
 }
