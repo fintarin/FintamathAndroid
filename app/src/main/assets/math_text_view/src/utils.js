@@ -979,7 +979,14 @@ function redrawSvg(elem) {
    * @param {SVGSVGElement} elem - The SVG element to set its color.
    */
   function setSvgColor(elem) {
-    const color = getColorWithOpacity(mathTextView.style.color, linesOpacity);
+    let color;
+
+    if (specialSvgClasses.includes(getClassName(elem))) {
+      color = mathTextView.style.color;
+    } else {
+      color = getColorWithOpacity(mathTextView.style.color, linesOpacity);
+    }
+
     elem.setAttribute('fill', color);
   }
 }
