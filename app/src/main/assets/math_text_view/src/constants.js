@@ -24,6 +24,8 @@ const ceilPrefixVerticalClass = 'ceil-vertical-prefix';
 const ceilPostfixVerticalClass = 'ceil-vertical-postfix';
 const ceilPrefixHorizontalClass = 'ceil-horizontal-prefix';
 const ceilPostfixHorizontalClass = 'ceil-horizontal-postfix';
+const supParentClass = 'sup-parent';
+const subParentClass = 'sub-parent';
 const supClass = 'sup';
 const subClass = 'sub';
 const sqrtClass = 'sqrt';
@@ -50,15 +52,18 @@ const textDecorationNoneAttr = 'none';
 const textClasses = [textClass, textHintClass];
 const operatorClasses = [unaryPrefixOperatorClass, unaryPostfixOperatorClass, binaryOperatorClass];
 const specialSvgClasses = [infClass, complexInfClass];
+const indexParentClasses = [supParentClass, subParentClass];
+const indexChildClasses = [supClass, subClass];
 const parentContainerClasses = [
   fractionClass,
+  rootClass,
   sqrtClass,
   logClass,
   floorPrefixClass,
   floorPostfixClass,
   ceilPrefixClass,
   ceilPostfixClass,
-];
+].concat(indexParentClasses);
 const childContainerClasses = [
   numeratorClass,
   denominatorClass,
@@ -66,9 +71,15 @@ const childContainerClasses = [
   rootIndexClass,
   logContentClass,
   logIndexClass,
-];
-const indexContainerClasses = [supClass, subClass];
-const containerClasses = parentContainerClasses + childContainerClasses + indexContainerClasses;
+].concat(indexChildClasses);
+const containerClasses = parentContainerClasses.concat(childContainerClasses);
+const bracketMap = {
+  [bracketPrefixClass]: bracketPostfixClass,
+  [absPrefixClass]: absPostfixClass,
+  [floorPrefixClass]: floorPostfixClass,
+  [ceilPrefixClass]: ceilPostfixClass,
+};
+const bracketMapReversed = reverseMap(bracketMap);
 
 // Define constants for special symbols and strings.
 const openBracket = '(';
@@ -137,15 +148,6 @@ const binaryOperators = [
 const unaryPrefixOperators = ['+', mathHtmlMap['-'], mathHtmlMap['~']];
 const unaryPostfixOperators = ['%', '!', mathHtmlMap['deg']];
 
-// Define a mapping for pairs like '(' and ')'.
-const bracketMap = {
-  [bracketPrefixClass]: bracketPostfixClass,
-  [absPrefixClass]: absPostfixClass,
-  [floorPrefixClass]: floorPostfixClass,
-  [ceilPrefixClass]: ceilPostfixClass,
-};
-const bracketMapReversed = reverseMap(bracketMap);
-
 // Define constants for text styling.
 const textEmptyHintSelected = '\u2B1A'; // TODO: use svg image instead
 const linesOpacity = 0.75;
@@ -155,7 +157,7 @@ const textHintOpacity = 0.5;
 const openBracketSvgPath =
   'M43.256 0H57.14S14.95 25.902 15.086 83.25c.135 57.348 42.054 83.25 42.054 83.25H43.244S.366 138.573.002 83.25C-.362 27.927 43.256 0 43.256 0z';
 const closeBracketSvgPath =
-  'M13.883 0H0s42.19 25.902 42.054 83.25C41.92 140.598 0 166.5 0 166.5h13.896s42.877-27.927 43.241-83.25C57.502 27.927 13.883 0 13.883 0z';
+  'M13.883 0H0s40.556 25.902 40.42 83.25C40.286 140.598 0 166.5 0 166.5h13.896s40.994-28.126 41.358-83.449C55.619 27.728 13.883 0 13.883 0z';
 const verticalLineSvgPath = 'M19.816564 0 h15 v166.5 h-15z';
 const horizontalLineSvgPath = 'M-44.4 0v11.95H88.4V0z';
 const sqrtPrefixSvgPath = 'M66.567 81.535l-4.56.003L14.993 9.987.008 9.904 0 .019 22.329 0l44.238 66.087z';
@@ -166,7 +168,7 @@ const complexInfSvgPath =
 
 // Define constants for SVG view boxes.
 const bracketSvgViewBox = '0 0 57.1 166.5';
-const verticalLineSvgViewBox = '0 0 55 166.5';
+const verticalLineSvgViewBox = '0 0 55.7 166.5';
 const horizontalLineSvgViewBox = '0 0 44 12';
 const sqrtPrefixViewBox = '0 0 43 81';
 const infViewBox = '0 0 218 218';
@@ -203,5 +205,4 @@ const svgElementsMap = {
 };
 
 // Define numeric coefficients
-const bracketFirstScale = 1.175;
 const bracketNextScale = 1.1;

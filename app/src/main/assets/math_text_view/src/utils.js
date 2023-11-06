@@ -74,11 +74,11 @@ function toHtml(mathText, isEditable = false) {
           continue;
         }
         case supOperator: {
-          childElem = insertIndex(chooseElement(rootElem, childElem), supClass);
+          childElem = insertIndex(chooseElement(rootElem, childElem), supParentClass, supClass);
           continue;
         }
         case subOperator: {
-          childElem = insertIndex(chooseElement(rootElem, childElem), subClass);
+          childElem = insertIndex(chooseElement(rootElem, childElem), subParentClass, subClass);
           continue;
         }
         case mathHtmlMap['Inf']: {
@@ -95,7 +95,7 @@ function toHtml(mathText, isEditable = false) {
       }
 
       // Insert an unary prefix operator into the index container
-      if (unaryPrefixOperators.includes(symbols) && indexContainerClasses.includes(getClassName(childElem))) {
+      if (unaryPrefixOperators.includes(symbols) && indexChildClasses.includes(getClassName(childElem))) {
         childElem = insertOperator(childElem, unaryPrefixOperatorClass, symbols);
         continue;
       }
@@ -120,10 +120,7 @@ function toHtml(mathText, isEditable = false) {
 
         const newChildElem = createElement(textClass);
 
-        if (
-          !indexContainerClasses.includes(getClassName(childElem)) &&
-          !childContainerClasses.includes(getClassName(childElem))
-        ) {
+        if (!childContainerClasses.includes(getClassName(childElem))) {
           parentElem = parentElem.parentElement;
         }
 
@@ -165,17 +162,23 @@ function toHtml(mathText, isEditable = false) {
    * Handle the insertion of index operator like '^', '_'.
    *
    * @param {HTMLSpanElement?} elem - The element to insert index.
+   * @param {string} indexParentClass - The parent CSS class of the index operator.
    * @param {string} indexClass - The CSS class of the index operator.
    * @returns {HTMLSpanElement} New child element.
    */
-  function insertIndex(elem, indexClass) {
-    const indexElem = createElement(indexClass);
+  function insertIndex(elem, indexParentClass, indexClass) {
+    const indexParentElem = createElement(indexParentClass);
 
-    if (indexContainerClasses.includes(getClassName(elem))) {
-      elem = elem.parentElement;
+    const indexElem = createElement(indexClass);
+    indexParentElem.appendChild(indexElem);
+
+    if (indexChildClasses.includes(getClassName(elem))) {
+      elem = elem.parentElement.parentElement;
     }
 
-    return elem.appendChild(indexElem);
+    elem.appendChild(indexParentElem);
+
+    return indexElem;
   }
 
   /**
@@ -188,7 +191,9 @@ function toHtml(mathText, isEditable = false) {
     /** @type {HTMLSpanElement?} */
     let childElem = null;
 
-    if (indexContainerClasses.includes(getClassName(elem))) {
+    if (indexChildClasses.includes(getClassName(elem))) {
+      elem = elem.parentElement;
+
       const parentElem = elem.parentElement;
 
       const prevElem = elem.previousElementSibling;
@@ -257,10 +262,7 @@ function toHtml(mathText, isEditable = false) {
 
       if (closeBracketPos < end && mathText[closeBracketPos + 1] === divOperator) {
         childElem = rootElem.appendChild(bracketsChildElem);
-      } else if (
-        indexContainerClasses.includes(getClassName(childElem)) ||
-        getClassName(childElem) === denominatorClass
-      ) {
+      } else if (indexChildClasses.includes(getClassName(childElem)) || getClassName(childElem) === denominatorClass) {
         childElem = insertChildren(childElem, bracketsChildElem.children, null);
       } else {
         if (funcName === '') {
@@ -336,11 +338,14 @@ function toHtml(mathText, isEditable = false) {
         case logFunction: {
           let tokenElems = tokenizeByComma(elem);
 
-          let logIndexElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
-          setClassName(logIndexElem, logIndexClass);
+          let subElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
+          setClassName(subElem, subClass);
 
           let logContentElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
           setClassName(logContentElem, logContentClass);
+
+          let logIndexElem = createElement(logIndexClass);
+          logIndexElem.appendChild(subElem);
 
           elem = createElement(logClass);
           elem.appendChild(logIndexElem, elem.firstElementChild);
@@ -715,10 +720,10 @@ function toMathText(html, isEditable = false) {
           putInBrackets(toMathTextChildren(elem.children[0]) + comma + space + toMathTextChildren(elem.children[1]))
         );
       }
-      case supClass: {
+      case supParentClass: {
         return supOperator + tryPutInBrackets(toMathTextChildren(elem));
       }
-      case subClass: {
+      case subParentClass: {
         return subOperator + tryPutInBrackets(toMathTextChildren(elem));
       }
       case textClass: {
@@ -784,7 +789,7 @@ function toMathText(html, isEditable = false) {
 
       if (
         !childContainerClasses.includes(getClassName(childElem)) &&
-        !indexContainerClasses.includes(getClassName(childElem)) &&
+        !indexParentClasses.includes(getClassName(childElem)) &&
         !(getClassName(childElem) in bracketMapReversed) &&
         getClassName(childElem) !== unaryPostfixOperatorClass &&
         getClassName(prevChildElem) !== undefinedClass &&
@@ -838,13 +843,18 @@ function redrawSvg(elem) {
     return;
   }
 
-  const bracketMinHeight =
-    bracketFirstScale *
-    (getClassName(elem.firstChild) !== borderClass
-      ? elem.firstChild.clientHeight
-      : elem.firstChild.nextSibling.clientHeight);
+  const firstElem =
+    getClassName(elem.firstElementChild) !== borderClass
+      ? elem.firstElementChild
+      : elem.firstElementChild.nextElementSibling;
 
-  const bracketMaxHeightStack = [bracketMinHeight];
+  const firstElemStyle = window.getComputedStyle(firstElem);
+  const firstElemMarginTop = parseFloatOrZero(firstElemStyle.marginTop);
+  const firstElemMarginBottom = parseFloatOrZero(firstElemStyle.marginBottom);
+  const firstElemHeight = firstElem.clientHeight + firstElemMarginTop - firstElemMarginBottom;
+
+  /** @type {(number | Element)[][]} */
+  const bracketMaxHeightStack = [[firstElemHeight, firstElem, firstElem]];
 
   /** @type {SVGSVGElement[]} */
   const openBracketElemsStack = [];
@@ -852,17 +862,19 @@ function redrawSvg(elem) {
   for (let i = 0; i < elem.childElementCount; i++) {
     let childElem = elem.children[i];
 
+    if (getClassName(childElem) === borderClass) {
+      continue;
+    }
+
     if (childElem instanceof SVGSVGElement) {
       setSvgColor(childElem);
     }
 
     if (getClassName(childElem) in bracketMap || getClassName(childElem) in bracketMapReversed) {
-      setSvgHeight(childElem, bracketMinHeight);
+      setSvgHeight(childElem, firstElem, firstElem, firstElemHeight, true);
     }
 
     redrawSvg(childElem);
-
-    let childElemHeight = childElem.clientHeight;
 
     switch (getClassName(childElem)) {
       case bracketPrefixClass:
@@ -870,62 +882,89 @@ function redrawSvg(elem) {
       case floorPrefixClass:
       case ceilPrefixClass: {
         openBracketElemsStack.push(childElem);
-        bracketMaxHeightStack.push(bracketMinHeight);
-        break;
+        bracketMaxHeightStack.push([firstElemHeight, firstElem, firstElem]);
+        continue;
       }
       case bracketPostfixClass:
       case absPostfixClass:
       case floorPostfixClass:
       case ceilPostfixClass: {
-        let height = bracketMaxHeightStack[bracketMaxHeightStack.length - 1];
-        setSvgHeight(childElem, height);
+        const array = bracketMaxHeightStack[bracketMaxHeightStack.length - 1];
+        const height = array[0];
+        const bottomElem = array[1];
+        const topElem = array[2];
+
+        setSvgHeight(childElem, bottomElem, topElem, height);
 
         if (openBracketElemsStack.length > 0) {
+          setSvgHeight(openBracketElemsStack.pop(), bottomElem, topElem, height);
           popHeightStack(bracketMaxHeightStack);
-          setSvgHeight(openBracketElemsStack.pop(), height);
         } else {
-          updateHeightStack(bracketMaxHeightStack, height * bracketNextScale);
+          updateHeightStack(bracketMaxHeightStack, bottomElem, topElem, true);
         }
 
-        break;
+        continue;
       }
     }
 
-    if (indexContainerClasses.includes(getClassName(childElem))) {
-      let top = Math.min(
-        childElem.getBoundingClientRect().top,
-        childElem.previousElementSibling.getBoundingClientRect().top
-      );
-
-      let bottom = Math.max(
-        childElem.getBoundingClientRect().bottom,
-        childElem.previousElementSibling.getBoundingClientRect().bottom
-      );
-
-      childElemHeight = bottom - top;
-    }
-
-    updateHeightStack(bracketMaxHeightStack, childElemHeight);
+    updateHeightStack(bracketMaxHeightStack, childElem, childElem);
   }
 
   while (openBracketElemsStack.length > 0) {
-    setSvgHeight(openBracketElemsStack.pop(), popHeightStack(bracketMaxHeightStack));
+    const array = popHeightStack(bracketMaxHeightStack);
+    const height = array[0];
+    const bottomElem = array[1];
+    const topElem = array[1];
+
+    setSvgHeight(openBracketElemsStack.pop(), bottomElem, topElem, height);
   }
 
   //---------------------------------------------------------------------------------------------------------//
 
   /**
+   * Pop the height stack and updates it.
+   *
+   * @param {(number | Element)[][]} maxHeightStack - The height stack to pop.
+   * @returns {(number | Element)[]} The popped array.
+   */
+  function popHeightStack(maxHeightStack) {
+    const array = maxHeightStack.pop();
+    const height = array[0];
+    const bottomElem = array[1];
+    const topElem = array[2];
+
+    updateHeightStack(maxHeightStack, bottomElem, topElem, height, true);
+
+    return array;
+  }
+
+  /**
    * Update the height stack with the given height.
    *
-   * @param {number[]} maxHeightStack - The height stack to update.
-   * @param {number} height - The given height.
+   * @param {(number | Element)[][]} maxHeightStack - The height stack to update.
+   * @param {HTMLSpanElement} bottomElem - The element with the maximum bottom value.
+   * @param {HTMLSpanElement} topElem - The element with the minimum top value.
+   * @param {boolean} useScale - Whether to use bracket scale.
    */
-  function updateHeightStack(maxHeightStack, height) {
-    if (maxHeightStack[maxHeightStack.length - 1] < height) {
-      maxHeightStack[maxHeightStack.length - 1] = height;
+  function updateHeightStack(maxHeightStack, bottomElem, topElem, useScale = false) {
+    const oldBottomElem = maxHeightStack[maxHeightStack.length - 1][1];
+    const newBottomElem = getElementBottom(oldBottomElem) > getElementBottom(bottomElem) ? oldBottomElem : bottomElem;
+
+    const oldTopElem = maxHeightStack[maxHeightStack.length - 1][2];
+    const newTopElem = getElementTop(oldTopElem) < getElementTop(topElem) ? oldTopElem : topElem;
+
+    const oldHeight = maxHeightStack[maxHeightStack.length - 1][0];
+    let newHeight = Math.max(oldHeight, getElementBottom(newBottomElem) - getElementTop(newTopElem));
+
+    if (useScale) {
+      newHeight *= bracketNextScale;
+    }
+
+    if (oldHeight < newHeight) {
+      maxHeightStack[maxHeightStack.length - 1] = [newHeight, newBottomElem, newTopElem];
 
       for (let i = maxHeightStack.length - 1; i > 0; i--) {
-        if (maxHeightStack[i - 1] < maxHeightStack[i]) {
+        if (maxHeightStack[i - 1][0] < maxHeightStack[i][0]) {
           maxHeightStack[i - 1] = maxHeightStack[i];
         }
       }
@@ -933,29 +972,15 @@ function redrawSvg(elem) {
   }
 
   /**
-   * Pop the height stack and updates it.
-   *
-   * @param {number[]} maxHeightStack - The height stack to pop.
-   * @returns {number} The popped height.
-   */
-  function popHeightStack(maxHeightStack) {
-    let height = maxHeightStack.pop();
-    let prevHeight = height * bracketNextScale;
-
-    if (maxHeightStack[maxHeightStack.length - 1] < prevHeight) {
-      updateHeightStack(maxHeightStack, prevHeight);
-    }
-
-    return height;
-  }
-
-  /**
    * Set the SVG element height.
    *
    * @param {SVGSVGElement} elem - The SVG element to set its height.
+   * @param {HTMLSpanElement} bottomElem - The element with the maximum bottom value.
+   * @param {HTMLSpanElement} topElem - The element with the minimum top value.
    * @param {number} height - The height to set.
+   * @param {boolean} init - Whether to initialize element parameters.
    */
-  function setSvgHeight(elem, height) {
+  function setSvgHeight(elem, bottomElem, topElem, height, init = false) {
     switch (getClassName(elem)) {
       case floorPrefixClass:
       case ceilPrefixClass: {
@@ -969,8 +994,27 @@ function redrawSvg(elem) {
       }
     }
 
+    if (init) {
+      elem.style.verticalAlign = '';
+    }
+
     elem.setAttribute('preserveAspectRatio', 'none');
     elem.style.height = height + 'px';
+
+    const elemVerticalAlign = parseFloatOrZero(elem.style.verticalAlign);
+    const elemBottom = getElementBottom(elem);
+    const elemTop = getElementTop(elem);
+
+    const bottomElemBottom = getElementBottom(bottomElem);
+    const topElemTop = getElementTop(topElem);
+
+    const heightDelta = (height + topElemTop - bottomElemBottom) / 2;
+
+    if (bottomElemBottom < elemBottom) {
+      elem.style.verticalAlign = elemVerticalAlign + bottomElemBottom - elemBottom - heightDelta + 'px';
+    } else {
+      elem.style.verticalAlign = elemVerticalAlign + elemTop - topElemTop + heightDelta + 'px';
+    }
   }
 
   /**
@@ -1179,7 +1223,7 @@ function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
     if (
       (className === binaryOperatorClass ||
         className === unaryPostfixOperatorClass ||
-        indexContainerClasses.includes(className)) &&
+        indexParentClasses.includes(className)) &&
       (prevElemClassName === undefinedClass ||
         prevElemClassName === binaryOperatorClass ||
         prevElemClassName === unaryPrefixOperatorClass ||
@@ -1211,7 +1255,7 @@ function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
  * @param {number} end - The end index to check.
  */
 function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
-  if (start < 0 || start >= elem.childElementCount) {
+  if (start < 0 || start >= elem.childElementCount || parentContainerClasses.includes(getClassName(elem))) {
     return;
   }
 
@@ -1222,35 +1266,33 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
     const prevElemClassName = childElem !== null ? getClassName(childElem.previousElementSibling) : undefinedClass;
     const nextElemClassName = childElem !== null ? getClassName(childElem.nextElementSibling) : undefinedClass;
 
-    if (!parentContainerClasses.includes(getClassName(elem))) {
-      if (
-        (containerClasses.includes(className) ||
-          specialSvgClasses.includes(className) ||
-          className in bracketMap ||
-          className in bracketMapReversed ||
-          className === unaryPrefixOperatorClass ||
-          className === functionNameClass) &&
-        prevElemClassName !== functionNameClass &&
-        !textClasses.includes(prevElemClassName) &&
-        prevElemClassName !== borderClass
-      ) {
-        elem.insertBefore(createElement(textClass), childElem);
-        end++;
-      }
+    if (
+      (containerClasses.includes(className) ||
+        specialSvgClasses.includes(className) ||
+        className in bracketMap ||
+        className in bracketMapReversed ||
+        className === unaryPrefixOperatorClass ||
+        className === functionNameClass) &&
+      prevElemClassName !== functionNameClass &&
+      !textClasses.includes(prevElemClassName) &&
+      prevElemClassName !== borderClass
+    ) {
+      elem.insertBefore(createElement(textClass), childElem);
+      end++;
+    }
 
-      if (
-        (containerClasses.includes(className) ||
-          specialSvgClasses.includes(className) ||
-          className in bracketMap ||
-          className in bracketMapReversed ||
-          className === unaryPostfixOperatorClass) &&
-        !textClasses.includes(nextElemClassName) &&
-        nextElemClassName !== borderClass
-      ) {
-        elem.insertBefore(createElement(textClass), childElem !== null ? childElem.nextElementSibling : null);
-        end++;
-        i++;
-      }
+    if (
+      (containerClasses.includes(className) ||
+        specialSvgClasses.includes(className) ||
+        className in bracketMap ||
+        className in bracketMapReversed ||
+        className === unaryPostfixOperatorClass) &&
+      !textClasses.includes(nextElemClassName) &&
+      nextElemClassName !== borderClass
+    ) {
+      elem.insertBefore(createElement(textClass), childElem !== null ? childElem.nextElementSibling : null);
+      end++;
+      i++;
     }
   }
 }
@@ -1368,7 +1410,7 @@ function findFirstTextHintElement(rootElem, startIndex, endIndex) {
 
       if (
         nextElem === null ||
-        (getClassName(nextElem) !== binaryOperatorClass && !indexContainerClasses.includes(getClassName(nextElem)))
+        (getClassName(nextElem) !== binaryOperatorClass && !indexParentClasses.includes(getClassName(nextElem)))
       ) {
         return childElem;
       }
@@ -1779,6 +1821,30 @@ function createNewSvg(className, path, viewBox) {
   return svgElem;
 }
 
+/**
+ * Return bottom + margin-bottom of the given element.
+ *
+ * @param {HTMLSpanElement} elem - The given element.
+ * @returns {number} The element bottom.
+ */
+function getElementBottom(elem) {
+  const style = window.getComputedStyle(elem);
+  const marginBottom = parseFloatOrZero(style.marginBottom);
+  return elem.getBoundingClientRect().bottom + marginBottom;
+}
+
+/**
+ * Return top + margin-top of the given element.
+ *
+ * @param {HTMLSpanElement} elem - The given element.
+ * @returns {number} The element top.
+ */
+function getElementTop(elem) {
+  const style = window.getComputedStyle(elem);
+  const marginTop = parseFloatOrZero(style.marginTop);
+  return elem.getBoundingClientRect().top - marginTop;
+}
+
 function getColorWithOpacity(color, opacity) {
   return color.replace(closeBracket, ',' + opacity.toString() + closeBracket).replace('rgb', 'rgba');
 }
@@ -1819,6 +1885,16 @@ function cutSpaces(str) {
   }
 
   return str;
+}
+
+/**
+ * Convert a string to an integer.
+ *
+ * @param {String} string - The string to parse.
+ * @returns {number} The result.
+ */
+function parseFloatOrZero(string) {
+  return string !== '' ? parseFloat(string) : 0;
 }
 
 /**

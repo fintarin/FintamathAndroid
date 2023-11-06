@@ -149,7 +149,7 @@ function insertAtCursor(mathText) {
       lastElem.nextElementSibling !== null &&
       (!(lastElem instanceof HTMLSpanElement) ||
         operatorClasses.includes(getClassName(lastElem)) ||
-        indexContainerClasses.includes(getClassName(lastElem)))
+        indexParentClasses.includes(getClassName(lastElem)))
     ) {
       setCursorToElementBegin(lastElem.nextElementSibling);
     } else {

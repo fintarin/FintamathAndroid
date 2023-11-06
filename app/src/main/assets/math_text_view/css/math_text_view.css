@@ -15,10 +15,9 @@ div,
 svg {
   font-family: mathFont, sans-serif;
   display: inline-block;
-  vertical-align: middle; /* TODO: remove */
   outline: none;
   white-space: nowrap;
-  text-underline-offset: 0.4ex;
+  text-underline-offset: 0.325ex;
   line-height: 0;
 }
 
@@ -32,11 +31,6 @@ svg {
   padding-right: 1.5ex;
   padding-top: 1ex;
   padding-bottom: 1ex;
-}
-
-.math-text-view:empty::before {
-  content: attr(hint);
-  opacity: 0.5;
 }
 
 .text {
@@ -72,6 +66,7 @@ svg {
 .binary-operator,
 .unary-prefix-operator,
 .unary-postfix-operator {
+  line-height: 0.6; /* TODO: remove when implementing a custom cursor */
   margin-top: 0.2ex;
 }
 
@@ -85,10 +80,11 @@ svg {
 .unary-postfix-operator::before {
   content: attr(before-content);
   opacity: 0.75;
-  float: left;
+  float: left; /* TODO: remove when implementing a custom cursor */
 }
 
 .function-name {
+  line-height: 0.6; /* TODO: remove when implementing a custom cursor */
   margin-top: 0.2ex;
   margin-left: 0.1ex;
   margin-right: -0.2ex;
@@ -97,35 +93,59 @@ svg {
 .function-name::before {
   content: attr(before-content);
   opacity: 0.75;
-  float: left;
+  float: left; /* TODO: remove when implementing a custom cursor */
+}
+
+.sup-parent,
+.sub-parent,
+.log-index {
+  font-size: 70%;
+}
+
+.sup-parent {
+  vertical-align: 1.5ex;
+}
+
+.sub-parent,
+.log-index {
+  vertical-align: -1.5ex;
 }
 
 .sup {
-  font-size: 70%;
-  vertical-align: super; /* TODO: remove */
-  margin-left: 0.1ex;
-  margin-right: 0.2ex;
+  vertical-align: text-bottom;
 }
 
 .sub {
-  font-size: 70%;
-  vertical-align: sub; /* TODO: remove */
+  vertical-align: text-top;
+}
+
+.sup-parent,
+.sub-parent {
   margin-left: 0.1ex;
-  margin-right: 0.2ex;
+  margin-right: 0.3ex;
+}
+
+.log-index {
+  font-size: 70%;
+  margin-left: 0.3ex;
+  margin-right: -0.2ex;
 }
 
 .fraction {
-  text-align: center; /* TODO: remove */
+  text-align: center;
+  vertical-align: 1ex;
   margin-left: 0.7ex;
   margin-right: 0.7ex;
 }
 
 .numerator {
   display: block;
+  overflow: hidden;
 }
 
 .denominator {
-  display: block;
+  float: left;
+  width: 100%;
 }
 
 .denominator::before {
@@ -139,20 +159,9 @@ svg {
   opacity: 0.75;
 }
 
-.log {
-  vertical-align: baseline; /* TODO: remove */
-}
-
-.log-index {
-  font-size: 70%;
-  vertical-align: sub; /* TODO: remove */
-  margin-left: 0.2ex;
-  margin-right: -0.2ex;
-}
-
 .open-bracket,
 .close-bracket {
-  width: 0.75ex;
+  width: 0.7ex;
 }
 
 .open-bracket {
@@ -173,7 +182,17 @@ svg {
 .floor-horizontal-postfix,
 .ceil-horizontal-prefix,
 .ceil-horizontal-postfix {
-  width: 0.6ex;
+  width: 0.57ex;
+}
+
+.floor-horizontal-prefix,
+.floor-horizontal-postfix {
+  vertical-align: bottom;
+}
+
+.ceil-horizontal-prefix,
+.ceil-horizontal-postfix {
+  vertical-align: top;
 }
 
 .abs-prefix,
@@ -188,16 +207,6 @@ svg {
 .ceil-postfix {
   margin-right: 0.15ex;
   padding-left: 0.15ex;
-}
-
-.floor-horizontal-prefix,
-.floor-horizontal-postfix {
-  vertical-align: bottom;
-}
-
-.ceil-horizontal-prefix,
-.ceil-horizontal-postfix {
-  vertical-align: top;
 }
 
 .floor-horizontal-prefix,
@@ -229,20 +238,21 @@ svg {
 }
 
 .root-prefix {
-  width: 1.1ex;
-  height: 1.1ex;
+  width: 1ex;
+  height: 1ex;
   vertical-align: bottom;
 }
 
 .root-index {
   font-size: 60%;
-  margin-bottom: 2.2ex;
-  margin-right: -1.4ex;
+  margin-bottom: 1.8ex;
+  margin-right: -1.2ex;
   vertical-align: bottom;
 }
 
 .infinite,
 .complex-infinite {
+  vertical-align: middle;
   width: 1.5ex;
   height: 1.5ex;
   margin-left: 0.2ex;
