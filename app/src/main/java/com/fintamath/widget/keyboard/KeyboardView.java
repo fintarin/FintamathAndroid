@@ -828,11 +828,17 @@ public class KeyboardView extends View implements View.OnClickListener {
                 Key oldKey = keys[oldKeyIndex];
                 oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY);
                 invalidateKey(oldKeyIndex);
+
+                if (!mIsMiniKeyboard) {
+                    performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
+                }
             }
             if (mCurrentKeyIndex != NOT_A_KEY && keys.length > mCurrentKeyIndex) {
                 Key newKey = keys[mCurrentKeyIndex];
                 newKey.onPressed();
                 invalidateKey(mCurrentKeyIndex);
+
+                performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
             }
         }
         // If key changed and preview is on ...
@@ -1097,17 +1103,6 @@ public class KeyboardView extends View implements View.OnClickListener {
 
     @Override
     public boolean onTouchEvent(MotionEvent me) {
-        if (!mIsMiniKeyboard) {
-            switch (me.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-                case MotionEvent.ACTION_UP:
-                    if (mPreviewPopup.isShowing() && mPreviewTextContainer.getVisibility() == VISIBLE) {
-                        performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
-                    }
-            }
-        }
-
         // Convert multi-pointer up/down events to single up/down events to
         // deal with the typical multi-pointer behavior of two-thumb typing
         final int pointerCount = me.getPointerCount();
