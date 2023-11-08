@@ -81,11 +81,23 @@ function toHtml(mathText, isEditable = false) {
           childElem = insertIndex(chooseElement(rootElem, childElem), subParentClass, subClass);
           continue;
         }
-        case mathHtmlMap['Inf']: {
+        case piConst: {
+          childElem = chooseElement(rootElem, childElem).appendChild(createSvg(piClass));
+          continue;
+        }
+        case eConst: {
+          childElem = chooseElement(rootElem, childElem).appendChild(createSvg(eClass));
+          continue;
+        }
+        case iConst: {
+          childElem = chooseElement(rootElem, childElem).appendChild(createSvg(iClass));
+          continue;
+        }
+        case infConst: {
           childElem = chooseElement(rootElem, childElem).appendChild(createSvg(infClass));
           continue;
         }
-        case mathHtmlMap['ComplexInf']: {
+        case complexInfConst: {
           childElem = chooseElement(rootElem, childElem).appendChild(createSvg(complexInfClass));
           continue;
         }
@@ -729,11 +741,20 @@ function toMathText(html, isEditable = false) {
       case textClass: {
         return elem.innerText;
       }
+      case piClass: {
+        return piConst;
+      }
+      case eClass: {
+        return eConst;
+      }
+      case iClass: {
+        return iConst;
+      }
       case infClass: {
-        return mathHtmlMap.Inf;
+        return infConst;
       }
       case complexInfClass: {
-        return mathHtmlMap.ComplexInf;
+        return complexInfConst;
       }
       default: {
         if (operatorClasses.includes(getClassName(elem))) {

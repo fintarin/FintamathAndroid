@@ -250,11 +250,32 @@ svg {
   vertical-align: bottom;
 }
 
-.infinite,
-.complex-infinite {
-  vertical-align: middle;
-  width: 1.5ex;
-  height: 1.5ex;
+.pi-const,
+.e-const,
+.i-const,
+.inf-const,
+.complex-inf-const {
   margin-left: 0.2ex;
   margin-right: 0.2ex;
+}
+
+.pi-const {
+  vertical-align: -0.01ex;
+  width: 1.26ex;
+}
+
+.e-const {
+  vertical-align: -0.02ex;
+  width: 0.77ex;
+}
+
+.i-const {
+  vertical-align: -0.01ex;
+  width: 0.57ex;
+}
+
+.inf-const,
+.complex-inf-const {
+  vertical-align: -0.08ex;
+  width: 1.4ex;
 }

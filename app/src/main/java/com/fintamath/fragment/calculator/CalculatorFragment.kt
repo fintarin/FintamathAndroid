@@ -37,7 +37,7 @@ class CalculatorFragment : Fragment() {
 
     private val maxSolutionLength = 1000
 
-    private val inTextViewPreloadString = "abc * 123 Inf () sqrt() abs() floor() ceil()"
+    private val inTextViewPreloadString = "abc * 123 Pi E I Inf ComplexInf () sqrt() abs() floor() ceil()"
     private var inTextViewInitialColor = 0
 
     private val inTextViewCreated = 0
