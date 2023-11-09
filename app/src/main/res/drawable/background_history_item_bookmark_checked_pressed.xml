@@ -8,7 +8,7 @@
 
     <item
         android:drawable="@drawable/ic_bookmark_checked"
-        android:height="24dp"
-        android:width="24dp"
+        android:height="@dimen/diameter_bar_icon"
+        android:width="@dimen/diameter_bar_icon"
         android:gravity="center"/>
 </layer-list>

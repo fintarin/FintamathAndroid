@@ -35,11 +35,21 @@
     <dimen name="radius_keyboard_switch_key">@dimen/_12sdp</dimen>
 
     <dimen name="diameter_bar_button">@dimen/_37sdp</dimen>
+    <dimen name="diameter_bar_icon">@dimen/_19sdp</dimen>
+
     <dimen name="diameter_history_item_button">@dimen/_32sdp</dimen>
+    <dimen name="radius_history_item">@dimen/_11sdp</dimen>
+
     <dimen name="diameter_solution_warning">@dimen/_20sdp</dimen>
-    <dimen name="radius_history_button">@dimen/_11sdp</dimen>
+    <dimen name="height_solution_warning_icon">@dimen/_19sdp</dimen>
+    <dimen name="width_solution_warning_icon">@dimen/_16sdp</dimen>
+
     <dimen name="radius_loading_dots">@dimen/_2sdp</dimen>
     <dimen name="radius_quick_action_popup">8dp</dimen>
+
+    <dimen name="height_logo">@dimen/_65sdp</dimen>
+    <dimen name="width_logo">@dimen/_135sdp</dimen>
+    <dimen name="diameter_logo_small">@dimen/_37sdp</dimen>
 
     <dimen name="height_in_math_text_view">@dimen/_54ssp</dimen>
     <dimen name="height_delimiter">@dimen/_2sdp</dimen>

@@ -11,25 +11,25 @@
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6033"
-            app:keyIcon="@drawable/ic_undo"
+            app:keyIcon="@drawable/ic_key_undo"
             app:keyBackground="@drawable/background_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="6034"
-            app:keyIcon="@drawable/ic_redo"
+            app:keyIcon="@drawable/ic_key_redo"
             app:keyBackground="@drawable/background_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="5998"
-            app:keyIcon="@drawable/ic_arrow_left"
+            app:keyIcon="@drawable/ic_key_arrow_left"
             app:keyBackground="@drawable/background_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
         <Key
             app:codes="5999"
-            app:keyIcon="@drawable/ic_arrow_right"
+            app:keyIcon="@drawable/ic_key_arrow_right"
             app:keyBackground="@drawable/background_control_key"
             app:isRepeatable="true"
             app:isPreviewEnabled="false" />
