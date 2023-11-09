@@ -881,8 +881,8 @@ function redrawSvg(elem) {
   const firstElemMarginBottom = parseFloatOrZero(firstElemStyle.marginBottom);
   const firstElemHeight = firstElem.clientHeight + firstElemMarginTop - firstElemMarginBottom;
 
-  /** @type {(number | Element)[][]} */
-  const bracketMaxHeightStack = [[firstElemHeight, firstElem, firstElem]];
+  const firstElemHeightObj = { height: firstElemHeight, bottomElem: firstElem, topElem: firstElem };
+  const bracketMaxHeightStack = [firstElemHeightObj];
 
   /** @type {SVGSVGElement[]} */
   const openBracketElemsStack = [];
@@ -899,7 +899,7 @@ function redrawSvg(elem) {
     }
 
     if (getClassName(childElem) in bracketMap || getClassName(childElem) in bracketMapReversed) {
-      setSvgHeight(childElem, firstElem, firstElem, firstElemHeight, true);
+      setSvgHeight(childElem, firstElemHeightObj, true);
     }
 
     redrawSvg(childElem);
@@ -910,25 +910,22 @@ function redrawSvg(elem) {
       case floorPrefixClass:
       case ceilPrefixClass: {
         openBracketElemsStack.push(childElem);
-        bracketMaxHeightStack.push([firstElemHeight, firstElem, firstElem]);
+        bracketMaxHeightStack.push({ height: firstElemHeight, bottomElem: firstElem, topElem: firstElem });
         continue;
       }
       case bracketPostfixClass:
       case absPostfixClass:
       case floorPostfixClass:
       case ceilPostfixClass: {
-        const array = bracketMaxHeightStack[bracketMaxHeightStack.length - 1];
-        const height = array[0];
-        const bottomElem = array[1];
-        const topElem = array[2];
+        const heightObj = bracketMaxHeightStack[bracketMaxHeightStack.length - 1];
 
-        setSvgHeight(childElem, bottomElem, topElem, height);
+        setSvgHeight(childElem, heightObj);
 
         if (openBracketElemsStack.length > 0) {
-          setSvgHeight(openBracketElemsStack.pop(), bottomElem, topElem, height);
+          setSvgHeight(openBracketElemsStack.pop(), heightObj);
           popHeightStack(bracketMaxHeightStack);
         } else {
-          updateHeightStack(bracketMaxHeightStack, bottomElem, topElem, true);
+          updateHeightStack(bracketMaxHeightStack, heightObj.bottomElem, heightObj.topElem, true);
         }
 
         continue;
@@ -939,12 +936,7 @@ function redrawSvg(elem) {
   }
 
   while (openBracketElemsStack.length > 0) {
-    const array = popHeightStack(bracketMaxHeightStack);
-    const height = array[0];
-    const bottomElem = array[1];
-    const topElem = array[1];
-
-    setSvgHeight(openBracketElemsStack.pop(), bottomElem, topElem, height);
+    setSvgHeight(openBracketElemsStack.pop(), popHeightStack(bracketMaxHeightStack));
   }
 
   //---------------------------------------------------------------------------------------------------------//
@@ -952,36 +944,31 @@ function redrawSvg(elem) {
   /**
    * Pop the height stack and updates it.
    *
-   * @param {(number | Element)[][]} maxHeightStack - The height stack to pop.
-   * @returns {(number | Element)[]} The popped array.
+   * @param {{height: number; bottomElem: HTMLSpanElement; topElem: HTMLSpanElement;}[]} maxHeightStack - The height stack to pop.
+   * @returns {{height: number; bottomElem: HTMLSpanElement; topElem: HTMLSpanElement;}} The popped object.
    */
   function popHeightStack(maxHeightStack) {
-    const array = maxHeightStack.pop();
-    const height = array[0];
-    const bottomElem = array[1];
-    const topElem = array[2];
-
-    updateHeightStack(maxHeightStack, bottomElem, topElem, height, true);
-
-    return array;
+    const obj = maxHeightStack.pop();
+    updateHeightStack(maxHeightStack, obj.bottomElem, obj.topElem, true);
+    return obj;
   }
 
   /**
    * Update the height stack with the given height.
    *
-   * @param {(number | Element)[][]} maxHeightStack - The height stack to update.
+   * @param {{height: number; bottomElem: HTMLSpanElement; topElem: HTMLSpanElement;}[]} maxHeightStack - The height stack to update.
    * @param {HTMLSpanElement} bottomElem - The element with the maximum bottom value.
    * @param {HTMLSpanElement} topElem - The element with the minimum top value.
    * @param {boolean} useScale - Whether to use bracket scale.
    */
   function updateHeightStack(maxHeightStack, bottomElem, topElem, useScale = false) {
-    const oldBottomElem = maxHeightStack[maxHeightStack.length - 1][1];
+    const oldBottomElem = maxHeightStack[maxHeightStack.length - 1].bottomElem;
     const newBottomElem = getElementBottom(oldBottomElem) > getElementBottom(bottomElem) ? oldBottomElem : bottomElem;
 
-    const oldTopElem = maxHeightStack[maxHeightStack.length - 1][2];
+    const oldTopElem = maxHeightStack[maxHeightStack.length - 1].topElem;
     const newTopElem = getElementTop(oldTopElem) < getElementTop(topElem) ? oldTopElem : topElem;
 
-    const oldHeight = maxHeightStack[maxHeightStack.length - 1][0];
+    const oldHeight = maxHeightStack[maxHeightStack.length - 1].height;
     let newHeight = Math.max(oldHeight, getElementBottom(newBottomElem) - getElementTop(newTopElem));
 
     if (useScale) {
@@ -989,10 +976,10 @@ function redrawSvg(elem) {
     }
 
     if (oldHeight < newHeight) {
-      maxHeightStack[maxHeightStack.length - 1] = [newHeight, newBottomElem, newTopElem];
+      maxHeightStack[maxHeightStack.length - 1] = { height: newHeight, bottomElem: newBottomElem, topElem: newTopElem };
 
       for (let i = maxHeightStack.length - 1; i > 0; i--) {
-        if (maxHeightStack[i - 1][0] < maxHeightStack[i][0]) {
+        if (maxHeightStack[i - 1].height < maxHeightStack[i].height) {
           maxHeightStack[i - 1] = maxHeightStack[i];
         }
       }
@@ -1003,12 +990,10 @@ function redrawSvg(elem) {
    * Set the SVG element height.
    *
    * @param {SVGSVGElement} elem - The SVG element to set its height.
-   * @param {HTMLSpanElement} bottomElem - The element with the maximum bottom value.
-   * @param {HTMLSpanElement} topElem - The element with the minimum top value.
-   * @param {number} height - The height to set.
+   * @param {{height: number; bottomElem: HTMLSpanElement; topElem: HTMLSpanElement;}} obj - The height object.
    * @param {boolean} init - Whether to initialize element parameters.
    */
-  function setSvgHeight(elem, bottomElem, topElem, height, init = false) {
+  function setSvgHeight(elem, obj, init = false) {
     switch (getClassName(elem)) {
       case floorPrefixClass:
       case ceilPrefixClass: {
@@ -1027,16 +1012,16 @@ function redrawSvg(elem) {
     }
 
     elem.setAttribute('preserveAspectRatio', 'none');
-    elem.style.height = height + 'px';
+    elem.style.height = obj.height + 'px';
 
     const elemVerticalAlign = parseFloatOrZero(elem.style.verticalAlign);
     const elemBottom = getElementBottom(elem);
     const elemTop = getElementTop(elem);
 
-    const bottomElemBottom = getElementBottom(bottomElem);
-    const topElemTop = getElementTop(topElem);
+    const bottomElemBottom = getElementBottom(obj.bottomElem);
+    const topElemTop = getElementTop(obj.topElem);
 
-    const heightDelta = (height + topElemTop - bottomElemBottom) / 2;
+    const heightDelta = (obj.height + topElemTop - bottomElemBottom) / 2;
 
     if (bottomElemBottom < elemBottom) {
       elem.style.verticalAlign = elemVerticalAlign + bottomElemBottom - elemBottom - heightDelta + 'px';
