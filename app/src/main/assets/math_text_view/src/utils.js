@@ -1866,6 +1866,13 @@ function getElementTop(elem) {
   return elem.getBoundingClientRect().top - marginTop;
 }
 
+/**
+ * Convert RGB to RGBA color.
+ *
+ * @param {string} color - The RGB color string to convert.
+ * @param {number} opacity - The opacity of a new RGBA color.
+ * @returns {string} The RGBA color string.
+ */
 function getColorWithOpacity(color, opacity) {
   return color.replace(closeBracket, ',' + opacity.toString() + closeBracket).replace('rgb', 'rgba');
 }
@@ -1921,8 +1928,8 @@ function parseFloatOrZero(string) {
 /**
  * Reverse the map object.
  *
- * @param {Object} mapObj - the map object to reverse.
- * @returns {Object} - the reverse map object.
+ * @param {Object} mapObj - The map object to reverse.
+ * @returns {Object} The reverse map object.
  */
 function reverseMap(mapObj) {
   let res = {};
