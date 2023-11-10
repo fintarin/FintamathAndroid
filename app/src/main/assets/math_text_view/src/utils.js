@@ -797,6 +797,19 @@ function toMathText(html, isEditable = false) {
 
       const nextChildElem = childElem.nextElementSibling;
 
+      if (
+        !childContainerClasses.includes(getClassName(childElem)) &&
+        !indexParentClasses.includes(getClassName(childElem)) &&
+        !(getClassName(childElem) in bracketMapReversed) &&
+        getClassName(childElem) !== unaryPostfixOperatorClass &&
+        getClassName(prevChildElem) !== undefinedClass &&
+        getClassName(prevChildElem) !== unaryPrefixOperatorClass &&
+        getClassName(prevChildElem) !== functionNameClass &&
+        !(getClassName(prevChildElem) in bracketMap)
+      ) {
+        text += space;
+      }
+
       if (isNumberElement(childElem) && isNumberFractionElement(nextChildElem)) {
         text +=
           fracFunction +
@@ -813,19 +826,6 @@ function toMathText(html, isEditable = false) {
         i++;
         prevChildElem = nextChildElem;
         continue;
-      }
-
-      if (
-        !childContainerClasses.includes(getClassName(childElem)) &&
-        !indexParentClasses.includes(getClassName(childElem)) &&
-        !(getClassName(childElem) in bracketMapReversed) &&
-        getClassName(childElem) !== unaryPostfixOperatorClass &&
-        getClassName(prevChildElem) !== undefinedClass &&
-        getClassName(prevChildElem) !== unaryPrefixOperatorClass &&
-        getClassName(prevChildElem) !== functionNameClass &&
-        !(getClassName(prevChildElem) in bracketMap)
-      ) {
-        text += space;
       }
 
       text += toMathTextRec(childElem);
