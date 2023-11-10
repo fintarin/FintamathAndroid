@@ -1236,7 +1236,8 @@ function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
     if (
       (className === binaryOperatorClass ||
         className === unaryPostfixOperatorClass ||
-        indexParentClasses.includes(className)) &&
+        indexParentClasses.includes(className) ||
+        className in bracketMapReversed) &&
       (prevElemClassName === undefinedClass ||
         prevElemClassName === binaryOperatorClass ||
         prevElemClassName === unaryPrefixOperatorClass ||
@@ -1887,24 +1888,6 @@ function makeRegexFromString(str) {
  */
 function getUnicodeTextLength(text) {
   return [...text].length;
-}
-
-/**
- * Remove the first and the last spaces from the given string.
- *
- * @param {String} str - The string to remove spaces from.
- * @returns {String} - The result.
- */
-function cutSpaces(str) {
-  if (str.length > 1 && str[0] === space) {
-    str = str.substring(1);
-  }
-
-  if (str.length > 1 && str[str.length - 1] === space) {
-    str = str.substring(0, str.length - 1);
-  }
-
-  return str;
 }
 
 /**
