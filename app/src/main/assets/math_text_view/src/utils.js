@@ -51,7 +51,7 @@ function toHtml(mathText, isEditable = false) {
         let pos = i + symbols.length;
 
         // Insert a function
-        if (pos <= end && mathText[pos] === openBracket) {
+        if (pos <= end && (mathText[pos] === openBracket || mathText[pos] === openSquareBracket)) {
           ({ start: i, childElem: childElem } = insertBrackets(rootElem, childElem, mathText, pos, end, symbols));
           continue;
         }
@@ -65,7 +65,9 @@ function toHtml(mathText, isEditable = false) {
       // Insert special symbols
       switch (symbols) {
         case openBracket:
-        case closeBracket: {
+        case closeBracket:
+        case openSquareBracket:
+        case closeSquareBracket: {
           ({ start: i, childElem: childElem } = insertBrackets(rootElem, childElem, mathText, prevIndex, end));
           continue;
         }
@@ -265,7 +267,7 @@ function toHtml(mathText, isEditable = false) {
    * @returns {{start: number; childElem: HTMLSpanElement;}} New start and the updated child element.
    */
   function insertBrackets(rootElem, childElem, mathText, start, end, funcName = '') {
-    if (mathText[start] === closeBracket) {
+    if (mathText[start] === closeBracket || mathText[start] === closeSquareBracket) {
       childElem = rootElem.appendChild(createSvg(bracketPostfixClass));
       return { start, childElem };
     }
@@ -506,34 +508,14 @@ function toHtml(mathText, isEditable = false) {
       let lastTokenElem = createElement();
       const tokenElems = [lastTokenElem];
 
-      let bracketsCount = 0;
-
       while (elem.childElementCount > 0) {
         const childElem = elem.firstElementChild;
 
-        switch (getClassName(childElem)) {
-          case bracketPrefixClass: {
-            bracketsCount++;
-            break;
-          }
-          case bracketPostfixClass: {
-            bracketsCount--;
-            break;
-          }
-        }
-
-        let isCommaFound = false;
-
         if (childElem.getAttribute(beforeContentAttr) === comma) {
-          if (bracketsCount === 0) {
-            lastTokenElem = createElement();
-            tokenElems.push(lastTokenElem);
-            elem.removeChild(childElem);
-            isCommaFound = true;
-          }
-        }
-
-        if (!isCommaFound) {
+          lastTokenElem = createElement();
+          tokenElems.push(lastTokenElem);
+          elem.removeChild(childElem);
+        } else {
           lastTokenElem.appendChild(childElem);
         }
       }
@@ -616,19 +598,26 @@ function toHtml(mathText, isEditable = false) {
    * @returns {number} The position of the close bracket or -1 if not found.
    * */
   function getCloseBracketPos(mathText, start, end) {
+    const openBracketStr = mathText[start];
+    const closeBracketStr = openBracketStr === openSquareBracket ? closeSquareBracket : closeBracket;
+
     let bracketsNum = 0;
 
     for (let i = start; i <= end; i++) {
       const ch = mathText[i];
 
       switch (ch) {
-        case openBracket: {
+        case openBracketStr: {
           bracketsNum++;
           break;
         }
-        case closeBracket: {
+        case closeBracketStr: {
           bracketsNum--;
-          if (bracketsNum === 0) return i;
+
+          if (bracketsNum === 0) {
+            return i;
+          }
+
           break;
         }
       }
@@ -700,50 +689,58 @@ function toMathText(html, isEditable = false) {
       case bracketPrefixClass: {
         return openBracket;
       }
-      case bracketPostfixClass:
+      case absPrefixClass: {
+        return absFunction + openSquareBracket;
+      }
+      case floorPrefixClass: {
+        return floorFunction + openSquareBracket;
+      }
+      case ceilPrefixClass: {
+        return ceilFunction + openSquareBracket;
+      }
+      case bracketPostfixClass: {
+        return closeBracket;
+      }
       case absPostfixClass:
       case floorPostfixClass:
       case ceilPostfixClass: {
-        return closeBracket;
-      }
-      case absPrefixClass: {
-        return absFunction + openBracket;
-      }
-      case floorPrefixClass: {
-        return floorFunction + openBracket;
-      }
-      case ceilPrefixClass: {
-        return ceilFunction + openBracket;
+        return closeSquareBracket;
       }
       case functionNameClass: {
         return elem.getAttribute(beforeContentAttr);
       }
       case sqrtClass: {
-        return sqrtFunction + putInBrackets(toMathTextChildren(elem));
+        return sqrtFunction + putInSquareBrackets(toMathTextChildren(elem));
       }
       case rootClass: {
         return (
           rootFunction +
-          putInBrackets(toMathTextChildren(elem.children[2]) + comma + space + toMathTextChildren(elem.children[0]))
+          putInSquareBrackets(
+            toMathTextChildren(elem.children[2]) + comma + space + toMathTextChildren(elem.children[0])
+          )
         );
       }
       case logClass: {
         return (
           logFunction +
-          putInBrackets(toMathTextChildren(elem.children[1]) + comma + space + toMathTextChildren(elem.children[3]))
+          putInSquareBrackets(
+            toMathTextChildren(elem.children[1]) + comma + space + toMathTextChildren(elem.children[3])
+          )
         );
       }
       case fractionClass: {
         return (
           fracFunction +
-          putInBrackets(toMathTextChildren(elem.children[0]) + comma + space + toMathTextChildren(elem.children[1]))
+          putInSquareBrackets(
+            toMathTextChildren(elem.children[0]) + comma + space + toMathTextChildren(elem.children[1])
+          )
         );
       }
       case supParentClass: {
-        return supOperator + tryPutInBrackets(toMathTextChildren(elem));
+        return supOperator + putInSquareBrackets(toMathTextChildren(elem));
       }
       case subParentClass: {
-        return subOperator + tryPutInBrackets(toMathTextChildren(elem));
+        return subOperator + putInSquareBrackets(toMathTextChildren(elem));
       }
       case textClass: {
         return elem.innerText;
@@ -813,7 +810,7 @@ function toMathText(html, isEditable = false) {
       if (isNumberElement(childElem) && isNumberFractionElement(nextChildElem)) {
         text +=
           fracFunction +
-          putInBrackets(
+          putInSquareBrackets(
             toMathTextRec(childElem) +
               comma +
               space +
@@ -842,22 +839,8 @@ function toMathText(html, isEditable = false) {
    * @param {String} text - The text to put in brackets.
    * @returns {String} The result.
    */
-  function putInBrackets(text) {
-    return openBracket + text + closeBracket;
-  }
-
-  /**
-   * Put the text in brackets if its length > 1, otherwise do nothing.
-   *
-   * @param {String} text - The text to put in brackets.
-   * @returns {String} The result.
-   */
-  function tryPutInBrackets(text) {
-    if (text.length != 1) {
-      return putInBrackets(text);
-    }
-
-    return text;
+  function putInSquareBrackets(text) {
+    return openSquareBracket + text + closeSquareBracket;
   }
 }
 

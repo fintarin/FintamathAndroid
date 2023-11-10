@@ -223,7 +223,8 @@ class CalculatorFragment : Fragment() {
             calculatorProcessor.stopCurrentCalculations()
             viewBinding.outSolutionView.showIncompleteInput()
         } else {
-            calculatorProcessor.calculate(text)
+            val formattedText = text.replace('[', '(').replace(']', ')')
+            calculatorProcessor.calculate(formattedText)
         }
     }
 
