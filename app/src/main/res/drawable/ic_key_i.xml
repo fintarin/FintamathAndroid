@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/text_size_keyboard_special"
+    android:height="@dimen/text_size_keyboard_special"
+    android:viewportWidth="220"
+    android:viewportHeight="220">
+  <path
+      android:pathData="m100.73,183.51c-7.55,-2.23 -13.82,-13.51 -11.14,-24.55 3.13,-12.87 6.95,-10.95 20.34,-54.29 3.1,-10.03 1.93,-15.74 -2.41,-16.62 -11.07,-2.24 -18.66,23.05 -18.66,23.05l-10.83,-1.56c0,0 3.73,-13.07 8.77,-21.04 10.04,-15.85 22.65,-16.83 32.43,-11.3 7.35,4.16 11.38,15.6 6.65,30.82 -13.4,43.21 -23.71,56.82 -15.67,61.37 10.23,5.79 20.6,-23.99 20.6,-23.99l9.59,1.31c0,0 -5.08,18.64 -13.4,28.3 -8.32,9.66 -18.71,10.73 -26.26,8.51zM123.36,55.71c-10.01,-2.81 -7.53,-19.44 3.29,-21.99 7.92,-1.87 13.44,4.88 10.68,13.03 -2.15,6.34 -8.58,10.47 -13.97,8.96z"
+      android:strokeWidth="0.2"
+      android:fillColor="@color/text_keyboard"/>
+</vector>
