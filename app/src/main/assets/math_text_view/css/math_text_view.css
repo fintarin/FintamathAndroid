@@ -66,7 +66,7 @@ svg {
 .binary-operator,
 .unary-prefix-operator,
 .unary-postfix-operator {
-  line-height: 0.6; /* TODO: remove when implementing a custom cursor */
+  vertical-align: 0.58ex; /* TODO: remove when implementing a custom cursor */
   margin-top: 0.2ex;
 }
 
@@ -84,7 +84,7 @@ svg {
 }
 
 .function-name {
-  line-height: 0.6; /* TODO: remove when implementing a custom cursor */
+  vertical-align: 0.58ex; /* TODO: remove when implementing a custom cursor */
   margin-top: 0.2ex;
   margin-left: 0.1ex;
   margin-right: -0.2ex;
