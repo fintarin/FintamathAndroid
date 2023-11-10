@@ -104,7 +104,7 @@ function toHtml(mathText, isEditable = false) {
           continue;
         }
         case space: {
-          childElem = insertSpace(rootElem);
+          childElem = rootElem.lastElementChild;
           continue;
         }
       }
@@ -149,14 +149,6 @@ function toHtml(mathText, isEditable = false) {
 
       // Insert text to the current text element
       childElem.innerHTML += symbols;
-    }
-
-    if (
-      rootElem.childElementCount > 0 &&
-      getClassName(rootElem.lastElementChild) === textClass &&
-      rootElem.lastElementChild.innerHTML === ''
-    ) {
-      rootElem.removeChild(rootElem.lastElementChild);
     }
 
     insertHints(rootElem);
@@ -382,7 +374,6 @@ function toHtml(mathText, isEditable = false) {
 
           if (tokenElems.length > 2) {
             let integerElem = tokenElems[0];
-            setClassName(integerElem, textClass);
 
             let numeratorElem = tokenElems[1];
             setClassName(numeratorElem, numeratorClass);
@@ -395,7 +386,7 @@ function toHtml(mathText, isEditable = false) {
             fracElem.appendChild(denominatorElem);
 
             elem = createElement();
-            elem.appendChild(integerElem);
+            insertChildren(elem, integerElem.children)
             elem.appendChild(fracElem);
 
             isSpecialFunc = false;
@@ -522,21 +513,6 @@ function toHtml(mathText, isEditable = false) {
 
       return tokenElems;
     }
-  }
-
-  /**
-   * Handle the insertion of space.
-   *
-   * @param {HTMLSpanElement?} elem - The element to insert space.
-   * @returns {HTMLSpanElement?} New child element.
-   */
-  function insertSpace(elem) {
-    if (elem.childElementCount > 0 && elem.lastElementChild !== null && elem.lastElementChild.innerHTML !== '') {
-      const spaceElem = createElement(textClass);
-      return elem.appendChild(spaceElem);
-    }
-
-    return elem.lastChild;
   }
 
   /**

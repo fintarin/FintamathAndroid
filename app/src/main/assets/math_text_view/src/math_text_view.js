@@ -196,7 +196,7 @@ function deleteAtCursor() {
     deleteChild(prevElem);
   } else {
     elem = elem.parentElement;
-    if (childContainerClasses.includes(getClassName(elem))) {
+    while (childContainerClasses.includes(getClassName(elem))) {
       elem = elem.parentElement;
     }
 
