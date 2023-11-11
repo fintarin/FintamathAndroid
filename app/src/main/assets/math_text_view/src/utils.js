@@ -845,126 +845,174 @@ function toMathText(html, isEditable = false) {
 }
 
 /**
- * Set size and color of all SVG sub children in the given element.
+ * Redraw all SVG sub children in the given element.
  *
  * @param {HTMLSpanElement} elem - The element to search.
  */
-function redrawSvg(elem) {
-  if (elem.childElementCount === 0) {
-    return;
-  }
-
-  const wasTextElemAdded = !textClasses.includes(getClassName(elem.firstElementChild));
-  if (wasTextElemAdded) {
-    elem.insertBefore(createElement(textClass), elem.firstElementChild);
-  }
-
-  const firstElem = elem.firstElementChild;
-  const firstElemStyle = window.getComputedStyle(firstElem);
-  const firstElemMarginTop = parseFloatOrZero(firstElemStyle.marginTop);
-  const firstElemMarginBottom = parseFloatOrZero(firstElemStyle.marginBottom);
-  const firstElemHeight = firstElem.clientHeight + firstElemMarginTop - firstElemMarginBottom;
-
-  const firstElemHeightObj = { height: firstElemHeight, bottomElem: firstElem, topElem: firstElem };
-  const bracketMaxHeightStack = [firstElemHeightObj];
-
-  /** @type {SVGSVGElement[]} */
-  const openBracketElemsStack = [];
-
-  const children = getChildren(elem);
-
-  for (let childElem of children) {
-    if (getClassName(childElem) === borderClass) {
-      continue;
-    }
-
-    if (childElem instanceof SVGSVGElement) {
-      setSvgColor(childElem);
-    }
-
-    if (getClassName(childElem) in bracketMap || getClassName(childElem) in bracketMapReversed) {
-      setSvgHeight(childElem, firstElemHeightObj, true);
-    }
-
-    redrawSvg(childElem);
-
-    switch (getClassName(childElem)) {
-      case bracketPrefixClass:
-      case absPrefixClass:
-      case floorPrefixClass:
-      case ceilPrefixClass: {
-        openBracketElemsStack.push(childElem);
-        bracketMaxHeightStack.push({ height: firstElemHeight, bottomElem: firstElem, topElem: firstElem });
-        continue;
-      }
-      case bracketPostfixClass:
-      case absPostfixClass:
-      case floorPostfixClass:
-      case ceilPostfixClass: {
-        const heightObj = bracketMaxHeightStack[bracketMaxHeightStack.length - 1];
-
-        setSvgHeight(childElem, heightObj);
-
-        if (openBracketElemsStack.length > 0) {
-          setSvgHeight(openBracketElemsStack.pop(), heightObj);
-          popHeightStack(bracketMaxHeightStack);
-        } else {
-          updateHeightStack(bracketMaxHeightStack, heightObj.bottomElem, heightObj.topElem, true);
-        }
-
-        continue;
-      }
-    }
-
-    updateHeightStack(bracketMaxHeightStack, childElem, childElem);
-  }
-
-  while (openBracketElemsStack.length > 0) {
-    setSvgHeight(openBracketElemsStack.pop(), popHeightStack(bracketMaxHeightStack));
-  }
-
-  if (wasTextElemAdded) {
-    elem.removeChild(elem.firstChild);
-  }
+function redrawSvgs(elem) {
+  initSvgs(elem);
+  setBracketHeights(elem);
 
   //---------------------------------------------------------------------------------------------------------//
 
   /**
-   * Pop the height stack and updates it.
+   * Set color and init size of all SVG sub children in the given element.
    *
-   * @param {{height: number; bottomElem: HTMLSpanElement; topElem: HTMLSpanElement;}[]} maxHeightStack - The height stack to pop.
-   * @returns {{height: number; bottomElem: HTMLSpanElement; topElem: HTMLSpanElement;}} The popped object.
+   * @param {HTMLSpanElement} elem - The element to search.
    */
-  function popHeightStack(maxHeightStack) {
-    const obj = maxHeightStack.pop();
-    updateHeightStack(maxHeightStack, obj.bottomElem, obj.topElem, true);
-    return obj;
+  function initSvgs(elem) {
+    if (elem.childElementCount === 0 || elem instanceof SVGElement) {
+      return;
+    }
+
+    /** @type {(() => void)[]} */
+    const writeCallbacks = [() => {}];
+
+    for (let i = 0; i < elem.childElementCount; i++) {
+      const childElem = elem.children[i];
+
+      if (childElem instanceof SVGSVGElement) {
+        writeCallbacks.push(() => setSvgColor(childElem));
+      }
+
+      if (getClassName(childElem) in bracketMap || getClassName(childElem) in bracketMapReversed) {
+        writeCallbacks.push(() => setBracketHeight(makeBracketObject(childElem), null, true));
+      }
+
+      initSvgs(childElem);
+    }
+
+    for (let callback of writeCallbacks) {
+      callback();
+    }
   }
 
   /**
-   * Update the height stack with the given height.
+   * Set size of all bracket sub children in the given element.
    *
-   * @param {{height: number; bottomElem: HTMLSpanElement; topElem: HTMLSpanElement;}[]} maxHeightStack - The height stack to update.
-   * @param {HTMLSpanElement} bottomElem - The element with the maximum bottom value.
-   * @param {HTMLSpanElement} topElem - The element with the minimum top value.
+   * @param {HTMLSpanElement} elem - The element to search.
+   */
+  function setBracketHeights(elem) {
+    if (elem.childElementCount === 0 || elem instanceof SVGElement) {
+      return;
+    }
+
+    const wasTextElemAdded = !textClasses.includes(getClassName(elem.firstElementChild));
+    if (wasTextElemAdded) {
+      elem.insertBefore(createElement(textClass), elem.firstElementChild);
+    }
+
+    const firstElem = elem.firstElementChild;
+    const firstElemTop = getElementTop(firstElem);
+    const firstElemBottom = getElementBottom(firstElem);
+    const firstElemHeight = firstElemBottom - firstElemTop;
+
+    const firstElemHeightObj = { height: firstElemHeight, bottom: firstElemBottom, top: firstElemTop };
+    const bracketMaxHeightStack = [firstElemHeightObj];
+
+    /** @type {SVGSVGElement[]} */
+    const openBracketElemsStack = [];
+
+    const children = getChildren(elem);
+
+    /** @type {(() => void)[]} */
+    const writeCallbacks = [() => {}];
+
+    for (let childElem of children) {
+      if (getClassName(childElem) === borderClass) {
+        continue;
+      }
+
+      setBracketHeights(childElem);
+
+      switch (getClassName(childElem)) {
+        case bracketPrefixClass:
+        case absPrefixClass:
+        case floorPrefixClass:
+        case ceilPrefixClass: {
+          openBracketElemsStack.push(childElem);
+          bracketMaxHeightStack.push(firstElemHeightObj);
+          continue;
+        }
+        case bracketPostfixClass:
+        case absPostfixClass:
+        case floorPostfixClass:
+        case ceilPostfixClass: {
+          const heightObj = bracketMaxHeightStack[bracketMaxHeightStack.length - 1];
+          const closeBracketObj = makeBracketObject(childElem);
+
+          writeCallbacks.push(() => setBracketHeight(closeBracketObj, heightObj));
+
+          if (openBracketElemsStack.length > 0) {
+            const openBracketObj = makeBracketObject(openBracketElemsStack.pop());
+
+            writeCallbacks.push(() => setBracketHeight(openBracketObj, heightObj));
+
+            popHeightStack(bracketMaxHeightStack);
+          } else {
+            updateHeightStack(bracketMaxHeightStack, heightObj.bottom, heightObj.top, true);
+          }
+
+          continue;
+        }
+      }
+
+      updateHeightStack(bracketMaxHeightStack, getElementBottom(childElem), getElementTop(childElem));
+    }
+
+    while (openBracketElemsStack.length > 0) {
+      const bracketObj = makeBracketObject(openBracketElemsStack.pop());
+
+      writeCallbacks.push(() => setBracketHeight(bracketObj, popHeightStack(bracketMaxHeightStack)));
+    }
+
+    for (let callback of writeCallbacks) {
+      callback();
+    }
+
+    if (wasTextElemAdded) {
+      elem.removeChild(elem.firstChild);
+    }
+  }
+
+  /**
+   * Pop the height stack and updates it.
+   *
+   * @param {{height: number; bottom: number; top: number;}[]} maxHeightStack - The height stack to pop.
+   * @returns {{height: number; bottom: number; top: number;}} The popped height object.
+   */
+  function popHeightStack(maxHeightStack) {
+    const heightObj = maxHeightStack.pop();
+    updateHeightStack(maxHeightStack, heightObj.bottom, heightObj.top, true);
+    return heightObj;
+  }
+
+  /**
+   * Update the height stack with the given height, bottom and top.
+   *
+   * @param {{height: number; bottom: HTMLSpanElement; top: HTMLSpanElement;}[]} maxHeightStack - The height stack to update.
+   * @param {number} bottom - The maximum bottom value.
+   * @param {number} top - The minimum top value.
    * @param {boolean} useScale - Whether to use bracket scale.
    */
-  function updateHeightStack(maxHeightStack, bottomElem, topElem, useScale = false) {
-    const oldBottomElem = maxHeightStack[maxHeightStack.length - 1].bottomElem;
-    const newBottomElem = getElementBottom(oldBottomElem) > getElementBottom(bottomElem) ? oldBottomElem : bottomElem;
+  function updateHeightStack(maxHeightStack, bottom, top, useScale = false) {
+    const lastHeightObj = maxHeightStack[maxHeightStack.length - 1];
 
-    const oldTopElem = maxHeightStack[maxHeightStack.length - 1].topElem;
-    const newTopElem = getElementTop(oldTopElem) < getElementTop(topElem) ? oldTopElem : topElem;
+    const oldBottom = lastHeightObj.bottom;
+    const newBottom = Math.max(oldBottom, bottom);
 
-    const oldHeight = maxHeightStack[maxHeightStack.length - 1].height;
-    let newHeight = Math.max(oldHeight, getElementBottom(newBottomElem) - getElementTop(newTopElem));
+    const oldTop = lastHeightObj.top;
+    const newTop = Math.min(oldTop, top);
+
+    const oldHeight = lastHeightObj.height;
+    let newHeight = Math.max(oldHeight, newBottom - newTop);
 
     if (useScale) {
       newHeight *= bracketNextScale;
     }
 
     if (oldHeight < newHeight) {
-      maxHeightStack[maxHeightStack.length - 1] = { height: newHeight, bottomElem: newBottomElem, topElem: newTopElem };
+      maxHeightStack[maxHeightStack.length - 1] = { height: newHeight, bottom: newBottom, top: newTop };
 
       for (let i = maxHeightStack.length - 1; i > 0; i--) {
         if (maxHeightStack[i - 1].height < maxHeightStack[i].height) {
@@ -975,64 +1023,46 @@ function redrawSvg(elem) {
   }
 
   /**
-   * Set the SVG element height.
+   * Set the bracket element height.
    *
-   * @param {SVGSVGElement} elem - The SVG element to set its height.
-   * @param {{height: number; bottomElem: HTMLSpanElement; topElem: HTMLSpanElement;}} obj - The height object.
+   * @param {{element: SVGSVGElement; bottom: number; top: number;}} bracketObj - The bracket element to set its height.
+   * @param {{height: number; bottom: number; top: number;}|null} heightObj - The height object.
+   * @param {{height: number; bottom: number; top: number;}|null} heightObj - The height object.
    * @param {boolean} init - Whether to initialize element parameters.
    */
-  function setSvgHeight(elem, obj, init = false) {
-    switch (getClassName(elem)) {
+  function setBracketHeight(bracketObj, heightObj, init = false) {
+    let bracketElem = bracketObj.element;
+
+    switch (getClassName(bracketElem)) {
       case floorPrefixClass:
       case ceilPrefixClass: {
-        elem = elem.firstElementChild;
+        bracketElem = bracketElem.firstElementChild;
         break;
       }
       case floorPostfixClass:
       case ceilPostfixClass: {
-        elem = elem.lastElementChild;
+        bracketElem = bracketElem.lastElementChild;
         break;
       }
     }
 
     if (init) {
-      elem.style.verticalAlign = '';
+      bracketElem.setAttribute('preserveAspectRatio', 'none');
+      bracketElem.style.verticalAlign = '';
+      bracketElem.style.height = '';
+      return;
     }
 
-    elem.setAttribute('preserveAspectRatio', 'none');
-    elem.style.height = obj.height + 'px';
+    const heightDelta = heightObj.height + bracketObj.top - bracketObj.bottom;
+    const heightScaleDelta = (heightObj.height + heightObj.top - heightObj.bottom) / 2;
 
-    const elemVerticalAlign = parseFloatOrZero(elem.style.verticalAlign);
-    const elemBottom = getElementBottom(elem);
-    const elemTop = getElementTop(elem);
-
-    const bottomElemBottom = getElementBottom(obj.bottomElem);
-    const topElemTop = getElementTop(obj.topElem);
-
-    const heightDelta = (obj.height + topElemTop - bottomElemBottom) / 2;
-
-    if (bottomElemBottom < elemBottom) {
-      elem.style.verticalAlign = elemVerticalAlign + bottomElemBottom - elemBottom - heightDelta + 'px';
+    if (heightObj.bottom < bracketObj.bottom) {
+      bracketElem.style.verticalAlign = heightObj.bottom - bracketObj.bottom - heightDelta - heightScaleDelta + 'px';
     } else {
-      elem.style.verticalAlign = elemVerticalAlign + elemTop - topElemTop + heightDelta + 'px';
-    }
-  }
-
-  /**
-   * Set the SVG icon color.
-   *
-   * @param {SVGSVGElement} elem - The SVG element to set its color.
-   */
-  function setSvgColor(elem) {
-    let color;
-
-    if (specialSvgClasses.includes(getClassName(elem))) {
-      color = mathTextView.style.color;
-    } else {
-      color = getColorWithOpacity(mathTextView.style.color, linesOpacity);
+      bracketElem.style.verticalAlign = bracketObj.top - heightObj.top - heightDelta + heightScaleDelta + 'px';
     }
 
-    elem.setAttribute('fill', color);
+    bracketElem.style.height = heightObj.height + 'px';
   }
 
   /**
@@ -1055,6 +1085,37 @@ function redrawSvg(elem) {
     }
 
     return children;
+  }
+
+  /**
+   * Construct the bracket object from the given bracket element.
+   *
+   * @param {HTMLSpanElement} bracketElem - The given bracket element.
+   * @returns {{element: any;bottom: number;top: number;}} - New bracket object
+   */
+  function makeBracketObject(bracketElem) {
+    return {
+      element: bracketElem,
+      bottom: getElementBottom(bracketElem),
+      top: getElementTop(bracketElem),
+    };
+  }
+
+  /**
+   * Set the SVG icon color.
+   *
+   * @param {SVGSVGElement} elem - The SVG element to set its color.
+   */
+  function setSvgColor(elem) {
+    let color;
+
+    if (specialSvgClasses.includes(getClassName(elem))) {
+      color = mathTextView.style.color;
+    } else {
+      color = getColorWithOpacity(mathTextView.style.color, linesOpacity);
+    }
+
+    elem.setAttribute('fill', color);
   }
 }
 

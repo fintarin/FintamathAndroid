@@ -45,7 +45,7 @@ function setText(mathText) {
  */
 function setColor(color) {
   mathTextView.style.color = color;
-  redrawSvg(mathTextView);
+  redrawSvgs(mathTextView);
 }
 
 /**

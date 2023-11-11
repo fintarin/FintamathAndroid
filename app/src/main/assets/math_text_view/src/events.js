@@ -50,7 +50,7 @@ function onMouseDown(event) {
  */
 function onTextChange() {
   insertBordersRec(mathTextView);
-  redrawSvg(mathTextView);
+  redrawSvgs(mathTextView);
   onSelectedElementChanged();
 
   let mathText = toMathText(mathTextView.innerHTML, mathTextView.isContentEditable);
