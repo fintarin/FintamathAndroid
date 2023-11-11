@@ -331,13 +331,13 @@ function toHtml(mathText, isEditable = false) {
         case rootFunction: {
           let tokenElems = tokenizeByComma(elem);
 
+          let rootContentElem = tokenElems.length > 0 ? tokenElems[0] : createElement();
+          setClassName(rootContentElem, rootContentClass);
+          rootContentElem.style.borderColor = getColorWithOpacity(mathTextView.style.color, linesOpacity);
+
           let rootIndexElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
           setClassName(rootIndexElem, rootIndexClass);
           rootIndexElem.style.borderColor = getColorWithOpacity(mathTextView.style.color, linesOpacity);
-
-          let rootContentElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
-          setClassName(rootContentElem, rootContentClass);
-          rootContentElem.style.borderColor = getColorWithOpacity(mathTextView.style.color, linesOpacity);
 
           elem = createElement(rootClass);
           elem.appendChild(rootIndexElem);
@@ -349,7 +349,7 @@ function toHtml(mathText, isEditable = false) {
         case logFunction: {
           let tokenElems = tokenizeByComma(elem);
 
-          let subElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
+          let subElem = tokenElems.length > 0 ? tokenElems[0] : createElement();
           setClassName(subElem, subClass);
 
           let logContentElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
@@ -389,7 +389,7 @@ function toHtml(mathText, isEditable = false) {
 
             isSpecialFunc = false;
           } else {
-            let numeratorElem = tokenElems.length > 1 ? tokenElems[0] : createElement();
+            let numeratorElem = tokenElems.length > 0 ? tokenElems[0] : createElement();
             setClassName(numeratorElem, numeratorClass);
 
             let denominatorElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
