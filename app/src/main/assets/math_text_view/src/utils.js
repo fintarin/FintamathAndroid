@@ -65,10 +65,13 @@ function toHtml(mathText, isEditable = false) {
       // Insert special symbols
       switch (symbols) {
         case openBracket:
-        case closeBracket:
-        case openSquareBracket:
-        case closeSquareBracket: {
+        case openSquareBracket: {
           ({ start: i, childElem: childElem } = insertBrackets(rootElem, childElem, mathText, prevIndex, end));
+          continue;
+        }
+        case closeBracket:
+        case closeSquareBracket: {
+          childElem = rootElem.appendChild(createSvg(bracketPostfixClass));
           continue;
         }
         case divOperator: {
@@ -259,11 +262,6 @@ function toHtml(mathText, isEditable = false) {
    * @returns {{start: number; childElem: HTMLSpanElement;}} New start and the updated child element.
    */
   function insertBrackets(rootElem, childElem, mathText, start, end, funcName = '') {
-    if (mathText[start] === closeBracket || mathText[start] === closeSquareBracket) {
-      childElem = rootElem.appendChild(createSvg(bracketPostfixClass));
-      return { start, childElem };
-    }
-
     const closeBracketPos = getCloseBracketPos(mathText, start, end);
 
     if (closeBracketPos != -1) {
@@ -386,7 +384,7 @@ function toHtml(mathText, isEditable = false) {
             fracElem.appendChild(denominatorElem);
 
             elem = createElement();
-            insertChildren(elem, integerElem.children)
+            insertChildren(elem, integerElem.children);
             elem.appendChild(fracElem);
 
             isSpecialFunc = false;
@@ -574,32 +572,58 @@ function toHtml(mathText, isEditable = false) {
    * @returns {number} The position of the close bracket or -1 if not found.
    * */
   function getCloseBracketPos(mathText, start, end) {
-    const openBracketStr = mathText[start];
-    const closeBracketStr = openBracketStr === openSquareBracket ? closeSquareBracket : closeBracket;
+    const openBracketCountMap = {
+      [openBracket]: 0,
+      [openSquareBracket]: 0,
+    };
+    const oppositeBracketMapReversed = {
+      [closeBracket]: openBracket,
+      [closeSquareBracket]: openSquareBracket,
+    };
 
-    let bracketsNum = 0;
+    const openBracketToSearch = mathText[start];
 
     for (let i = start; i <= end; i++) {
       const ch = mathText[i];
 
-      switch (ch) {
-        case openBracketStr: {
-          bracketsNum++;
-          break;
-        }
-        case closeBracketStr: {
-          bracketsNum--;
+      if (ch in openBracketCountMap) {
+        openBracketCountMap[ch]++;
+      } else if (ch in oppositeBracketMapReversed) {
+        openBracketCountMap[oppositeBracketMapReversed[ch]]--;
 
-          if (bracketsNum === 0) {
+        if (oppositeBracketMapReversed[ch] === openBracketToSearch) {
+          if (
+            (ch === closeSquareBracket && openBracketCountMap[openBracketToSearch] === 0) ||
+            !containsNonZero(openBracketCountMap)
+          ) {
             return i;
           }
-
-          break;
         }
       }
     }
 
     return -1;
+
+    //---------------------------------------------------------------------------------------------------------//
+
+    /**
+     * Determine if the given map contains non-zero values.
+     *
+     * @param {Object} map - The map to check.
+     * @returns {boolean} The result.
+     */
+    function containsNonZero(map) {
+      let res = false;
+
+      for (let key in map) {
+        if (map[key] !== 0) {
+          res = true;
+          break;
+        }
+      }
+
+      return res;
+    }
   }
 
   /**
