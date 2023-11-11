@@ -57,6 +57,7 @@ const operatorClasses = [unaryPrefixOperatorClass, unaryPostfixOperatorClass, bi
 const specialSvgClasses = [piClass, eClass, iClass, infClass, complexInfClass];
 const indexParentClasses = [supParentClass, subParentClass];
 const indexChildClasses = [supClass, subClass];
+const functionContainerClasses = [logClass, logContentClass];
 const parentContainerClasses = [
   fractionClass,
   rootClass,

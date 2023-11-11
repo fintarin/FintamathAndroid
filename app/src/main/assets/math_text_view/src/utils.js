@@ -871,9 +871,9 @@ function redrawSvg(elem) {
   /** @type {SVGSVGElement[]} */
   const openBracketElemsStack = [];
 
-  for (let i = 0; i < elem.childElementCount; i++) {
-    let childElem = elem.children[i];
+  const children = getChildren(elem);
 
+  for (let childElem of children) {
     if (getClassName(childElem) === borderClass) {
       continue;
     }
@@ -1033,6 +1033,28 @@ function redrawSvg(elem) {
     }
 
     elem.setAttribute('fill', color);
+  }
+
+  /**
+   * Return the element's children with sub children of function content containers.
+   *
+   * @param {HTMLSpanElement} elem - The element to get children.
+   * @returns {HTMLSpanElement[]} The element's children.
+   */
+  function getChildren(elem) {
+    let children = [];
+
+    for (let i = 0; i < elem.childElementCount; i++) {
+      let childElem = elem.children[i];
+
+      if (functionContainerClasses.includes(getClassName(childElem))) {
+        children = children.concat(getChildren(childElem));
+      } else {
+        children.push(childElem);
+      }
+    }
+
+    return children;
   }
 }
 
