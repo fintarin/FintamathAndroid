@@ -854,11 +854,12 @@ function redrawSvg(elem) {
     return;
   }
 
-  const firstElem =
-    getClassName(elem.firstElementChild) !== borderClass
-      ? elem.firstElementChild
-      : elem.firstElementChild.nextElementSibling;
+  const wasTextElemAdded = !textClasses.includes(getClassName(elem.firstElementChild));
+  if (wasTextElemAdded) {
+    elem.insertBefore(createElement(textClass), elem.firstElementChild);
+  }
 
+  const firstElem = elem.firstElementChild;
   const firstElemStyle = window.getComputedStyle(firstElem);
   const firstElemMarginTop = parseFloatOrZero(firstElemStyle.marginTop);
   const firstElemMarginBottom = parseFloatOrZero(firstElemStyle.marginBottom);
@@ -920,6 +921,10 @@ function redrawSvg(elem) {
 
   while (openBracketElemsStack.length > 0) {
     setSvgHeight(openBracketElemsStack.pop(), popHeightStack(bracketMaxHeightStack));
+  }
+
+  if (wasTextElemAdded) {
+    elem.removeChild(elem.firstChild);
   }
 
   //---------------------------------------------------------------------------------------------------------//
