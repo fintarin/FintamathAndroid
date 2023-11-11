@@ -67,7 +67,6 @@ svg {
 .unary-prefix-operator,
 .unary-postfix-operator {
   vertical-align: 0.58ex; /* TODO: remove when implementing a custom cursor */
-  margin-top: 0.2ex;
 }
 
 .binary-operator {
@@ -85,7 +84,6 @@ svg {
 
 .function-name {
   vertical-align: 0.58ex; /* TODO: remove when implementing a custom cursor */
-  margin-top: 0.2ex;
   margin-left: 0.1ex;
   margin-right: -0.2ex;
 }
@@ -126,7 +124,6 @@ svg {
 }
 
 .log-index {
-  font-size: 70%;
   margin-left: 0.3ex;
   margin-right: -0.2ex;
 }
