@@ -11,7 +11,7 @@ window.oncontextmenu = onContextMenu;
 
 mathTextView.onmousedown = onMouseDown;
 
-setInterval(function () {
+setInterval(() => {
   onSelectedElementChanged();
 }, 10);
 
