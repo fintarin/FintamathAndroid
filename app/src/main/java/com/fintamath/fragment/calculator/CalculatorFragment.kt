@@ -26,6 +26,12 @@ import kotlin.concurrent.schedule
 
 class CalculatorFragment : Fragment() {
 
+    private enum class InTextViewState(val value: Int) {
+        Created(0),
+        Changed(1),
+        Ready(2),
+    }
+
     private lateinit var viewBinding: FragmentCalculatorBinding
     private lateinit var calculatorProcessor: CalculatorProcessor
     private lateinit var keyboardSwitcher: CalculatorKeyboardSwitcher
@@ -40,10 +46,7 @@ class CalculatorFragment : Fragment() {
     private val inTextViewPreloadString = "abc * 123 Pi E I Inf ComplexInf () sqrt() abs() floor() ceil()"
     private var inTextViewInitialColor = 0
 
-    private val inTextViewCreated = 0
-    private val inTextViewChanged = 1
-    private val inTextViewReady = 2
-    private var inTextViewState = AtomicInteger(inTextViewCreated)
+    private var inTextViewState = AtomicInteger(InTextViewState.Created.value)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +77,7 @@ class CalculatorFragment : Fragment() {
 
         updateSettings()
 
-        if (inTextViewState.get() == inTextViewReady) {
+        if (inTextViewState.get() == InTextViewState.Ready.value) {
             if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
                 viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
             }
@@ -189,13 +192,13 @@ class CalculatorFragment : Fragment() {
 
     private fun onInTextChange(text: String) {
         when (inTextViewState.get()) {
-            inTextViewCreated -> {
+            InTextViewState.Created.value -> {
                 // Preloading - part 2
                 viewBinding.inTextView.clear()
                 inTextViewState.incrementAndGet()
                 return
             }
-            inTextViewChanged -> {
+            InTextViewState.Changed.value -> {
                 // Preloading - part 3
                 viewBinding.inTextView.clearUndoStates()
                 viewBinding.inTextView.requestFocus()
