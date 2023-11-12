@@ -87,7 +87,7 @@ class CalculatorFragment : Fragment() {
                 onInTextChange(viewBinding.inTextView.text)
             }
 
-            viewBinding.inTextView.requestFocus()
+            viewBinding.inTextView.requestFocusInWeb()
         }
 
         wereSettingsUpdated.set(false)
@@ -163,15 +163,14 @@ class CalculatorFragment : Fragment() {
     private fun initKeyboardActions() {
         viewBinding.inTextView.setOnClickListener {
             keyboardSwitcher.showCurrentKeyboard()
-            viewBinding.inTextView.requestFocus()
         }
         viewBinding.outSolutionView.setOnClickListener {
             keyboardSwitcher.hideCurrentKeyboard()
-            viewBinding.inTextView.clearFocus()
+            viewBinding.inTextView.clearFocusInWeb()
         }
         viewBinding.inOutLayout.setOnClickListener {
             keyboardSwitcher.hideCurrentKeyboard()
-            viewBinding.inTextView.clearFocus()
+            viewBinding.inTextView.clearFocusInWeb()
         }
     }
 
@@ -201,7 +200,7 @@ class CalculatorFragment : Fragment() {
             InTextViewState.Changed.value -> {
                 // Preloading - part 3
                 viewBinding.inTextView.clearUndoStates()
-                viewBinding.inTextView.requestFocus()
+                viewBinding.inTextView.requestFocusInWeb()
                 viewBinding.inTextView.textColor = inTextViewInitialColor
                 inTextViewState.incrementAndGet()
                 return
@@ -318,7 +317,7 @@ class CalculatorFragment : Fragment() {
 
     private fun showFragment(navigationId: Int) {
         runSaveToHistoryTask()
-        viewBinding.inTextView.clearFocus()
+        viewBinding.inTextView.clearFocusInWeb()
         viewBinding.root.findNavController().navigate(navigationId)
     }
 

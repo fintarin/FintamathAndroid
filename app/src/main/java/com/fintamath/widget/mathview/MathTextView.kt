@@ -222,28 +222,34 @@ class MathTextView @JvmOverloads constructor(
         onTextChangedListener = listener
     }
 
-    override fun requestFocus(direction: Int, previouslyFocusedRect: Rect?): Boolean {
+    fun requestFocusInWeb() {
+        if (hasFocus()) {
+            return
+        }
+
         if (!isLoaded) {
             onLoaded {
-                requestFocus(direction, previouslyFocusedRect)
+                requestFocusInWeb()
             }
         }
         else {
+            super.requestFocus()
             evaluateJavascript("requestFocus()") { }
         }
-
-        return super.requestFocus(direction, previouslyFocusedRect)
     }
 
-    override fun clearFocus() {
+    fun clearFocusInWeb() {
+        if (!hasFocus()) {
+            return
+        }
+
         if (!isLoaded) {
             onLoaded {
-                clearFocus()
+                clearFocusInWeb()
             }
         }
         else {
             super.clearFocus()
-
             evaluateJavascript("clearFocus()") { }
         }
     }

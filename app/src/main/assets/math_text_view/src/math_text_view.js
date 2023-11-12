@@ -511,6 +511,7 @@ function moveCursorRight() {
  */
 function requestFocus() {
   mathTextView.focus();
+  setCursorToElementEnd(mathTextView);
 }
 
 /**
