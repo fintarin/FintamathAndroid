@@ -57,26 +57,25 @@ const operatorClasses = [unaryPrefixOperatorClass, unaryPostfixOperatorClass, bi
 const specialSvgClasses = [piClass, eClass, iClass, infClass, complexInfClass];
 const indexParentClasses = [supParentClass, subParentClass];
 const indexChildClasses = [supClass, subClass];
-const functionContainerClasses = [logClass, logContentClass];
+const bracketParentContainerClasses = [logClass];
+const bracketContentContainerClasses = [logContentClass];
+const bracketPrefixContainerClasses = [logIndexClass];
 const parentContainerClasses = [
   fractionClass,
   rootClass,
   sqrtClass,
-  logClass,
   logIndexClass,
   floorPrefixClass,
   floorPostfixClass,
   ceilPrefixClass,
   ceilPostfixClass,
-].concat(indexParentClasses);
-const childContainerClasses = [
-  numeratorClass,
-  denominatorClass,
-  rootContentClass,
-  rootIndexClass,
-  logContentClass,
-  logIndexClass,
-].concat(indexChildClasses);
+]
+  .concat(indexParentClasses)
+  .concat(bracketParentContainerClasses);
+const childContainerClasses = [numeratorClass, denominatorClass, rootContentClass, rootIndexClass]
+  .concat(indexChildClasses)
+  .concat(bracketContentContainerClasses)
+  .concat(bracketPrefixContainerClasses);
 const containerClasses = parentContainerClasses.concat(childContainerClasses);
 const bracketMap = {
   [bracketPrefixClass]: bracketPostfixClass,

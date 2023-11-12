@@ -884,13 +884,7 @@ function redrawSvgs(elem) {
       elem.insertBefore(createElement(textClass), elem.firstElementChild);
     }
 
-    const firstElem = elem.firstElementChild;
-    const firstElemTop = getElementTop(firstElem);
-    const firstElemBottom = getElementBottom(firstElem);
-    const firstElemHeight = firstElemBottom - firstElemTop;
-
-    const firstElemHeightObj = { height: firstElemHeight, bottom: firstElemBottom, top: firstElemTop };
-    const bracketMaxHeightStack = [firstElemHeightObj];
+    const bracketMaxHeightStack = [makeHeightObject(elem.firstElementChild)];
 
     /** @type {SVGSVGElement[]} */
     const openBracketElemsStack = [];
@@ -901,19 +895,25 @@ function redrawSvgs(elem) {
     const writeCallbacks = [() => {}];
 
     for (let childElem of children) {
-      if (getClassName(childElem) === borderClass) {
+      const className = getClassName(childElem);
+
+      if (className === borderClass) {
         continue;
       }
 
       setBracketHeightsRec(childElem);
 
-      switch (getClassName(childElem)) {
+      if (bracketPrefixContainerClasses.includes(className)) {
+        continue;
+      }
+
+      switch (className) {
         case bracketPrefixClass:
         case absPrefixClass:
         case floorPrefixClass:
         case ceilPrefixClass: {
           openBracketElemsStack.push(childElem);
-          bracketMaxHeightStack.push(firstElemHeightObj);
+          bracketMaxHeightStack.push(makeHeightObject(elem.firstElementChild));
           continue;
         }
         case bracketPostfixClass:
@@ -939,7 +939,9 @@ function redrawSvgs(elem) {
         }
       }
 
-      updateHeightStack(bracketMaxHeightStack, getElementBottom(childElem), getElementTop(childElem));
+      const useScale = bracketParentContainerClasses.includes(className);
+
+      updateHeightStack(bracketMaxHeightStack, getElementBottom(childElem), getElementTop(childElem), useScale);
     }
 
     while (openBracketElemsStack.length > 0) {
@@ -1059,7 +1061,7 @@ function redrawSvgs(elem) {
     for (let i = 0; i < elem.childElementCount; i++) {
       let childElem = elem.children[i];
 
-      if (functionContainerClasses.includes(getClassName(childElem))) {
+      if (bracketContentContainerClasses.includes(getClassName(childElem))) {
         children = children.concat(getChildren(childElem));
       } else {
         children.push(childElem);
@@ -1070,10 +1072,23 @@ function redrawSvgs(elem) {
   }
 
   /**
+   * Construct the height object from the given element.
+   *
+   * @param {HTMLSpanElement} elem - The given element.
+   * @returns {{height: number; bottom: number; top: number;}} - New height object.
+   */
+  function makeHeightObject(elem) {
+    const top = getElementTop(elem);
+    const bottom = getElementBottom(elem);
+    const height = bottom - top;
+    return { height: height, bottom: bottom, top: top };
+  }
+
+  /**
    * Construct the bracket object from the given bracket element.
    *
-   * @param {HTMLSpanElement} bracketElem - The given bracket element.
-   * @returns {{element: any;bottom: number;top: number;}} - New bracket object
+   * @param {SVGSVGElement} bracketElem - The given bracket element.
+   * @returns {{element: SVGSVGElement; bottom: number; top: number;}} - New bracket object.
    */
   function makeBracketObject(bracketElem) {
     return {
