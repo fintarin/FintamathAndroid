@@ -19,7 +19,8 @@ function toHtml(mathText, isEditable = false) {
   }
 
   const elem = toHtmlRec(mathText, 0, mathText.length - 1);
-  insertHintsIntoContainersRec(elem);
+  insertHintsRec(elem);
+  insertEmptyTextsRec(elem);
 
   return elem.innerHTML;
 
@@ -153,9 +154,6 @@ function toHtml(mathText, isEditable = false) {
       // Insert text to the current text element
       childElem.innerHTML += symbols;
     }
-
-    insertHints(rootElem);
-    insertEmptyTexts(rootElem);
 
     return rootElem;
   }
@@ -510,22 +508,6 @@ function toHtml(mathText, isEditable = false) {
       }
 
       return tokenElems;
-    }
-  }
-
-  /**
-   * Insert text hints into containers recursively.
-   *
-   * @param {HTMLSpanElement} elem - The element to insert text hints.
-   */
-  function insertHintsIntoContainersRec(elem) {
-    for (let i = 0; i < elem.childElementCount; i++) {
-      const childElem = elem.children[i];
-      insertHintsIntoContainersRec(childElem);
-    }
-
-    if (containerClasses.includes(getClassName(elem)) && elem.innerHTML === '') {
-      elem.appendChild(createElement(textHintClass));
     }
   }
 
@@ -1333,6 +1315,24 @@ function insertHints(elem, start = 0, end = elem.childElementCount - 1) {
 }
 
 /**
+ * Insert text hints to sub children in the given element.
+ *
+ * @param {HTMLSpanElement} elem - The element to insert text hints.
+ */
+function insertHintsRec(elem) {
+  for (let i = 0; i < elem.childElementCount; i++) {
+    const childElem = elem.children[i];
+    insertHintsRec(childElem);
+  }
+
+  if (containerClasses.includes(getClassName(elem)) && elem.innerHTML === '') {
+    elem.appendChild(createElement(textHintClass));
+  }
+
+  insertHints(elem);
+}
+
+/**
  * Insert empty text elements from the start child to the end child of the given element.
  *
  * @param {HTMLSpanElement} elem - The element to insert empty texts.
@@ -1380,6 +1380,20 @@ function insertEmptyTexts(elem, start = 0, end = elem.childElementCount - 1) {
       i++;
     }
   }
+}
+
+/**
+ * Insert empty texts to sub children in the given element.
+ *
+ * @param {HTMLSpanElement} elem - The element to insert empty texts.
+ */
+function insertEmptyTextsRec(elem) {
+  for (let i = 0; i < elem.childElementCount; i++) {
+    const childElem = elem.children[i];
+    insertEmptyTextsRec(childElem);
+  }
+
+  insertEmptyTexts(elem);
 }
 
 /**
