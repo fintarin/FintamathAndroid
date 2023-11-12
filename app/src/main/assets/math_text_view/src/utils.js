@@ -832,8 +832,8 @@ function toMathText(html, isEditable = false) {
  * @param {HTMLSpanElement} elem - The element to search.
  */
 function redrawSvgs(elem) {
-  initSvgs(elem);
-  setBracketHeights(elem);
+  initSvgsRec(elem);
+  setBracketHeightsRec(elem);
 
   //---------------------------------------------------------------------------------------------------------//
 
@@ -842,7 +842,7 @@ function redrawSvgs(elem) {
    *
    * @param {HTMLSpanElement} elem - The element to search.
    */
-  function initSvgs(elem) {
+  function initSvgsRec(elem) {
     if (elem.childElementCount === 0 || elem instanceof SVGElement) {
       return;
     }
@@ -861,7 +861,7 @@ function redrawSvgs(elem) {
         writeCallbacks.push(() => setBracketHeight(makeBracketObject(childElem), null, true));
       }
 
-      initSvgs(childElem);
+      initSvgsRec(childElem);
     }
 
     for (let callback of writeCallbacks) {
@@ -874,7 +874,7 @@ function redrawSvgs(elem) {
    *
    * @param {HTMLSpanElement} elem - The element to search.
    */
-  function setBracketHeights(elem) {
+  function setBracketHeightsRec(elem) {
     if (elem.childElementCount === 0 || elem instanceof SVGElement) {
       return;
     }
@@ -905,7 +905,7 @@ function redrawSvgs(elem) {
         continue;
       }
 
-      setBracketHeights(childElem);
+      setBracketHeightsRec(childElem);
 
       switch (getClassName(childElem)) {
         case bracketPrefixClass:
