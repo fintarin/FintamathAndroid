@@ -63,6 +63,7 @@ const parentContainerClasses = [
   rootClass,
   sqrtClass,
   logClass,
+  logIndexClass,
   floorPrefixClass,
   floorPostfixClass,
   ceilPrefixClass,
