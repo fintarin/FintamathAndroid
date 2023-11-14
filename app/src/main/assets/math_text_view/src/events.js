@@ -63,8 +63,8 @@ function onTextChange() {
   let isMathTextComplete = isComplete(mathTextView) ? 'true' : 'false';
 
   // Math texts with a single and last character '=' are complete.
-  if (mathText.length > 1 && mathText.endsWith('=') && mathText.split('=').length - 1 === 1) {
-    mathText = mathText.substring(0, mathText.length - 1);
+  if (mathText.length > 1 && mathText.endsWith(' =') && mathText.split('=').length - 1 === 1) {
+    mathText = mathText.substring(0, mathText.length - 2);
     isMathTextComplete = 'true';
   }
 
