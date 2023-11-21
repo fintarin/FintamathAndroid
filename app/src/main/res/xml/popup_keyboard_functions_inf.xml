@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="@dimen/width_keyboard_functions_key"
+    app:keyHeight="@dimen/height_keyboard_key">
+
+    <Row>
+        <Key
+            app:keyOutputText="Inf"
+            app:keyIcon="@drawable/ic_key_inf"/>
+        <Key
+            app:keyOutputText="ComplexInf"
+            app:keyIcon="@drawable/ic_key_complexinf"/>
+    </Row>
+
+</Keyboard>

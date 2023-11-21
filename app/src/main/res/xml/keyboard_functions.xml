@@ -166,7 +166,11 @@
     <Row>
         <Key
             app:keyOutputText="Inf"
-            app:keyIcon="@drawable/ic_key_inf"/>
+            app:keyIcon="@drawable/ic_key_inf"
+            app:keyTopIcon="@drawable/ic_key_complexinf_top"
+            app:popupKeyboard="@xml/popup_keyboard_functions_inf"
+            app:keyTopLabelPaddingHorizontal="@dimen/padding_horizontal_keyboard_top_icon"
+            app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_icon" />
         <Key
             app:keyOutputText="!"
             app:keyLabel="!" />
