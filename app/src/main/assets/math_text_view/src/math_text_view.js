@@ -64,6 +64,10 @@ function setContentEditable(contentEditable) {
  * @param {string} mathText - The math text to convert to HTML and insert.
  */
 function insertAtCursor(mathText) {
+  if (mathText.length === 0) {
+    return;
+  }
+
   addUndoState();
 
   const selection = window.getSelection();

@@ -21,6 +21,12 @@ svg {
   line-height: 0;
 }
 
+span::selection,
+div::selection,
+svg::selection {
+  background: none;
+}
+
 .math-text-view {
   display: block;
   position: absolute;

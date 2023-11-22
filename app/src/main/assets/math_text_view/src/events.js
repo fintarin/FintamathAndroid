@@ -10,6 +10,10 @@ let selectedElem = null;
 window.oncontextmenu = onContextMenu;
 
 mathTextView.onmousedown = onMouseDown;
+mathTextView.onkeydown = onKeyDown;
+mathTextView.onpaste = onPaste;
+
+//---------------------------------------------------------------------------------------------------------//
 
 setInterval(() => {
   onSelectedElementChanged();
@@ -27,11 +31,12 @@ function onContextMenu(event) {
 }
 
 /**
- * Disable double click.
+ * Handle the mousedown event.
  *
  * @param {MouseEvent} event - The mouse down event.
  */
 function onMouseDown(event) {
+  // Disable double click.
   if (event.detail > 1) {
     event.preventDefault();
 
@@ -43,6 +48,83 @@ function onMouseDown(event) {
     selection.removeAllRanges();
     selection.addRange(document.caretRangeFromPoint(event.x, event.y));
   }
+}
+
+/**
+ * Handle the keydown event.
+ *
+ * @param {KeyboardEvent} event - The keydown event.
+ */
+function onKeyDown(event) {
+  let shouldPreventDefault = true;
+
+  if (event.ctrlKey) {
+    switch (event.key) {
+      case 'x': {
+        navigator.clipboard.writeText(toMathText(mathTextView.innerHTML));
+        clear();
+        break;
+      }
+      case 'c': {
+        navigator.clipboard.writeText(toMathText(mathTextView.innerHTML));
+        break;
+      }
+      case 'z': {
+        undo();
+        break;
+      }
+      case 'Z':
+      case 'y': {
+        redo();
+        break;
+      }
+      default: {
+        shouldPreventDefault = false;
+        break;
+      }
+    }
+  } else {
+    switch (event.key) {
+      case 'Backspace': {
+        deleteAtCursor();
+        break;
+      }
+      case 'ArrowLeft':
+      case 'ArrowUp': {
+        moveCursorLeft();
+        break;
+      }
+      case 'ArrowRight':
+      case 'ArrowDown': {
+        moveCursorRight();
+        break;
+      }
+      default: {
+        if (event.key.length == 1) {
+          insertAtCursor(event.key);
+        } else {
+          shouldPreventDefault = false;
+        }
+
+        break;
+      }
+    }
+  }
+
+  if (shouldPreventDefault) {
+    event.preventDefault();
+  }
+}
+
+/**
+ * Handle the paste event.
+ *
+ * @param {ClipboardEvent} event - The paste event.
+ */
+function onPaste(event) {
+  const text = event.clipboardData.getData('text/plain').replace(/[\r\n]/g, '');
+  insertAtCursor(text);
+  event.preventDefault();
 }
 
 /**
@@ -68,7 +150,11 @@ function onTextChange() {
     isMathTextComplete = 'true';
   }
 
-  Android.onTextChange(mathText, isMathTextComplete);
+  try {
+    Android.onTextChange(mathText, isMathTextComplete);
+  } catch (ReferenceError) {
+    // do nothing
+  }
 }
 
 /**
