@@ -57,12 +57,11 @@
             app:keyLabel="f(x)"
             app:keyBackground="@drawable/background_switch_key"
             app:isPreviewEnabled="false" />
-        <!--        TODO: uncomment when derivatives and integral functions will be better implemented -->
-        <!--        <Key-->
-        <!--            app:codes="6037"-->
-        <!--            app:keyLabel="∫xdx"-->
-        <!--            app:keyBackground="@drawable/background_switch_key"-->
-        <!--            app:isPreviewEnabled="false" />-->
+        <Key
+            app:codes="6037"
+            app:keyLabel="∫xdx"
+            app:keyBackground="@drawable/background_switch_key"
+            app:isPreviewEnabled="false" />
         <Key
             app:codes="6038"
             app:keyLabel="T/F"
@@ -177,17 +176,9 @@
             app:keyOutputText="0"
             app:keyLabel="0"
             app:keyBackground="@drawable/background_number_key" />
-        <!--        TODO: remove when derivatives and min/max functions will be better implemented -->
         <Key
             app:keyOutputText="."
             app:keyLabel="." />
-        <!--        TODO: uncomment when derivatives and min/max functions will be better implemented -->
-        <!--        <Key-->
-        <!--            app:keyOutputText="."-->
-        <!--            app:keyLabel="."-->
-        <!--            app:keyTopLabel=","-->
-        <!--            app:popupKeyboardLocationFlags="right"-->
-        <!--            app:popupKeyboard="@xml/popup_keyboard_main_point"/>-->
         <Key
             app:keyOutputText="="
             app:keyLabel="="

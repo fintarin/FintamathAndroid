@@ -133,12 +133,11 @@ class CalculatorFragment : Fragment() {
                         viewBinding.functionsKeyboardView.root,
                         Keyboard(requireContext(), R.xml.keyboard_functions)
                     ),
-            // TODO: uncomment when derivatives and integral functions will be better implemented
-            // CalculatorKeyboardType.AnalysisKeyboard to
-            //         Pair(
-            //             viewBinding.analysisKeyboardView.root,
-            //             Keyboard(requireContext(), R.xml.keyboard_analysis)
-            //         ),
+            CalculatorKeyboardType.AnalysisKeyboard to
+                    Pair(
+                        viewBinding.analysisKeyboardView.root,
+                        Keyboard(requireContext(), R.xml.keyboard_analysis)
+                    ),
             CalculatorKeyboardType.LogicKeyboard to
                     Pair(
                         viewBinding.logicKeyboardView.root,

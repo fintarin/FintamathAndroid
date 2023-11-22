@@ -19,6 +19,7 @@
     <dimen name="text_size_keyboard">@dimen/_17sdp</dimen>
     <dimen name="text_size_keyboard_special">@dimen/_20sdp</dimen>
     <dimen name="text_size_keyboard_special_big">@dimen/_25sdp</dimen>
+    <dimen name="text_size_keyboard_special_huge">@dimen/_42sdp</dimen>
     <dimen name="text_size_keyboard_top_label">@dimen/_9sdp</dimen>
     <dimen name="text_size_keyboard_top_special">@dimen/_10sdp</dimen>
 

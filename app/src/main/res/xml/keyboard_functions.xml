@@ -57,12 +57,11 @@
             app:keyLabel="f(x)"
             app:keyBackground="@drawable/background_switch_enabled_key"
             app:isPreviewEnabled="false" />
-        <!--        TODO: uncomment when derivatives and integral functions will be better implemented -->
-        <!--        <Key-->
-        <!--            app:codes="6037"-->
-        <!--            app:keyLabel="∫xdx"-->
-        <!--            app:keyBackground="@drawable/background_switch_key"-->
-        <!--            app:isPreviewEnabled="false" />-->
+        <Key
+            app:codes="6037"
+            app:keyLabel="∫xdx"
+            app:keyBackground="@drawable/background_switch_key"
+            app:isPreviewEnabled="false" />
         <Key
             app:codes="6038"
             app:keyLabel="T/F"
