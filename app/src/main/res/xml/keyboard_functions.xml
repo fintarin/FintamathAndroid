@@ -112,7 +112,7 @@
             app:keyIcon="@drawable/ic_key_pi"/>
         <Key
             app:keyOutputText="deg"
-            app:keyLabel="°"/>
+            app:keyIcon="@drawable/ic_key_degrees" />
         <Key
             app:keyOutputText="log(,)"
             app:keyLabel="log" />
@@ -172,7 +172,7 @@
             app:keyTopLabelPaddingVertical="@dimen/padding_vertical_keyboard_top_icon" />
         <Key
             app:keyOutputText="!"
-            app:keyLabel="!" />
+            app:keyIcon="@drawable/ic_key_factorial" />
         <Key
             app:keyOutputText="sign()"
             app:keyLabel="sign" />
