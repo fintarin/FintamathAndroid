@@ -47,6 +47,13 @@ function onMouseDown(event) {
 
     selection.removeAllRanges();
     selection.addRange(document.caretRangeFromPoint(event.x, event.y));
+
+    const range = selection.getRangeAt(0);
+    const elem = range.startContainer;
+
+    if (elem.nodeType !== Node.TEXT_NODE) {
+      setCursorToElementBegin(elem);
+    }
   }
 }
 
@@ -56,10 +63,11 @@ function onMouseDown(event) {
  * @param {KeyboardEvent} event - The keydown event.
  */
 function onKeyDown(event) {
-  let shouldPreventDefault = true;
-
   if (event.ctrlKey) {
     switch (event.key) {
+      case 'v': {
+        return;
+      }
       case 'x': {
         navigator.clipboard.writeText(toMathText(mathTextView.innerHTML));
         clear();
@@ -111,9 +119,7 @@ function onKeyDown(event) {
     }
   }
 
-  if (shouldPreventDefault) {
-    event.preventDefault();
-  }
+  event.preventDefault();
 }
 
 /**
