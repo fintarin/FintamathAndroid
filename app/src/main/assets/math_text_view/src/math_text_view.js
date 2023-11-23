@@ -524,3 +524,29 @@ function requestFocus() {
 function clearFocus() {
   mathTextView.blur();
 }
+
+function cut() {
+  try {
+    Android.onCut();
+  } catch (ReferenceError) {
+    navigator.clipboard.writeText(toMathText(mathTextView.innerHTML));
+    clear();
+  }
+}
+
+function copy() {
+  try {
+    Android.onCopy();
+  } catch (ReferenceError) {
+    navigator.clipboard.writeText(toMathText(mathTextView.innerHTML));
+  }
+}
+
+function paste() {
+  try {
+    Android.onPaste();
+  } catch (ReferenceError) {
+    const text = event.clipboardData.getData('text/plain').replace(/[\r\n]/g, '');
+    insertAtCursor(text);
+  }
+}

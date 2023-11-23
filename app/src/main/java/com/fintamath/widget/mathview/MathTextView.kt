@@ -1,20 +1,18 @@
 package com.fintamath.widget.mathview
 
 import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Color
-import android.graphics.Rect
-import android.os.Handler
-import android.os.Looper
 import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
+import android.view.inputmethod.BaseInputConnection
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
 import android.webkit.JavascriptInterface
 import android.webkit.ValueCallback
 import android.webkit.WebView
@@ -23,9 +21,8 @@ import android.widget.Button
 import android.widget.PopupWindow
 import androidx.annotation.Keep
 import com.fintamath.R
-import java.util.Timer
-import kotlin.concurrent.schedule
 import kotlin.math.abs
+
 
 @Keep
 class MathTextView @JvmOverloads constructor(
@@ -144,16 +141,28 @@ class MathTextView @JvmOverloads constructor(
         quickActionPopup!!.setBackgroundDrawable(null)
 
         cutActionButton = quickActionPopup!!.contentView.findViewById(R.id.cut)
-        cutActionButton!!.setOnClickListener { onCutAction() }
+        cutActionButton!!.setOnClickListener {
+            onCut()
+            quickActionPopup!!.dismiss()
+        }
 
         copyActionButton = quickActionPopup!!.contentView.findViewById(R.id.copy)
-        copyActionButton!!.setOnClickListener { onCopyAction() }
+        copyActionButton!!.setOnClickListener {
+            onCopy()
+            quickActionPopup!!.dismiss()
+        }
 
         pasteActionButton = quickActionPopup!!.contentView.findViewById(R.id.paste)
-        pasteActionButton!!.setOnClickListener { onPasteAction() }
+        pasteActionButton!!.setOnClickListener {
+            onPaste()
+            quickActionPopup!!.dismiss()
+        }
 
         deleteActionButton = quickActionPopup!!.contentView.findViewById(R.id.delete)
-        deleteActionButton!!.setOnClickListener { onDeleteAction() }
+        deleteActionButton!!.setOnClickListener {
+            clear()
+            quickActionPopup!!.dismiss()
+        }
     }
 
     fun insertAtCursor(text: String) {
@@ -186,36 +195,6 @@ class MathTextView @JvmOverloads constructor(
 
     fun moveCursorRight() {
         evaluateJavascript("moveCursorRight()") { }
-    }
-
-    private fun onCutAction() {
-        onCopyAction()
-        clear()
-    }
-
-    private fun onCopyAction() {
-        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("math-text", text)
-        clipboard.setPrimaryClip(clip)
-
-        quickActionPopup!!.dismiss()
-    }
-
-    private fun onPasteAction() {
-        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val pasteText = clipboard.primaryClip?.getItemAt(0)?.text
-
-        if (pasteText != null) {
-            insertAtCursor(pasteText.toString().replace("[\n\r]".toRegex(), " "))
-        }
-
-        quickActionPopup!!.dismiss()
-    }
-
-    private fun onDeleteAction() {
-        clear()
-
-        quickActionPopup!!.dismiss()
     }
 
     fun setOnTextChangedListener(listener: ((textView: MathTextView, text: String) -> Unit)?) {
@@ -252,6 +231,10 @@ class MathTextView @JvmOverloads constructor(
             super.clearFocus()
             evaluateJavascript("clearFocus()") { }
         }
+    }
+
+    override fun onCreateInputConnection(outAttrs: EditorInfo?): InputConnection {
+        return BaseInputConnection(this, false)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -351,6 +334,14 @@ class MathTextView @JvmOverloads constructor(
         }
     }
 
+    private fun onLoaded(callback: () -> Unit) {
+        if (isLoaded) {
+            callback.invoke()
+        } else {
+            onLoadedCallbacks.add(callback)
+        }
+    }
+
     @JavascriptInterface
     fun onTextChange(newText: String, isCompleteStr: String) {
         textCached = newText
@@ -361,11 +352,26 @@ class MathTextView @JvmOverloads constructor(
         }
     }
 
-    private fun onLoaded(callback: () -> Unit) {
-        if (isLoaded) {
-            callback.invoke()
-        } else {
-            onLoadedCallbacks.add(callback)
+    @JavascriptInterface
+    fun onCut() {
+        onCopy()
+        clear()
+    }
+
+    @JavascriptInterface
+    fun onCopy() {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("math-text", text)
+        clipboard.setPrimaryClip(clip)
+    }
+
+    @JavascriptInterface
+    fun onPaste() {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val pasteText = clipboard.primaryClip?.getItemAt(0)?.text
+
+        if (pasteText != null) {
+            insertAtCursor(pasteText.toString().replace("[\n\r]".toRegex(), " "))
         }
     }
 

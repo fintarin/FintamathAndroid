@@ -69,12 +69,11 @@ function onKeyDown(event) {
         return;
       }
       case 'x': {
-        navigator.clipboard.writeText(toMathText(mathTextView.innerHTML));
-        clear();
+        cut();
         break;
       }
       case 'c': {
-        navigator.clipboard.writeText(toMathText(mathTextView.innerHTML));
+        copy();
         break;
       }
       case 'z': {
@@ -84,6 +83,10 @@ function onKeyDown(event) {
       case 'Z':
       case 'y': {
         redo();
+        break;
+      }
+      case 'Backspace': {
+        clear();
         break;
       }
       default: {
@@ -128,8 +131,7 @@ function onKeyDown(event) {
  * @param {ClipboardEvent} event - The paste event.
  */
 function onPaste(event) {
-  const text = event.clipboardData.getData('text/plain').replace(/[\r\n]/g, '');
-  insertAtCursor(text);
+  paste();
   event.preventDefault();
 }
 
