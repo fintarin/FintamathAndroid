@@ -52,7 +52,11 @@ function onMouseDown(event) {
     const elem = range.startContainer;
 
     if (elem.nodeType !== Node.TEXT_NODE) {
-      setCursorToElementBegin(elem);
+      if (elem.innerHTML.length === 0 || elem instanceof SVGElement) {
+        setCursorToElementBegin(elem);
+      } else {
+        setCursorToElementEnd(elem);
+      }
     }
   }
 }
