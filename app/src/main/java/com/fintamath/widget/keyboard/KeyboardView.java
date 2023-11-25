@@ -1302,11 +1302,15 @@ public class KeyboardView extends View implements View.OnClickListener {
         x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
         float y = mMiniKeyboard.getY() + mMiniKeyboardOffsetY;
 
-        int miniKeyboardAction = action == MotionEvent.ACTION_MOVE ? MotionEvent.ACTION_DOWN : action;
-
-        if (miniKeyboardAction == MotionEvent.ACTION_DOWN || miniKeyboardAction == MotionEvent.ACTION_UP) {
+        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
             return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,
-                    miniKeyboardAction, x, y, me.getMetaState()));
+                    MotionEvent.ACTION_DOWN, x, y, me.getMetaState()));
+        }
+
+        if (action == MotionEvent.ACTION_UP) {
+            mMiniKeyboard.detectAndSendKey(mMiniKeyboard.mCurrentKeyIndex, (int) x, (int) y, now);
+            dismissPopupKeyboard();
+            return true;
         }
 
         return false;
