@@ -421,6 +421,34 @@ function toHtml(mathText, isEditable = false) {
           isSpecialFunc = false;
           break;
         }
+        case derivativeFunction: {
+          let tokenElems = tokenizeByComma(elem);
+
+          let derivativeContentElem = tokenElems.length > 0 ? tokenElems[0] : createElement();
+          setClassName(derivativeContentElem, derivativeContentClass);
+
+          let derivativeBaseElem = tokenElems.length > 1 ? tokenElems[1] : createElement();
+          setClassName(derivativeBaseElem, derivativeBaseClass);
+
+          let derivativePrefixNumeratorElem = createElement(derivativeNumeratorClass);
+          derivativePrefixNumeratorElem.appendChild(createSvg(derivativeNameClass));
+
+          let derivativePrefixDenominatorElem = createElement(derivativeDenominatorClass);
+          derivativePrefixDenominatorElem.appendChild(createSvg(derivativeNameClass));
+          derivativePrefixDenominatorElem.appendChild(derivativeBaseElem);
+
+          let derivativeFracElem = createElement(derivativeFracClass);
+          derivativeFracElem.appendChild(derivativePrefixNumeratorElem);
+          derivativeFracElem.appendChild(derivativePrefixDenominatorElem);
+
+          elem = createElement(derivativeClass);
+          elem.appendChild(derivativeFracElem);
+          elem.appendChild(createSvg(bracketPrefixClass));
+          elem.appendChild(derivativeContentElem);
+          elem.appendChild(createSvg(bracketPostfixClass));
+
+          break;
+        }
         default: {
           putInBrackets(elem);
           elem.insertBefore(createFunctionNameElement(funcName), elem.firstElementChild);
@@ -715,6 +743,17 @@ function toMathText(html, isEditable = false) {
           fracFunction +
           putInSquareBrackets(
             toMathTextChildren(elem.children[0]) + comma + space + toMathTextChildren(elem.children[1])
+          )
+        );
+      }
+      case derivativeClass: {
+        return (
+          derivativeFunction +
+          putInSquareBrackets(
+            toMathTextChildren(elem.children[2]) +
+              comma +
+              space +
+              toMathTextChildren(elem.children[0].children[1].children[1])
           )
         );
       }
@@ -1636,7 +1675,7 @@ function setCursorToElementBegin(elem) {
     return;
   }
 
-  while (elem instanceof HTMLElement && elem.innerHTML !== elem.innerText) {
+  while (elem instanceof HTMLElement && elem.innerHTML !== elem.innerText && !isEmptyElement(elem)) {
     elem = elem.firstElementChild;
   }
 
@@ -1677,7 +1716,7 @@ function setCursorToElementEnd(elem) {
     return;
   }
 
-  while (elem instanceof HTMLElement && elem.innerHTML !== elem.innerText) {
+  while (elem instanceof HTMLElement && elem.innerHTML !== elem.innerText && !isEmptyElement(elem)) {
     elem = elem.lastElementChild;
   }
 
@@ -1775,7 +1814,10 @@ function isNotEmptyTextElement(elem) {
  * @returns {boolean} Whether the given element is a empty element.
  */
 function isEmptyElement(elem) {
-  return (textClasses.includes(getClassName(elem)) || getClassName(elem) === borderClass) && elem.innerHTML === '';
+  return (
+    (textClasses.includes(getClassName(elem)) && elem.innerHTML === '') ||
+    emptyElementClasses.includes(getClassName(elem))
+  );
 }
 
 /**

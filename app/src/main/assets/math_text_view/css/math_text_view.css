@@ -134,24 +134,28 @@ svg::selection {
   margin-right: -0.2ex;
 }
 
-.fraction {
+.fraction,
+.derivative-fraction {
   text-align: center;
   vertical-align: 1.015ex;
   margin-left: 0.7ex;
   margin-right: 0.7ex;
 }
 
-.numerator {
+.numerator,
+.derivative-numerator {
   display: block;
   overflow: hidden;
 }
 
-.denominator {
+.denominator,
+.derivative-denominator {
   float: left;
   width: 100%;
 }
 
-.denominator::before {
+.denominator::before,
+.derivative-denominator::before {
   content: '';
   border-top: 0.16ex solid;
   display: block;
@@ -160,6 +164,20 @@ svg::selection {
   margin-left: -0.3ex;
   margin-right: -0.3ex;
   opacity: 0.75;
+}
+
+.fraction {
+  margin-left: 0.7ex;
+  margin-right: 0.7ex;
+}
+
+.derivative-fraction {
+  margin-left: 0.7ex;
+  margin-right: 0.3ex;
+}
+
+.derivative-base {
+  margin-left: 0.2ex;
 }
 
 .open-bracket,
@@ -275,6 +293,11 @@ svg::selection {
 .i-const {
   vertical-align: -0.01ex;
   width: 0.57ex;
+}
+
+.derivative-name {
+  vertical-align: -0.03ex;
+  width: 0.89ex;
 }
 
 .inf-const,

@@ -447,7 +447,10 @@ function moveCursorLeft() {
       return;
     }
 
-    while (elem.previousElementSibling === null) {
+    while (
+      elem.previousElementSibling === null ||
+      emptyElementClasses.includes(getClassName(elem.previousElementSibling))
+    ) {
       const parentElem = elem.parentElement;
 
       if (getClassName(parentElem) === mathTextViewClass) {
@@ -496,7 +499,7 @@ function moveCursorRight() {
       return;
     }
 
-    while (elem.nextElementSibling === null) {
+    while (elem.nextElementSibling === null || emptyElementClasses.includes(getClassName(elem.nextElementSibling))) {
       const parentElem = elem.parentElement;
 
       if (getClassName(parentElem) === mathTextViewClass) {
