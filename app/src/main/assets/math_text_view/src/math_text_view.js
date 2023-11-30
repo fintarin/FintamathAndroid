@@ -447,6 +447,10 @@ function moveCursorLeft() {
       return;
     }
 
+    if (getClassName(elem.previousElementSibling) === borderClass) {
+      elem = elem.previousElementSibling;
+    }
+
     while (
       elem.previousElementSibling === null ||
       emptyElementClasses.includes(getClassName(elem.previousElementSibling))
@@ -458,6 +462,10 @@ function moveCursorLeft() {
       }
 
       elem = parentElem;
+
+      if (getClassName(elem.previousElementSibling) === borderClass) {
+        elem = elem.previousElementSibling;
+      }
     }
 
     setCursorToElementEnd(elem.previousElementSibling);
@@ -499,6 +507,10 @@ function moveCursorRight() {
       return;
     }
 
+    if (getClassName(elem.nextElementSibling) === borderClass) {
+      elem = elem.nextElementSibling;
+    }
+
     while (elem.nextElementSibling === null || emptyElementClasses.includes(getClassName(elem.nextElementSibling))) {
       const parentElem = elem.parentElement;
 
@@ -507,6 +519,10 @@ function moveCursorRight() {
       }
 
       elem = parentElem;
+
+      if (getClassName(elem.nextElementSibling) === borderClass) {
+        elem = elem.nextElementSibling;
+      }
     }
 
     setCursorToElementBegin(elem.nextElementSibling);
