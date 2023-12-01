@@ -52,7 +52,7 @@ class HistoryFragment : Fragment() {
 
     private fun initBarButtons() {
         viewBinding.calculatorButton.setOnClickListener { showCalculatorFragment() }
-        viewBinding.cameraButton.setOnClickListener { showCameraFragment() }
+//        viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented
         viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
     }

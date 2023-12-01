@@ -174,7 +174,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun initBarButtons() {
-        viewBinding.cameraButton.setOnClickListener { showCameraFragment() }
+//        viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented
         viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
         viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
