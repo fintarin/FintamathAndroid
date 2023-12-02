@@ -75,9 +75,14 @@ svg::selection {
   vertical-align: 0.58ex; /* TODO: remove when implementing a custom cursor */
 }
 
-.binary-operator {
-  margin-left: 0.2ex;
-  margin-right: 0.2ex;
+.binary-operator,
+.unary-prefix-operator {
+  margin-left: 0.1ex;
+}
+
+.binary-operator,
+.unary-postfix-operator {
+  margin-right: 0.1ex;
 }
 
 .binary-operator::before,
@@ -91,7 +96,7 @@ svg::selection {
 .function-name {
   vertical-align: 0.58ex; /* TODO: remove when implementing a custom cursor */
   margin-left: 0.1ex;
-  margin-right: -0.2ex;
+  margin-right: -0.075ex;
 }
 
 .function-name::before {
@@ -130,7 +135,7 @@ svg::selection {
 }
 
 .log-index {
-  margin-left: 0.3ex;
+  margin-left: 0.15ex;
   margin-right: -0.2ex;
 }
 
@@ -138,8 +143,6 @@ svg::selection {
 .derivative-fraction {
   text-align: center;
   vertical-align: 1.015ex;
-  margin-left: 0.7ex;
-  margin-right: 0.7ex;
 }
 
 .numerator,
@@ -167,13 +170,13 @@ svg::selection {
 }
 
 .fraction {
-  margin-left: 0.7ex;
-  margin-right: 0.7ex;
+  margin-left: 0.6ex;
+  margin-right: 0.6ex;
 }
 
 .derivative-fraction {
-  margin-left: 0.7ex;
-  margin-right: 0.3ex;
+  margin-left: 0.6ex;
+  margin-right: 0.45ex;
 }
 
 .derivative-base {
@@ -186,11 +189,11 @@ svg::selection {
 }
 
 .open-bracket {
-  margin-left: 0.3ex;
+  margin-left: 0.2ex;
 }
 
 .close-bracket {
-  margin-right: 0.3ex;
+  margin-right: 0.2ex;
 }
 
 .abs-prefix,
@@ -219,14 +222,14 @@ svg::selection {
 .abs-prefix,
 .floor-prefix,
 .ceil-prefix {
-  margin-left: 0.15ex;
+  margin-left: 0.05ex;
   padding-right: 0.15ex;
 }
 
 .abs-postfix,
 .floor-postfix,
 .ceil-postfix {
-  margin-right: 0.15ex;
+  margin-right: 0.05ex;
   padding-left: 0.15ex;
 }
 
@@ -241,12 +244,12 @@ svg::selection {
 }
 
 .sqrt {
-  margin-right: 0.4ex;
+  margin-right: 0.2ex;
 }
 
 .root {
-  margin-right: 0.4ex;
-  margin-left: 0.4ex;
+  margin-right: 0.2ex;
+  margin-left: 0.2ex;
 }
 
 .root-content {
@@ -266,8 +269,8 @@ svg::selection {
 
 .root-index {
   font-size: 60%;
-  margin-bottom: 1.8ex;
-  margin-right: -1.2ex;
+  margin-bottom: 2ex;
+  margin-right: -1.4ex;
   vertical-align: bottom;
 }
 
@@ -276,8 +279,8 @@ svg::selection {
 .i-const,
 .inf-const,
 .complex-inf-const {
-  margin-left: 0.2ex;
-  margin-right: 0.2ex;
+  margin-left: 0.1ex;
+  margin-right: 0.1ex;
 }
 
 .pi-const {
