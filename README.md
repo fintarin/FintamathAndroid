@@ -19,6 +19,7 @@ Key features:
 - Arbitrary precision arithmetic
 - High precision approximation
 - Complex numbers
+- Derivatives
 - Logic optimization
 - Rich display of math expressions
 - Copy and paste expressions
