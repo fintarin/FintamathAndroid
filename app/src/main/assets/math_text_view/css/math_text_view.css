@@ -75,12 +75,15 @@ svg::selection {
   vertical-align: 0.58ex; /* TODO: remove when implementing a custom cursor */
 }
 
-.binary-operator,
+.binary-operator {
+  margin-left: 0.2ex;
+  margin-right: 0.2ex;
+}
+
 .unary-prefix-operator {
   margin-left: 0.1ex;
 }
 
-.binary-operator,
 .unary-postfix-operator {
   margin-right: 0.1ex;
 }
