@@ -19,7 +19,7 @@ const char *invalidInputExc = "Invalid input";
 const char *failedToSolveExc = "Failed to solve";
 
 constexpr int32_t maxSolutionLength = 1000000;
-static uint8_t precision = 10;
+static unsigned precision = 10;
 
 static pid_t calcPid = -1;
 static auto *solutionStrShared = (char *)mmap(nullptr, maxSolutionLength, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
@@ -122,10 +122,7 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_setPrecision(
   if (inPrecision <= 0) {
     precision = 1;
   }
-  else if (inPrecision > FINTAMATH_PRECISION) {
-    precision = FINTAMATH_PRECISION;
-  }
   else {
-    precision = uint8_t(inPrecision);
+    precision = inPrecision;
   }
 }

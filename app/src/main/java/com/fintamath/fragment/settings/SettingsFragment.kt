@@ -22,7 +22,13 @@ class SettingsFragment : Fragment() {
 
         viewBinding.settingsBackButton.setOnClickListener { executeBack() }
 
-        viewBinding.precisionSlider.value = SettingsStorage.getPrecision().toFloat()
+        if (SettingsStorage.getPrecision() <= viewBinding.precisionSlider.valueTo) {
+            viewBinding.precisionSlider.value = SettingsStorage.getPrecision().toFloat()
+        }
+        else {
+            SettingsStorage.setPrecision(viewBinding.precisionSlider.value.toInt())
+        }
+
         viewBinding.precisionSlider.addOnChangeListener(Slider.OnChangeListener { _, value, _ -> onPrecisionChanged(value.toInt()) })
 
         return viewBinding.root

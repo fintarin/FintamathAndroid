@@ -41,7 +41,7 @@ class CalculatorFragment : Fragment() {
 
     private var wereSettingsUpdated = AtomicBoolean(false)
 
-    private val maxSolutionLength = 1000
+    private val maxSolutionLength = 2000
 
     private val inTextViewPreloadString = "abc * 123 Pi E I Inf ComplexInf () sqrt() abs() floor() ceil() derivative(x,x)"
     private var inTextViewInitialColor = 0
