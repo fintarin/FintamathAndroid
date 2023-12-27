@@ -8,29 +8,34 @@ import android.graphics.Paint
 import android.view.MotionEvent
 import android.util.AttributeSet
 import android.view.View
+import com.fintamath.widget.graph.grid.GraphGrid
 import kotlin.math.abs
-import kotlin.math.min
 
 class GraphView(
     ctx: Context,
     attrs: AttributeSet
 ) : View(ctx, attrs) {
 
+    private var lockScrollScale = false
+
+
     private val axisPaint = Paint().apply {
         color = Color.LTGRAY
         strokeWidth = 3f
     }
 
-    private val gridPaint = Paint().apply {
-        color = Color.DKGRAY
-        strokeWidth = 2f
+    private val axisNamePaint = Paint().apply {
+        color = Color.LTGRAY
+        textSize = 40f
     }
 
     private var offsetX = 0.0f
     private var offsetY = 0.0f
 
-    private var cellSize: Float = 0.0f
     private val minCellCount: Int = 10
+
+    private var graphGrid: GraphGrid = GraphGrid()
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -38,12 +43,14 @@ class GraphView(
         val width = width.toFloat()
         val height = height.toFloat()
 
-        cellSize = min(height, width) / minCellCount
+        graphGrid.update(width, height, offsetX, offsetY, minCellCount)
+        graphGrid.onDraw(canvas)
 
-        drawGrid(canvas)
-
-        if (abs(offsetX) < width / 2) {
+        if ((offsetX <= 0 && abs(offsetX) < (width / 2 - 40f)) || (offsetX > 0 && abs(offsetX) < (width / 2 - 20f))) {
             drawVerticalAxis(canvas)
+            canvas.drawText("Y", width / 2 + offsetX - 30f, 50f, axisNamePaint)
+        } else {
+            canvas.drawText("Y",  (if (offsetX < 0) 10f else width- 40f), 50f, axisNamePaint)
         }
 
         if (abs(offsetY) < height / 2) {
@@ -67,23 +74,11 @@ class GraphView(
     private var lastX = 0f
     private var lastY = 0f
 
-    private fun drawGrid(canvas: Canvas) {
-        var currentXCoord = offsetX % cellSize
-        var currentYCoord = offsetY % cellSize
-
-        while (currentXCoord < width.toFloat()) {
-            canvas.drawLine(currentXCoord, 0.0f, currentXCoord, height.toFloat(), gridPaint)
-            currentXCoord += cellSize
-        }
-
-        while (currentYCoord < height.toFloat()) {
-            canvas.drawLine(0.0f, currentYCoord, width.toFloat(), currentYCoord, gridPaint)
-            currentYCoord += cellSize
-        }
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (lockScrollScale) {
+            return true
+        }
         val x = event.x
         val y = event.y
 

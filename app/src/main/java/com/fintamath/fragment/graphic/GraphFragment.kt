@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.fintamath.databinding.FragmentGraphicBinding
 
-class GraphicFragment : Fragment() {
+class GraphFragment : Fragment() {
 
     private lateinit var viewBinding: FragmentGraphicBinding
 
