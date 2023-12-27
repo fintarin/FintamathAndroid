@@ -11,7 +11,6 @@ import com.fintamath.R
 import com.fintamath.calculator.Approximator
 import com.fintamath.databinding.FragmentGraphBinding
 import com.fintamath.storage.CalculatorStorage
-import com.fintamath.widget.graph.GraphView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
@@ -20,9 +19,15 @@ import java.math.BigDecimal
 class GraphFragment : Fragment() {
 
     private lateinit var viewBinding: FragmentGraphBinding
-    private lateinit var graphView: GraphView
+    private lateinit var approximator: Approximator
 
-    private var currentFun = CalculatorStorage.outputMathTextData.text
+    private var currentMathText = CalculatorStorage.outputMathTextData.text
+
+    private var drawGraphJob: Job? = null
+
+    private val initialMinX = BigDecimal(-10)
+    private val initialMaxX = BigDecimal(10)
+    private val graphPointNum = 200
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,20 +36,18 @@ class GraphFragment : Fragment() {
         viewBinding = FragmentGraphBinding.inflate(inflater, container, false)
 
         initBarButtons()
+        initApproximator()
 
-        graphView = viewBinding.root.findViewById(R.id.graphView)
-
-        graphView.setOnScrollOrScale {
-            if (currentFun != CalculatorStorage.outputMathTextData.text) {
-                currentFun = CalculatorStorage.outputMathTextData.text
-                graphView.clearGraph()
+        viewBinding.graphView.setOnScrollOrScale {
+            if (currentMathText != CalculatorStorage.outputMathTextData.text) {
+                currentMathText = CalculatorStorage.outputMathTextData.text
+                viewBinding.graphView.clearGraph()
             }
 
-            drawGraph(graphView.getMinX(), graphView.getMaxX())
-            //drawGraph(graphView.getMinX(), graphView.getMaxX())
+            drawGraph(viewBinding.graphView.getMinX(), viewBinding.graphView.getMaxX())
         }
 
-        drawGraph(BigDecimal(-10), BigDecimal(10))
+        drawGraph(initialMinX, initialMaxX)
 
         return viewBinding.root
     }
@@ -57,8 +60,9 @@ class GraphFragment : Fragment() {
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
     }
 
-    private var drawGraphJob: Job? = null
-    private val approximator = Approximator()
+    private fun initApproximator() {
+        approximator = Approximator()
+    }
 
     private fun drawGraph(minX: BigDecimal, maxX: BigDecimal) {
         drawGraph(CalculatorStorage.outputMathTextData.text, minX, maxX)
@@ -72,20 +76,20 @@ class GraphFragment : Fragment() {
                 return@launch
             }
 
-            val varStr = approximator.getLastVariable(firstSolutionText)
-            val mid = (min + max) / BigDecimal(2)
+            val varName = approximator.getLastVariable(firstSolutionText)
+            val mid = (min + max).divide(BigDecimal(2))
 
-            drawGraphPoint(firstSolutionText, varStr, mid)
+            drawGraphPoint(firstSolutionText, varName, mid)
 
-            val delta = (max - min) / BigDecimal(200)
+            val delta = (max - min).divide(BigDecimal(graphPointNum))
             var bottom = mid - delta
             var top = mid + delta
 
             while (bottom >= min) {
                 yield()
 
-                drawGraphPoint(firstSolutionText, varStr, bottom)
-                drawGraphPoint(firstSolutionText, varStr, top)
+                drawGraphPoint(firstSolutionText, varName, bottom)
+                drawGraphPoint(firstSolutionText, varName, top)
 
                 bottom -= delta
                 top += delta
@@ -95,18 +99,13 @@ class GraphFragment : Fragment() {
 
     private fun drawGraphPoint(
         firstSolutionText: String,
-        varStr: String,
-        top: BigDecimal
+        varName: String,
+        varValue: BigDecimal
     ) {
-        graphView.addPoint(top,
-            BigDecimal(approximator.approximate(
-                firstSolutionText,
-                varStr,
-                top.toString()
-            )))
-
+        val approxValueStr = approximator.approximate(firstSolutionText, varName, varValue.toString())
+        val approxValue = BigDecimal(approxValueStr.replace("*10^", "e"))
+        viewBinding.graphView.addPoint(varValue, approxValue)
     }
-
 
     private fun showCalculatorFragment() {
         executeBack()
