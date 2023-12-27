@@ -20,16 +20,16 @@
             app:destination="@id/cameraFragment" />
 
         <action
+            android:id="@+id/action_calculatorFragment_to_graphFragment"
+            app:destination="@id/graphFragment" />
+
+        <action
             android:id="@+id/action_calculatorFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
 
         <action
             android:id="@+id/action_calculatorFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-
-        <action
-            android:id="@+id/action_calculatorFragment_to_graphFragment"
-            app:destination="@id/graphFragment" />
 
     </fragment>
 
@@ -69,7 +69,17 @@
         android:id="@+id/graphFragment"
         android:name="com.fintamath.fragment.graph.GraphFragment"
         android:label="fragment_graph"
-        tools:layout="@layout/fragment_graph" />
+        tools:layout="@layout/fragment_graph" >
+
+        <action
+            android:id="@+id/action_graphFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+
+        <action
+            android:id="@+id/action_graphFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/aboutFragment"

@@ -29,24 +29,32 @@ class GraphFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         viewBinding = FragmentGraphBinding.inflate(inflater, container, false)
-        viewBinding.aboutBackButton.setOnClickListener { executeBack() }
+
+        initBarButtons()
 
         graphView = viewBinding.root.findViewById(R.id.graphView)
+
         graphView.setOnScrollOrScale {
             if (currentFun != CalculatorStorage.outputMathTextData.text) {
                 currentFun = CalculatorStorage.outputMathTextData.text
                 graphView.clearGraph()
             }
+
             drawGraph(graphView.getMinX(), graphView.getMaxX())
             //drawGraph(graphView.getMinX(), graphView.getMaxX())
         }
+
         drawGraph(BigDecimal(-10), BigDecimal(10))
 
         return viewBinding.root
     }
 
-    private fun executeBack() {
-        viewBinding.root.findNavController().navigateUp()
+    private fun initBarButtons() {
+        viewBinding.calculatorButton.setOnClickListener { showCalculatorFragment() }
+        viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
+        // viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented{
+        viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
+        viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
     }
 
     private var drawGraphJob: Job? = null
@@ -91,7 +99,7 @@ class GraphFragment : Fragment() {
         top: BigDecimal
     ) {
         graphView.addPoint(top,
-        BigDecimal(approximator.approximate(
+            BigDecimal(approximator.approximate(
                 firstSolutionText,
                 varStr,
                 top.toString()
@@ -100,4 +108,33 @@ class GraphFragment : Fragment() {
     }
 
 
+    private fun showCalculatorFragment() {
+        executeBack()
+    }
+
+    private fun showHistoryFragment() {
+        executeBack()
+        showFragment(R.id.action_calculatorFragment_to_historyFragment)
+    }
+
+    private fun showCameraFragment() {
+        executeBack()
+        showFragment(R.id.action_calculatorFragment_to_cameraFragment)
+    }
+
+    private fun showAboutFragment() {
+        showFragment(R.id.action_graphFragment_to_aboutFragment)
+    }
+
+    private fun showSettingsFragment() {
+        showFragment(R.id.action_graphFragment_to_settingsFragment)
+    }
+
+    private fun showFragment(navigationId: Int) {
+        viewBinding.root.findNavController().navigate(navigationId)
+    }
+
+    private fun executeBack() {
+        viewBinding.root.findNavController().navigateUp()
+    }
 }

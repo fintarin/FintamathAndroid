@@ -49,7 +49,8 @@ class HistoryFragment : Fragment() {
 
     private fun initBarButtons() {
         viewBinding.calculatorButton.setOnClickListener { showCalculatorFragment() }
-//        viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented
+        viewBinding.graphButton.setOnClickListener { showGraphFragment() }
+        // viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented{
         viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
     }
@@ -76,6 +77,11 @@ class HistoryFragment : Fragment() {
 
     private fun showCalculatorFragment() {
         executeBack()
+    }
+
+    private fun showGraphFragment() {
+        executeBack()
+        showFragment(R.id.action_calculatorFragment_to_graphFragment)
     }
 
     private fun showCameraFragment() {
