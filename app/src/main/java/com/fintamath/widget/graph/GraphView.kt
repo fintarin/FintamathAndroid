@@ -29,8 +29,8 @@ class GraphView(
     }
 
     private val pointPaint = Paint().apply {
-        color = Color.LTGRAY
-        strokeWidth = 1f
+        color = Color.CYAN
+        strokeWidth = 4f
     }
 
     private var offsetX = 0.0f
