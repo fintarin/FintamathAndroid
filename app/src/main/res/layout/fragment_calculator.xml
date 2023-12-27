@@ -67,7 +67,7 @@
             android:layout_height="wrap_content" />
 
         <ImageButton
-            android:id="@+id/graphicButton"
+            android:id="@+id/graphButton"
             android:layout_width="@dimen/diameter_bar_button"
             android:layout_height="@dimen/diameter_bar_button"
             android:layout_weight="1"

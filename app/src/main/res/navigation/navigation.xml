@@ -26,9 +26,10 @@
         <action
             android:id="@+id/action_calculatorFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+
         <action
-            android:id="@+id/action_calculatorFragment_to_graphicFragment"
-            app:destination="@id/graphicFragment" />
+            android:id="@+id/action_calculatorFragment_to_graphFragment"
+            app:destination="@id/graphFragment" />
 
     </fragment>
 
@@ -65,6 +66,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/graphFragment"
+        android:name="com.fintamath.fragment.graph.GraphFragment"
+        android:label="fragment_graph"
+        tools:layout="@layout/fragment_graph" />
+
+    <fragment
         android:id="@+id/aboutFragment"
         android:name="com.fintamath.fragment.about.AboutFragment"
         android:label="fragment_about"
@@ -75,9 +82,5 @@
         android:name="com.fintamath.fragment.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/graphicFragment"
-        android:name="com.fintamath.fragment.graph.GraphFragment"
-        android:label="GraphicFragment" />
 
 </navigation>

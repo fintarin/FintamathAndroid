@@ -182,11 +182,11 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun initBarButtons() {
-//        viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented
+        // viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented
         viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
         viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
-        viewBinding.graphicButton.setOnClickListener { showGraphicFragment() }
+        viewBinding.graphButton.setOnClickListener { showGraphFragment() }
     }
 
     private fun updateSettings() {
@@ -373,8 +373,8 @@ class CalculatorFragment : Fragment() {
         showFragment(R.id.action_calculatorFragment_to_settingsFragment)
     }
 
-    private fun showGraphicFragment() {
-        showFragment(R.id.action_calculatorFragment_to_graphicFragment)
+    private fun showGraphFragment() {
+        showFragment(R.id.action_calculatorFragment_to_graphFragment)
     }
 
     private fun showFragment(navigationId: Int) {
