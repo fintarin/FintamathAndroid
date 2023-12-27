@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_calculatorFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_calculatorFragment_to_graphicFragment"
+            app:destination="@id/graphicFragment" />
 
     </fragment>
 
@@ -72,5 +75,9 @@
         android:name="com.fintamath.fragment.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/graphicFragment"
+        android:name="com.fintamath.fragment.graphic.GraphicFragment"
+        android:label="GraphicFragment" />
 
 </navigation>

@@ -63,6 +63,19 @@
             android:contentDescription="@string/history"/>
 
         <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/graphicButton"
+            android:layout_width="@dimen/diameter_bar_button"
+            android:layout_height="@dimen/diameter_bar_button"
+            android:layout_weight="1"
+            android:background="@drawable/background_bar_button"
+            android:contentDescription="@string/graphic"
+            android:src="@drawable/ic_history" />
+
+        <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />

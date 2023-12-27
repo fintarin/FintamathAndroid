@@ -178,6 +178,7 @@ class CalculatorFragment : Fragment() {
         viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
         viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
+        viewBinding.graphicButton.setOnClickListener { showGraphicFragment() }
     }
 
     private fun updateSettings() {
@@ -312,6 +313,10 @@ class CalculatorFragment : Fragment() {
 
     private fun showSettingsFragment() {
         showFragment(R.id.action_calculatorFragment_to_settingsFragment)
+    }
+
+    private fun showGraphicFragment() {
+        showFragment(R.id.action_calculatorFragment_to_graphicFragment)
     }
 
     private fun showFragment(navigationId: Int) {
