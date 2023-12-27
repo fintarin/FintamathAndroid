@@ -53,7 +53,7 @@ class GraphGrid() {
     }
     private fun addVerticalLines() {
         var xCoord = (offsetX + width / 2) % cellSize
-        var value: Float = minimalX
+        var value: Float = minimalX * cellDelta
         while (xCoord < width) {
             gridLines.add(GridLine(width, height, xCoord, offsetY + height / 2, false, value))
             xCoord += cellSize
@@ -63,7 +63,7 @@ class GraphGrid() {
 
     private fun addHorizontalLines() {
         var yCoord = (offsetY + height / 2) % cellSize
-        var value: Float = minimalY
+        var value: Float = minimalY * cellDelta
         while (yCoord < height) {
             gridLines.add(GridLine(width, height, offsetX + width / 2, yCoord, true, value))
             yCoord += cellSize

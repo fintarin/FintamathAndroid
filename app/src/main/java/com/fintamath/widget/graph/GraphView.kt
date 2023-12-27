@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.view.MotionEvent
 import android.util.AttributeSet
+import android.view.ScaleGestureDetector
 import android.view.View
 import com.fintamath.widget.graph.grid.GraphGrid
 import kotlin.math.abs
@@ -24,17 +25,14 @@ class GraphView(
         strokeWidth = 3f
     }
 
-    private val axisNamePaint = Paint().apply {
-        color = Color.LTGRAY
-        textSize = 40f
-    }
-
     private var offsetX = 0.0f
     private var offsetY = 0.0f
 
     private val minCellCount: Int = 10
+    private var currCellCount = minCellCount
 
     private var graphGrid: GraphGrid = GraphGrid()
+    private var cellDelta = 1f
 
 
     override fun onDraw(canvas: Canvas) {
@@ -43,14 +41,11 @@ class GraphView(
         val width = width.toFloat()
         val height = height.toFloat()
 
-        graphGrid.update(width, height, offsetX, offsetY, minCellCount, 1f)
+        graphGrid.update(width, height, offsetX, offsetY, currCellCount, cellDelta)
         graphGrid.onDraw(canvas)
 
         if ((offsetX <= 0 && abs(offsetX) < (width / 2 - 40f)) || (offsetX > 0 && abs(offsetX) < (width / 2 - 20f))) {
             drawVerticalAxis(canvas)
-            canvas.drawText("Y", width / 2 + offsetX - 30f, 50f, axisNamePaint)
-        } else {
-            canvas.drawText("Y",  (if (offsetX < 0) 10f else width- 40f), 50f, axisNamePaint)
         }
 
         if (abs(offsetY) < height / 2) {
@@ -71,6 +66,41 @@ class GraphView(
         canvas.drawLine(offsetWidth, 0f, offsetWidth, height, axisPaint)
     }
 
+    private var mScaleFactor = 1f
+
+    private val scaleListener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            mScaleFactor /= detector.scaleFactor
+
+            println(mScaleFactor)
+
+            updateScale()
+
+
+            invalidate()
+            return true
+        }
+    }
+
+    private fun updateScale() {
+        if (mScaleFactor < 0.5f) {
+            mScaleFactor = 1f
+            cellDelta /=2
+        }
+
+        if (mScaleFactor > 1.5f) {
+            mScaleFactor = 1f
+            cellDelta *= 2
+
+        }
+
+        currCellCount = (minCellCount * mScaleFactor).toInt()
+    }
+
+    private val mScaleDetector = ScaleGestureDetector(context, scaleListener)
+
+
     private var lastX = 0f
     private var lastY = 0f
 
@@ -79,6 +109,10 @@ class GraphView(
         if (lockScrollScale) {
             return true
         }
+        if (mScaleDetector.onTouchEvent(event)) {
+            return true
+        }
+
         val x = event.x
         val y = event.y
 

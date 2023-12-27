@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import com.fintamath.databinding.FragmentGraphicBinding
+import com.fintamath.databinding.FragmentGraphBinding
 
 class GraphFragment : Fragment() {
 
-    private lateinit var viewBinding: FragmentGraphicBinding
+    private lateinit var viewBinding: FragmentGraphBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        viewBinding = FragmentGraphicBinding.inflate(inflater, container, false)
+        viewBinding = FragmentGraphBinding.inflate(inflater, container, false)
 
         viewBinding.aboutBackButton.setOnClickListener { executeBack() }
 
