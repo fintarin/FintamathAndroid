@@ -11,6 +11,8 @@ import com.fintamath.R
 import com.fintamath.calculator.Approximator
 import com.fintamath.databinding.FragmentGraphBinding
 import com.fintamath.storage.CalculatorStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
@@ -23,6 +25,7 @@ class GraphFragment : Fragment() {
 
     private var currentMathText = CalculatorStorage.outputMathTextData.text
 
+    private val drawGraphScope = CoroutineScope(Job() + Dispatchers.Main)
     private var drawGraphJob: Job? = null
 
     private val initialMinX = BigDecimal(-10)
@@ -71,7 +74,7 @@ class GraphFragment : Fragment() {
     private fun drawGraph(firstSolutionText: String, min: BigDecimal, max: BigDecimal) {
         drawGraphJob?.cancel()
 
-        drawGraphJob = viewLifecycleOwner.lifecycleScope.launch {
+        drawGraphJob = drawGraphScope.launch {
             if (approximator.getVariableCount(firstSolutionText) != 1) {
                 return@launch
             }

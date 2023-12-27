@@ -143,8 +143,7 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_setPrecision(
   }
 }
 
-extern "C"
-JNIEXPORT jstring
+extern "C" JNIEXPORT jstring
 Java_com_fintamath_calculator_Approximator_approximate(JNIEnv *env, jobject instance, jstring exprJStr, jstring varJStr, jstring valJStr) {
   std::string exprStr = env->GetStringUTFChars(exprJStr, nullptr);
   std::string varStr = env->GetStringUTFChars(varJStr, nullptr);
@@ -152,14 +151,12 @@ Java_com_fintamath_calculator_Approximator_approximate(JNIEnv *env, jobject inst
 
   updateCachedExpression(exprStr);
 
-  if (auto val = convert<Real>(*Expression(valStr).toMinimalObject())) {
-      Expression approxExpr = exprCached;
-      approxExpr.setVariable(Variable(varStr), *val);
-      approxExpr = approxExpr.approximate();
+  Expression approxExpr = exprCached;
+  approxExpr.setVariable(Variable(varStr), Real(valStr));
+  approxExpr = approxExpr.approximate();
 
-      if (auto res = convert<Real>(*approxExpr.toMinimalObject())) {
-          return env->NewStringUTF(res->toString(5).c_str());
-      }
+  if (auto res = convert<Real>(*approxExpr.toMinimalObject())) {
+    return env->NewStringUTF(res->toString(5).c_str());
   }
 
   return env->NewStringUTF("");
@@ -181,5 +178,3 @@ extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Approximator_getLastV
 
   return env->NewStringUTF(exprVariablesCached.back().toString().c_str());
 }
-
-
