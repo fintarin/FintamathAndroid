@@ -68,10 +68,21 @@ void stopCurrentCalculations() {
 }
 
 void updateCachedExpression(const std::string &exprStr) {
-  if (exprStrCached != exprStr) {
+  if (exprStrCached == exprStr) {
+    return;
+  }
+
+  try {
     exprStrCached = exprStr;
     exprCached = Expression(exprStrCached);
     exprVariablesCached = exprCached.getVariables();
+  }
+  catch (const std::exception &exc) {
+    __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "%s", exc.what());
+
+    exprStrCached = "";
+    exprCached = 0;
+    exprVariablesCached.clear();
   }
 }
 
@@ -143,20 +154,32 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_setPrecision(
   }
 }
 
-extern "C" JNIEXPORT jstring
-Java_com_fintamath_calculator_Approximator_approximate(JNIEnv *env, jobject instance, jstring exprJStr, jstring varJStr, jstring valJStr) {
+extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Approximator_approximate(JNIEnv *env, jobject instance, jstring exprJStr, jstring varJStr, jstring valJStr) {
   std::string exprStr = env->GetStringUTFChars(exprJStr, nullptr);
   std::string varStr = env->GetStringUTFChars(varJStr, nullptr);
   std::string valStr = env->GetStringUTFChars(valJStr, nullptr);
 
   updateCachedExpression(exprStr);
 
-  Expression approxExpr = exprCached;
-  approxExpr.setVariable(Variable(varStr), Real(valStr));
-  approxExpr = approxExpr.approximate();
+  try {
+    constexpr unsigned approxPrecision = 100;
+    constexpr unsigned outputPrecision = 5;
 
-  if (auto res = convert<Real>(*approxExpr.toMinimalObject())) {
-    return env->NewStringUTF(res->toString(5).c_str());
+    Real::ScopedSetPrecision setPrecision(approxPrecision);
+
+    Variable var(varStr);
+    Real val(valStr);
+
+    Expression approxExpr = exprCached;
+    approxExpr.setVariable(var, val);
+    approxExpr = approxExpr.approximate();
+
+    if (auto res = convert<Real>(*approxExpr.toMinimalObject())) {
+      return env->NewStringUTF(res->toString(outputPrecision).c_str());
+    }
+  }
+  catch (const std::exception &exc) {
+    __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "%s", exc.what());
   }
 
   return env->NewStringUTF("");
