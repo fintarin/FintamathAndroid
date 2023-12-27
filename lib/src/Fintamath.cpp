@@ -2,6 +2,7 @@
 #include "fintamath/expressions/Expression.hpp"
 #include "fintamath/expressions/ExpressionFunctions.hpp"
 #include "fintamath/expressions/ExpressionParser.hpp"
+#include "fintamath/numbers/Real.hpp"
 
 #include <android/log.h>
 #include <jni.h>
@@ -24,6 +25,10 @@ static unsigned currPrecision = 10;
 
 static pid_t calcPid = -1;
 static auto *solutionStrShared = (char *)mmap(nullptr, maxSolutionLength, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
+
+static std::string exprStrCached;
+static Expression exprCached;
+static std::vector<Variable> exprVariablesCached;
 
 std::string makeOutResult(const std::string &res) {
   return res + "\n";
@@ -59,6 +64,16 @@ void stopCurrentCalculations() {
   if (calcPid != -1) {
     kill(calcPid, SIGKILL);
     calcPid = -1;
+  }
+}
+
+void updateCachedExpression(const std::string &exprStr) {
+  if (exprStrCached != exprStr) {
+    exprStrCached = exprStr;
+    exprCached = Expression(exprStrCached);
+    exprVariablesCached = exprCached.getVariables();
+
+    __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "aaa");
   }
 }
 
@@ -128,4 +143,39 @@ extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_setPrecision(
   else {
     currPrecision = inPrecision;
   }
+}
+
+extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Calculator_approximate(JNIEnv *env, jobject instance, jstring exprJStr, jstring varJStr, jstring valJStr) {
+  std::string exprStr = env->GetStringUTFChars(exprJStr, nullptr);
+  std::string varStr = env->GetStringUTFChars(varJStr, nullptr);
+  std::string valStr = env->GetStringUTFChars(valJStr, nullptr);
+
+  updateCachedExpression(exprStr);
+
+  Expression approxExpr = exprCached;
+  approxExpr.setVariable(Variable(varStr), Real(valStr));
+  approxExpr = approxExpr.approximate();
+
+  if (auto res = cast<Real>(approxExpr.toMinimalObject())) {
+    return env->NewStringUTF(res->toString(5).c_str());
+  }
+
+  return env->NewStringUTF("");
+}
+
+extern "C" JNIEXPORT jint Java_com_fintamath_calculator_Calculator_getVariableCount(JNIEnv *env, jobject instance, jstring exprJStr) {
+  std::string exprStr = env->GetStringUTFChars(exprJStr, nullptr);
+  updateCachedExpression(exprStr);
+  return jint(exprVariablesCached.size());
+}
+
+extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Calculator_getLastVariable(JNIEnv *env, jobject instance, jstring exprJStr) {
+  std::string exprStr = env->GetStringUTFChars(exprJStr, nullptr);
+  updateCachedExpression(exprStr);
+
+  if (exprVariablesCached.empty()) {
+    return env->NewStringUTF("");
+  }
+
+  return env->NewStringUTF(exprVariablesCached.back().toString().c_str());
 }

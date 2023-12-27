@@ -2,6 +2,7 @@ package com.fintamath.fragment.calculator
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -17,11 +18,13 @@ import com.fintamath.storage.MathTextData
 import com.fintamath.storage.SettingsStorage
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
+import java.math.BigDecimal
 import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.concurrent.schedule
+import kotlin.concurrent.thread
 
 
 class CalculatorFragment : Fragment() {
@@ -246,6 +249,7 @@ class CalculatorFragment : Fragment() {
             viewBinding.outSolutionView.showFailedToSolve()
         } else {
             val cutSolutionTexts = cutSolutionTexts(texts)
+            val firstSolutionText = cutSolutionTexts.first()
 
             if (countTextsLength(cutSolutionTexts) > maxSolutionLength) {
                 viewBinding.outSolutionView.showCharacterLimitExceeded()
@@ -257,6 +261,32 @@ class CalculatorFragment : Fragment() {
                         onSaveToHistory()
                     }
                 }
+            }
+
+            thread {
+                drawGraph(firstSolutionText)
+            }
+        }
+    }
+
+    private fun drawGraph(firstSolutionText: String) {
+        if (calculatorProcessor.getVariableCount(firstSolutionText) == 1) {
+            val varStr = calculatorProcessor.getLastVariable(firstSolutionText)
+            val minVal = BigDecimal(-10)
+            val maxVal = BigDecimal(10)
+            val delta = BigDecimal("0.1")
+
+            var i = minVal
+            while (i <= maxVal) {
+                Log.d(
+                    "fintamath",
+                    calculatorProcessor.approximate(
+                        firstSolutionText,
+                        varStr,
+                        i.toString()
+                    )
+                )
+                i += delta
             }
         }
     }

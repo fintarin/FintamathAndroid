@@ -50,6 +50,13 @@ class CalculatorProcessor(
 
     fun setPrecision(precision: Int) = calculator.setPrecision(precision)
 
+    fun approximate(exprStr: String, varStr: String, valStr: String): String =
+        calculator.approximate(exprStr, varStr, valStr)
+
+    fun getVariableCount(exprStr: String): Int = calculator.getVariableCount(exprStr)
+
+    fun getLastVariable(exprStr: String): String = calculator.getLastVariable(exprStr)
+
     private fun onCalculated(result: List<String>) {
         callbacksThread {
             isCalculating.set(false)
