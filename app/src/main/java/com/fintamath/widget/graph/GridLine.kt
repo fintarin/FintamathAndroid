@@ -1,4 +1,4 @@
-package com.fintamath.widget.graph.grid
+package com.fintamath.widget.graph
 
 import android.graphics.Canvas
 import android.graphics.Color

@@ -1,4 +1,4 @@
-package com.fintamath.widget.graph.grid
+package com.fintamath.widget.graph
 
 import android.graphics.Canvas
 import kotlin.math.min
@@ -24,22 +24,24 @@ class GraphGrid() {
         }
     }
 
-    fun update(newWidth: Float,
-               newHeight: Float,
-               newOffsetX: Float,
-               newOffsetY: Float,
+    fun update(width: Float,
+               height: Float,
+               offsetX: Float,
+               offsetY: Float,
                cellCount: Int,
                cellDelta: Float) {
-        gridLines = ArrayList()
-        width = newWidth
-        height = newHeight
-        cellSize = min(height, width) / cellCount
 
-        offsetX = newOffsetX
-        offsetY = newOffsetY
+        this.gridLines = ArrayList()
+        this.width = width
+        this.height = height
+        this.cellSize = min(this.height, this.width) / cellCount
+
+        this.offsetX = offsetX
+        this.offsetY = offsetY
         this.cellDelta = cellDelta
         this.minimalY = countMinimalY().toFloat()
         this.minimalX = countMinimalX().toFloat()
+
         addVerticalLines()
         addHorizontalLines()
     }
@@ -49,12 +51,13 @@ class GraphGrid() {
     }
 
     private fun countMinimalX() : Int {
-        return (( - width / 2 -offsetX) / cellSize).toInt()
+        return ((-width / 2 - offsetX) / cellSize).toInt()
     }
 
     private fun countMinimalY() : Int {
-        return (( offsetY + height / 2 )/ cellSize).toInt()
+        return ((offsetY + height / 2 ) / cellSize).toInt()
     }
+
     private fun addVerticalLines() {
         var xCoord = (offsetX + width / 2) % cellSize
         var value: Float = minimalX * cellDelta

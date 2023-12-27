@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.fintamath.R
-import com.fintamath.approximator.Approximator
+import com.fintamath.calculator.Approximator
 import com.fintamath.databinding.FragmentGraphBinding
 import com.fintamath.storage.CalculatorStorage
 import com.fintamath.widget.graph.GraphView
@@ -22,7 +22,7 @@ class GraphFragment : Fragment() {
     private lateinit var viewBinding: FragmentGraphBinding
     private lateinit var graphView: GraphView
 
-    private var currentFun = CalculatorStorage.firstOutputMathTextData.text
+    private var currentFun = CalculatorStorage.outputMathTextData.text
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,8 +33,8 @@ class GraphFragment : Fragment() {
 
         graphView = viewBinding.root.findViewById(R.id.graphView)
         graphView.setOnScrollOrScale {
-            if (currentFun != CalculatorStorage.firstOutputMathTextData.text) {
-                currentFun = CalculatorStorage.firstOutputMathTextData.text
+            if (currentFun != CalculatorStorage.outputMathTextData.text) {
+                currentFun = CalculatorStorage.outputMathTextData.text
                 graphView.clearGraph()
             }
             drawGraph(graphView.getMinX(), graphView.getMaxX())
@@ -53,7 +53,7 @@ class GraphFragment : Fragment() {
     private val approximator = Approximator()
 
     private fun drawGraph(minX: BigDecimal, maxX: BigDecimal) {
-        drawGraph(CalculatorStorage.firstOutputMathTextData.text, minX, maxX)
+        drawGraph(CalculatorStorage.outputMathTextData.text, minX, maxX)
     }
 
     private fun drawGraph(firstSolutionText: String, min: BigDecimal, max: BigDecimal) {

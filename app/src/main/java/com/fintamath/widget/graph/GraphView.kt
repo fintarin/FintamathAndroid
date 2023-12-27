@@ -10,7 +10,6 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.ScaleGestureDetector
 import android.view.View
-import com.fintamath.widget.graph.grid.GraphGrid
 import java.math.BigDecimal
 import kotlin.math.abs
 
@@ -42,9 +41,57 @@ class GraphView(
 
     private var updateLambda: ()->Unit = {}
 
+    private var graphGrid: GraphGrid = GraphGrid()
+    private var cellDelta = 1f
+    private var scaleFactor = 1f
+
+    private val scrollDetector = GestureDetector(ctx, object : GestureDetector.SimpleOnGestureListener() {
+        override fun onScroll(
+            e1: MotionEvent?,
+            e2: MotionEvent,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+
+            if (e1 == null) {
+                return false
+            }
+
+            when (e2.action) {
+                MotionEvent.ACTION_MOVE -> {
+                    offsetX -= distanceX
+                    offsetY -= distanceY
+                }
+            }
+
+            onScrollOrScale()
+            invalidate()
+
+            return true
+        }
+    })
+
+    private val scaleDetector = ScaleGestureDetector(ctx, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            scaleFactor /= detector.scaleFactor
+
+            updateScale()
+            onScrollOrScale()
+            invalidate()
+
+            return true
+        }
+    })
+
+    init {
+        setOnTouchListener {_, event ->
+            scrollDetector.onTouchEvent(event)
+            scaleDetector.onTouchEvent(event)
+        }
+    }
+
     fun setOnScrollOrScale(onScrollOnScale: ()->Unit) {
         updateLambda = onScrollOnScale
-        println("cleared")
     }
 
     fun clearGraph() {
@@ -60,65 +107,21 @@ class GraphView(
         updateLambda()
     }
 
-    private var graphGrid: GraphGrid = GraphGrid()
-    private var cellDelta = 1f
-
-    private val scrollDetector = GestureDetector(ctx, object : GestureDetector.SimpleOnGestureListener() {
-        override fun onScroll(
-            e1: MotionEvent?,
-            e2: MotionEvent,
-            distanceX: Float,
-            distanceY: Float
-        ): Boolean {
-            if (e1 == null) {
-                return false
-            }
-            when (e2.action) {
-                MotionEvent.ACTION_MOVE -> {
-                    offsetX -= distanceX
-                    offsetY -= distanceY
-                }
-            }
-            onScrollOrScale()
-            invalidate()
-            return true
-        }
-    })
-    private val scaleDetector = ScaleGestureDetector(ctx, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        override fun onScale(detector: ScaleGestureDetector): Boolean {
-            mScaleFactor /= detector.scaleFactor
-
-            updateScale()
-            onScrollOrScale()
-            invalidate()
-            return true
-        }
-    })
-
-    private var mScaleFactor = 1f
-
     private fun updateScale() {
-        if (mScaleFactor < 0.5f) {
-            mScaleFactor = 1f
+        if (scaleFactor < 0.5f) {
+            scaleFactor = 1f
             cellDelta /=2
         }
 
-        if (mScaleFactor > 1.5f) {
-            mScaleFactor = 1f
+        if (scaleFactor > 1.5f) {
+            scaleFactor = 1f
             cellDelta *= 2
 
         }
 
-        currCellCount = (minCellCount * mScaleFactor).toInt()
+        currCellCount = (minCellCount * scaleFactor).toInt()
     }
 
-    init {
-        setOnTouchListener {_, event ->
-            scrollDetector.onTouchEvent(event)
-            scaleDetector.onTouchEvent(event)
-        }
-
-    }
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -154,6 +157,7 @@ class GraphView(
     private fun drawPoints(canvas: Canvas) {
         var oldX: BigDecimal? = null
         var oldY: BigDecimal? = null
+
         for (x in points.keys.toList().sorted()) {
             val y = points[x]
 
@@ -182,7 +186,7 @@ class GraphView(
     private fun drawPointOnCanvas(x: BigDecimal, y: BigDecimal, canvas: Canvas) {
         val cellSize = graphGrid.getCellSize()
         canvas.drawPoint(offsetX + width/2 + x.toFloat() * cellSize / cellDelta,
-                        offsetY + height/2 - y.toFloat() * cellSize / cellDelta, pointPaint)
+            offsetY + height/2 - y.toFloat() * cellSize / cellDelta, pointPaint)
     }
 
     private fun drawLineOnCanvas(x1: BigDecimal, y1:BigDecimal, x2:BigDecimal, y2:BigDecimal, canvas: Canvas) {

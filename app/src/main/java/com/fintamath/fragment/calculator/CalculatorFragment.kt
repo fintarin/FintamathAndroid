@@ -255,7 +255,7 @@ class CalculatorFragment : Fragment() {
         } else {
             val cutSolutionTexts = cutSolutionTexts(texts)
             val firstSolutionText = cutSolutionTexts.first()
-            CalculatorStorage.firstOutputMathTextData.text = firstSolutionText
+            CalculatorStorage.outputMathTextData.text = firstSolutionText
 
             if (countTextsLength(cutSolutionTexts) > maxSolutionLength) {
                 viewBinding.outSolutionView.showCharacterLimitExceeded()
