@@ -72,8 +72,6 @@ void updateCachedExpression(const std::string &exprStr) {
     exprStrCached = exprStr;
     exprCached = Expression(exprStrCached);
     exprVariablesCached = exprCached.getVariables();
-
-    __android_log_print(ANDROID_LOG_DEBUG, loggerTag, "aaa");
   }
 }
 

@@ -23,8 +23,8 @@ import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.schedule
-import kotlin.concurrent.thread
 
 
 class CalculatorFragment : Fragment() {
@@ -43,6 +43,8 @@ class CalculatorFragment : Fragment() {
     private var saveToHistoryTask: TimerTask? = null
 
     private var wereSettingsUpdated = AtomicBoolean(false)
+
+    private var graphThreadId = AtomicLong(0)
 
     private val maxSolutionLength = 2000
 
@@ -263,32 +265,57 @@ class CalculatorFragment : Fragment() {
                 }
             }
 
-            thread {
-                drawGraph(firstSolutionText)
-            }
+            drawGraph(firstSolutionText)
         }
     }
 
     private fun drawGraph(firstSolutionText: String) {
-        if (calculatorProcessor.getVariableCount(firstSolutionText) == 1) {
-            val varStr = calculatorProcessor.getLastVariable(firstSolutionText)
-            val minVal = BigDecimal(-10)
-            val maxVal = BigDecimal(10)
-            val delta = BigDecimal("0.1")
+        val graphThread = Thread {
+            if (calculatorProcessor.getVariableCount(firstSolutionText) != 1) {
+                return@Thread
+            }
 
-            var i = minVal
-            while (i <= maxVal) {
-                Log.d(
-                    "fintamath",
-                    calculatorProcessor.approximate(
-                        firstSolutionText,
-                        varStr,
-                        i.toString()
-                    )
-                )
-                i += delta
+            val varStr = calculatorProcessor.getLastVariable(firstSolutionText)
+            val min = BigDecimal(-10)
+            val max = BigDecimal(10)
+            val mid = (min + max) / BigDecimal(2)
+
+            drawGraphPoint(firstSolutionText, varStr, mid)
+
+            val delta = BigDecimal("0.1")
+            var bottom = mid - delta
+            var top = mid + delta
+
+            while (bottom >= min) {
+                if (Thread.currentThread().id != graphThreadId.get()) {
+                    break
+                }
+
+                drawGraphPoint(firstSolutionText, varStr, bottom)
+                drawGraphPoint(firstSolutionText, varStr, top)
+
+                bottom -= delta
+                top += delta
             }
         }
+
+        graphThreadId.set(graphThread.id)
+        graphThread.start()
+    }
+
+    private fun drawGraphPoint(
+        firstSolutionText: String,
+        varStr: String,
+        top: BigDecimal
+    ) {
+        Log.d(
+            "fintamath",
+            calculatorProcessor.approximate(
+                firstSolutionText,
+                varStr,
+                top.toString()
+            )
+        )
     }
 
     private fun startLoading() {
