@@ -268,55 +268,7 @@ class CalculatorFragment : Fragment() {
                     }
                 }
             }
-
-            drawGraph(firstSolutionText)
         }
-    }
-
-    private fun drawGraph(firstSolutionText: String) {
-        drawGraphJob?.cancel()
-
-        drawGraphJob = viewLifecycleOwner.lifecycleScope.launch {
-            if (calculatorProcessor.getVariableCount(firstSolutionText) != 1) {
-                return@launch
-            }
-
-            val varStr = calculatorProcessor.getLastVariable(firstSolutionText)
-            val min = BigDecimal(-10)
-            val max = BigDecimal(10)
-            val mid = (min + max) / BigDecimal(2)
-
-            drawGraphPoint(firstSolutionText, varStr, mid)
-
-            val delta = BigDecimal("0.1")
-            var bottom = mid - delta
-            var top = mid + delta
-
-            while (bottom >= min) {
-                yield()
-
-                drawGraphPoint(firstSolutionText, varStr, bottom)
-                drawGraphPoint(firstSolutionText, varStr, top)
-
-                bottom -= delta
-                top += delta
-            }
-        }
-    }
-
-    private fun drawGraphPoint(
-        firstSolutionText: String,
-        varStr: String,
-        top: BigDecimal
-    ) {
-        Log.d(
-            "fintamath",
-            calculatorProcessor.approximate(
-                firstSolutionText,
-                varStr,
-                top.toString()
-            )
-        )
     }
 
     private fun startLoading() {
