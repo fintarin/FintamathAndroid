@@ -19,7 +19,8 @@ const char *invalidInputExc = "Invalid input";
 const char *failedToSolveExc = "Failed to solve";
 
 constexpr int32_t maxSolutionLength = 1000000;
-static unsigned precision = 10;
+constexpr unsigned extraPrecision = 100;
+static unsigned currPrecision = 10;
 
 static pid_t calcPid = -1;
 static auto *solutionStrShared = (char *)mmap(nullptr, maxSolutionLength, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
@@ -33,7 +34,9 @@ std::string calculate(const std::string &inStr) {
     ArgumentPtr inExpr = parseFintamath(inStr);
     Expression simplExpr(inExpr);
     Expression solExpr = solve(simplExpr);
-    Expression solApproxExpr = solExpr.approximate(precision);
+    Expression solApproxExpr = solExpr
+                                   .approximate(currPrecision + extraPrecision)
+                                   .approximate(currPrecision);
 
     std::string solutions = makeOutResult(inExpr->toString()) +
                             makeOutResult(solExpr.toString()) +
@@ -115,14 +118,14 @@ extern "C" JNIEXPORT void JNICALL Java_com_fintamath_calculator_Calculator_stopC
 }
 
 extern "C" JNIEXPORT jint Java_com_fintamath_calculator_Calculator_getPrecision(JNIEnv *env, jobject instance) {
-  return precision;
+  return currPrecision;
 }
 
 extern "C" JNIEXPORT void Java_com_fintamath_calculator_Calculator_setPrecision(JNIEnv *env, jobject instance, jint inPrecision) {
   if (inPrecision <= 0) {
-    precision = 1;
+    currPrecision = 1;
   }
   else {
-    precision = inPrecision;
+    currPrecision = inPrecision;
   }
 }
