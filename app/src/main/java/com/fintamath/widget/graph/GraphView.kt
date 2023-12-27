@@ -43,7 +43,7 @@ class GraphView(
         val width = width.toFloat()
         val height = height.toFloat()
 
-        graphGrid.update(width, height, offsetX, offsetY, minCellCount)
+        graphGrid.update(width, height, offsetX, offsetY, minCellCount, 1f)
         graphGrid.onDraw(canvas)
 
         if ((offsetX <= 0 && abs(offsetX) < (width / 2 - 40f)) || (offsetX > 0 && abs(offsetX) < (width / 2 - 20f))) {
