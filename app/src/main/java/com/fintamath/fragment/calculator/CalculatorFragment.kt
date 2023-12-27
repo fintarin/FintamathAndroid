@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
@@ -18,12 +19,14 @@ import com.fintamath.storage.MathTextData
 import com.fintamath.storage.SettingsStorage
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import java.math.BigDecimal
 import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
-import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.schedule
 
 
@@ -44,7 +47,7 @@ class CalculatorFragment : Fragment() {
 
     private var wereSettingsUpdated = AtomicBoolean(false)
 
-    private var graphThreadId = AtomicLong(0)
+    private var drawGraphJob: Job? = null
 
     private val maxSolutionLength = 2000
 
@@ -270,9 +273,11 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun drawGraph(firstSolutionText: String) {
-        val graphThread = Thread {
+        drawGraphJob?.cancel()
+
+        drawGraphJob = viewLifecycleOwner.lifecycleScope.launch {
             if (calculatorProcessor.getVariableCount(firstSolutionText) != 1) {
-                return@Thread
+                return@launch
             }
 
             val varStr = calculatorProcessor.getLastVariable(firstSolutionText)
@@ -287,9 +292,7 @@ class CalculatorFragment : Fragment() {
             var top = mid + delta
 
             while (bottom >= min) {
-                if (Thread.currentThread().id != graphThreadId.get()) {
-                    break
-                }
+                yield()
 
                 drawGraphPoint(firstSolutionText, varStr, bottom)
                 drawGraphPoint(firstSolutionText, varStr, top)
@@ -298,9 +301,6 @@ class CalculatorFragment : Fragment() {
                 top += delta
             }
         }
-
-        graphThreadId.set(graphThread.id)
-        graphThread.start()
     }
 
     private fun drawGraphPoint(
