@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.fintamath.R
 import com.fintamath.calculator.Approximator
@@ -105,6 +104,10 @@ class GraphFragment : Fragment() {
         varName: String,
         varValue: BigDecimal
     ) {
+        if (viewBinding.graphView.hasPoint(varValue)) {
+            return
+        }
+
         val approxValueStr = approximator.approximate(
             firstSolutionText,
             varName,

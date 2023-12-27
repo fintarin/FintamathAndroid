@@ -103,6 +103,10 @@ class GraphView(
         invalidate()
     }
 
+    fun hasPoint(x: BigDecimal): Boolean {
+        return points.contains(x)
+    }
+
     private fun onScrollOrScale() {
         updateLambda()
     }
