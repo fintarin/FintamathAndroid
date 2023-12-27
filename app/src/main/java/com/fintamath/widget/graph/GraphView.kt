@@ -1,78 +1,109 @@
 package com.fintamath.widget.graph
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.view.MotionEvent
 import android.util.AttributeSet
 import android.view.View
+import kotlin.math.abs
+import kotlin.math.min
 
 class GraphView(
-    context: Context,
-    attributeSet: AttributeSet
-) : View(context, attributeSet) {
+    ctx: Context,
+    attrs: AttributeSet
+) : View(ctx, attrs) {
 
-    private val dataSet = mutableListOf<DataPoint>()
-    private var xMin = 0
-    private var xMax = 0
-    private var yMin = 0
-    private var yMax = 0
-
-    private val dataPointPaint = Paint().apply {
-        color = Color.BLUE
-        strokeWidth = 7f
-        style = Paint.Style.STROKE
+    private val axisPaint = Paint().apply {
+        color = Color.LTGRAY
+        strokeWidth = 3f
     }
 
-    private val dataPointFillPaint = Paint().apply {
-        color = Color.WHITE
+    private val gridPaint = Paint().apply {
+        color = Color.DKGRAY
+        strokeWidth = 2f
     }
 
-    private val dataPointLinePaint = Paint().apply {
-        color = Color.BLUE
-        strokeWidth = 7f
-        isAntiAlias = true
-    }
+    private var offsetX = 0.0f
+    private var offsetY = 0.0f
 
-    private val axisLinePaint = Paint().apply {
-        color = Color.RED
-        strokeWidth = 4f
-    }
-
-    fun setData(newDataSet: List<DataPoint>) {
-        xMin = newDataSet.minBy { it.xVal }.xVal ?: 0
-        xMax = newDataSet.maxBy { it.xVal }.xVal ?: 0
-        yMin = newDataSet.minBy { it.yVal }.yVal ?: 0
-        yMax = newDataSet.maxBy { it.yVal }.yVal ?: 0
-        dataSet.clear()
-        dataSet.addAll(newDataSet)
-        invalidate()
-    }
+    private var cellSize: Float = 0.0f
+    private val minCellCount: Int = 10
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        dataSet.forEachIndexed { index, currentDataPoint ->
-            val realX = currentDataPoint.xVal.toRealX()
-            val realY = currentDataPoint.yVal.toRealY()
+        val width = width.toFloat()
+        val height = height.toFloat()
 
-            if (index < dataSet.size - 1) {
-                val nextDataPoint = dataSet[index + 1]
-                val startX = currentDataPoint.xVal.toRealX()
-                val startY = currentDataPoint.yVal.toRealY()
-                val endX = nextDataPoint.xVal.toRealX()
-                val endY = nextDataPoint.yVal.toRealY()
-                canvas.drawLine(startX, startY, endX, endY, dataPointLinePaint)
-            }
+        cellSize = min(height, width) / minCellCount
 
-            canvas.drawCircle(realX, realY, 7f, dataPointFillPaint)
-            canvas.drawCircle(realX, realY, 7f, dataPointPaint)
+        drawGrid(canvas)
+
+        if (abs(offsetX) < width / 2) {
+            drawVerticalAxis(canvas)
         }
 
-        canvas.drawLine(width.toFloat() / 2, 0f, width.toFloat() / 2, height.toFloat(), axisLinePaint)
-        canvas.drawLine(0f, height.toFloat() / 2, width.toFloat(), height.toFloat() / 2, axisLinePaint)
-    }
-    private fun Int.toRealX() = toFloat() / xMax * width
-    private fun Int.toRealY() = toFloat() / yMax * height
+        if (abs(offsetY) < height / 2) {
+            drawHorizontalAxis(canvas)
+        }
 
+    }
+
+    private fun drawHorizontalAxis(canvas: Canvas) {
+        val offsetHeight = height.toFloat() / 2 + offsetY
+        val width = width.toFloat()
+        canvas.drawLine(0f, offsetHeight, width, offsetHeight, axisPaint)
+    }
+
+    private fun drawVerticalAxis(canvas: Canvas) {
+        val height = height.toFloat()
+        val offsetWidth = width.toFloat() / 2 + offsetX
+        canvas.drawLine(offsetWidth, 0f, offsetWidth, height, axisPaint)
+    }
+
+    private var lastX = 0f
+    private var lastY = 0f
+
+    private fun drawGrid(canvas: Canvas) {
+        var currentXCoord = offsetX % cellSize
+        var currentYCoord = offsetY % cellSize
+
+        while (currentXCoord < width.toFloat()) {
+            canvas.drawLine(currentXCoord, 0.0f, currentXCoord, height.toFloat(), gridPaint)
+            currentXCoord += cellSize
+        }
+
+        while (currentYCoord < height.toFloat()) {
+            canvas.drawLine(0.0f, currentYCoord, width.toFloat(), currentYCoord, gridPaint)
+            currentYCoord += cellSize
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        val x = event.x
+        val y = event.y
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                lastX = x
+                lastY = y
+            }
+            MotionEvent.ACTION_MOVE -> {
+                val deltaX = x - lastX
+                val deltaY = y - lastY
+
+                offsetX += deltaX
+                offsetY += deltaY
+
+                lastX = x
+                lastY = y
+            }
+        }
+        invalidate()
+        return true
+    }
 }
