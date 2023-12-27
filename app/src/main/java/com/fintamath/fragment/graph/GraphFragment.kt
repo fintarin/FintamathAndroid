@@ -1,4 +1,4 @@
-package com.fintamath.fragment.graphic
+package com.fintamath.fragment.graph
 
 import android.os.Bundle
 import android.view.LayoutInflater

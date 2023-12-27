@@ -77,7 +77,7 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/graphicFragment"
-        android:name="com.fintamath.fragment.graphic.GraphFragment"
+        android:name="com.fintamath.fragment.graph.GraphFragment"
         android:label="GraphicFragment" />
 
 </navigation>
