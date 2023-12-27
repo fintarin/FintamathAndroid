@@ -102,8 +102,9 @@ class GraphFragment : Fragment() {
         varName: String,
         varValue: BigDecimal
     ) {
-        val approxValueStr = approximator.approximate(firstSolutionText, varName, varValue.toString())
-        val approxValue = BigDecimal(approxValueStr.replace("*10^", "e"))
+        val varValueStr = varValue.toString().replace("E", "*10^")
+        val approxValueStr = approximator.approximate(firstSolutionText, varName, varValueStr)
+        val approxValue = BigDecimal(approxValueStr.replace("*10^", "E"))
         viewBinding.graphView.addPoint(varValue, approxValue)
     }
 

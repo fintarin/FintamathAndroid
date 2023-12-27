@@ -151,7 +151,7 @@ extern "C" JNIEXPORT jstring Java_com_fintamath_calculator_Calculator_approximat
   updateCachedExpression(exprStr);
 
   Expression approxExpr = exprCached;
-  approxExpr.setVariable(Variable(varStr), Real(valStr));
+  approxExpr.setVariable(Variable(varStr), Expression(valStr));
   approxExpr = approxExpr.approximate();
 
   if (auto res = cast<Real>(approxExpr.toMinimalObject())) {
