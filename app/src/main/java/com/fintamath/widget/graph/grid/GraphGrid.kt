@@ -44,6 +44,10 @@ class GraphGrid() {
         addHorizontalLines()
     }
 
+    fun getCellSize(): Float {
+        return cellSize
+    }
+
     private fun countMinimalX() : Int {
         return (( - width / 2 -offsetX) / cellSize).toInt()
     }
