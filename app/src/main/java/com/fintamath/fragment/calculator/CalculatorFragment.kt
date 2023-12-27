@@ -14,7 +14,7 @@ import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.databinding.FragmentCalculatorBinding
 import com.fintamath.storage.HistoryStorage
-import com.fintamath.storage.CalculatorInputStorage
+import com.fintamath.storage.CalculatorStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.storage.SettingsStorage
 import com.fintamath.widget.keyboard.Keyboard
@@ -86,8 +86,8 @@ class CalculatorFragment : Fragment() {
         updateSettings()
 
         if (inTextViewState.get() == InTextViewState.Ready.value) {
-            if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
-                viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
+            if (viewBinding.inTextView.text != CalculatorStorage.inputMathTextData.text) {
+                viewBinding.inTextView.text = CalculatorStorage.inputMathTextData.text
             }
 
             if (viewBinding.outSolutionView.isShowingLoading() || wereSettingsUpdated.get()) {
@@ -111,7 +111,7 @@ class CalculatorFragment : Fragment() {
     private fun initMathTexts() {
         viewBinding.inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
-        viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
+        viewBinding.inTextView.text = CalculatorStorage.inputMathTextData.text
         viewBinding.inTextView.setOnTextChangedListener { _, text -> onInTextChange(text) }
         viewBinding.inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
     }
@@ -215,7 +215,7 @@ class CalculatorFragment : Fragment() {
             }
         }
 
-        CalculatorInputStorage.mathTextData = MathTextData(text)
+        CalculatorStorage.inputMathTextData = MathTextData(text)
         cancelSaveToHistoryTask()
 
         viewBinding.inTextViewHint.visibility = if (viewBinding.inTextView.text.isNotEmpty())
@@ -255,6 +255,7 @@ class CalculatorFragment : Fragment() {
         } else {
             val cutSolutionTexts = cutSolutionTexts(texts)
             val firstSolutionText = cutSolutionTexts.first()
+            CalculatorStorage.firstOutputMathTextData.text = firstSolutionText
 
             if (countTextsLength(cutSolutionTexts) > maxSolutionLength) {
                 viewBinding.outSolutionView.showCharacterLimitExceeded()

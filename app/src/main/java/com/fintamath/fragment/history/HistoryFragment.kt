@@ -13,10 +13,7 @@ import com.fintamath.R
 import com.fintamath.databinding.FragmentHistoryBinding
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
-import com.fintamath.storage.CalculatorInputStorage
-import java.util.Timer
-import java.util.TimerTask
-import kotlin.concurrent.schedule
+import com.fintamath.storage.CalculatorStorage
 
 class HistoryFragment : Fragment() {
 
@@ -73,7 +70,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun onCalculate(text: String) {
-        CalculatorInputStorage.mathTextData = MathTextData(text)
+        CalculatorStorage.inputMathTextData = MathTextData(text)
         showCalculatorFragment()
     }
 
