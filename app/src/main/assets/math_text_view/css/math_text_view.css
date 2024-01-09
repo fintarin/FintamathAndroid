@@ -265,15 +265,15 @@ svg::selection {
 }
 
 .root-prefix {
-  width: 1ex;
-  height: 1ex;
+  width: 0.95ex;
+  height: 0.95ex;
   vertical-align: bottom;
 }
 
 .root-index {
   font-size: 60%;
-  margin-bottom: 2ex;
-  margin-right: -1.4ex;
+  margin-bottom: 1.6ex;
+  margin-right: -1.3ex;
   vertical-align: bottom;
 }
 
