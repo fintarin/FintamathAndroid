@@ -43,6 +43,18 @@
         <!--            android:layout_height="wrap_content" />-->
 
         <ImageButton
+            android:id="@+id/graphButton"
+            android:layout_width="@dimen/diameter_bar_button"
+            android:layout_height="@dimen/diameter_bar_button"
+            android:background="@drawable/background_bar_button"
+            android:src="@drawable/ic_graph"
+            android:contentDescription="@string/graph"/>
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
             android:id="@+id/calculatorButton"
             android:layout_width="@dimen/diameter_bar_button"
             android:layout_height="@dimen/diameter_bar_button"
@@ -150,7 +162,6 @@
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
-
     </FrameLayout>
 
     <FrameLayout

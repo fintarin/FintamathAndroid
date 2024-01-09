@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background_main"
-    tools:context=".fragment.history.HistoryFragment">
+    tools:context=".fragment.about.AboutFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             android:id="@+id/graphButton"
             android:layout_width="@dimen/diameter_bar_button"
             android:layout_height="@dimen/diameter_bar_button"
-            android:background="@drawable/background_bar_button"
+            android:background="@drawable/background_bar_enabled_button"
             android:src="@drawable/ic_graph"
             android:contentDescription="@string/graph"/>
 
@@ -70,7 +70,7 @@
             android:id="@+id/historyButton"
             android:layout_width="@dimen/diameter_bar_button"
             android:layout_height="@dimen/diameter_bar_button"
-            android:background="@drawable/background_bar_enabled_button"
+            android:background="@drawable/background_bar_button"
             android:src="@drawable/ic_history"
             android:contentDescription="@string/history"/>
 
@@ -89,42 +89,16 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.fintamath.widget.loading.LoadingView
-            android:id="@+id/loadingView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            app:dots_color="@color/text_main"
-            app:dots_duration="500"
-            app:dots_count="3"
-            app:dots_radius="@dimen/radius_loading_dots" />
-
-        <TextView
-            android:id="@+id/emptyHistoryTextView"
+        <com.fintamath.widget.graph.GraphView
+            android:id="@+id/graphView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:text="@string/empty_history_message"
-            android:textSize="@dimen/text_size_history_empty"
-            android:textColor="@color/text_hint" />
+            android:layout_height="match_parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/historyListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:visibility="invisible"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/layout_history_item"/>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

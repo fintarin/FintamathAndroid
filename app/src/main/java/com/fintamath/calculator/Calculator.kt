@@ -16,6 +16,12 @@ internal class Calculator(
 
     external fun setPrecision(int: Int)
 
+    external fun approximate(exprStr: String, varStr: String, valStr: String): String
+
+    external fun getVariableCount(exprStr: String): Int
+
+    external fun getLastVariable(exprStr: String): String
+
     private fun onCalculated(str: String) {
         calculatedCallback.invoke(listOf(*str.split("\n").toTypedArray()))
     }
