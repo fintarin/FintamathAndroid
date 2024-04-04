@@ -20,6 +20,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.PopupWindow
 import androidx.annotation.Keep
+import androidx.core.view.isVisible
 import com.fintamath.R
 import kotlin.math.abs
 
@@ -279,14 +280,18 @@ class MathTextView @JvmOverloads constructor(
     private fun onLongClick(): Boolean {
         isClicking = false
 
+        if (!isEditable) {
+            onCopy()
+            return true
+        }
+
         if (quickActionPopup == null) {
             return true
         }
 
-        cutActionButton!!.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
+        cutActionButton!!.visibility = if (text.isNotEmpty()) VISIBLE else GONE
+        deleteActionButton!!.visibility = if (text.isNotEmpty()) VISIBLE else GONE
         copyActionButton!!.visibility = if (text.isNotEmpty()) VISIBLE else GONE
-        pasteActionButton!!.visibility = if (isEditable) VISIBLE else GONE
-        deleteActionButton!!.visibility = if (isEditable && text.isNotEmpty()) VISIBLE else GONE
 
         val location = IntArray(2)
         getLocationOnScreen(location)
