@@ -325,7 +325,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                             showKey(msg.arg1);
                             break;
                         case MSG_REMOVE_PREVIEW:
-                            mPreviewTextContainer.setVisibility(INVISIBLE);
+                            mPreviewPopup.dismiss();
                             dismissPopupKeyboard();
                             break;
                         case MSG_REPEAT:
@@ -852,7 +852,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                 }
             }
             if (keyIndex != NOT_A_KEY) {
-                if (previewPopup.isShowing() && mPreviewTextContainer.getVisibility() == VISIBLE) {
+                if (previewPopup.isShowing()) {
                     // Show right away, if it's already visible and finger is moving around
                     showKey(keyIndex);
                 } else {
@@ -872,7 +872,7 @@ public class KeyboardView extends View implements View.OnClickListener {
 
         Key key = keys[keyIndex];
         if (!key.isPreviewEnabled) {
-            mPreviewTextContainer.setVisibility(INVISIBLE);
+            mPreviewPopup.dismiss();
             return;
         }
 
@@ -930,8 +930,6 @@ public class KeyboardView extends View implements View.OnClickListener {
             previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY,
                     mPopupPreviewX, mPopupPreviewY);
         }
-
-        mPreviewTextContainer.setVisibility(VISIBLE);
 
         showPopupKeyboard(keyIndex);
     }
