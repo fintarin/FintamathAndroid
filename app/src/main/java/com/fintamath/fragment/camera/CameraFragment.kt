@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.fintamath.R
 import com.fintamath.databinding.FragmentCameraBinding
+import com.fintamath.utils.addInsets
 
 class CameraFragment : Fragment() {
 
@@ -20,6 +21,8 @@ class CameraFragment : Fragment() {
         viewBinding = FragmentCameraBinding.inflate(inflater, container, false)
 
         initBarButtons()
+
+        addInsets(viewBinding.root)
 
         return viewBinding.root
     }

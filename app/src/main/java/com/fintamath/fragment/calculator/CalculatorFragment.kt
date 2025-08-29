@@ -15,6 +15,7 @@ import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.CalculatorInputStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.storage.SettingsStorage
+import com.fintamath.utils.addInsets
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
 import java.util.Timer
@@ -66,6 +67,8 @@ class CalculatorFragment : Fragment() {
             viewBinding.inTextView.textColor = (viewBinding.inOutLayout.background as ColorDrawable).color
             viewBinding.inTextView.text = inTextViewPreloadString
         }
+
+        addInsets(viewBinding.root)
 
         return viewBinding.root
     }

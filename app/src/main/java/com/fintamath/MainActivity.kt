@@ -2,7 +2,12 @@ package com.fintamath
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.Insets
+import androidx.core.view.OnApplyWindowInsetsListener
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.SettingsStorage
 import java.io.File

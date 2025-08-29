@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.fintamath.databinding.FragmentAboutBinding
+import com.fintamath.utils.addInsets
 
 class AboutFragment : Fragment() {
 
@@ -19,6 +20,8 @@ class AboutFragment : Fragment() {
         viewBinding = FragmentAboutBinding.inflate(inflater, container, false)
 
         viewBinding.aboutBackButton.setOnClickListener { executeBack() }
+
+        addInsets(viewBinding.root)
 
         return viewBinding.root
     }

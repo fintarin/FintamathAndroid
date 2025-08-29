@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.fintamath.databinding.FragmentSettingsBinding
 import com.fintamath.storage.SettingsStorage
+import com.fintamath.utils.addInsets
 import com.google.android.material.slider.Slider
 
 class SettingsFragment : Fragment() {
@@ -30,6 +31,8 @@ class SettingsFragment : Fragment() {
         }
 
         viewBinding.precisionSlider.addOnChangeListener(Slider.OnChangeListener { _, value, _ -> onPrecisionChanged(value.toInt()) })
+
+        addInsets(viewBinding.root)
 
         return viewBinding.root
     }

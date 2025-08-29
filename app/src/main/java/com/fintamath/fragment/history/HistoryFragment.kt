@@ -14,6 +14,7 @@ import com.fintamath.databinding.FragmentHistoryBinding
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.storage.CalculatorInputStorage
+import com.fintamath.utils.addInsets
 import java.util.Timer
 import java.util.TimerTask
 import kotlin.concurrent.schedule
@@ -42,6 +43,8 @@ class HistoryFragment : Fragment() {
                 adapter = historyAdapter
             }
         }
+
+        addInsets(viewBinding.root)
 
         return viewBinding.root
     }

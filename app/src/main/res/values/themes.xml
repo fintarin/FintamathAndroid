@@ -6,8 +6,7 @@
         <item name="android:statusBarColor">@color/background_bar</item>
         <item name="android:navigationBarColor">@color/background_keyboard</item>
         <item name="android:textColor">@color/text_main</item>
-        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
-        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
     </style>
 
     <style name="Theme.Fintamath.PopupMenu" parent="@style/ThemeOverlay.AppCompat.Dark">
