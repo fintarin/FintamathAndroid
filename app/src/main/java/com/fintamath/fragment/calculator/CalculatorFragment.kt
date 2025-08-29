@@ -2,21 +2,27 @@ package com.fintamath.fragment.calculator
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.fintamath.R
 import com.fintamath.calculator.CalculatorProcessor
 import com.fintamath.databinding.FragmentCalculatorBinding
 import com.fintamath.storage.HistoryStorage
-import com.fintamath.storage.CalculatorInputStorage
+import com.fintamath.storage.CalculatorStorage
 import com.fintamath.storage.MathTextData
 import com.fintamath.storage.SettingsStorage
 import com.fintamath.widget.keyboard.Keyboard
 import com.fintamath.widget.keyboard.KeyboardView
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
+import java.math.BigDecimal
 import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.atomic.AtomicBoolean
@@ -40,6 +46,8 @@ class CalculatorFragment : Fragment() {
     private var saveToHistoryTask: TimerTask? = null
 
     private var wereSettingsUpdated = AtomicBoolean(false)
+
+    private var drawGraphJob: Job? = null
 
     private val maxSolutionLength = 2000
 
@@ -78,8 +86,8 @@ class CalculatorFragment : Fragment() {
         updateSettings()
 
         if (inTextViewState.get() == InTextViewState.Ready.value) {
-            if (viewBinding.inTextView.text != CalculatorInputStorage.mathTextData.text) {
-                viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
+            if (viewBinding.inTextView.text != CalculatorStorage.inputMathTextData.text) {
+                viewBinding.inTextView.text = CalculatorStorage.inputMathTextData.text
             }
 
             if (viewBinding.outSolutionView.isShowingLoading() || wereSettingsUpdated.get()) {
@@ -103,7 +111,7 @@ class CalculatorFragment : Fragment() {
     private fun initMathTexts() {
         viewBinding.inTextLayout.setOnTouchListener { _, event -> touchInText(event) }
 
-        viewBinding.inTextView.text = CalculatorInputStorage.mathTextData.text
+        viewBinding.inTextView.text = CalculatorStorage.inputMathTextData.text
         viewBinding.inTextView.setOnTextChangedListener { _, text -> onInTextChange(text) }
         viewBinding.inTextView.setOnFocusChangeListener { _, state -> onInTextFocusChange(state) }
     }
@@ -174,10 +182,11 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun initBarButtons() {
-//        viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented
+        // viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented
         viewBinding.historyButton.setOnClickListener { showHistoryFragment() }
         viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
+        viewBinding.graphButton.setOnClickListener { showGraphFragment() }
     }
 
     private fun updateSettings() {
@@ -206,7 +215,7 @@ class CalculatorFragment : Fragment() {
             }
         }
 
-        CalculatorInputStorage.mathTextData = MathTextData(text)
+        CalculatorStorage.inputMathTextData = MathTextData(text)
         cancelSaveToHistoryTask()
 
         viewBinding.inTextViewHint.visibility = if (viewBinding.inTextView.text.isNotEmpty())
@@ -245,6 +254,8 @@ class CalculatorFragment : Fragment() {
             viewBinding.outSolutionView.showFailedToSolve()
         } else {
             val cutSolutionTexts = cutSolutionTexts(texts)
+            val firstSolutionText = cutSolutionTexts.first()
+            CalculatorStorage.outputMathTextData.text = firstSolutionText
 
             if (countTextsLength(cutSolutionTexts) > maxSolutionLength) {
                 viewBinding.outSolutionView.showCharacterLimitExceeded()
@@ -312,6 +323,10 @@ class CalculatorFragment : Fragment() {
 
     private fun showSettingsFragment() {
         showFragment(R.id.action_calculatorFragment_to_settingsFragment)
+    }
+
+    private fun showGraphFragment() {
+        showFragment(R.id.action_calculatorFragment_to_graphFragment)
     }
 
     private fun showFragment(navigationId: Int) {

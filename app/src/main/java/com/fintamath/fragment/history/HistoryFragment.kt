@@ -13,10 +13,7 @@ import com.fintamath.R
 import com.fintamath.databinding.FragmentHistoryBinding
 import com.fintamath.storage.HistoryStorage
 import com.fintamath.storage.MathTextData
-import com.fintamath.storage.CalculatorInputStorage
-import java.util.Timer
-import java.util.TimerTask
-import kotlin.concurrent.schedule
+import com.fintamath.storage.CalculatorStorage
 
 class HistoryFragment : Fragment() {
 
@@ -52,7 +49,8 @@ class HistoryFragment : Fragment() {
 
     private fun initBarButtons() {
         viewBinding.calculatorButton.setOnClickListener { showCalculatorFragment() }
-//        viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented
+        viewBinding.graphButton.setOnClickListener { showGraphFragment() }
+        // viewBinding.cameraButton.setOnClickListener { showCameraFragment() } // TODO: uncomment when camera is implemented{
         viewBinding.settingsButton.setOnClickListener { showSettingsFragment() }
         viewBinding.aboutButton.setOnClickListener { showAboutFragment() }
     }
@@ -73,12 +71,17 @@ class HistoryFragment : Fragment() {
     }
 
     private fun onCalculate(text: String) {
-        CalculatorInputStorage.mathTextData = MathTextData(text)
+        CalculatorStorage.inputMathTextData = MathTextData(text)
         showCalculatorFragment()
     }
 
     private fun showCalculatorFragment() {
         executeBack()
+    }
+
+    private fun showGraphFragment() {
+        executeBack()
+        showFragment(R.id.action_calculatorFragment_to_graphFragment)
     }
 
     private fun showCameraFragment() {
