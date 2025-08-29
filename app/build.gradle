@@ -4,15 +4,15 @@ apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
 
 android {
     namespace 'com.fintamath'
-    compileSdk 34
+    compileSdk 36
     ndkVersion "26.2.11394342"
 
     defaultConfig {
         applicationId "com.fintamath"
         minSdk 27
-        targetSdk 34
-        versionCode 92
-        versionName "0.8.1 alpha"
+        targetSdk 36
+        versionCode 93
+        versionName "0.8.2 alpha"
     }
 
     buildTypes {

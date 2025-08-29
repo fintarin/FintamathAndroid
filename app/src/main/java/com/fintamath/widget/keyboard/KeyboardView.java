@@ -828,10 +828,6 @@ public class KeyboardView extends View implements View.OnClickListener {
                 Key oldKey = keys[oldKeyIndex];
                 oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY);
                 invalidateKey(oldKeyIndex);
-
-                if (!mIsMiniKeyboard) {
-                    performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE);
-                }
             }
             if (mCurrentKeyIndex != NOT_A_KEY && keys.length > mCurrentKeyIndex) {
                 Key newKey = keys[mCurrentKeyIndex];
@@ -923,7 +919,7 @@ public class KeyboardView extends View implements View.OnClickListener {
 
         if (previewPopup.isShowing()) {
             previewPopup.update(mPopupPreviewX, mPopupPreviewY,
-                    popupWidth, popupHeight);
+                    popupWidth, popupHeight, true);
         } else {
             previewPopup.setWidth(popupWidth);
             previewPopup.setHeight(popupHeight);
