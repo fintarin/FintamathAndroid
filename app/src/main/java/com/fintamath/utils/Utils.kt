@@ -10,19 +10,18 @@ import com.fintamath.R
 
 fun addInsets(view: View) {
     ViewCompat.setOnApplyWindowInsetsListener(
-        view,
-        OnApplyWindowInsetsListener { v: View, insets: WindowInsetsCompat ->
-            val systemInsets: Insets = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-            )
-            v.setPadding(
-                systemInsets.left,
-                systemInsets.top,
-                systemInsets.right,
-                systemInsets.bottom
-            )
-            v.setBackgroundColor(ContextCompat.getColor(v.context, R.color.background_bar))
-            insets
-        }
-    )
+        view
+    ) { v: View, insets: WindowInsetsCompat ->
+        val systemInsets: Insets = insets.getInsets(
+            WindowInsetsCompat.Type.systemBars()
+        )
+        v.setPadding(
+            systemInsets.left,
+            systemInsets.top,
+            systemInsets.right,
+            systemInsets.bottom
+        )
+        v.setBackgroundColor(ContextCompat.getColor(v.context, R.color.background_bar))
+        insets
+    }
 }
