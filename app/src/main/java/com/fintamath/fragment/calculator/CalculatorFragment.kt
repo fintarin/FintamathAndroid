@@ -339,11 +339,11 @@ class CalculatorFragment : Fragment() {
         val solTexts = texts.distinct().toMutableList()
 
         if (solTexts.size > 1 && solTexts.first() == inText) {
-            solTexts.removeFirst()
+            solTexts.removeAt(0)
         }
 
         while (solTexts.size > 1 && countTextsLength(solTexts) > maxSolutionLength) {
-            solTexts.removeFirst()
+            solTexts.removeAt(0)
         }
 
         return solTexts
