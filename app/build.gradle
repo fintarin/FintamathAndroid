@@ -1,18 +1,23 @@
-apply plugin: 'com.android.application'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+}
 
 android {
     namespace 'com.fintamath'
-    compileSdk 36
-    ndkVersion "26.2.11394342"
+    compileSdkVersion 36
+    ndkVersion '28.2.13676358'
 
     defaultConfig {
-        applicationId "com.fintamath"
+        applicationId 'com.fintamath'
         minSdk 27
         targetSdk 36
-        versionCode 96
-        versionName "0.8.2 alpha"
+        versionCode 97
+        versionName '0.8.2 alpha'
 
         ndk {
             abiFilters 'x86_64', 'armeabi-v7a', 'arm64-v8a'
@@ -28,12 +33,14 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = '11'
+    tasks.withType(KotlinJvmCompile).configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
 
     externalNativeBuild {
@@ -48,13 +55,13 @@ android {
 
     tasks.withType(JavaCompile).tap {
         configureEach {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
         }
     }
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.google.android.material:material:1.13.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.9.3'
