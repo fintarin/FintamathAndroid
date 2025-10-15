@@ -16,8 +16,8 @@ android {
         applicationId 'com.fintamath'
         minSdk 27
         targetSdk 36
-        versionCode 97
-        versionName '0.8.2 alpha'
+        versionCode 98
+        versionName '0.8.3 alpha'
 
         ndk {
             abiFilters 'x86_64', 'armeabi-v7a', 'arm64-v8a'
