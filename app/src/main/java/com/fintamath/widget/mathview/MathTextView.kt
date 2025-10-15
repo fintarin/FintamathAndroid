@@ -1,10 +1,8 @@
 package com.fintamath.widget.mathview
 
-import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.ContextWrapper
 import android.graphics.Color
 import android.os.SystemClock
 import android.util.AttributeSet
@@ -20,8 +18,8 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.PopupWindow
 import androidx.annotation.Keep
-import androidx.core.view.isVisible
 import com.fintamath.R
+import com.fintamath.utils.getActivity
 import kotlin.math.abs
 
 
@@ -352,7 +350,7 @@ class MathTextView @JvmOverloads constructor(
         textCached = newText
         isComplete = isCompleteStr == "true"
 
-        getActivity()?.runOnUiThread {
+        getActivity(context)?.runOnUiThread {
             onTextChangedListener?.invoke(this, newText)
         }
     }
@@ -392,19 +390,5 @@ class MathTextView @JvmOverloads constructor(
     @Suppress("DEPRECATION")
     private fun toPx(size: Int): Int {
         return (size  * resources.displayMetrics.scaledDensity).toInt()
-    }
-
-    private fun getActivity(): Activity? {
-        var activityContext: Context? = context
-
-        while (activityContext is ContextWrapper) {
-            if (activityContext is Activity) {
-                return activityContext
-            }
-
-            activityContext = activityContext.baseContext
-        }
-
-        return null
     }
 }

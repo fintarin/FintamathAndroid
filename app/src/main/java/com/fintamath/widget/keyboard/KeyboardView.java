@@ -39,7 +39,6 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -47,7 +46,6 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewPropertyAnimator;
 import android.widget.FrameLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.fintamath.R;
@@ -148,17 +146,14 @@ public class KeyboardView extends View implements View.OnClickListener {
 
     private TextView mPreviewText;
     private View mPreviewTextContainer;
-    private final PopupWindow mPreviewPopup;
+    private final KeyboardPopupWindow mPreviewPopup;
     // Working variable
     private final int[] mCoordinates = new int[2];
 
-    private final PopupWindow mPopupKeyboard;
+    private final KeyboardPopupWindow mPopupKeyboard;
     private KeyboardView mMiniKeyboard;
     private boolean mIsMiniKeyboard;
     private int mMiniKeyboardLocationFlags;
-    private View mPopupParent;
-    private int mMiniKeyboardOffsetX;
-    private int mMiniKeyboardOffsetY;
     private final Map<Key,View> mMiniKeyboardCache;
     private Key[] mKeys;
 
@@ -271,11 +266,11 @@ public class KeyboardView extends View implements View.OnClickListener {
 
         a.recycle();
 
-        mPreviewPopup = new PopupWindow(context);
+        mPreviewPopup = new KeyboardPopupWindow(context);
         if (previewLayout != 0) {
-            mPreviewText = (TextView) inflate(getContext(), previewLayout, null);
+            mPreviewText = (TextView) inflate(context, previewLayout, null);
 
-            FrameLayout previewTextContainer = new FrameLayout(getContext());
+            FrameLayout previewTextContainer = new FrameLayout(context);
             previewTextContainer.setLayoutParams(new FrameLayout.LayoutParams(0, 0));
             previewTextContainer.setBackground(mPreviewText.getBackground());
             previewTextContainer.addView(mPreviewText);
@@ -284,18 +279,11 @@ public class KeyboardView extends View implements View.OnClickListener {
             mPreviewText.setBackground(null);
 
             mPreviewPopup.setContentView(mPreviewTextContainer);
-            mPreviewPopup.setBackgroundDrawable(null);
         } else {
             mShowPreview = false;
         }
 
-        mPreviewPopup.setTouchable(false);
-
-        mPopupKeyboard = new PopupWindow(context);
-        mPopupKeyboard.setBackgroundDrawable(null);
-        mPopupKeyboard.setClippingEnabled(false);
-
-        mPopupParent = this;
+        mPopupKeyboard = new KeyboardPopupWindow(context);
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -493,18 +481,6 @@ public class KeyboardView extends View implements View.OnClickListener {
      */
     public boolean isPreviewEnabled() {
         return mShowPreview;
-    }
-
-    public void setPopupParent(View v) {
-        mPopupParent = v;
-    }
-
-    public void setPopupOffset(int x, int y) {
-        mMiniKeyboardOffsetX = x;
-        mMiniKeyboardOffsetY = y;
-        if (mPreviewPopup.isShowing()) {
-            mPreviewPopup.dismiss();
-        }
     }
 
     /**
@@ -818,7 +794,6 @@ public class KeyboardView extends View implements View.OnClickListener {
 
     private void showPreview(int keyIndex) {
         int oldKeyIndex = mCurrentKeyIndex;
-        final PopupWindow previewPopup = mPreviewPopup;
 
         mCurrentKeyIndex = keyIndex;
         // Release the old key and press the new key
@@ -840,7 +815,7 @@ public class KeyboardView extends View implements View.OnClickListener {
         // If key changed and preview is on ...
         if (oldKeyIndex != mCurrentKeyIndex && mShowPreview) {
             mHandler.removeMessages(MSG_SHOW_PREVIEW);
-            if (previewPopup.isShowing()) {
+            if (mPreviewPopup.isShowing()) {
                 if (keyIndex == NOT_A_KEY) {
                     mHandler.sendMessageDelayed(mHandler
                                     .obtainMessage(MSG_REMOVE_PREVIEW),
@@ -848,7 +823,7 @@ public class KeyboardView extends View implements View.OnClickListener {
                 }
             }
             if (keyIndex != NOT_A_KEY) {
-                if (previewPopup.isShowing()) {
+                if (mPreviewPopup.isShowing()) {
                     // Show right away, if it's already visible and finger is moving around
                     showKey(keyIndex);
                 } else {
@@ -861,7 +836,6 @@ public class KeyboardView extends View implements View.OnClickListener {
     }
 
     private void showKey(final int keyIndex) {
-        final PopupWindow previewPopup = mPreviewPopup;
         final Key[] keys = mKeys;
 
         if (keyIndex < 0 || keyIndex >= mKeys.length) return;
@@ -903,29 +877,25 @@ public class KeyboardView extends View implements View.OnClickListener {
         final int popupHeightOffset = key.height / 4;
         final int popupHeight = key.height * 2 + popupHeightOffset;
 
-        int mPopupPreviewX = key.x - mPreviewTextContainer.getPaddingLeft() + getPaddingLeft();
-        int mPopupPreviewY = key.y - key.height - popupHeightOffset;
-
         mHandler.removeMessages(MSG_REMOVE_PREVIEW);
         getLocationInWindow(mCoordinates);
-        mCoordinates[0] += mMiniKeyboardOffsetX; // Offset may be zero
-        mCoordinates[1] += mMiniKeyboardOffsetY; // Offset may be zero
+
+        final int mPopupPreviewX
+                = key.x
+                - mPreviewTextContainer.getPaddingLeft()
+                + getPaddingLeft()
+                + mCoordinates[0];
+        final int mPopupPreviewY
+                = key.y
+                - key.height
+                - popupHeightOffset
+                + mCoordinates[1];
 
         // Set the preview background state
         mPreviewTextContainer.getBackground().setState(
                 key.popupResId != 0 ? LONG_PRESSABLE_STATE_SET : EMPTY_STATE_SET);
-        mPopupPreviewX += mCoordinates[0];
-        mPopupPreviewY += mCoordinates[1];
 
-        if (previewPopup.isShowing()) {
-            previewPopup.update(mPopupPreviewX, mPopupPreviewY,
-                    popupWidth, popupHeight, true);
-        } else {
-            previewPopup.setWidth(popupWidth);
-            previewPopup.setHeight(popupHeight);
-            previewPopup.showAtLocation(mPopupParent, Gravity.NO_GRAVITY,
-                    mPopupPreviewX, mPopupPreviewY);
-        }
+        mPreviewPopup.show(mPopupPreviewX, mPopupPreviewY, popupWidth, popupHeight);
 
         showPopupKeyboard(keyIndex);
     }
@@ -1024,7 +994,6 @@ public class KeyboardView extends View implements View.OnClickListener {
 
             Keyboard keyboard = new Keyboard(getContext(), popupKeyboardId);
             mMiniKeyboard.setKeyboard(keyboard);
-            mMiniKeyboard.setPopupParent(this);
             mMiniKeyboardContainer.measure(
                     MeasureSpec.makeMeasureSpec(getWidth(), MeasureSpec.AT_MOST),
                     MeasureSpec.makeMeasureSpec(getHeight(), MeasureSpec.AT_MOST));
@@ -1057,14 +1026,13 @@ public class KeyboardView extends View implements View.OnClickListener {
 
         final int x = mPopupX + mMiniKeyboardContainer.getPaddingRight() + mCoordinates[0];
         final int y = mPopupY + mMiniKeyboardContainer.getPaddingBottom() + mCoordinates[1];
+        final int width = mMiniKeyboardContainer.getMeasuredWidth();
+        final int height = mMiniKeyboardContainer.getMeasuredHeight();
 
         mMiniKeyboard.pressKey();
-        mMiniKeyboard.setPopupOffset(Math.max(x, 0), y);
         mMiniKeyboard.setShifted(isShifted());
         mPopupKeyboard.setContentView(mMiniKeyboardContainer);
-        mPopupKeyboard.setWidth(mMiniKeyboardContainer.getMeasuredWidth());
-        mPopupKeyboard.setHeight(mMiniKeyboardContainer.getMeasuredHeight());
-        mPopupKeyboard.showAtLocation(this, Gravity.NO_GRAVITY, x, y);
+        mPopupKeyboard.show(x, y, width, height);
         invalidateAllKeys();
 
         return true;
@@ -1138,8 +1106,8 @@ public class KeyboardView extends View implements View.OnClickListener {
     }
 
     private boolean onModifiedTouchEvent(MotionEvent me, boolean possiblePoly) {
-        int touchX = (int) me.getX() - getPaddingLeft();
-        int touchY = (int) me.getY() - getPaddingTop();
+        int touchX = (int) me.getX() - getLeft() - getPaddingLeft();
+        int touchY = (int) me.getY() - getTop() - getPaddingTop();
         if (touchY >= -mVerticalCorrection)
             touchY += mVerticalCorrection;
         final int action = me.getAction();
@@ -1291,10 +1259,10 @@ public class KeyboardView extends View implements View.OnClickListener {
             }
         }
 
-        float x = me.getX() - mMiniKeyboard.mMiniKeyboardOffsetX;
-        x = x >= mMiniKeyboard.getRight() ? mMiniKeyboard.getRight() - 1 : x;
-        x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
-        float y = mMiniKeyboard.getY() + mMiniKeyboardOffsetY;
+        float x = rawX;
+        x = x >= miniKeyboardRect.right ? miniKeyboardRect.right - 1 : x;
+        x = x <= miniKeyboardRect.left ? miniKeyboardRect.left + 1 : x;
+        float y = miniKeyboardRect.top + 1;
 
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
             return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,

@@ -1,5 +1,8 @@
 package com.fintamath.utils
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.Insets
@@ -24,4 +27,18 @@ fun addInsets(view: View) {
         v.setBackgroundColor(ContextCompat.getColor(v.context, R.color.background_bar))
         insets
     }
+}
+
+fun getActivity(context: Context): Activity? {
+    var activityContext: Context? = context
+
+    while (activityContext is ContextWrapper) {
+        if (activityContext is Activity) {
+            return activityContext
+        }
+
+        activityContext = activityContext.baseContext
+    }
+
+    return null
 }
