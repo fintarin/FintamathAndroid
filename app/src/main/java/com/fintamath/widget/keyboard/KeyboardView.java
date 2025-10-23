@@ -1238,31 +1238,17 @@ public class KeyboardView extends View implements View.OnClickListener {
     private boolean onMiniKeyboardTouchEvent(MotionEvent me) {
         final int action = me.getAction();
         final long now = me.getEventTime();
-        float rawX = me.getRawX();
-        float rawY = me.getRawY();
 
-        final int widthDelta = mMiniKeyboard.getKeyboard().getKeyWidth() / 2;
-        final int heightDelta = mMiniKeyboard.getKeyboard().getKeyHeight() / 2;
-
-        Rect miniKeyboardRect = getViewDrawingRect(mMiniKeyboard);
-        Rect previewRect = getViewDrawingRect(mPreviewTextContainer);
-
-        if (action == MotionEvent.ACTION_MOVE) {
-            if (rawX < miniKeyboardRect.left - widthDelta
-                    || rawX > miniKeyboardRect.right + widthDelta
-                    || rawY < previewRect.top - heightDelta
-                    || rawY > previewRect.bottom + heightDelta) {
-
-                dismissPopupKeyboard();
-                return onTouchEvent(MotionEvent.obtain(now, now,
-                        MotionEvent.ACTION_DOWN, me.getX(), me.getY(), me.getMetaState()));
-            }
+        if (action == MotionEvent.ACTION_MOVE && isOutsideMiniKeyboard(me)) {
+            dismissPopupKeyboard();
+            return onTouchEvent(MotionEvent.obtain(now, now,
+                    MotionEvent.ACTION_DOWN, me.getX(), me.getY(), me.getMetaState()));
         }
 
-        float x = rawX;
-        x = x >= miniKeyboardRect.right ? miniKeyboardRect.right - 1 : x;
-        x = x <= miniKeyboardRect.left ? miniKeyboardRect.left + 1 : x;
-        float y = miniKeyboardRect.top + 1;
+        float x = me.getX();
+        x = x >= mMiniKeyboard.getRight() ? mMiniKeyboard.getRight() - 1 : x;
+        x = x <= mMiniKeyboard.getLeft() ? mMiniKeyboard.getLeft() + 1 : x;
+        float y = mMiniKeyboard.getTop() + 1;
 
         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) {
             return mMiniKeyboard.onTouchEvent(MotionEvent.obtain(now, now,
@@ -1278,7 +1264,23 @@ public class KeyboardView extends View implements View.OnClickListener {
         return false;
     }
 
-    private Rect getViewDrawingRect(View view) {
+    private boolean isOutsideMiniKeyboard(MotionEvent me) {
+        float x = me.getRawX();
+        float y = me.getRawY();
+
+        final int widthDelta = mMiniKeyboard.getKeyboard().getKeyWidth() / 2;
+        final int heightDelta = mMiniKeyboard.getKeyboard().getKeyHeight() / 2;
+
+        Rect miniKeyboardRect = getViewDrawingRectOnScreen(mMiniKeyboard);
+        Rect previewRect = getViewDrawingRectOnScreen(mPreviewTextContainer);
+
+        return x < miniKeyboardRect.left - widthDelta
+                || x > miniKeyboardRect.right + widthDelta
+                || y < previewRect.top - heightDelta
+                || y > previewRect.bottom + heightDelta;
+    }
+
+    private Rect getViewDrawingRectOnScreen(View view) {
         Rect rect = new Rect();
         int[] location = new int[2];
         view.getDrawingRect(rect);

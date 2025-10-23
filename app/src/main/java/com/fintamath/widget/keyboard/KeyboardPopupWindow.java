@@ -34,10 +34,10 @@ public class KeyboardPopupWindow {
         }
 
         int[] rootLayoutLocation = new int[2];
-        rootLayout.getLocationOnScreen(rootLayoutLocation);
+        rootLayout.getLocationInWindow(rootLayoutLocation);
 
         var layoutParams = new FrameLayout.LayoutParams(width, height);
-        layoutParams.leftMargin = x - rootLayoutLocation[0];
+        layoutParams.leftMargin = x + rootLayoutLocation[0];
         layoutParams.topMargin = y - rootLayoutLocation[1];
         contentView.setLayoutParams(layoutParams);
 
